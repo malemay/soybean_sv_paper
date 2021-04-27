@@ -37,7 +37,7 @@ figures/figure_3_circos/ref_ltr.txt
 figures/figure_3_circos/snp_density.txt
 figures/figure_3_circos/sv_counts.txt
 figures/figure_3_circos/sv_highlights.txt
-gene_analysis/overlap_data.txt
+gene_analysis/*.txt
 nanoplot_stats/N50_stats.txt
 tables/table_s?.csv
 tables/table_1.csv

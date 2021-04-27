@@ -14,6 +14,10 @@ overlap_data <- read.table("../gene_analysis/overlap_data.txt",
 
 overlap_data$overlap <- factor(overlap_data$overlap, levels = c("cds", "gene", "upstream5kb", "intergenic"))
 
+# Loading the data on the randomly shuffled SVs and gene overlaps
+# DEPENDENCY : ../gene_analysis/permutation_all_100kb.RData
+load("../gene_analysis/permutation_all_100kb.RData")
+
 # Creating the plot
 figure_5 <- ggplot(overlap_data, aes(x = af, color = overlap)) +
 	geom_density() +
