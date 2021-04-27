@@ -1,0 +1,21 @@
+Sample,Sequencing date,Growing conditions,Grinding method,Extraction protocol,RNase temperature (°C),Size selection,DNA combined,Active pores,Library mass (ng),Run time (h),Yield (Gb),Read N50 (kb)
+AC2001 (1),13-03-2020,Lab,Liquid nitrogen + Qiagen TissueLyser,CTAB,37,BluePippin High-Pass Plus > 15kb,no,1652,210,72,9.3,6
+AC2001 (2),27-07-2020,Lab,Liquid nitrogen + Qiagen TissueLyser,CTAB,37,Circulomics SRE,no,1586,309,72,13.9,19.7
+Alta,13-03-2020,Lab,Liquid nitrogen + Qiagen TissueLyser,CTAB,37,BluePippin High-Pass Plus > 15kb,no,1640,196,72,30.4,11.2
+Maple Isle (1),11-06-2020,Lab,Liquid nitrogen + Qiagen TissueLyser,CTAB,37,BluePippin High-Pass Plus > 15kb,no,1477,166,72,6.6,4.1
+Maple Isle (2),10-08-2020,Lab,Liquid nitrogen + Qiagen TissueLyser,CTAB,60,Circulomics SRE,no,1518,354,72,15.7,14.8
+Maple Presto,01-10-2019,Field,Lyophilisation + Qiagen TissueLyser,Qiagen DNeasy Plant Mini Kit,65,BluePippin > 6kb,yes,1568,364,48,10.2,5.2
+OAC 09-35C,21-05-2020,Lab,Liquid nitrogen + Qiagen TissueLyser,CTAB,37,BluePippin High-Pass Plus > 15kb,no,1613,109,72,12.8,17.5
+OAC Carman,09-10-2019,Field,Lyophilisation + Qiagen TissueLyser,Qiagen DNeasy Plant Mini Kit,65,BluePippin > 6kb,yes,1678,146,48,15.6,3.8
+OAC Drayton,15-06-2020,Lab,Liquid nitrogen + Qiagen TissueLyser,CTAB,37,BluePippin High-Pass Plus > 15kb,no,1461,118,72,11.1,18.3
+OAC Embro,14-03-2019,Greenhouse,Liquid nitrogen + mortar and pestle,Qiagen Gentra Puregene Tissue Kit,37,None,no,NA,244,48,16.3,6.9
+OAC Lakeview (1),15-06-2020,Lab,Liquid nitrogen + Qiagen TissueLyser,CTAB,37,BluePippin High-Pass Plus > 15kb,no,1478,112,72,4.8,21
+OAC Lakeview (2),10-08-2020,Lab,Liquid nitrogen + Qiagen TissueLyser,CTAB,60,Circulomics SRE,no,1347,339,72,15.3,8.1
+OAC Madoc,21-05-2020,Lab,Liquid nitrogen + Qiagen TissueLyser,CTAB,37,BluePippin High-Pass Plus > 15kb,no,1589,187,72,10.2,12
+OAC Oxford,26-05-2020,Lab,Liquid nitrogen + Qiagen TissueLyser,CTAB,37,BluePippin High-Pass Plus > 15kb,no,1471,218,72,16.7,22
+OAC Petrel,31-07-2020,Lab,Liquid nitrogen + Qiagen TissueLyser,CTAB,60,Circulomics SRE,no,1559,407,72,9.6,29.5
+OAC Prudence,11-06-2020,Lab,Liquid nitrogen + Qiagen TissueLyser,CTAB,37,BluePippin High-Pass Plus > 15kb,no,1402,262,72,13.5,20.7
+OAC Stratford,26-05-2020,Lab,Liquid nitrogen + Qiagen TissueLyser,CTAB,37,BluePippin High-Pass Plus > 15kb,no,1177,225,72,12.5,18.9
+OT09-03,25-02-2020,Lab,Liquid nitrogen + Qiagen TissueLyser,CTAB,65,Circulomics SRE,no,1392,248,72,10.1,24.8
+QS5091.50j,11-09-2019,Field,Lyophilisation + Qiagen TissueLyser,Qiagen DNeasy Plant Mini Kit,65,BluePippin > 6kb,no,1190,225,48,11.4,6.7
+Roland,07-07-2020,Lab,Liquid nitrogen + Qiagen TissueLyser,CTAB,60,Circulomics SRE,no,1774,168,72,10.9,25.6

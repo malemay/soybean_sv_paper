@@ -1,0 +1,41 @@
+\documentclass[convert]{standalone}
+
+\usepackage{csvsimple} % read and display csv files as tables
+\usepackage{booktabs} % prettier tables
+\usepackage{threeparttable} % easy addition of footnotes below tables
+
+% Reducing the space between columns
+\setlength{\tabcolsep}{4pt}
+
+% END OF PREAMBLE
+
+\begin{document}
+
+% Table 1
+
+	\begin{threeparttable}\small
+
+		\csvreader[head to column names,
+		before first line = {\begin{tabular}{lcccccccccccccccccc}%
+			\toprule & \multicolumn{4}{c}{[50bp -- 100bp[} & &  \multicolumn{4}{c}{[100bp -- 1kb[} & & \multicolumn{4}{c}{[1kb -- 10kb[} & & \multicolumn{3}{c}{$\geq$ 10kb\tnote{*}}%
+			\\[0.5ex] \cmidrule{2-5} \cmidrule{7-10} \cmidrule{12-15} \cmidrule{17-19}%
+			Calling program & DEL & INS & DUP & INV & & DEL & INS & DUP & INV & & DEL & INS & DUP & INV & & DEL & DUP & INV %
+			\\[0.5ex] \cmidrule{2-5} \cmidrule{7-10} \cmidrule{12-15} \cmidrule{17-19}},%
+			late after last line = { \\ \bottomrule \end{tabular}}]%
+		{table_1.csv}%
+		{}%
+		{\program & \smalldel  & \smallins  & \smalldup  & \smallinv  & & %
+		           \mediumdel & \mediumins & \mediumdup & \mediuminv & & %
+		           \largedel  & \largeins  & \largedup  & \largeinv  & & %
+			   \hugedel   & \hugedup   & \hugeinv \\}
+
+			   \begin{tablenotes} \footnotesize
+			   \item[*] Insertions $\geq$ 10kb are not shown because none were called
+			   \item[ ] DEL: deletions, INS: insertions, DUP: duplications, INV: inversions
+			   \item[ ] merged: the dataset merged using SVmerge
+			   \end{tablenotes}
+
+	\end{threeparttable}
+
+\end{document}
+

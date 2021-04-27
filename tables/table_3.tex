@@ -1,0 +1,37 @@
+\documentclass[convert]{standalone}
+
+\usepackage{csvsimple} % read and display csv files as tables
+\usepackage{booktabs} % prettier tables
+\usepackage{threeparttable} % easy addition of footnotes below tables
+\usepackage{calc} % makes \widthof available to set the width of the last column
+\usepackage{array} % using command \arraybackslash to restore the definition of \\ after \centering
+
+% Reducing the space between columns
+% \setlength{\tabcolsep}{4pt}
+
+% END OF PREAMBLE
+
+\begin{document}
+
+% Table 3
+
+	\begin{threeparttable}\small
+
+		\csvreader[head to column names,
+		tabular = lccm{\widthof{in genome}},
+		table head = \toprule Feature & DEL (\%) & INS (\%) & Feature \% in genome\\\midrule,
+		table foot = \bottomrule]%
+		{table_3.csv}%
+		{}%
+		{\feature & \DEL~(\DELprop) & \INS~(\INSprop) & \centering \gprop \arraybackslash}
+
+			   \begin{tablenotes}\footnotesize
+			   \item{ } DEL: deletions, INS: insertions
+			   \item{ } cds: coding sequence
+			   \item{ } upstream5kb: within 5 kb upstream of a gene
+			   \end{tablenotes}
+
+	\end{threeparttable}
+
+\end{document}
+

@@ -1,0 +1,38 @@
+\documentclass[convert]{standalone}
+
+\usepackage{csvsimple} % read and display csv files as tables
+\usepackage{booktabs} % prettier tables
+\usepackage{threeparttable} % easy addition of footnotes below tables
+\usepackage{array} % using command \arraybackslash to restore the definition of \\ after \centering
+
+\newcommand{\cit}{\centering\textit}
+% Reducing the space between columns
+% \setlength{\tabcolsep}{4pt}
+
+% END OF PREAMBLE
+
+\begin{document}
+
+% Table 2
+	\begin{threeparttable}\small
+
+		\csvreader[tabular = l*{2}{p{0.15\textwidth}}c*{2}{p{0.15\textwidth}}c*{2}{p{0.15\textwidth}}, 
+		head to column names,
+		table head = \toprule & \multicolumn{2}{c}{DEL (\%)} & & \multicolumn{2}{c}{INS (\%)} & & \multicolumn{2}{c}{REF\tnote{a} (\%)} \\ \cmidrule{2-3} \cmidrule{5-6} \cmidrule{8-9}%
+		TE type & \cit N\tnote{b} & \centering kb\tnote{c} &  & \cit N & \centering kb & & \cit N & \centering Mb\tnote{d} \arraybackslash\\\midrule,
+		table foot = \bottomrule]%
+			{table_2.csv}%
+			{}%
+			{\type & \centering \DEL~(\DELprop) & \centering \DELkb~(\DELkbprop) & & \centering \INS~(\INSprop) & \centering \INSkb~(\INSkbprop) & & \centering \ref~(\refprop) & \centering \refmb~(\refmbprop) \arraybackslash}
+
+			   \begin{tablenotes}\footnotesize
+			   \item[a] Transposable elements $\geq$ 100 bp in the reference genome
+			   \item[b] \textit N: Number of deletions or insertions matching given TE type %(\% of matching SVs corresponding to a given TE type)
+			   \item[c] kb: Total length of polymorphic elements matching given TE type, in kb %(\% of polymorphic bases corresponding to a given TE type)
+			   \item[d] Mb: Total length of reference elements of a given type, in Mb
+			   \end{tablenotes}
+
+	\end{threeparttable}
+
+\end{document}
+
