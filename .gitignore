@@ -9,6 +9,9 @@
 *.pdf
 *.toc
 
+# Ignore R ouput files
+*Rout
+
 # Ignore vim swap files
 *.swp
 

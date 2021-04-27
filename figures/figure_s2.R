@@ -65,7 +65,7 @@ inversions_plot <-
 	common_theme
 
 # Saving as a .png file
-png("figure_s2.png", width = 3, height = 6, units = "in", res = 300)
+png("figure_s2.png", width = 3, height = 6, units = "in", res = 500)
 grid.newpage()
 # Locating the subplots in the figure
 pushViewport(viewport(x = 0.05, y = 0.03, just = c("left", "bottom"), width = 0.95, height = 0.97))

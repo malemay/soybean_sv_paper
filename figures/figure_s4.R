@@ -45,7 +45,7 @@ figure_s4 <- ggplot(line_ids, aes(x = sequencing_depth, y = precision)) +
 	      text = element_text(size = 8))
 
 # Saving to disk as a png file
-png("figure_s4.png", width = 3, height = 3, units = "in", res = 300)
+png("figure_s4.png", width = 3, height = 3, units = "in", res = 500)
 print(figure_s4)
 dev.off()
 

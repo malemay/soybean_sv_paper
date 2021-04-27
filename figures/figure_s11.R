@@ -61,7 +61,7 @@ panelB <- ggplot(line_ids, aes(x = N50 / 1000, y = insertions_10000)) +
 	      text = element_text(size = 10))
 
 # Saving to the png format
-png("figure_s11.png", width = 6, height = 3, units = "in", res = 300)
+png("figure_s11.png", width = 6, height = 3, units = "in", res = 500)
 pushViewport(viewport(layout = grid.layout(1, 2)))
 
 # Printing panel A in the left column viewport

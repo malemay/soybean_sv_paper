@@ -51,7 +51,7 @@ panelB <- ggplot(sv_sizes[sv_sizes$svtype == "DEL", ], aes(x = abs(size))) +
 	      panel.grid.minor.y = element_blank())
 
 # Assembling both panels in a single figure and saving to "figure_s8.png"
-png("figure_s8.png", width = 6, height = 6, units = "in", res = 300)
+png("figure_s8.png", width = 6, height = 6, units = "in", res = 500)
 grid.newpage()
 pushViewport(viewport(layout = grid.layout(1, 2)))
 pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 1))
