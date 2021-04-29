@@ -14,9 +14,13 @@
 library(grid)
 library(ggplot2)
 
+# Reading in the polymorphic_tes as identified in our data
+# DEPENDENCY : ../te_analysis/polymorphic_tes.tsv
+polymorphic_tes <- read.table("../te_analysis/polymorphic_tes.tsv", sep = "\t", header = TRUE, stringsAsFactors = FALSE)
+
 # Reading in the polymorphic TEs found by Tian et al. (2012)
-# DEPENDENCY : tian2012_tes.txt
-tian_tes <- read.table("tian2012_tes.txt", header = FALSE, stringsAsFactors = FALSE)
+# DEPENDENCY : ../te_analysis/tian2012_tes.txt
+tian_tes <- read.table("../te_analysis/tian2012_tes.txt", header = FALSE, stringsAsFactors = FALSE)
 names(tian_tes) <- c("accession", "chrom", "pos", "family", "category", "boundary")
 
 # Focusing on the LTR retrotrotransposons and reformatting their family names
@@ -26,32 +30,19 @@ tian_ltr$family <- sub("RL[CG]_", "", tian_ltr$family)
 # Similarly extracting and formatting my own data
 polymorphic_ltr <- polymorphic_tes[polymorphic_tes$te_type %in% c("RLC", "RLG"), ]
 
-# Checking the extent to which the family names match across both datasets
-tian_family_names <- unique(tian_ltr$family)
-my_family_names <- unique(polymorphic_ltr$family)
-
-# sum(my_family_names %in% tian_family_names) / length(my_family_names)
-# [1] 0.7016575
-# sum(tian_family_names %in% my_family_names) / length(tian_family_names)
-# [1] 0.6135266
-
-# Looking at the unmatched names
-# my_family_names[!my_family_names %in% tian_family_names]
-
 # Those that have had names added after their ID can be easily reformatted and matched
 polymorphic_ltr$family <- sub("/.*", "", polymorphic_ltr$family)
-my_family_names <- unique(polymorphic_ltr$family)
 
 # Now let us format this data into a data.frame for plotting
 family_numbers <- table(polymorphic_ltr$family)
-family_numbers <- data.frame(family = names(family_numbers), count = as.numeric(family_numbers))
+family_numbers <- data.frame(family = names(family_numbers), count = as.numeric(family_numbers), stringsAsFactors = FALSE)
+
 # Adding the counts from the Tian et al. 2021 data
 tian_counts <- table(tian_ltr$family)
 family_numbers$tian_count <- as.numeric(tian_counts[family_numbers$family])
 
-
 # We keep only families for which we have at least 10 SV matching
-# and for which there was a matching fmily name in the Tian et al. data
+# and for which there was a matching family name in the Tian et al. data
 family_numbers <- family_numbers[complete.cases(family_numbers) & family_numbers$count >= 10, ]
 
 # Now let us plot
