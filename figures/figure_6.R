@@ -47,10 +47,11 @@ family_numbers <- family_numbers[complete.cases(family_numbers) & family_numbers
 
 # Now let us plot
 figure_6a <- ggplot(family_numbers, aes(x = count, y = tian_count)) +
-	geom_point() +
-	scale_x_log10("Number of SVs per LTR family in this study") +
-	scale_y_log10("Number of occurences of LTR family in Tian et al. (2012)") +
-	theme_bw()
+	geom_point(size = 1) +
+	scale_x_log10("SVs per LTR family in this study") +
+	scale_y_log10("Occurences of LTR family \nin Tian et al. (2012)") +
+	theme_bw() +
+	theme(text = element_text(size = 8))
 
 # Now let us see what we can learn about DNA transposable elements from the ones found by Tian et al. 2021
 tian_dna <- tian_tes[grepl("^DNA", tian_tes$category), ]
@@ -79,72 +80,80 @@ tian_dna_counts <- table(tian_dna$new_category)
 stopifnot(identical(names(my_dna_counts), names(tian_dna_counts)))
 dna_counts <- data.frame(type = names(my_dna_counts),
 			 count = as.numeric(my_dna_counts),
-			 tian_count = as.numeric(tian_dna_counts))
+			 tian_count = as.numeric(tian_dna_counts),
+			 stringsAsFactors = FALSE)
+dna_counts[dna_counts$type == "PIF-Harbinge", "type"] <- "PIF-Harbinger"
 
 # Now plotting these results
 figure_6b <- ggplot(dna_counts, aes(x = count, y = tian_count)) +
-	geom_point() +
-	geom_text(aes(label = type), vjust = 0, hjust = 0, nudge_x = -0.05, nudge_y = -0.08, size = 2) +
-	scale_x_log10("Number of SVs per DNA TE superfamily in this study") +
-	scale_y_log10("Number of occurences of DNA TE superfamily in Tian et al. (2012)") +
+	geom_point(size = 1) +
+	geom_blank(data = data.frame(count = 950, tian_count = 3000)) +
+	geom_text(aes(label = type), vjust = 0, hjust = 0, nudge_x = -0.1, nudge_y = -0.09, size = 1.5) +
+	scale_x_log10("SVs per DNA TE category in this study") +
+	scale_y_log10("Occurences of DNA TE category in\n Tian et al. (2012)") +
 	theme_bw() +
-	theme(text = element_text(size = 10))
+	theme(text = element_text(size = 8),
+	      panel.grid.minor = element_blank())
 
 
 
 # Preparing panel C
 # Reading the data for plotting
 # DEPENDENCY : multiple_alignments/filtered_alignments/tir_similarity_all.txt
-all_means <- read.table("multiple_alignments/filtered_alignments/tir_similarity_all.txt", header = TRUE, stringsAsFactors = FALSE)
-
-ggplot(all_means, aes(x = family, y = similarity, color = superfamily)) +
-	geom_jitter(size = 2, height = 0, width = 0.15) +
-	scale_y_continuous(name = "Proportion of matching nucleotides in terminal repeats") +
-	scale_x_discrete(name = "Name of matching TE entry in database") +
-	scale_color_discrete(name = "Superfamily",
-			     labels = c("DTH" = "PIF-Harbinger (DTH)",
-					"DTM" = "Mutator (DTM)",
-					"DTT" = "Tc1-Mariner (DTT)")) +
-theme_bw() +
-theme(axis.text.x = element_text(angle = 35, 
-				 vjust = 1, 
-				 hjust = 1,
-				 size = 7),
-      legend.position = "top",
-      legend.direction = "horizontal")
+# all_means <- read.table("multiple_alignments/filtered_alignments/tir_similarity_all.txt", header = TRUE, stringsAsFactors = FALSE)
+# 
+# fugre_6c <- ggplot(all_means, aes(x = family, y = similarity, color = superfamily)) +
+#         geom_jitter(size = 2, height = 0, width = 0.15) +
+#         scale_y_continuous(name = "Proportion of matching nucleotides in terminal repeats") +
+#         scale_x_discrete(name = "Name of matching TE entry in database") +
+#         scale_color_discrete(name = "Superfamily",
+#                              labels = c("DTH" = "PIF-Harbinger (DTH)",
+#                                         "DTM" = "Mutator (DTM)",
+#                                         "DTT" = "Tc1-Mariner (DTT)")) +
+# theme_bw() +
+# theme(axis.text.x = element_text(angle = 35, 
+#                                  vjust = 1, 
+#                                  hjust = 1,
+#                                  size = 7),
+#       legend.position = "top",
+#       legend.direction = "horizontal")
+# 
 
 # Reading the data for plotting
-# DEPENDENCY : multiple_alignments/filtered_alignments/tir_similarity_noref.txt
-noref_means <- read.table("multiple_alignments/filtered_alignments/tir_similarity_noref.txt", header = TRUE, stringsAsFactors = FALSE)
+# DEPENDENCY : ../te_analysis/multiple_alignments/filtered_alignments/tir_similarity_noref.txt
+noref_means <- read.table("../te_analysis/multiple_alignments/filtered_alignments/tir_similarity_noref.txt", header = TRUE, stringsAsFactors = FALSE)
 
-ggplot(noref_means, aes(x = family, y = similarity, color = superfamily)) +
-	geom_jitter(size = 2, height = 0, width = 0.15) +
-	scale_y_continuous(name = "Proportion of matching nucleotides in terminal repeats") +
+figure_6c <- ggplot(noref_means, aes(x = family, y = similarity, color = superfamily)) +
+	geom_jitter(size = 1, height = 0, width = 0.15) +
+	scale_y_continuous(name = "Proportion of matching nucleotides\nin terminal repeats") +
 	scale_x_discrete(name = "Name of matching TE entry in database") +
 	scale_color_discrete(name = "Superfamily",
 			     labels = c("DTH" = "PIF-Harbinger (DTH)",
 					"DTM" = "Mutator (DTM)",
 					"DTT" = "Tc1-Mariner (DTT)")) +
 theme_bw() +
-theme(axis.text.x = element_text(angle = 35, 
+theme(text = element_text(size = 8),
+      axis.text.x = element_text(angle = 40, 
 				 vjust = 1, 
 				 hjust = 1,
-				 size = 7),
+				 size = 6),
+      legend.box.spacing = unit(0, "npc"),
       legend.position = "top",
-      legend.direction = "horizontal")
+      legend.direction = "horizontal",
+      panel.grid.minor.y = element_blank())
 
 # Preparing panel D of the figure
-# DEPENDENCY : multiple_alignments/Gm04_2257090_INS_480_analysis/plotting_df.RData
-load("multiple_alignments/Gm04_2257090_INS_480_analysis/plotting_df.RData")
-# DEPENDENCY : multiple_alignments/Gm04_2257090_INS_480_analysis/diverging_snps.RData
-load("multiple_alignments/Gm04_2257090_INS_480_analysis/diverging_snps.RData")
+# DEPENDENCY : ../te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/plotting_df.RData
+load("../te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/plotting_df.RData")
+# DEPENDENCY : ../te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/diverging_snps.RData
+load("../te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/diverging_snps.RData")
 
 # Adding a column for the position of the SNPs to the diverging_snps data.frame
 diverging_snps$snp_pos <- sapply(strsplit(diverging_snps$site, "_"),
 			      function (x) x[1])
 
 # Plotting the ALT allele frequencies within the interval
-ggplot(plotting_df, aes(x = as.factor(site_num), y = as.factor(hap_num), fill = alt_freq)) +
+figure_6d <- ggplot(plotting_df, aes(x = as.factor(site_num), y = as.factor(hap_num), fill = alt_freq)) +
 	geom_tile(height = 0.65) + #, color = "black", size = 0.1) +
 	geom_vline(data = diverging_snps, mapping = aes(xintercept = site_num), linetype = 3, size = 0.2) +
 	scale_x_discrete(name = "",
@@ -154,12 +163,41 @@ ggplot(plotting_df, aes(x = as.factor(site_num), y = as.factor(hap_num), fill = 
 			 labels = c("1" = "absent",
 				    "2" = "present",
 				    "3" = "excised")) +
-	scale_fill_distiller(name = "Alternate allele frequency", 
+	scale_fill_distiller(name = "Alternate allele\nfrequency", 
 			     type = "div", 
 			     palette = "RdBu") +
-	theme_bw() + 
-	theme(legend.direction = "horizontal",
-	      legend.position = "top",
-	      panel.grid = element_blank(),
-	      panel.border = element_blank())
+theme_bw() + 
+theme(text = element_text(size = 8),
+      legend.box.spacing = unit(0, "npc"),
+      legend.direction = "horizontal",
+      legend.position = "top",
+      panel.grid = element_blank(),
+      panel.border = element_blank())
+
+# Now arranging the panels in the single figure and saving it to file
+png("figure_6.png", width = 6, height = 9, units = "in", res = 500)
+grid.newpage()
+# Preparing the 3 x 2 layout for the plots
+pushViewport(viewport(layout = grid.layout(nrow = 3, ncol = 2)))
+# Pushing the viewport for panel A
+pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 1))
+print(figure_6a, vp = viewport(x = 0.02, width = 0.98, just = "left"))
+grid.text("A", x = 0.04, y = 0.95)
+popViewport()
+# Pushing the viewport for panel B
+pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 2))
+print(figure_6b, vp = viewport(x = 0.02, width = 0.98, just = "left"))
+grid.text("B", x = 0.04, y = 0.95)
+popViewport()
+# Pushing the viewport for panel C
+pushViewport(viewport(layout.pos.row = 2))
+print(figure_6c, vp = viewport(x = 0.02, width = 0.98, just = "left"))
+grid.text("C", x = 0.04, y = 0.95)
+popViewport()
+# Pushing the viewport for panel C
+pushViewport(viewport(layout.pos.row = 3))
+print(figure_6d, vp = viewport(x = 0.02, width = 0.98, just = "left"))
+grid.text("D", x = 0.04, y = 0.95)
+popViewport()
+dev.off()
 
