@@ -22,7 +22,7 @@ overlap_data$af_class <- cut(overlap_data$af, seq(0, 1, 0.1))
 
 # Creating panel A of the plot
 figure_5a <- ggplot(overlap_data[overlap_data$ af != 1, ], aes(x = af_class, fill = overlap)) +
-	geom_bar(position = position_dodge()) +
+	geom_bar(width = 0.6, position = position_dodge()) +
 	facet_wrap(~svtype, ncol = 1,
 		   labeller = labeller(svtype = c("DEL" = "Deletions", "INS" = "Insertions"))) +
 	scale_x_discrete(name = "Allele frequency bin") +
