@@ -18,12 +18,14 @@
 	\begin{threeparttable}\small
 
 		\csvreader[head to column names,
-		tabular = lccm{\widthof{in genome}},
-		table head = \toprule Feature & DEL (\%) & INS (\%) & Feature \% in genome\\\midrule,
+		tabular = lm{\widthof{\% in reference}}llcm{\widthof{\% in reference}}ll,
+		table head = \toprule & \multicolumn{3}{c}{Whole genome} & & \multicolumn{3}{c}{Non-repeated genome}\\ \cmidrule{2-4} \cmidrule{6-8}%
+		Feature & \% in reference & DEL (\%) & INS (\%) & & \% in reference & DEL (\%) & INS (\%)\\\midrule,
 		table foot = \bottomrule]%
 		{table_3.csv}%
 		{}%
-		{\feature & \DEL~(\DELprop) & \INS~(\INSprop) & \centering \gprop \arraybackslash}
+		{\feature & \centering \gprop & \DEL~(\DELprop) & \INS~(\INSprop) & &%
+		\centering \nrgprop & \nrDEL~(\nrDELprop) & \nrINS~(\nrINSprop)\arraybackslash}
 
 			   \begin{tablenotes}\footnotesize
 			   \item{ } DEL: deletions, INS: insertions
