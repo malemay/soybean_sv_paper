@@ -18,7 +18,8 @@ library(rtracklayer)
 library(GenomicRanges)
 
 # First we will read the repeat annotation from the repeat GFF file
-repeats <- import("/home/malem420/refgenome/Gmax_v4/Wm82.a4.v1/annotation/Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3")
+# DEPENDENCY : refgenome/Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3
+repeats <- import("../../refgenome/Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3")
 
 # We extract the repeats of interest from the class column
 ref_gypsy <- repeats[grepl("Gypsy", repeats$class)]
@@ -28,17 +29,14 @@ ref_dna   <- repeats[grepl("DNA", repeats$class)]
 
 # Let us look at the number of each of these
 length(ref_gypsy)
-# [1] 74930
 length(ref_copia)
-# [1] 96745
 length(ref_ltr)
-# [1] 171675
 length(ref_dna)
-# [1] 99866
 
 
 # Now we also read the polymorphic elements from the analysis we made earlier
-polymorphic <- read.table("/home/malem420/analyse_nanopore/transposons/polymorphic_tes.tsv", 
+# DEPENDENCY: te_analysis/polymorphic_tes.tsv
+polymorphic <- read.table("../../te_analysis/polymorphic_tes.tsv", 
 			  header = TRUE, stringsAsFactors = FALSE, sep = "\t")
 # Then we coerce it as a GRanges object
 polymorphic <- makeGRangesFromDataFrame(polymorphic, keep.extra.columns = TRUE)
@@ -50,16 +48,13 @@ poly_dna   <- polymorphic[polymorphic$te_group == "DNA"]
 
 # Now let us have a look at their numbers
 length(poly_gypsy)
-# [1] 1622
 length(poly_copia)
-# [1] 2375
 length(poly_ltr)
-# [1] 3997
 length(poly_dna)
-# [1] 397
 
 
 # Now we can read in the genome bins in order to compute the number of TEs that overlap them
+# DEPENDENCY : figures/figure_3_circos/gmax4_3Mb_bins.RData
 load("gmax4_3Mb_bins.RData")
 
 # Let us write a function that takes a GRanges object as input, some bins to count over
@@ -72,12 +67,20 @@ output_track <- function(x, bins, output_file) {
 		    quote = FALSE, sep = "\t")
 }
 
-output_track(ref_copia, gmax4_3Mb_bins, "ref_copia.txt")
-output_track(ref_gypsy, gmax4_3Mb_bins, "ref_gypsy.txt")
+# UTPUT: figures/figure_3_circos/ref_copia.txt
+#output_track(ref_copia, gmax4_3Mb_bins, "ref_copia.txt")
+# UTPUT: figures/figure_3_circos/ref_gypsy.txt
+#output_track(ref_gypsy, gmax4_3Mb_bins, "ref_gypsy.txt")
+# OUTPUT: figures/figure_3_circos/ref_ltr.txt
 output_track(ref_ltr, gmax4_3Mb_bins, "ref_ltr.txt")
+# OUTPUT: figures/figure_3_circos/ref_dna.txt
 output_track(ref_dna, gmax4_3Mb_bins, "ref_dna.txt")
-output_track(poly_copia, gmax4_3Mb_bins, "poly_copia.txt")
-output_track(poly_gypsy, gmax4_3Mb_bins, "poly_gypsy.txt")
+# UTPUT: figures/figure_3_circos/poly_copia.txt
+#output_track(poly_copia, gmax4_3Mb_bins, "poly_copia.txt")
+# UTPUT: figures/figure_3_circos/poly_gypsy.txt
+#output_track(poly_gypsy, gmax4_3Mb_bins, "poly_gypsy.txt")
+# OUTPUT: figures/figure_3_circos/poly_ltr.txt
 output_track(poly_ltr, gmax4_3Mb_bins, "poly_ltr.txt")
+# OUTPUT: figures/figure_3_circos/poly_dna.txt
 output_track(poly_dna, gmax4_3Mb_bins, "poly_dna.txt")
 

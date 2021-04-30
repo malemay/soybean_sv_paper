@@ -8,7 +8,8 @@
 library(Rsamtools)
 
 # Reading in the index
-fai <- scanFaIndex("/home/malem420/refgenome/Gmax_v4/Gmax_508_v4.0_mit_chlp.fasta")
+# DEPENDENCY: refgenome/Gmax_508_v4.0_mit_chlp.fasta
+fai <- scanFaIndex("../../refgenome/Gmax_508_v4.0_mit_chlp.fasta")
 
 # Removing organelles and unanchored genomes
 fai <- fai[grepl("^Gm[0-9]{2}$", seqnames(fai))]
@@ -30,5 +31,6 @@ fai$COLOR <- paste0("chr", 1:20)
 fai <- fai[, c("chr", "sep", "ID", "LABEL", "START", "END", "COLOR")]
 
 # Writing to file
+# OUTPUT: figures/figure_3_circos/Gmax_karyotype.txt
 write.table(fai, file = "Gmax_karyotype.txt", col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
 

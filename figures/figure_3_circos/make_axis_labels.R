@@ -7,28 +7,32 @@
 # within the <plot> blocks of the plots.conf file
 
 # Reading the dataset of reference LTR elements
+# DEPENDENCY: figures/figure_3_circos/ref_ltr.txt
 ref_ltr <- read.table("ref_ltr.txt", header = FALSE, stringsAsFactors = FALSE)
 range(ref_ltr[[4]])
 # [1]   15 1547
 # We can set min and max for this track to 0 and 1600
 
 # Reading the dataset of polymorphic LTR elements
+# DEPENDENCY: figures/figure_3_circos/poly_ltr.txt
 poly_ltr <- read.table("poly_ltr.txt", header = FALSE, stringsAsFactors = FALSE)
 range(poly_ltr[[4]])
-# [1]  0 57
+# [1]  0 60
 # We can set min and max for this track to 0 and 60
 
 # Reading the dataset of reference DNA transposable elements
+# DEPENDENCY: figures/figure_3_circos/ref_dna.txt
 ref_dna <- read.table("ref_dna.txt", header = FALSE, stringsAsFactors = FALSE)
 range(ref_dna[[4]])
 # [1]  12 612
 # We can set min and max for this track to 0 and 650
 
 # Reading the dataset of reference DNA transposable elements
+# DEPENDENCY: figures/figure_3_circos/poly_dna.txt
 poly_dna <- read.table("poly_dna.txt", header = FALSE, stringsAsFactors = FALSE)
 range(poly_dna[[4]])
-# [1] 0 9
-# We can set the min and max for this track to 0 and 10
+# [1]  0 11
+# We can set the min and max for this track to 0 and 12
 
 
 # The ranges will be output to 4 different files:
@@ -54,8 +58,12 @@ write_axis_file <- function(ref_value, poly_value, output_file, dummy_length = 6
 options(scipen = 12)
 
 # Writing each of the files
+# OUTPUT: figures/figure_3_circos/ltr_axis_min.txt
 write_axis_file(ref_value = 0, poly_value = 0, output_file = "ltr_axis_min.txt")
+# OUTPUT: figures/figure_3_circos/ltr_axis_max.txt
 write_axis_file(ref_value = 1600, poly_value = 60, output_file = "ltr_axis_max.txt")
+# OUTPUT: figures/figure_3_circos/dna_axis_min.txt
 write_axis_file(ref_value = 0, poly_value = 0, output_file = "dna_axis_min.txt")
-write_axis_file(ref_value = 650, poly_value = 10, output_file = "dna_axis_max.txt")
+# OUTPUT: figures/figure_3_circos/dna_axis_max.txt
+write_axis_file(ref_value = 650, poly_value = 12, output_file = "dna_axis_max.txt")
 

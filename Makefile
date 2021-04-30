@@ -68,8 +68,46 @@ figures/figure_1.png: figures/figure_1.R
 figures/figure_2.png: figures/figure_2.R
 	cd figures; $(R_FIG_COMMAND) figure_2.R
 
-figures/figure_3_circos/figure_3.png: figures/figure_3_circos/circos.conf # WARNING: the prerequisites here are incomplete
-	cd figures/figure_3_circos/; $(CIRCOS)
+# --- Section for the Circos figure
+CIRCD = figures/figure_3_circos
+EXTDIR = external/circos_config_files
+
+$(CIRCD)/figure_3.png: $(CIRCD)/circos.conf $(EXTDIR)/housekeeping.conf $(EXTDIR)/housekeeping.conf $(CIRCD)/image.conf \
+	$(CIRCD)/Gmax_karyotype.txt $(CIRCD)/dummy_karyotype.txt $(CIRCD)/ideogram.conf $(CIRCD)/ticks.conf $(CIRCD)/plots.conf \
+	$(CIRCD)/highlights.conf $(CIRCD)/genes_heatmap.txt $(CIRCD)/snp_density.txt $(CIRCD)/sv_counts.txt $(CIRCD)/ref_ltr.txt \
+	$(CIRCD)/poly_ltr.txt $(CIRCD)/ref_dna.txt $(CIRCD)/poly_dna.txt $(CIRCD)/legendA.txt $(CIRCD)/legendB.txt $(CIRCD)/legendC.txt \
+	$(CIRCD)/legendD.txt $(CIRCD)/legendE.txt $(CIRCD)/dna_axis_min.txt $(CIRCD)/dna_axis_max.txt $(CIRCD)/ltr_axis_min.txt \
+	$(CIRCD)/ltr_axis_max.txt $(CIRCD)/sv_highlights.txt $(CIRCD)/ltr_highlights.txt $(CIRCD)/dna_highlights.txt
+	cd $(CIRCD); $(CIRCOS)
+
+$(CIRCD)/Gmax_karyotype.txt: $(CIRCD)/make_karyotype_file.R refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	cd $(CIRCD); $(R_RUN_COMMAND) make_karyotype_file.R
+
+$(CIRCD)/genes_heatmap.txt: $(CIRCD)/make_genes_heatmap_data.R $(CIRCD)/gmax4_3Mb_bins.RData
+	cd $(CIRCD); $(R_RUN_COMMAND) make_genes_heatmap_data.R
+
+$(CIRCD)/gmax4_3Mb_bins.RData: $(CIRCD)/make_3Mb_bins.R refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	cd $(CIRCD); $(R_RUN_COMMAND) make_3Mb_bins.R
+
+$(CIRCD)/snp_density.txt: $(CIRCD)/make_snp_track.R structure_analysis/platypus_filtered_snps.vcf $(CIRCD)/gmax4_3Mb_bins.RData
+	cd $(CIRCD); $(R_RUN_COMMAND) make_snp_track.R
+
+$(CIRCD)/sv_counts.txt: $(CIRCD)/make_SV_track.R $(CIRCD)/gmax4_3Mb_bins.RData
+	cd $(CIRCD); $(R_RUN_COMMAND) make_SV_track.R
+
+$(CIRCD)/ref_ltr.txt $(CIRCD)/poly_ltr.txt $(CIRCD)/ref_dna.txt $(CIRCD)/poly_dna.txt: $(CIRCD)/make_te_tracks.R \
+	refgenome/Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3 te_analysis/polymorphic_tes.tsv $(CIRCD)/gmax4_3Mb_bins.RData
+	cd $(CIRCD); $(R_RUN_COMMAND) make_te_tracks.R
+
+$(CIRCD)/dna_axis_min.txt $(CIRCD)/dna_axis_max.txt $(CIRCD)/ltr_axis_min.txt $(CIRCD)/ltr_axis_max.txt: $(CIRCD)/make_axis_labels.R \
+	$(CIRCD)/ref_ltr.txt $(CIRCD)/poly_ltr.txt $(CIRCD)/ref_dna.txt $(CIRCD)/poly_dna.txt
+	cd $(CIRCD); $(R_RUN_COMMAND) make_axis_labels.R
+
+$(CIRCD)/sv_highlights.txt $(CIRCD)/ltr_highlights.txt $(CIRCD)/dna_highlights.txt: $(CIRCD)/make_highlights_tracks.R \
+	$(CIRCD)/sv_counts.txt $(CIRCD)/ref_ltr.txt $(CIRCD)/poly_ltr.txt $(CIRCD)/ref_dna.txt $(CIRCD)/poly_dna.txt
+	cd $(CIRCD); $(R_RUN_COMMAND) make_highlights_tracks.R
+
+# --- End of the Circos figure section
 
 figures/figure_4.png: figures/figure_4.R
 	cd figures; $(R_FIG_COMMAND) figure_4.R
