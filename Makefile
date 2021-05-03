@@ -6,7 +6,7 @@ R_RUN_COMMAND = /prg/R/4.0/bin/R CMD BATCH --no-save --no-restore --no-site-file
 
 # Creating some variables for more readable coding
 SUPFIGURES = figures/figure_s1.png figures/figure_s2.png figures/figure_s3.png figures/figure_s4.png figures/figure_s5.png figures/figure_s6.png figures/figure_s7.png figures/figure_s8.png figures/figure_s9.png figures/figure_s10.png figures/figure_s11.png figures/figure_s12.png figures/figure_s13.png figures/figure_s14.png figures/figure_s15.png figures/figure_s16.png figures/figure_s17.png figures/figure_s18.png figures/figure_s19.png
-SUPTABLES = tables/table_s1.csv tables/table_s2.csv tables/table_s3.csv tables/table_s4.csv
+SUPTABLES = tables/table_s1.csv tables/table_s2.csv tables/table_s3.csv tables/table_s4.csv tables/table_s5.csv tables/table_s6.csv tables/table_s7.csv tables/table_s8.csv
 FIGURES = figures/figure_1.png figures/figure_2.png figures/figure_3_circos/figure_3.png figures/figure_4.png figures/figure_5.png figures/figure_6.png
 TABLES = tables/table_1.png tables/table_2.png tables/table_3.png
 CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
@@ -24,8 +24,14 @@ figures/figure_%.png : figures/figure_%.R
 tables/table_s1.csv tables/table_s2.csv tables/table_s3.csv: tables/formatting_sup_tables.R
 	cd tables; $(R_RUN_COMMAND) formatting_sup_tables.R
 
-tables/table_s4.csv:
+tables/table_s4.csv: tables/table_s4.R
 	cd tables; $(R_RUN_COMMAND) table_s4.R
+
+tables/table_s5.csv: tables/table_s5.R
+	cd tables; $(R_RUN_COMMAND) table_s5.R
+
+tables/table_s6.csv tables/table_s7.csv tables/table_s8.csv: tables/tables_s6_s7_s8.R 
+	cd tables; $(R_RUN_COMMAND) tables_s6_s7_s8.R
 
 supfigures : $(SUPFIGURES)
 

@@ -1,6 +1,7 @@
 #!/prg/R/4.0/bin/R
 
 # Loading the data from the allele frequency randomization analysis
+# DEPENDENCY: gene_analysis/allele_frequency_permutations.RData
 load("../gene_analysis/allele_frequency_permutations.RData")
 
 # Computing the differences between the values for deletions
@@ -40,4 +41,25 @@ for(i in names(insertion_pvalues)) {
 		insertion_pvalues[i] <- sum(insertion_differences[i] < insertion_permutations[[i]]) / nrow(insertion_permutations)
 	}
 }
+
+# Putting all the results into a table for writing to a csv file and preparing the LaTeX table
+output_table <- data.frame(regions = names(deletion_differences),
+			   stringsAsFactors = FALSE)
+
+# Adding the results to the columns
+output_table$del_difference <- deletion_differences[output_table$regions]
+output_table$ins_difference <- insertion_differences[output_table$regions]
+output_table$del_pvalue <- deletion_pvalues[output_table$regions]
+output_table$ins_pvalue <- insertion_pvalues[output_table$regions]
+
+# Formatting the columns for the final table
+output_table$regionfmt <- gsub("_", " - ", output_table$regions)
+output_table$deldiff <- sprintf("%.4f", output_table$del_difference)
+output_table$insdiff <- sprintf("%.4f", output_table$ins_difference)
+output_table$delp <- ifelse(output_table$del_pvalue == 0, "$< 10^{-4}$", sprintf("%.3f", output_table$del_pvalue))
+output_table$insp <- ifelse(output_table$ins_pvalue == 0, "$< 10^{-4}$", sprintf("%.3f", output_table$ins_pvalue))
+
+# Outputting the table to file
+# OUTPUT: tables/table_s5.csv
+write.table(output_table, file = "table_s5.csv", col.names = TRUE, row.names = FALSE, quote = FALSE, sep = ",")
 
