@@ -18,14 +18,14 @@
 	\begin{threeparttable}\small
 
 		\csvreader[head to column names,
-		tabular = lm{\widthof{\% in reference}}llcm{\widthof{\% in reference}}ll,
-		table head = \toprule & \multicolumn{3}{c}{Whole genome} & & \multicolumn{3}{c}{Non-repeated genome}\\ \cmidrule{2-4} \cmidrule{6-8}%
-		Feature & \% in reference & DEL (\%) & INS (\%) & & \% in reference & DEL (\%) & INS (\%)\\\midrule,
+		tabular = lm{\widthof{\% in reference}}r@{\hskip 2pt}lr@{\hskip 2pt}lcm{\widthof{\% in reference}}r@{\hskip 2pt}lr@{\hskip 2pt}l,
+		table head = \toprule & \multicolumn{5}{c}{Whole genome} & & \multicolumn{5}{c}{Non-repeated genome}\\ \cmidrule{2-6} \cmidrule{8-12}%
+		Feature & \% in reference & DEL & (\%) & INS & (\%) & & \% in reference & DEL & (\%) & INS & (\%)\\\midrule,
 		table foot = \bottomrule]%
 		{table_3.csv}%
 		{}%
-		{\feature & \centering \gprop & \DEL~(\DELprop) & \INS~(\INSprop) & &%
-		\centering \nrgprop & \nrDEL~(\nrDELprop) & \nrINS~(\nrINSprop)\arraybackslash}
+		{\feature & \centering \gprop & \DEL & (\DELprop) & \INS & (\INSprop) & &%
+		\centering \nrgprop & \nrDEL & (\nrDELprop) & \nrINS & (\nrINSprop)\arraybackslash}
 
 			   \begin{tablenotes}\footnotesize
 			   \item{ } DEL: deletions, INS: insertions
