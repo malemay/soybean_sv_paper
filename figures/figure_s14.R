@@ -27,17 +27,12 @@ inv_plot_data <- inv_plot_data[inv_plot_data$size_class == "all", ]
 # Defining a common theme for both plots
 common_theme <- theme_bw() + 
 	theme(plot.title = element_text(size = 12),
-	      panel.grid.minor = element_blank(),
-	      axis.title = element_blank())
+	      panel.grid.minor = element_blank())
 
 # Defining common x- and y-axes
-x_axis <- scale_x_continuous(name = "Sensitivity",
-			     limits = c(0, 0.42), 
-			     breaks = seq(0, 0.4, 0.1))
+x_axis <- scale_x_continuous(name = "Sensitivity")
 
-y_axis <- scale_y_continuous(name = "Precision",
-			     limits = c(0, 1),
-			     breaks = seq(0, 1, 0.2))
+y_axis <- scale_y_continuous(name = "Precision")
 
 # Preparing the plot for duplications
 duplications_plot <- 
@@ -49,9 +44,7 @@ duplications_plot <-
 	y_axis +
 	guides(color = FALSE) +
 	ggtitle("Duplications (all sizes)") +
-	common_theme +
-	theme(axis.text.x = element_blank(),
-	      axis.ticks.x = element_blank())
+	common_theme
 
 # Now preparing the plot for inversions
 inversions_plot <- 
@@ -70,18 +63,14 @@ inversions_plot <-
 png("figure_s14.png", width = 3, height = 6, units = "in", res = 500)
 grid.newpage()
 # Locating the subplots in the figure
-pushViewport(viewport(x = 0.05, y = 0.03, just = c("left", "bottom"), width = 0.95, height = 0.97))
+pushViewport(viewport(x = 0.05, just = "left", width = 0.95))
 pushViewport(viewport(layout = grid.layout(2, 1)))
-print(duplications_plot, vp = viewport(layout.pos.row = 1, layout.pos.col = 1))
-print(inversions_plot, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
-
-# Adding axis text
-popViewport(2)
-pushViewport(viewport(x = 0, y = 0.03, just = c("left", "bottom"), width = 0.05, height = 0.97))
-grid.text("Precision", rot = 90)
-popViewport()
-pushViewport(viewport(x = 0.05, y = 0, just = c("left", "bottom"), width = 0.95, height = 0.03))
-grid.text("Sensitivity")
-
+dup_vp <- viewport(layout.pos.row = 1, layout.pos.col = 1)
+print(duplications_plot, vp = dup_vp)
+inv_vp <- viewport(layout.pos.row = 2, layout.pos.col = 1)
+print(inversions_plot, vp = inv_vp)
+# Add the panel labels A and B
+grid.text("A", x = 0, y = 0.95, gp = gpar(fontsize = 20), vp = dup_vp)
+grid.text("B", x = 0, y = 0.95, gp = gpar(fontsize = 20), vp = inv_vp)
 dev.off()
 
