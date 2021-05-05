@@ -102,7 +102,5 @@ print(insertions_plot, vp = ins_vp)
 # Adding the A and B panel labels
 grid.text("A", x = 0, y = 0.97, gp = gpar(fontsize = 24), vp = del_vp)
 grid.text("B", x = 0, y = 0.97, gp = gpar(fontsize = 24), vp = ins_vp)
-
-# Adding axis text
 dev.off()
 
