@@ -506,17 +506,17 @@ The SV refinement pipeline described here is available from \textcolor{red}{\url
 
 \clearpage%}}}
 
-% Figure S1 \caption[Illumina deletion and insertion benchmarks in non-repeat regions]{{{{
+% Figure S1 \caption[Sensitivity and precision of Illumina deletion and insertion genotyping in non-repeat regions]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s1.png
 	\includegraphics[width = 5in]{figure_s1}
 
-	\caption[Illumina deletion and insertion benchmarks in non-repeat regions]{
-		Benchmarking of deletions and insertions discovered from the Illumina data in non-repeat regions. 
+	\caption[Sensitivity and precision of Illumina deletion and insertion genotyping in non-repeat regions]{
+		Genotyping sensitivity and precision of (A) deletions and (B) insertions discovered from the Illumina data in non-repeat regions. 
 		Only SVs with less than 20\% overlap to regions annotated as repeats were used for these benchmarks. 
 		Each line and color represents one of 17 samples. 
-		Different points were obtained for a given sample by adjusting the minimum number of supporting reads required for a Paragraph call to be considered. 
-		The asterisks indicate a minimum number of supporting reads of 2.
+		The points correspond to different filtering thresholds on the minimum number of Illumina reads required to support a genotype call.
+		The asterisks indicate a minimum number of supporting reads of 2; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 		Note that no results were available for deletions larger than 10 kb because these all overlapped repeat regions.
 	}
 
@@ -526,16 +526,16 @@ The SV refinement pipeline described here is available from \textcolor{red}{\url
 
 \clearpage%}}}
 
-% Figure S2 \caption[Illumina duplication and inversion benchmarks]{{{{
+% Figure S2 \caption[Sensitivity and precision of Illumina duplication and inversion genotyping]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s2.png
 	\includegraphics[width = 3.5in]{figure_s2}
-
-	\caption[Illumina duplication and inversion benchmarks]{
-		Benchmarking of duplications and inversions discovered from the Illumina data. 
+	
+	\caption[Sensitivity and precision of Illumina duplication and inversion genotyping]{
+		Genotyping sensitivity and precision of (A) duplications and (B) inversions discovered from the Illumina data.
 		Each line and color represents one of 17 samples. 
-		Different points were obtained for a given sample by adjusting the minimum number of supporting reads required for a Paragraph call to be considered. 
-		The asterisks indicate a minimum number of supporting reads of 2.
+		The points correspond to different filtering thresholds on the minimum number of Illumina reads required to support a genotype call.
+		The asterisks indicate a minimum number of supporting reads of 2; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 	}
 
 	\label{fig_s2}
@@ -544,17 +544,17 @@ The SV refinement pipeline described here is available from \textcolor{red}{\url
 
 \clearpage%}}}
 
-% Figure S3 \caption[Illumina duplication and inversion benchmarks in non-repeat regions]{{{{
+% Figure S3 \caption[Sensitivity and precision of Illumina duplication and inversion genotyping in non-repeat regions]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s3.png
 	\includegraphics[width = 3.5in]{figure_s3}
 
-	\caption[Illumina duplication and inversion benchmarks in non-repeat regions]{
-		Benchmarking of duplications and inversions discovered from the Illumina data in non-repeat regions. 
+	\caption[Sensitivity and precision of Illumina duplication and inversion genotyping in non-repeat regions]{
+		Genotyping sensitivity and precision of (A) duplications and (B) inversions discovered from the Illumina data in non-repeat regions.
 		Only SVs with less than 20\% overlap to regions annotated as repeats were used for these benchmarks. 
 		Each line and color represents one of 17 samples. 
-		Different points were obtained for a given sample by adjusting the minimum number of supporting reads required for a Paragraph call to be considered. 
-		The asterisks indicate a minimum number of supporting reads of 2.
+		The points correspond to different filtering thresholds on the minimum number of Illumina reads required to support a genotype call.
+		The asterisks indicate a minimum number of supporting reads of 2; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 	}
 
 	\label{fig_s3}
@@ -584,10 +584,10 @@ The SV refinement pipeline described here is available from \textcolor{red}{\url
 	\includegraphics[width = 5in]{figure_s5}
 
 	\caption[Effect of ALT allele count on genotyping performance of Illumina deletions and insertions]{
-		Effect of filtering variants for minimum number of ALT alleles in homozygous genotype calls (AC\_Hom) on the performance of deletion and insertion genotyping of SVs discovered from Illumina data.
+		Effect of filtering variants for minimum number of ALT alleles in homozygous genotype calls (AC\_Hom) on the genotyping performance of (A) deletions and (B) insertions discovered from Illumina data.
 		Each line and color represents a different sample.
-		The curve for a given sample was obtained by varying the AC\_Hom threshold for a variant to be considered for benchmarking.
-		The asterisks mark an AC\_Hom threshold of 4 ALT alleles in homozygous genotype calls in the whole population of 102 samples.
+		The curve for a given sample was obtained by varying the AC\_Hom filtering threshold for a variant to be considered for benchmarking.
+		The asterisks mark an AC\_Hom threshold of 4 ALT alleles in homozygous genotype calls in the whole population of 102 samples; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 	}
 
 	\label{fig_s5}
@@ -602,10 +602,10 @@ The SV refinement pipeline described here is available from \textcolor{red}{\url
 	\includegraphics[width = 3.5in]{figure_s6}
 
 	\caption[Effect of ALT allele count on genotyping performance of Illumina duplications and inversions]{
-		Effect of filtering variants for minimum number of ALT alleles in homozygous genotype calls (AC\_Hom) on the performance of duplication and inversion genotyping of SVs discovered from Illumina data.
+		Effect of filtering variants for minimum number of ALT alleles in homozygous genotype calls (AC\_Hom) on the genotyping performance of (A) duplications and (B) inversions discovered from Illumina data.
 		Each line and color represents a different sample.
-		The curve for a given sample was obtained by varying the AC\_Hom threshold for a variant to be considered for benchmarking.
-		The asterisks mark an AC\_Hom threshold of 6 (for duplications) or 10 (for inversions) ALT alleles in homozygous genotype calls in the whole population of 102 samples.
+		The curve for a given sample was obtained by varying the AC\_Hom filtering threshold for a variant to be considered for benchmarking.
+		The asterisks mark an AC\_Hom threshold of 6 (for duplications) or 10 (for inversions) ALT alleles in homozygous genotype calls in the whole population of 102 samples; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 	}
 
 	\label{fig_s6}
@@ -620,10 +620,10 @@ The SV refinement pipeline described here is available from \textcolor{red}{\url
 	\includegraphics[width = 5in]{figure_s7}
 
 	\caption[Effect of the number of supporting calling programs on genotyping performance of Illumina deletions and insertions]{
-		Effect of filtering variants for minimum number of supporting calling programs on the performance of deletion and insertion genotyping of SVs discovered from Illumina data.
+		Effect of filtering variants for minimum number of supporting calling programs on the genotyping performance of (A) deletions and (B) insertions discovered from Illumina data.
 		Each line and color represents a different sample.
 		The curve for a given sample was obtained by varying the minimum threshold of number of supporting calling programs for a variant to be considered for benchmarking.
-		The asterisks mark a minimum threshold of one supporting calling program for a variant to be considered.
+		The asterisks mark a minimum threshold of one supporting calling program for a variant to be considered; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 		}
 
 	\label{fig_s7}
@@ -704,17 +704,17 @@ The SV refinement pipeline described here is available from \textcolor{red}{\url
 
 \clearpage%}}}
 
-% Figure S12 \caption[Oxford Nanopore deletion and insertion benchmarks in non-repeat regions]{{{{
+% Figure S12 \caption[Sensitivity and precision of Oxford Nanopore deletion and insertion genotyping in non-repeat regions]{{{{
 \begin{lsfigure}
 		% DEPENDENCY : figure_s12.png
 		\includegraphics[width = 9.5in]{figure_s12}
 
-		\caption[Oxford Nanopore deletion and insertion benchmarks in non-repeat regions]{
-			Benchmarking of (A) deletions and (B) insertions discovered from the Oxford Nanopore data in non-repeat regions. 
+		\caption[Sensitivity and precision of Oxford Nanopore deletion and insertion genotyping in non-repeat regions]{
+			Genotyping sensitivity and precision of (A) deletions and (B) insertions discovered from the Oxford Nanopore data in non-repeat regions. 
 			Only SVs with less than 20\% overlap to regions annotated as repeats were used for these benchmarks. 
 			Each line and color represents one of 17 samples. 
-			Different points were obtained for a given sample by adjusting the minimum number of supporting reads required for a Paragraph call to be considered. 
-			The asterisks indicate a minimum number of supporting reads of 2.
+		The points correspond to different filtering thresholds on the minimum number of Illumina reads required to support a genotype call.
+			The asterisks indicate a minimum number of supporting reads of 2; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 			Note that no results were available for deletions larger than 10 kb because these all overlapped repeat regions.
 	}
 
@@ -723,16 +723,16 @@ The SV refinement pipeline described here is available from \textcolor{red}{\url
 
 \clearpage%}}}
 
-% Figure S13 \caption[Oxford Nanopore duplication and inversion benchmarks]{{{{
+% Figure S13 \caption[Sensitivity and precision of Oxford Nanopore duplication and inversion genotyping]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s13.png
 	\includegraphics[width = 3.5in]{figure_s13}
 
-	\caption[Oxford Nanopore duplication and inversion benchmarks]{
-		Benchmarking of duplications and inversions discovered from the Oxford Nanopore data. 
+	\caption[Sensitivity and precision of Oxford Nanopore duplication and inversion genotyping]{
+		Genotyping sensitivity and precision of (A) duplications and (B) inversions discovered from the Oxford Nanopore data. 
 		Each line and color represents one of 17 samples. 
-		Different points were obtained for a given sample by adjusting the minimum number of supporting reads required for a Paragraph call to be considered. 
-		The asterisks indicate a minimum number of supporting reads of 2.
+		The points correspond to different filtering thresholds on the minimum number of Illumina reads required to support a genotype call.
+		The asterisks indicate a minimum number of supporting reads of 2; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 	}
 
 	\label{fig_s13}
@@ -741,17 +741,17 @@ The SV refinement pipeline described here is available from \textcolor{red}{\url
 
 \clearpage%}}}
 
-% Figure S14 \caption[Oxford Nanopore duplication and inversion benchmarks in non-repeat regions]{{{{
+% Figure S14 \caption[Sensitivity and precision of Oxford Nanopore duplication and inversion genotyping in non-repeat regions]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s14.png
 	\includegraphics[width = 3.5in]{figure_s14}
 
-	\caption[Oxford Nanopore duplication and inversion benchmarks in non-repeat regions]{
-		Benchmarking of duplications and inversions discovered from the Oxford Nanopore data in non-repeat regions.
+	\caption[Sensitivity and precision of Oxford Nanopore duplication and inversion genotyping in non-repeat regions]{
+		Genotyping sensitivity and precision of (A) duplications and (B) inversions discovered from the Oxford Nanopore data in non-repeat regions.
 		Only SVs with less than 20\% overlap to regions annotated as repeats were used for these benchmarks. 
 		Each line and color represents one of 17 samples. 
-		Different points were obtained for a given sample by adjusting the minimum number of supporting reads required for a Paragraph call to be considered. 
-		The asterisks indicate a minimum number of supporting reads of 2.
+		The points correspond to different filtering thresholds on the minimum number of Illumina reads required to support a genotype call.
+		The asterisks indicate a minimum number of supporting reads of 2; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 	}
 
 	\label{fig_s14}
@@ -760,16 +760,16 @@ The SV refinement pipeline described here is available from \textcolor{red}{\url
 
 \clearpage%}}}
 
-% Figure S15  \caption[Joint Illumina/Oxford Nanopore deletion and insertion benchmarks]{{{{
+% Figure S15  \caption[Sensitivity and precision of joint Illumina/Oxford Nanopore deletion and insertion genotyping]{{{{
 \begin{lsfigure}
 	% DEPENDENCY : figure_s15.png
 	\includegraphics[width = 9.5in]{figure_s15}
 
-	\caption[Joint Illumina/Oxford Nanopore deletion and insertion benchmarks]{
-		Benchmarking of (A) deletions and (B) insertions in the merged dataset of SVs discovered from the Illumina and Oxford Nanopore data.
+	\caption[Sensitivity and precision of joint Illumina/Oxford Nanopore deletion and insertion genotyping]{
+		Genotyping sensitivity and precision of (A) deletions and (B) insertions in the merged dataset of SVs discovered from the Illumina and Oxford Nanopore data.
 			Each line and color represents one of 17 samples. 
-			Different points were obtained for a given sample by adjusting the minimum number of supporting reads required for a Paragraph call to be considered. 
-			The asterisks indicate a minimum number of supporting reads of 2.
+			The points correspond to different filtering thresholds on the minimum number of Illumina reads required to support a genotype call.
+			The asterisks indicate a minimum number of supporting reads of 2; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 	}
 
 	\label{fig_s15}
@@ -777,17 +777,17 @@ The SV refinement pipeline described here is available from \textcolor{red}{\url
 
 \clearpage%}}}
 
-% Figure S16 \caption[Joint Illumina/Oxford Nanopore deletion and insertion benchmarks in non-repeat regions]{{{{
+% Figure S16 \caption[Sensitivity and precision of joint Illumina/Oxford Nanopore deletion and insertion genotyping in non-repeat regions]{{{{
 \begin{lsfigure}
 	% DEPENDENCY : figure_s16.png
 	\includegraphics[width = 9.5in]{figure_s16}
 
-	\caption[Joint Illumina/Oxford Nanopore deletion and insertion benchmarks in non-repeat regions]{
-		Benchmarking of (A) deletions and (B) insertions in non-repeat regions in the merged dataset of SVs discovered from the Illumina and Oxford Nanopore data. 
+	\caption[Sensitivity and precision of joint Illumina/Oxford Nanopore deletion and insertion genotyping in non-repeat regions]{
+		Genotyping sensitivity and precision of (A) deletions and (B) insertions in non-repeat regions in the merged dataset of SVs discovered from the Illumina and Oxford Nanopore data. 
 		Only SVs with less than 20\% overlap to regions annotated as repeats were used for these benchmarks. 
 		Each line and color represents one of 17 samples. 
-		Different points were obtained for a given sample by adjusting the minimum number of supporting reads required for a Paragraph call to be considered. 
-		The asterisks indicate a minimum number of supporting reads of 2.
+		The points correspond to different filtering thresholds on the minimum number of Illumina reads required to support a genotype call.
+		The asterisks indicate a minimum number of supporting reads of 2; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 		Note that no results were available for deletions larger than 10 kb because these all overlapped repeat regions.
 	}
 
@@ -796,12 +796,16 @@ The SV refinement pipeline described here is available from \textcolor{red}{\url
 
 \clearpage%}}}
 
-% Figure S17 \caption{Genotyping benchmark of raw and refined Oxford Nanopore SVs for four samples using BayesTyper}{{{
+% Figure S17 \caption[Genotyping benchmark of raw and refined Oxford Nanopore SVs for four samples using BayesTyper]{{{
 \begin{lsfigure}
 	% DEPENDENCY : figure_s17.png
 	\includegraphics[width = 9.5in]{figure_s17}
 
-	\caption{Genotyping benchmark of raw and refined Oxford Nanopore SVs for four samples using BayesTyper.}
+	\caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using BayesTyper]{
+		Genotyping sensitivity and precision of raw and refined (A) deletions and (B) insertions discovered by Sniffles on the Oxford Nanopore data for four samples when using BayesTyper as a genotyper.
+		Each line represents data for a single sample whose SV breakpoints have either been refined (refined SVs) or not (raw SVs).
+		The points correspond to different filtering thresholds on the genotype quality (GQ) required to support a genotype call.
+	}
 
 	\label{fig_s17}
 
@@ -809,12 +813,16 @@ The SV refinement pipeline described here is available from \textcolor{red}{\url
 
 \clearpage%}}}
 
-% Figure S18 \caption{Genotyping benchmark of raw and refined Oxford Nanopore SVs for four samples using vg}{{{
+% Figure S18 \caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using vg]{{{{
 \begin{lsfigure}
 	% DEPENDENCY : figure_s18.png
 	\includegraphics[width = 9.5in]{figure_s18}
 
-	\caption{Genotyping benchmark of raw and refined Oxford Nanopore SVs for four samples using vg}
+	\caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using vg]{
+		Genotyping sensitivity and precision of raw and refined (A) deletions and (B) insertions discovered by Sniffles on the Oxford Nanopore data for four samples when using vg as a genotyper.
+		Each line represents data for a single sample whose SV breakpoints have either been refined (refined SVs) or not (raw SVs).
+		The points correspond to different filtering thresholds on the genotype quality (GQ) required to support a genotype call.
+	}
 
 	\label{fig_s18}
 
@@ -822,12 +830,16 @@ The SV refinement pipeline described here is available from \textcolor{red}{\url
 
 \clearpage%}}}
 
-% Figure S19 \caption{Genotyping benchmark of raw and refined Oxford Nanopore SVs for four samples using Paragraph}{{{
+% Figure S19 \caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using Paragraph]{{{
 \begin{lsfigure}
 	% DEPENDENCY : figure_s19.png
 	\includegraphics[width = 9.5in]{figure_s19}
 
-	\caption{Genotyping benchmark of raw and refined Oxford Nanopore SVs for four samples using Paragraph}
+	\caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using Paragraph]{
+		Genotyping sensitivity and precision of raw and refined (A) deletions and (B) insertions discovered by Sniffles on the Oxford Nanopore data for four samples when using Paragraph as a genotyper.
+		Each line represents data for a single sample whose SV breakpoints have either been refined (refined SVs) or not (raw SVs).
+		The points correspond to different filtering thresholds on the minimum number of Illumina reads required to support a genotype call.
+	}
 
 	\label{fig_s19}
 
