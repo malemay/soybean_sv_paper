@@ -41,22 +41,16 @@ ins_plot_data$size_class <- droplevels(ins_plot_data$size_class)
 # Defining a common theme for both plots
 common_theme <- theme_bw() + 
 	theme(panel.grid.minor = element_blank(),
-	      axis.title = element_blank(),
 	      legend.text = element_text(size = 8),
 	      legend.key.height = unit(0.02, "npc"),
 	      legend.position = "top",
 	      legend.direction = "horizontal")
 
-# Defining common x- and y-axes
-x_axis <- scale_x_continuous(name = "Sensitivity",
-			     limits = c(-0.02, 0.75), 
-			     expand = c(-0.02, 0.02),
-			     breaks = seq(0, 0.7, 0.1))
-
+# Defining a common y-axis
 y_axis <- scale_y_continuous(name = "Precision",
 			     limits = c(0.4, 1),
 			     expand = c(-0.02, 0.02),
-			     breaks = seq(0.4, 1, 0.1))
+			     breaks = seq(0.4, 1, 0.2))
 
 # Preparing the plot for deletions
 deletions_plot <- 
@@ -70,14 +64,14 @@ deletions_plot <-
 					 "[100-1000[" = "[100-1,000 bp[ deletions",
 					 "[1000-10000[" = "[1,000-10,000 bp[ deletions",
 					 "[10000+[" = "[10,000+ bp[ deletions"))) +
-
-	x_axis +
+	scale_x_continuous(name = "Sensitivity",
+			   limits = c(-0.02, 0.82), 
+			   expand = c(-0.02, 0.02),
+			   breaks = seq(0, 0.8, 0.2)) +
 	y_axis +
 	guides(color = FALSE) +
 	common_theme +
-	theme(axis.text.x = element_blank(),
-	      axis.ticks.x = element_blank(),
-	      panel.spacing.y = unit(0.03, "npc"))
+	theme(panel.spacing.y = unit(0.03, "npc"))
 
 # Now preparing the plot for insertions
 insertions_plot <- 
@@ -89,7 +83,7 @@ insertions_plot <-
 		   labeller = labeller(size_class = 
 				       c("[50-100[" = "[50-100 bp[ insertions",
 					 "[100-1000[" = "[100-1,000 bp[ insertions"))) +
-	x_axis +
+	scale_x_continuous(name = "Sensitivity") +
 	y_axis +
 	guides(color = FALSE) +
 	common_theme
@@ -99,18 +93,16 @@ insertions_plot <-
 png("figure_1.png", width = 6, height = 9, units = "in", res = 500)
 grid.newpage()
 # Locating the subplots in the figure
-pushViewport(viewport(x = 0.05, y = 0.03, just = c("left", "bottom"), width = 0.95, height = 0.97))
+pushViewport(viewport(x = 0.03, width = 0.97, just = "left"))
 pushViewport(viewport(layout = grid.layout(2, 1, heights = c(unit(65, "null"), unit(35, "null")))))
-print(deletions_plot, vp = viewport(layout.pos.row = 1, layout.pos.col = 1))
-print(insertions_plot, vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
+del_vp <- viewport(layout.pos.row = 1, layout.pos.col = 1)
+print(deletions_plot, vp = del_vp)
+ins_vp <- viewport(layout.pos.row = 2, layout.pos.col = 1)
+print(insertions_plot, vp = ins_vp)
+# Adding the A and B panel labels
+grid.text("A", x = 0, y = 0.97, gp = gpar(fontsize = 24), vp = del_vp)
+grid.text("B", x = 0, y = 0.97, gp = gpar(fontsize = 24), vp = ins_vp)
 
 # Adding axis text
-popViewport(2)
-pushViewport(viewport(x = 0, y = 0.03, just = c("left", "bottom"), width = 0.05, height = 0.97))
-grid.text("Precision", rot = 90)
-popViewport()
-pushViewport(viewport(x = 0.05, y = 0, just = c("left", "bottom"), width = 0.95, height = 0.03))
-grid.text("Sensitivity")
-
 dev.off()
 
