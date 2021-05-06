@@ -241,6 +241,115 @@ The SV refinement pipeline described here is available from \textcolor{red}{\url
 
 \clearpage
 
+\section{Detailed methods on the DNA transposable element analysis}
+
+\subsection{Description of the analysis pipeline}
+
+To study potential DNA transposable element (TE) activity in more detail, we extracted the SVs corresponding to all DNA TEs in the SoyTEdb database \citep{soytedb} that were matched by at least 3 SVs. 
+This represented 51 TEs in the database and 237 individual SVs.
+
+For each of these SVs, we extracted the Oxford Nanopore reads at the location of the SV and assembled them individually for each sample following a method similar to that used for the breakpoint refinement pipeline.
+Briefly, reads overlapping positions ± 200 bp from the SV were used for assembly with wtdbg2 and polishing with wtpoa\_cns after re-aligning the reads to the assembly with minimap2.
+
+The assemblies were then used for multiple alignment in order to identify TE boundaries as well as target site duplication (TSD) and terminal inverted repeat (TIR) sequences.
+We used the \texttt{PairwiseAlignment} function from the Bioconductor Biostrings package \citep{biostrings} to individually align all assemblies to a section of the reference genome ±~500 bp from the putative TE insertion site.
+This pairwise alignment was only done in order to extract the part of the assemblies that was of interest.
+
+We then used the aligned sequences obtained from the pairwise alignment as input for multiple alignment.
+Multiple alignment was done with the MAFFT \citep{mafft} suite of tools using the command \texttt{ginsi --reorder} which performs multiple global alignment.
+
+We processed multiple alignments so as to only keep high-quality alignments that showed obvious TE insertion polymorphism.
+First, we manually checked all alignments and only kept those that showed an insertion/deletion polymorphism of the expected length.
+Second, for a given multiple alignment, several of the sequences often showed very poor similarity to the reference genome, possibly because of issues with their assembly.
+We removed such sequences by filtering out those that had less than 75\% percent identity with the reference in the first and last 500 bp of the alignment (the nucleotides flanking the insertion/deletion site).
+Typically, only short TEs ($<$ 500 bp, essentially MITEs) remained following these filtering steps because the longer ones were too challenging to assemble and align properly.
+
+A total of 72 SV events representing 25 individual entries in the TE database remained following filtering.
+The sequences that remained following these filtering steps typically differed only in the presence or absence of the TE sequence.
+Sequences that contained the TE sequence could be analyzed further to identify TSD and TIR sequences from the TE insertion sequence.
+Seventy (70) out of the 72 SVs had at least one sequence bearing the insertion after filtering.
+In total, 301 sequences bearing the insertion could be queried for TSD and TIR sequences.
+Thirty-one (31) of these 301 were extracted from insertions that are present in the reference, whereas the 270 remaining insertion sequences were extracted from the local assemblies of the Oxford Nanopore reads.
+
+We analyzed the insertion sequences using the GenericRepeatFinder software \citep{grf} with the following command:
+
+\texttt{grf-main -i input\_fasta -o . -c 1 -p 30 -s 10 --seed\_mismatch 8 --min\_tr 12}
+
+The parameters \texttt{--min\_space} and \texttt{--max\_space} were adjusted to be -60 and +20 relative to the expected SV size, respectively. 
+The minimum (\texttt{--min\_tsd}) and maximum (\texttt{--max\_tsd}) TSD length were set to 2 for the DTT superfamily and 3 for the DTH superfamily, while the values were 5 and 10, respectively, for the DTM superfamily. 
+We used relatively relaxed parameters for seed matching because the presence of TSD and TIR sequences was expected and we wanted to maximize the probability of finding them.
+
+We parsed the output of GenericRepeatFinder to get the location and sequences of the TSD and TIR.
+In many cases, several potential TSD/TIR sequences could be identified from a given input sequence. 
+For DTT TEs, only entries with a TSD matching the expected TA sequence were kept. 
+For DTH TEs, only entries with a TSD matching either TAA or TTA were kept. 
+Despite those filters, several TSD/TIR candidates often remained for a given sample.
+Therefore, the candidates were ranked following an automated procedure according to their proximity to the expected insertion location and similarity to expected insertion size.
+For TEs in the DTM family, the highest priority was given to longer TSDs.
+For every sample, we considered the TSD/TIR entry with the highest priority as the only match for that sample.
+
+We annotated the multiple alignments with the putative TSD/TIR sequences and visually checked for consistency between these sequences and the location of the insertion.
+Our analysis relied entirely on the automatically identified TSD/TIR sequences; samples for which the best matching TSD/TIR sequence was not consistent were discarded and were not analyzed further.
+In total, we identified high-quality TSD/TIR sequences for 148 insertions representing 45 individual SVs.
+For each of the TIR sequences identified, we computed the percentage of matching nucleotides between the two inverted repeats and averaged them over all insertion sequences for a given SV.
+
+Some of the TIR sequences were identified directly from the reference sequence and may thus have been of higher quality than the error-prone assemblies generated from the Oxford Nanopore data.
+Therefore, we only show the results obtained from the de novo-assembled sequences in figure 6c of the main text.
+This represents 43 individual SVs for which 130 TIR sequences were used to compute the percentage of matching nucleotides.
+
+\subsection{Detailed analysis of a 480-bp Stowaway MITE insertion}
+
+A closer look at the multiple alignments revealed that in almost all cases, the sequences without the insertion presented a single occurence of the TSD sequence.
+This observation is consistent with a scenario in which the sequence without the insertion corresponds to a sequence in which the TE never inserted, rather than a sequence from which the TE was excised.
+In a single case however, that of a 480-bp insertion of a Tc1-Mariner (DTT) element (actually a Stowaway MITE) at position 2,257,090 of chromosome Gm04, visual analysis of the multiple alignment revealed that three different alleles were segregating at the insertion site:
+
+\begin{itemize}
+	\item The reference allele (no insertion at the target position)
+	\item A 480-bp insertion that corresponds to the TE insertion
+	\item A 6-bp insertion of nucleotides TACGAG 
+\end{itemize}
+
+This last allele is very likely to have resulted from the excision of the TE insertion.
+Indeed, the TA part of the insertion corresponds to the expected TSD sequence for a Tc1-Mariner element.
+The remaining CGAG nucleotides would likely have been inserted during the repair of the double-strand break following excision of the TE.
+Interestingly, this insertion is by far the one for which the similarity between the two TIR sequences was highest among the ones studied, at 96.3\%.
+
+To investigate this question further, we analysed the SNP patterns surrounding the insertion site.
+If the TACGAG indeed resulted from the excision of the TE, then the haplotypes corresponding to the TE insertion and the 6-bp insertion should be more similar to each other than to the reference sequence, as the excision would have occurred within the TE insertion genetic background.
+
+The SNPs with FILTER = PASS among those discovered by Platypus \citep{platypus} were extracted from the VCF file of the 102 samples sequenced by Illumina to carry this analysis.
+The analysis of linkage disequilibrium (LD) using PLINK \citep{plink} in a 200-kb window surrounding the insertion location at Gm04:2,257,090 revealed a high-LD block spanning positions 2,220,398 to 2,259,326 that included the location of the insertion.
+The SNPs in that 39-kb window were therefore extracted from the Platypus VCF file and used for downstream analyses.
+
+By combining the information obtained from Platypus and SV genotyping with Paragraph, we were able to classify samples into three groups depending on their status at the TE insertion locus:
+
+\begin{itemize}
+	\item absent: Absence of the TE (reference allele)
+	\item present: Presence of the TE insertion (as genotyped by Paragraph)
+	\item excised: Presence of the 6-bp insertion putatively left by TE excision (as genotyped by Platypus)
+\end{itemize}
+
+The number of samples in each group was as follows:
+
+\begin{itemize}
+	\item absent: 71 
+	\item present: 9
+	\item excised: 14
+\end{itemize}
+
+All genotype calls for the TE insertion were homozygous and were therefore easy to classify as "present" when homozygous for the alternate allele.
+For the 6-bp insertion, however, some genotype calls were heterozygous. 
+In all such cases, visual analysis of the aligned Illumina reads confirmed that these were most likely mis-genotyped and were actually homozygous for the alternate allele.
+Therefore, samples what were heterozygous at that site were classified as "excised" in addition to those that were homozygous for the alternate allele.
+Samples that were called as homozygous for the reference allele at the 6-bp insertion position were classified as "absent".
+Finally, eight (8) samples for which missing genotype calls did not allow unambiguous classification were discarded and not used for further analysis.
+
+Using this classification, we averaged the alternate allele frequency over the 156 SNPs in the 39-kb LD block for each of the three allele classes.
+These results are visualized in figure 6d of the main text.
+They show clear similarity between the "present" and "excised" haplotypes, which is indeed consistent with the 6-bp insertion being a remnant from the excision of the 480-bp TE.
+
+\clearpage
+
 % Table S1 \caption{DNA extraction and preparation methods for Oxford Nanopore sequencing}{{{
 \begin{table}
 	\centering
