@@ -124,7 +124,7 @@ figure_6b <- ggplot(dna_counts, aes(x = count, y = tian_count)) +
 noref_means <- read.table("../te_analysis/multiple_alignments/filtered_alignments/tir_similarity_noref.txt", header = TRUE, stringsAsFactors = FALSE)
 
 figure_6c <- ggplot(noref_means, aes(x = family, y = similarity, color = superfamily)) +
-	geom_jitter(size = 1, height = 0, width = 0.15) +
+	geom_jitter(size = 1, height = 0, width = 0.3) +
 	scale_y_continuous(name = "Proportion of matching nucleotides\nin terminal repeats") +
 	scale_x_discrete(name = "Name of matching TE entry in database") +
 	scale_color_discrete(name = "Superfamily",
