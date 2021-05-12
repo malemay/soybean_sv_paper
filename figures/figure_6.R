@@ -89,8 +89,8 @@ figure_6b <- ggplot(dna_counts, aes(x = count, y = tian_count)) +
 	geom_point(size = 1) +
 	geom_blank(data = data.frame(count = 950, tian_count = 3000)) +
 	geom_text(aes(label = type), vjust = 0, hjust = 0, nudge_x = -0.1, nudge_y = -0.09, size = 1.5) +
-	scale_x_log10("SVs per DNA TE category in this study") +
-	scale_y_log10("Occurences of DNA TE category in\n Tian et al. (2012)") +
+	scale_x_log10("SVs per DNA TE type in this study") +
+	scale_y_log10("Occurences of DNA TE type in\n Tian et al. (2012)") +
 	theme_bw() +
 	theme(text = element_text(size = 8),
 	      panel.grid.minor = element_blank())

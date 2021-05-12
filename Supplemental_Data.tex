@@ -51,7 +51,7 @@
 \setlength{\parskip}{2ex}
 
 % Information for the title page
-\title{Supplemental data to ``Oxford Nanopore sequencing enhances structural variation discovery and genotyping from Illumina data in a Canadian soybean panel''}
+\title{Supplemental data to ``Combined use of Oxford Nanopore and Illumina sequencing yields insights into soybean structural variation biology''}
 \author{Marc-André Lemay \and Jonas Andreas Sibbesen \and Davoud Torkamaneh \and Jérémie Hamel \and Roger Lévesque \and François Belzile}
 \date{}
 
@@ -79,13 +79,14 @@
 \section{Description and testing of the SV refinement pipeline}
 
 One of the main objectives of this project is to use Illumina data to genotype SVs that were originally discovered using Oxford Nanopore sequencing data. 
-This would enable the use Illumina data to carry out population-scale genotyping of variants that were initially discovered in a smaller set of samples sequenced with long-read technologies.
+This would enable the use of Illumina data to carry out population-scale genotyping of variants that were initially discovered in a smaller set of samples sequenced with long-read technologies.
 
 Oxford Nanopore data, however, has a high error rate.
 This makes it challenging to accurately describe breakpoints and sequence content (for insertions) and may negatively impact our ability to genotype the variants discovered with this technology using short reads.
 
-In order to address this issue, we assembled a pipeline that can be used to refine the SVs discovered by Sniffles.
-By refinement, we mean that the position of the breakpoints (start and end position for deletions, and single location for insertions) and the sequence content (for insertions) can be updated to improve the quality of the variants. The current version of the pipeline ignores SVs other than deletions or insertions due to their high complexity.
+In order to address this issue, we assembled a pipeline that can be used to refine the SVs discovered by Sniffles \citep{ngmlr}.
+By refinement, we mean that the position of the breakpoints (start and end position for deletions, and single location for insertions) and the sequence content (for insertions) can be updated to improve the quality of the variants. 
+The current version of the pipeline ignores SVs other than deletions or insertions due to difficulties in assembling and aligning them properly.
 
 The pipeline is based purely on Oxford Nanopore data (i.e. it does not need Illumina data e.g. for polishing or error correction) and therefore could potentially be used for SV refinement with any Oxford Nanopore or even PacBio dataset.
 
@@ -94,7 +95,7 @@ The pipeline is based purely on Oxford Nanopore data (i.e. it does not need Illu
 The pipeline performs a local assembly of the Oxford Nanopore reads aligned to the region of interest and then uses AGE \citep{age} to align this assembly to the appropriate region of the reference genome.
 This alignment is then used to update the breakpoints and inserted sequence of the variant if certain quality thresholds are met.
 
-This alignment pipeline is largely inspired by the guidelines suggested by the authors of AGE and wtdbg2 \citep{wtdbg2} and consists of the following steps:
+This alignment pipeline is largely inspired by the guidelines suggested by the authors of AGE in their newer LongAGE paper \citep{longage} and the authors of wtdbg2 \citep{wtdbg2} and consists of the following steps:
 
 \begin{itemize}
 	\item For every insertion or deletion, Oxford Nanopore reads overlapping the region of interest are extracted from the NGMLR \citep{ngmlr} BAM file. 
@@ -104,7 +105,7 @@ This alignment pipeline is largely inspired by the guidelines suggested by the a
 \item A consensus sequence for the assembly is produced using the \texttt{wtpoa-cns} command from wtdbg2 with default parameters.
 \item This assembly is polished using Oxford Nanopore data. For this, the same reads that were used for assembly are aligned to the consensus sequence using minimap2 \citep{minimap2} with options \texttt{-ax map-ont -r2k}. These aligned reads are used to update the consensus sequence with \texttt{wtpoa-cns}.
 \item Following assembly and polishing, the reference sequence is extracted ± 500 nucleotides from the SV breakpoints for the assembled contig to be aligned against it.
-\item The largest of the assembled contigs (there is usually only one) is then aligned to the reference sequence using AGE with parameters \texttt{-allpos, -go=-1} (gap opening penalty of -1 to account for the high indel error rate of Oxford Nanopore data), \texttt{-indel} (the expected excised region is an indel) and \texttt{-both} (try alignment of both the sequence and its reverse complement, and report the best alignment).
+\item The largest of the assembled contigs (there is usually only one) is then aligned to the reference sequence using AGE with parameters \texttt{-allpos}, \texttt{-go=-1} (gap opening penalty of -1 to account for the high indel error rate of Oxford Nanopore data), \texttt{-indel} (the expected excised region is an indel) and \texttt{-both} (try alignment of both the sequence and its reverse complement, and report the best alignment).
 \end{itemize}
 
 Once the alignment is completed, the results are parsed and used to extract the location of the regions excised by AGE from both the assembled contig and the reference genome.
@@ -114,18 +115,18 @@ The following metrics are then computed in order to compare the (refined) deleti
 
 \begin{itemize}
 	\item For deletions, the reciprocal overlap between the raw deletion and its refined counterpart. The reciprocal overlap is the minimum of the two following values: proportion of deletion 1 covered by deletion 2, and proportion of deletion 2 covered by deletion 1. This overlap is computed using functions from the GenomicRanges R package \citep{granges}.
-	\item For insertions, the offset of the two insertions, i.e. the (absolute) distance between the positions of the raw and refined insertion.
+	\item For insertions, the offset of the two insertions, i.e. the (absolute) physical distance in base pairs between the positions of the raw and refined insertion.
 	\item For insertions, the Levenshtein (edit) distance between the two inserted sequences, as computed by the R function \texttt{adist}. From this distance, a {\em distance ratio} is computed, which corresponds to the Levensthein distance between the two insertions divided by the length of the longest insertion. This provides a relative measure of the difference in sequence content between the two insertions.
 \end{itemize}
 
 In addition to the metrics related to the excised fragments themselves, the percentage of nucleotides that share identity and the percentage of nucleotides affected by gaps in the aligned regions are also extracted from the output of AGE.
 
 Note that SVs longer than 50 kb are excluded from the pipeline because of the high memory and computing time requirements of aligning to those variants using AGE.
-Although a new version of AGE called LongAGE \citep{longage} requiring less memory has been recently released, we found it unsuitable for our needs due to cryptic error messages and slower speed.
+Although a newer version of AGE called LongAGE \citep{longage} requiring less memory has been recently released, we found it unsuitable for our needs due to cryptic error messages and slower speed.
 
 \subsection{Parameters determining whether SVs are updated or not}
 
-Our objective is to update the position of the breakpoints and the sequence content such that the SVs updated in this way are closer to the real ones, and thus both easier to genotype from Illumina data and more representative of reality.
+Our objective is to update the position of the breakpoints and the sequence content such that the SVs updated in this way are closer to the actual sequence, and thus both easier to genotype from Illumina data and more representative of reality.
 However, we must also avoid updating the variant in a way that is irrelevant (as would occur if, for example, AGE identified a deletion or insertion different from the target one).
 Therefore, we established conditions to decide whether or not an SV should be updated.
 Based on analyses carried out during the development of the pipeline, we have settled on the following thresholds to decide whether a variant should be updated:
@@ -141,12 +142,12 @@ Based on analyses carried out during the development of the pipeline, we have se
 \subsection{Testing the effect of refined SVs on genotyping performance}
 
 The main objective of the SV refinement pipeline described above is to improve the genotyping of SVs with Illumina data.
-In order to verify whether the pipeline indeed improved genotyping, we compared the genotyping precision and sensitivity of raw and refined SVs using three different genotypers: BayesTyper \citep{bayestyper}, vg \citep{vg} and Paragraph \citep{paragraph}.
+In order to verify whether the pipeline indeed improved genotyping, we compared the genotyping precision and sensitivity of raw and refined SVs using three different genotypers: BayesTyper v. 1.5 \citep{bayestyper}, vg v. 1.23.0 \citep{vg} and Paragraph v. 2.4a \citep{paragraph}.
 
 \subsubsection{Application of the pipeline}
 
 For these testing purposes, we applied the SV refinement pipeline described above to the first four samples for which we obtained Oxford Nanopore data.
-Structural variants discovered using Sniffles were filtered as described in the main text (notably, only SVs genotyped as homozygous were kept) and then used as input to the pipeline.
+SVs discovered using Sniffles were filtered as described in the main text (notably, only SVs genotyped as homozygous were kept) and then used as input to the pipeline.
 Insertions and deletions were refined if they met the required thresholds, which were as described above except for the minimum reciprocal overlap which was set to 0.7 and the maximum distance ratio which was set to 0.45.
 
 Table \ref{table_s4} shows the number of variants that could be refined or not for each sample.
@@ -166,10 +167,10 @@ In either of these cases, we simply keep the original representation of the SV a
 
 In order to assess the effect of refining SVs on genotpying performance, we generated an input dataset of raw variants and another input dataset of refined variants.
 
-In order to generate input datasets for genotyping, the SV sets obtained from the four samples were merged using SVmerge with parameters \texttt{-maxdist 15 -reldist 0.1 -relsizediff 0.1 -relshift 0.1 -seqspecific}.
+In order to generate input datasets for genotyping, the SV sets obtained from the four samples were merged using SVmerge \citep{svmerge} with parameters \texttt{-maxdist 15 -reldist 0.1 -relsizediff 0.1 -relshift 0.1 -seqspecific}.
 For refined variants, the default random selection behavior of SVmerge when combining several variants together was modified to systematically favor variants that had been updated by the pipeline.
 
-Following this, the VCF files were coordinate-sorted, normalized (using \texttt{bcftools norm}) and duplicate records were removed.
+Following this, the VCF files were coordinate-sorted, normalized (using \texttt{bcftools norm}, \cite{bcftools}) and duplicate records were removed.
 
 \subsubsection{Genotyping methods}
 
@@ -189,19 +190,23 @@ Precision-recall curves for BayesTyper were generated by varying the genotype qu
 
 \paragraph{vg}
 
-Variation graphs were created from the VCF files using \texttt{vg construct} and then converted to PackedGraph format using \texttt{vg convert -p}. The graphs were then indexed prior to mapping using \texttt{vg index -L -x} to generate the xg index and \texttt{vg index -g} to generate the GCSA index. GCSA indexing was carried out on a version of the graph that had been pruned with \texttt{vg prune}.
+Variation graphs were created from the VCF files using \texttt{vg construct} and then converted to PackedGraph format using \texttt{vg convert -p}. 
+The graphs were then indexed prior to mapping using \texttt{vg index -L -x} to generate the xg index and \texttt{vg index -g} to generate the GCSA index. 
+GCSA indexing was carried out on a version of the graph that had been pruned with \texttt{vg prune}.
 
-Reads were mapped separately for each sample using \texttt{vg map}. These mappings were then used to call the SVs explicitly defined in the input VCF files using \texttt{vg pack -Q5} and \texttt{vg call -v}.
+Reads were mapped separately for each sample using \texttt{vg map}. 
+These mappings were then used to call the SVs explicitly defined in the input VCF files using \texttt{vg pack -Q5} and \texttt{vg call -v}.
 
 Precision-recall curves for vg were generated by varying the genotype quality (GQ) threshold necessary to make a call.
 
 \paragraph{Paragraph}
 
-VCF input files were prepared for input to Paragraph as described in the main text, i.e. variants located less than 500 nucleotides from chromosome ends were removed and variants were padded with reference nucleotides where required. Samples were genotyped separately using the \texttt{multigrmpy} utility of Paragraph.
+VCF input files were prepared for input to Paragraph using similar methods to those described in the main text, i.e. variants located less than 500 nucleotides away from chromosome ends were removed and variants were padded with reference nucleotides where required. 
+Samples were genotyped separately using the \texttt{multigrmpy} utility of Paragraph.
 
 Precision-recall curves for Paragraph were generated by varying the minimum number of reads (DP) threshold necessary to make a call.
 
-\subsubsection{Benchmarks: raw versus realigned variants}
+\subsubsection{Benchmarks: raw versus refined variants}
 
 Benchmarks were carried out using the sveval R package \citep[][\url{https://github.com/jmonlong/sveval}]{vg} following the methods described in the main text.
 
@@ -210,7 +215,7 @@ Benchmarks were carried out using the sveval R package \citep[][\url{https://git
 Figure \ref{fig_s17} shows the benchmarking results obtained for BayesTyper.
 Overall, the refined deletions resulted in a higher sensitivity but similar precision. 
 The benefits of SV refinement were obvious for larger deletions, whereas results were sometimes worse for deletions in the range of 100-1000 nucleotides.
-The improvemement brought by refinement is more obvious for insertions than it was for deletions, most likely because the refinement pipeline also improved the sequence content of the insertions.
+The improvemement brought by refinement is more obvious for insertions than it is for deletions, most likely because the refinement pipeline also improved the sequence content of the insertions.
 The poor overall sensitivity of the results obtained with BayesTyper when genotyping Oxford Nanopore SVs is probably due to the small tolerance of this program to errors in SV breakpoint location or sequence content, as has been previously documented \citep{vg}.
 Nevertheless, the improvement in sensitivity obtained by using refined SVs suggests that the SV refinement pipeline indeed improves the quality of the variants.
 
@@ -248,7 +253,7 @@ The SV refinement pipeline described here is available from \textcolor{red}{\url
 To study potential DNA transposable element (TE) activity in more detail, we extracted the SVs corresponding to all DNA TEs in the SoyTEdb database \citep{soytedb} that were matched by at least 3 SVs. 
 This represented 51 TEs in the database and 237 individual SVs.
 
-For each of these SVs, we extracted the Oxford Nanopore reads at the location of the SV and assembled them individually for each sample following a method similar to that used for the breakpoint refinement pipeline.
+For each of these SVs, we extracted the Oxford Nanopore reads at the location of the SV and assembled them individually for each sample following methods similar to those used for the breakpoint refinement pipeline.
 Briefly, reads overlapping positions ± 200 bp from the SV were used for assembly with wtdbg2 and polishing with wtpoa\_cns after re-aligning the reads to the assembly with minimap2.
 
 The assemblies were then used for multiple alignment in order to identify TE boundaries as well as target site duplication (TSD) and terminal inverted repeat (TIR) sequences.
@@ -276,7 +281,7 @@ We analyzed the insertion sequences using the GenericRepeatFinder software \cite
 \texttt{grf-main -i input\_fasta -o . -c 1 -p 30 -s 10 --seed\_mismatch 8 --min\_tr 12}
 
 The parameters \texttt{--min\_space} and \texttt{--max\_space} were adjusted to be -60 and +20 relative to the expected SV size, respectively. 
-The minimum (\texttt{--min\_tsd}) and maximum (\texttt{--max\_tsd}) TSD length were set to 2 for the DTT superfamily and 3 for the DTH superfamily, while the values were 5 and 10, respectively, for the DTM superfamily. 
+The minimum (\texttt{--min\_tsd}) and maximum (\texttt{--max\_tsd}) TSD length were set to 2 for the DTT superfamily and 3 for the DTH superfamily, while these values were 5 and 10, respectively, for the DTM superfamily. 
 We used relatively relaxed parameters for seed matching because the presence of TSD and TIR sequences was expected and we wanted to maximize the probability of finding them.
 
 We parsed the output of GenericRepeatFinder to get the location and sequences of the TSD and TIR.
@@ -300,8 +305,8 @@ This results in 40 individual SVs collectively representing 17 sequences in the 
 \subsection{Detailed analysis of a 480-bp Stowaway MITE insertion}
 
 A closer look at the multiple alignments revealed that in almost all cases, the sequences without the insertion presented a single occurence of the TSD sequence.
-This observation is consistent with a scenario in which the sequence without the insertion corresponds to a sequence in which the TE never inserted, rather than a sequence from which the TE was excised.
-In a single case however, that of a 480-bp insertion of a Tc1-Mariner (DTT) element (actually a Stowaway MITE) at position 2,257,090 of chromosome Gm04, visual analysis of the multiple alignment revealed that three different alleles were segregating at the insertion site:
+This observation is consistent with a scenario where the TE never inserted into the sequence, instead of having excised from it.
+In a single case however, that of a 480-bp insertion of a Tc1-Mariner (DTT) element (actually a Stowaway MITE) at position 2,257,090 of chromosome Gm04, visual analysis of the multiple alignment revealed that three different alleles are segregating at the insertion site:
 
 \begin{itemize}
 	\item The reference allele (no insertion at the target position)
@@ -311,15 +316,15 @@ In a single case however, that of a 480-bp insertion of a Tc1-Mariner (DTT) elem
 
 This last allele is very likely to have resulted from the excision of the TE insertion.
 Indeed, the TA part of the insertion corresponds to the expected TSD sequence for a Tc1-Mariner element.
-The remaining CGAG nucleotides would likely have been inserted during the repair of the double-strand break following excision of the TE.
+The remaining CGAG nucleotides would likely have been inserted during the repair of the DNA break following excision of the TE.
 Interestingly, this insertion is by far the one for which the similarity between the two TIR sequences was highest among the ones studied, at 96.3\%.
 
-To investigate this question further, we analysed the SNP patterns surrounding the insertion site.
+To investigate this question further, we analysed the SNV patterns surrounding the insertion site.
 If the TACGAG indeed resulted from the excision of the TE, then the haplotypes corresponding to the TE insertion and the 6-bp insertion should be more similar to each other than to the reference sequence, as the excision would have occurred within the TE insertion genetic background.
 
-The SNPs with FILTER = PASS among those discovered by Platypus \citep{platypus} were extracted from the VCF file of the 102 samples sequenced by Illumina to carry this analysis.
+The SNVs with FILTER = PASS among those discovered by Platypus \citep{platypus} were extracted from the VCF file of the 102 samples sequenced by Illumina to carry this analysis.
 The analysis of linkage disequilibrium (LD) using PLINK \citep{plink} in a 200-kb window surrounding the insertion location at Gm04:2,257,090 revealed a high-LD block spanning positions 2,220,398 to 2,259,326 that included the location of the insertion.
-The SNPs in that 39-kb window were therefore extracted from the Platypus VCF file and used for downstream analyses.
+The SNVs in that 39-kb window were therefore extracted from the Platypus VCF file and used for downstream analyses.
 
 By combining the information obtained from Platypus and SV genotyping with Paragraph, we were able to classify samples into three groups depending on their status at the TE insertion locus:
 
@@ -340,11 +345,11 @@ The number of samples in each group was as follows:
 All genotype calls for the TE insertion were homozygous and were therefore easy to classify as "present" when homozygous for the alternate allele.
 For the 6-bp insertion, however, some genotype calls were heterozygous. 
 In all such cases, visual analysis of the aligned Illumina reads confirmed that these were most likely mis-genotyped and were actually homozygous for the alternate allele.
-Therefore, samples what were heterozygous at that site were classified as "excised" in addition to those that were homozygous for the alternate allele.
+Therefore, samples that were heterozygous at that site were classified as "excised" in addition to those that were homozygous for the alternate allele.
 Samples that were called as homozygous for the reference allele at the 6-bp insertion position were classified as "absent".
 Finally, eight (8) samples for which missing genotype calls did not allow unambiguous classification were discarded and not used for further analysis.
 
-Using this classification, we averaged the alternate allele frequency over the 156 SNPs in the 39-kb LD block for each of the three allele classes.
+Using this classification, we averaged the alternate allele frequency over the 156 SNVs in the 39-kb LD block for each of the three allele classes.
 These results are visualized in figure 6d of the main text.
 They show clear similarity between the "present" and "excised" haplotypes, which is indeed consistent with the 6-bp insertion being a remnant from the excision of the 480-bp TE.
 
@@ -377,10 +382,10 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 		\item[d] Extraction protocol used: CTAB, CTAB-based protocol described in main text;\\
 			DNeasy, Qiagen DNeasy Plant Mini Kit;\\
 			Gentra, Qiagen Gentra Puregene Tissue Kit
-		\item[e] Incubation temperature of the RNase step
+		\item[e] Incubation temperature of the RNase A treatment
 		\item[f] Size-selection protocol: None, no size-selection;\\
-			BP 6kb, BluePippin with 6kb size-selection threshold;\\
-			BP 15kb, BluePippin High-Pass Plus cassette with 15kb size-selection threshold;\\
+			BP 6kb, BluePippin with 6-kb size-selection threshold;\\
+			BP 15kb, BluePippin High-Pass Plus cassette with 15-kb size-selection threshold;\\
 			SRE, Circulomics Short Read Eliminator Kit
 		\item[g] Indicates whether the DNA from two different extractions was combined for sequencing
 		\end{tablenotes}
@@ -429,7 +434,7 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 \begin{table}
 	\caption[Number of SVs per Oxford Nanopore sample]{
 		Number of filtered variants per SV type and size class discovered by Sniffles for 17 samples subjected to Oxford Nanopore sequencing. 
-		These SVs were used a a truth set for the benchmarks presented in this paper.}
+		These SVs were used as a truth set for the benchmarks presented in this paper.}
 	\label{table_s3}
 
 	\begin{threeparttable}\small
@@ -510,7 +515,7 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 		\begin{tablenotes}\footnotesize
 		\item[a] Observed difference between the mean allele frequencies of the SVs overlapping the corresponding genic features
-		\item[b] p-value computed from a one-sided comparison to the distribution mean differences obtained from the randomization test.
+		\item[b] p-value computed from a one-sided comparison to the distribution of mean differences obtained from the randomizations (10,000 iterations).
 			The significance threshold was set to $\alpha = 0.05 \div 6 = 0.008$ to correct for multiple testing.
 		\end{tablenotes}
 	\end{threeparttable}
@@ -675,7 +680,7 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 % Figure S4 \caption[Relationship between Oxford Nanopore sequencing depth and genotyping precision of Illumina SVs]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s4.png
-	\includegraphics[width = 4.5in]{figure_s4}
+	\includegraphics[width = 6in]{figure_s4}
 
 	\caption[Relationship between Oxford Nanopore sequencing depth and genotyping precision of Illumina SVs]{
 		Genotyping precision of (A) deletions, (B) insertions, (C) duplications and (D) inversions~discovered from Illumina data (at a minimum threshold of 2 supporting reads) for 17 samples as a function of the average Oxford Nanopore sequencing depth of that sample.
@@ -687,16 +692,16 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Figure S5 \caption[Effect of ALT allele count on genotyping performance of Illumina insertions and deletions]{{{{
+% Figure S5 \caption[Effect of homozygous ALT count on genotyping performance of Illumina insertions and deletions]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s5.png
 	\includegraphics[width = 5in]{figure_s5}
 
-	\caption[Effect of ALT allele count on genotyping performance of Illumina deletions and insertions]{
-		Effect of filtering variants for minimum number of ALT alleles in homozygous genotype calls (AC\_Hom) on the genotyping performance of (A) deletions and (B) insertions discovered from Illumina data.
+	\caption[Effect of homozygous ALT count on genotyping performance of Illumina deletions and insertions]{
+		Effect of filtering variants for minimum number of ALT alleles in homozygous genotype calls (homozygous ALT count) on the genotyping performance of (A) deletions and (B) insertions discovered from Illumina data.
 		Each line and color represents a different sample.
-		The curve for a given sample was obtained by varying the AC\_Hom filtering threshold for a variant to be considered for benchmarking.
-		The asterisks mark an AC\_Hom threshold of 4 ALT alleles in homozygous genotype calls in the whole population of 102 samples; points to the left of these for a given line represent increasingly stringent filtering threshold values.
+		The curve for a given sample was obtained by varying the filtering threshold for a variant to be considered for benchmarking.
+		The asterisks mark a homozygous ALT count threshold of 4; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 	}
 
 	\label{fig_s5}
@@ -705,16 +710,16 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Figure S6 \caption[Effect of ALT allele count on genotyping performance of Illumina duplications and inversions]{{{{
+% Figure S6 \caption[Effect of homozygous ALT count on genotyping performance of Illumina duplications and inversions]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s6.png
 	\includegraphics[width = 3.5in]{figure_s6}
 
-	\caption[Effect of ALT allele count on genotyping performance of Illumina duplications and inversions]{
-		Effect of filtering variants for minimum number of ALT alleles in homozygous genotype calls (AC\_Hom) on the genotyping performance of (A) duplications and (B) inversions discovered from Illumina data.
+	\caption[Effect of homozygous ALT count on genotyping performance of Illumina duplications and inversions]{
+		Effect of filtering variants for minimum number of ALT alleles in homozygous genotype calls (homozygous ALT count) on the genotyping performance of (A) duplications and (B) inversions discovered from Illumina data.
 		Each line and color represents a different sample.
-		The curve for a given sample was obtained by varying the AC\_Hom filtering threshold for a variant to be considered for benchmarking.
-		The asterisks mark an AC\_Hom threshold of 6 (for duplications) or 10 (for inversions) ALT alleles in homozygous genotype calls in the whole population of 102 samples; points to the left of these for a given line represent increasingly stringent filtering threshold values.
+		The curve for a given sample was obtained by varying the filtering threshold for a variant to be considered for benchmarking.
+		The asterisks mark a homozygous ALT count threshold of 6 (for duplications) or 10 (for inversions); points to the left of these for a given line represent increasingly stringent filtering threshold values.
 	}
 
 	\label{fig_s6}
@@ -723,16 +728,16 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Figure S7 \caption[Effect of the number of supporting calling programs on genotyping performance of Illumina deletions and insertions]{{{{
+% Figure S7 \caption[Effect of the number of supporting calling tools on genotyping performance of Illumina deletions and insertions]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s7.png
 	\includegraphics[width = 5in]{figure_s7}
 
-	\caption[Effect of the number of supporting calling programs on genotyping performance of Illumina deletions and insertions]{
-		Effect of filtering variants for minimum number of supporting calling programs on the genotyping performance of (A) deletions and (B) insertions discovered from Illumina data.
+	\caption[Effect of the number of supporting calling tools on genotyping performance of Illumina deletions and insertions]{
+		Effect of filtering variants for minimum number of supporting calling tools on the genotyping performance of (A) deletions and (B) insertions discovered from Illumina data.
 		Each line and color represents a different sample.
-		The curve for a given sample was obtained by varying the minimum threshold of number of supporting calling programs for a variant to be considered for benchmarking.
-		The asterisks mark a minimum threshold of one supporting calling program for a variant to be considered; points to the left of these for a given line represent increasingly stringent filtering threshold values.
+		The curve for a given sample was obtained by varying the minimum threshold of number of supporting calling tools for a variant to be considered for benchmarking.
+		The asterisks mark a minimum threshold of one supporting calling tool for a variant to be considered; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 		}
 
 	\label{fig_s7}
@@ -741,13 +746,13 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Figure S8 \caption[Size distribution of the SVs reported by various calling programs using Illumina data]{{{{
+% Figure S8 \caption[Size distribution of the SVs reported by various calling tools using Illumina data]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s8.png
 	\includegraphics[width = 6.5in]{figure_s8}
 
-	\caption[Size distribution of the SVs reported by various calling programs using Illumina data]{
-		Size distribution of the SVs reported by various calling programs using Illumina data.
+	\caption[Size distribution of the SVs reported by various calling tools using Illumina data]{
+		Size distribution of the SVs reported by various calling tools using Illumina data.
 		(A) Distribution of SV sizes in the range from -250 bp to 250 bp.
 		Negative sizes represent deletions and positive sizes represent insertions.
 		Duplications and inversions were omitted from this plot.
@@ -760,15 +765,15 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Figure S9 \caption[Number of true positive and false positive deletion calls reported by various calling program combinations]{{{{
+% Figure S9 \caption[Number of true positive and false positive deletion calls reported by various calling tool combinations]{{{{
 \begin{lsfigure}
 	% DEPENDENCY : figure_s9.png
 	\includegraphics[width = 9in]{figure_s9}
 
-	\caption[Number of true positive and false positive deletion calls reported by various calling program combinations]{
+	\caption[Number of true positive and false positive deletion calls reported by various calling tool combinations]{
 		Number of true positive and false positive deletion genotype calls broken down by size and by the combination of tools that reported the variant for sample OAC Oxford.
 		OAC Oxford was chosen as a representative sample because of its median F1 score among all 17 benchmarked samples.
-		The genotype calls considered here were filtered for a minimum number of supporting reads of 2 and a minimum number of ALT alleles in homozygous genotype calls of 4 across all 102 samples in the population.
+		The genotype calls considered here were filtered for a minimum number of supporting reads of 2 and a minimum homozygous ALT count of 4 across all 102 samples in the population.
 		Note the logarithmic scale on the x-axis.
 	}
 
@@ -778,15 +783,15 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Figure S10 \caption[Number of true positive and false positive insertion calls reported by various calling program combinations]{{{{
+% Figure S10 \caption[Number of true positive and false positive insertion calls reported by various calling tool combinations]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s10.png
 	\includegraphics[width = 6.5in]{figure_s10}
 
-	\caption[Number of true positive and false positive insertion calls reported by various calling program combinations]{
+	\caption[Number of true positive and false positive insertion calls reported by various calling tool combinations]{
 		Number of true positive and false positive insertion genotype calls broken down by size and by the combination of tools that reported the variant for sample OAC Lakeview.
 		OAC Lakeview was chosen as a representative sample because of its median F1 score among all 17 benchmarked samples.
-		The genotype calls considered here were filtered for a minimum number of supporting reads of 2 and a minimum number of ALT alleles in homozygous genotype calls of 4 across all 102 samples in the population.
+		The genotype calls considered here were filtered for a minimum number of supporting reads of 2 and a minimum homozygous ALT count of 4 across all 102 samples in the population.
 		Note the logarithmic scale on the x-axis.
 	}
 
@@ -956,16 +961,16 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Figure S20 \caption[IGV screenshot of Oxford Nanopore and Illumina read alignments at the location of a polymorphic Stowaway TE insertion]{{{
+% Figure S20 \caption[IGV screenshot of Oxford Nanopore and Illumina read alignments of three samples at the location of a polymorphic Stowaway TE insertion]{{{
 \begin{lsfigure}
 	% DEPENDENCY : Gm04_2257090_annotated.png
 	\includegraphics[width = 9.5in]{Gm04_2257090_annotated}
 
-	\caption[IGV screenshot of Oxford Nanopore and Illumina read alignments at the location of a polymorphic Stowaway TE insertion]{
-		IGV screenshot of Oxford Nanopore and Illumina read alignments at the location of a polymorphic Stowaway TE insertion at Gm04:2,257,090.
-		Oxford Nanopore (A) and Illumina (B) alignments of sample CAD1077/AC2001, which matches the reference (absence of TE insertion).
-		Oxford Nanopore (C) and Illumina (D) alignments of sample CAD1022/OAC Petrel, which bears the 480-bp Stowaway TE insertion.
-		Oxford Nanopore (E) and Illumina (F) alignments of sample CAD1010/Maple Presto, which bears a 6-bp insertion putatively due to excision of the TE.
+	\caption[IGV screenshot of Oxford Nanopore and Illumina read alignments of three samples at the location of a polymorphic Stowaway TE insertion]{
+		IGV screenshot of Oxford Nanopore and Illumina read alignments of three samples at the location of a polymorphic Stowaway TE insertion at Gm04:2,257,090.
+		(A) Oxford Nanopore and (B) Illumina alignments of sample CAD1077/AC2001, which matches the reference (absence of TE insertion).
+		(C) Oxford Nanopore and (D) Illumina alignments of sample CAD1022/OAC Petrel, which bears the 480-bp Stowaway TE insertion.
+		(E) Oxford Nanopore and (F) Illumina alignments of sample CAD1010/Maple Presto, which bears a 6-bp insertion putatively due to excision of the TE.
 		The black rectangle in the middle of the figure encloses the region where the insertion polymorphisms of interest occur.
 	}
 
@@ -975,17 +980,17 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Figure S21 \caption[IGV screenshot of Oxford Nanopore and Illumina read alignments at the location SNP that diverges between the Stowaway TE insertion and excision haplotypes]{{{
+% Figure S21 \caption[IGV screenshot of Oxford Nanopore and Illumina read alignments of three samples at the location SNV that diverges between the Stowaway TE insertion and excision haplotypes]{{{
 \begin{lsfigure}
 	% DEPENDENCY : Gm04_2254504_annotated.png
 	\includegraphics[width = 9.5in]{Gm04_2254504_annotated}
 
-	\caption[IGV screenshot of Oxford Nanopore and Illumina read alignments at the location of a SNP that diverges between the Stowaway TE insertion and excision haplotypes]{
-		IGV screenshot of Oxford Nanopore and Illumina read alignments at the location of a SNP (at Gm04:2,254,504) that diverges between the Stowaway TE insertion and excision haplotypes.
-		Oxford Nanopore (A) and Illumina (B) alignments of sample CAD1077/AC2001, which matches the reference (absence of TE insertion).
-		Oxford Nanopore (C) and Illumina (D) alignments of sample CAD1022/OAC Petrel, which bears the 480-bp Stowaway TE insertion.
-		Oxford Nanopore (E) and Illumina (F) alignments of sample CAD1010/Maple Presto, which bears a 6-bp insertion putatively due to excision of the TE.
-		The black rectangle in the middle of the figure encloses the SNP that diverges from the reference genome only in the haplotype that bears the Stowaway insertion.
+	\caption[IGV screenshot of Oxford Nanopore and Illumina read alignments of three samples at the location of a SNV that diverges between the Stowaway TE insertion and excision haplotypes]{
+		IGV screenshot of Oxford Nanopore and Illumina read alignments of three samples at the location of a SNV (at Gm04:2,254,504) that diverges between the Stowaway TE insertion and excision haplotypes.
+		(A) Oxford Nanopore and (B) Illumina alignments of sample CAD1077/AC2001, which matches the reference (absence of TE insertion).
+		(C) Oxford Nanopore and (D) Illumina alignments of sample CAD1022/OAC Petrel, which bears the 480-bp Stowaway TE insertion.
+		(E) Oxford Nanopore and (F) Illumina alignments of sample CAD1010/Maple Presto, which bears a 6-bp insertion putatively due to excision of the TE.
+		The black rectangle in the middle of the figure encloses the SNV that diverges from the reference genome only in the haplotype that bears the Stowaway insertion.
 	}
 
 	\label{fig_s21}
@@ -997,6 +1002,7 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 % DEPENDENCY : genome_research.bst
 \bibliographystyle{genome_research}
 % DEPENDENCY : references.bib
+\addcontentsline{toc}{section}{References}
 \bibliography{references}
 
 \end{document}

@@ -62,7 +62,7 @@ sv_pca$admixed <- apply(qmat, 1, max) < 0.6
 snp_pca$admixed <- apply(qmat, 1, max) < 0.6
 
 # Creating a common theme for the plots
-common_theme <- theme_bw()
+common_theme <- theme_bw() + theme(panel.grid.minor = element_blank())
 
 # A function that generates a plot for a given PCA data.frame and principal components
 pca_plot <- function(data, pc1, pc2) {
