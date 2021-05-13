@@ -5,7 +5,7 @@
 # For insertions, only 2 panels are needed because almost no SVs > 1000 bp were found
 
 # The difference with Figure 1 is that we look at non-repeated regions
-# Analysis was resticted to those regions using the bed.regions argument
+# Analysis was restricted to those regions using the bed.regions argument
 # of sveval::svevalOl
 
 # Loading the ggplot2 and grid packages
@@ -13,12 +13,12 @@ library(ggplot2)
 library(grid)
 
 # Loading the data used for plotting
-# DEPENDENCY : sveval_norepeat_rates.RData
-load("/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/svmerged_variants/paragraph/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData")
+# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData
+load("../sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData")
 
 # Also loading a script that will be used to prepare the data for plotting
-# DEPENDENCY : make_plot_data.R
-source("/home/malem420/scripts/make_plot_data.R")
+# DEPENDENCY : scripts/make_plot_data.R
+source("../scripts/make_plot_data.R")
 
 # Preparing the data for plotting
 del_plot_data <- make_plot_data(sveval_norepeat_rates, "DEL")
@@ -91,6 +91,7 @@ insertions_plot <-
 	common_theme
 
 # Saving in png format
+# OUTPUT : figures/figure_s1.png
 png("figure_s1.png", width = 6, height = 9, units = "in", res = 500)
 grid.newpage()
 # Locating the subplots in the figure

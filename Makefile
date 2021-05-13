@@ -3,22 +3,19 @@
 # Using R 3.5.0 for figures because of a problem with resolution when using R 4.0
 R_FIG_COMMAND = /usr/bin/R CMD BATCH --no-save --no-restore --no-site-file --no-environ
 R_RUN_COMMAND = /prg/R/4.0/bin/R CMD BATCH --no-save --no-restore --no-site-file --no-environ
+CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
 
 # Creating some variables for more readable coding
-SUPFIGURES = figures/figure_s1.png figures/figure_s2.png figures/figure_s3.png figures/figure_s4.png figures/figure_s5.png \
-	     figures/figure_s6.png figures/figure_s7.png figures/figure_s8.png figures/figure_s9.png figures/figure_s10.png \
-	     figures/figure_s11.png figures/figure_s12.png figures/figure_s13.png figures/figure_s14.png figures/figure_s15.png \
-	     figures/figure_s16.png figures/figure_s17.png figures/figure_s18.png figures/figure_s19.png
+# Supplemental figures S1 to S19 plus figures S20 and S21 which depend on other files
+SUPFIGURES = $(shell seq 1 19 | xargs -I {} echo figures/figure_s{}.png) \
+	     figures/Gm04_2257090_annotated.png \
+	     figures/Gm04_2254504_annotated.png
 
-SUPTABLES = tables/table_s1.csv tables/table_s2.csv tables/table_s3.csv tables/table_s4.csv tables/table_s5.csv \
-	    tables/table_s6.csv tables/table_s7.csv tables/table_s8.csv
+SUPTABLES = $(shell seq 1 8 | xargs -I {} echo tables/table_s{}.csv)
 
-FIGURES = figures/figure_1.png figures/figure_2.png figures/figure_3_circos/figure_3.png \
-	  figures/figure_4.png figures/figure_5.png figures/figure_6.png
+FIGURES = $(shell seq 1 6 | xargs -I {} echo figures/figure_{}.png)
 
-TABLES = tables/table_1.png tables/table_2.png tables/table_3.png
-
-CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
+TABLES = $(shell seq 1 3 | xargs -I {} echo tables/table_{}.png)
 
 # --- This target prepares all the figures, tables, and supplemental data
 all: Supplemental_Data.pdf $(TABLES) $(FIGURES)
@@ -29,6 +26,10 @@ Supplemental_Data.pdf : Supplemental_Data.tex references.bib genome_research.bst
 
 figures/figure_%.png : figures/figure_%.R
 	cd figures; $(R_FIG_COMMAND) $(<F)
+
+figures/figure_s1.png: figures/figure_s1.R \
+	sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData \
+	scripts/make_plot_data.R
 
 tables/table_s1.csv tables/table_s2.csv tables/table_s3.csv: tables/formatting_sup_tables.R
 	cd tables; $(R_RUN_COMMAND) formatting_sup_tables.R
@@ -87,7 +88,7 @@ figures/figure_2.png: figures/figure_2.R
 CIRCD = figures/figure_3_circos
 EXTDIR = external/circos_config_files
 
-$(CIRCD)/figure_3.png: $(CIRCD)/circos.conf $(EXTDIR)/housekeeping.conf $(EXTDIR)/housekeeping.conf $(CIRCD)/image.conf \
+figures/figure_3.png: $(CIRCD)/circos.conf $(EXTDIR)/housekeeping.conf $(EXTDIR)/housekeeping.conf $(CIRCD)/image.conf \
 	$(CIRCD)/Gmax_karyotype.txt $(CIRCD)/dummy_karyotype.txt $(CIRCD)/ideogram.conf $(CIRCD)/ticks.conf $(CIRCD)/plots.conf \
 	$(CIRCD)/highlights.conf $(CIRCD)/genes_heatmap.txt $(CIRCD)/snp_density.txt $(CIRCD)/sv_counts.txt $(CIRCD)/ref_ltr.txt \
 	$(CIRCD)/poly_ltr.txt $(CIRCD)/ref_dna.txt $(CIRCD)/poly_dna.txt $(CIRCD)/legendA.txt $(CIRCD)/legendB.txt $(CIRCD)/legendC.txt \
@@ -132,4 +133,22 @@ figures/figure_5.png: figures/figure_5.R
 
 figures/figure_6.png: figures/figure_6.R
 	cd figures; $(R_FIG_COMMAND) figure_6.R
+
+# --- The next section prepares the Illumina SV benchmarks from the Paragraph vcfs
+#
+ILLUMINA_BENCHMARK_VCFS = $(shell tail -n+2 utilities/line_ids.txt | cut -f2 | xargs -I {} echo sv_genotyping/illumina_svs/{}_results/genotypes.vcf.gz)
+NANOPORE_NORMALIZED_SVS = $(shell tail -n+2 utilities/line_ids.txt | cut -f1 | xargs -I {} echo nanopore_sv_calling/{}_normalized_ids.vcf)
+
+# Benchmark of Illumina SVs in non-repeat regions
+sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData: \
+	sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_benchmark.R \
+	utilities/line_ids.txt \
+	$(ILLUMINA_BENCHMARK_VCFS) \
+	$(NANOPORE_NORMALIZED_SVS) \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	refgenome/repeat_regions/non_repeated_regions.bed \
+	scripts/extract_rates.R \
+	scripts/read_filter_vcf.R
+	cd sv_genotyping/illumina_svs/sveval_benchmarks ; $(R_RUN_COMMAND) norepeat_benchmark.R
+
 
