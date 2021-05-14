@@ -18,7 +18,9 @@
 # Ignore vim swap files
 *.swp
 
-# Ignore vcf files
+# Ignore large data files
+*bam
+*bai
 *.vcf
 
 # Ignore reference data files
@@ -53,6 +55,23 @@ figures/figure_3_circos/sv_counts.txt
 figures/figure_3_circos/sv_highlights.txt
 gene_analysis/*.txt
 nanoplot_stats/N50_stats.txt
+nanopore_sv_calling/AC2001
+nanopore_sv_calling/ALTA
+nanopore_sv_calling/MAPLE_ISLE
+nanopore_sv_calling/MAPLE_PRESTO
+nanopore_sv_calling/OAC_09_35C
+nanopore_sv_calling/OAC_CARMAN
+nanopore_sv_calling/OAC_DRAYTON
+nanopore_sv_calling/OAC_EMBRO
+nanopore_sv_calling/OAC_LAKEVIEW
+nanopore_sv_calling/OAC_MADOC
+nanopore_sv_calling/OAC_OXFORD
+nanopore_sv_calling/OAC_PETREL_2
+nanopore_sv_calling/OAC_PRUDENCE
+nanopore_sv_calling/OAC_STRATFORD
+nanopore_sv_calling/OT09-03
+nanopore_sv_calling/QS5091.50J
+nanopore_sv_calling/ROLAND
 sv_genotyping/illumina_svs/CAD????_results
 tables/table_s?.csv
 tables/table_1.csv
@@ -80,4 +99,7 @@ tables/table1_data/
 # Ignore the reference formatting files that I am not using
 genomeresearch.bst
 genres.bst
+
+# Ignore the file used to update the timestamps
+reset_timestamps.sh
 
