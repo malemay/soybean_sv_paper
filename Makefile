@@ -154,7 +154,7 @@ NANOPORE_NORMALIZED_SVS := $(shell tail -n+2 utilities/line_ids.txt | cut -f1 | 
 .PRECIOUS : $(NANOPORE_NORMALIZED_SVS)
 
 # Refining the SV breakpoints
-$(NANOPORE_REFINED_SVS) &: $(NANOPORE_FILTERED_SVS) $(NANOPORE_SORTED_BAM) \
+nanopore_sv_calling/SV_REFINEMENT : $(NANOPORE_FILTERED_SVS) $(NANOPORE_SORTED_BAM) \
 	scripts/breakpoint_refinement/gather_align_data.R \
 	scripts/breakpoint_refinement/parse_age.R \
 	scripts/breakpoint_refinement/parse_svinfo.R \
@@ -165,20 +165,21 @@ $(NANOPORE_REFINED_SVS) &: $(NANOPORE_FILTERED_SVS) $(NANOPORE_SORTED_BAM) \
 	utilities/line_ids.txt \
 	scripts/breakpoint_refinement/age_realign.sh \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
-	cd nanopore_sv_calling ; $(R_RUN_COMMAND) refine_breakpoints.R $(SAMTOOLS) $(MINIMAP2) $(AGE) $(WTDBG2) $(WTPOA_CNS)
+	cd nanopore_sv_calling ; $(R_RUN_COMMAND) refine_breakpoints.R $(SAMTOOLS) $(MINIMAP2) $(AGE) $(WTDBG2) $(WTPOA_CNS) ; touch SV_REFINEMENT
 
 
 
 # Processing the refined VCFs to prepare them for input to SVmerge;
 # These files are also the reference Oxford Nanpore SVs for benchmarking
-$(NANOPORE_NORMALIZED_SVS) &: $(NANOPORE_REFINED_SVS) \
+nanopore_sv_calling/SV_NORMALIZATION : nanopore_sv_calling/SV_REFINEMENT \
+	$(NANOPORE_REFINED_SVS) \
 	nanopore_sv_calling/process_vcf_files.sh \
 	nanopore_sv_calling/add_metainfo_all.R \
 	nanopore_sv_calling/fix_vcfs.R \
 	scripts/add_metainfo.R \
 	scripts/fix_sniffles.R \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
-	cd nanopore_sv_calling ; ./process_vcf_files.sh $(BCFTOOLS) $(R_RUN_COMMAND)
+	cd nanopore_sv_calling ; ./process_vcf_files.sh $(BCFTOOLS) $(R_RUN_COMMAND) ; touch SV_NORMALIZATION
 
 
 # --- The next section prepares the Illumina SV benchmarks from the Paragraph vcfs
@@ -187,6 +188,7 @@ ILLUMINA_BENCHMARK_VCFS := $(shell tail -n+2 utilities/line_ids.txt | cut -f2 | 
 
 # Benchmark of Illumina SVs in non-repeat regions
 sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData: \
+	nanopore_sv_calling/SV_NORMALIZATION \
 	sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_benchmark.R \
 	utilities/line_ids.txt \
 	$(ILLUMINA_BENCHMARK_VCFS) \
