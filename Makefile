@@ -4,10 +4,14 @@
 R_FIG_COMMAND = /usr/bin/Rscript
 R_RUN_COMMAND = /prg/R/4.0/bin/Rscript
 CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
+BAYESTYPERTOOLS = /home/malem420/programs/bayesTyper_v1.5_linux_x86_64/bin/bayesTyperTools
 BCFTOOLS = /home/malem420/programs/bcftools/bcftools
 SAMTOOLS = /home/malem420/programs/samtools/samtools
 MINIMAP2 = /home/malem420/programs/minimap2/minimap2
+NGMLR = /home/malem420/programs/ngmlr/ngmlr-0.2.7/ngmlr
+PORECHOP = /home/malem420/programs/Porechop/porechop-runner.py
 AGE = /home/malem420/programs/AGE/age_align
+SNIFFLES = /home/malem420/programs/Sniffles-master/bin/sniffles-core-1.0.11/sniffles
 WTDBG2 = /home/malem420/programs/wtdbg2/wtdbg2
 WTPOA_CNS = /home/malem420/programs/wtdbg2/wtpoa-cns
 
@@ -140,39 +144,48 @@ figures/figure_5.png: figures/figure_5.R
 figures/figure_6.png: figures/figure_6.R
 	cd figures; $(R_FIG_COMMAND) figure_6.R
 
+# --- This section processes the raw basecalled Nanopore reads using Porechop and aligns them to the reference genome
+NANOPORE_READS := $(shell cat utilities/flowcell_names.txt | xargs -I {} echo nanopore_data/{}.fastq.gz)
+
+nanopore_data/NANOPORE_ALIGNMENT : $(NANOPORE_READS) \
+	nanopore_data/read_processing_alignment.sh \
+	utilities/flowcell_names.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	cd nanopore_data ; ./read_processing_alignment.sh $(PORECHOP) $(NGMLR) $(SAMTOOLS) ; touch NANOPORE_ALIGNMENT
+
 # --- This section prepares the Oxford Nanopore Sniffles VCF files from the sorted bam files
 NANOPORE_SORTED_BAM := $(shell tail -n+2 utilities/line_ids.txt | cut -f1 | xargs -I {} echo nanopore_data/{}_porechopped_aligned.sort.bam)
-.PRECIOUS : $(NANOPORE_SORTED_BAM)
-
 NANOPORE_FILTERED_SVS := $(shell tail -n+2 utilities/line_ids.txt | cut -f1 | xargs -I {} echo nanopore_sv_calling/{}_hom70_filtered.vcf)
-.PRECIOUS : $(NANOPORE_FILTERED_SVS)
-
 NANOPORE_REFINED_SVS := $(shell tail -n+2 utilities/line_ids.txt | cut -f1 | xargs -I {} echo nanopore_sv_calling/{}/{}_realigned.vcf)
-.PRECIOUS : $(NANOPORE_REFINED_SVS)
-
 NANOPORE_NORMALIZED_SVS := $(shell tail -n+2 utilities/line_ids.txt | cut -f1 | xargs -I {} echo nanopore_sv_calling/{}_normalized_ids.vcf)
-.PRECIOUS : $(NANOPORE_NORMALIZED_SVS)
+
+# Calling SVs with Sniffles and filtering the output
+nanopore_sv_calling/SV_CALLING : nanopore_data/NANOPORE_ALIGNMENT $(NANOPORE_SORTED_BAM) \
+	nanopore_sv_calling/sniffles_calling.sh \
+	nanopore_sv_calling/filter_sniffles_vcfs.R \
+	scripts/filter_sniffles.R \
+	utilities/line_ids.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	cd nanopore_sv_calling ; ./sniffles_calling.sh $(SNIFFLES) $(R_RUN_COMMAND) ; touch SV_CALLING
 
 # Refining the SV breakpoints
-nanopore_sv_calling/SV_REFINEMENT : $(NANOPORE_FILTERED_SVS) $(NANOPORE_SORTED_BAM) \
+nanopore_sv_calling/SV_REFINEMENT : nanopore_sv_calling/SV_CALLING $(NANOPORE_FILTERED_SVS) \
+	nanopore_data/NANOPORE_ALIGNMENT $(NANOPORE_SORTED_BAM) \
+	scripts/breakpoint_refinement/refine_breakpoints.R \
 	scripts/breakpoint_refinement/gather_align_data.R \
 	scripts/breakpoint_refinement/parse_age.R \
 	scripts/breakpoint_refinement/parse_svinfo.R \
 	scripts/breakpoint_refinement/revcomp.R \
 	scripts/breakpoint_refinement/call_age.R \
 	scripts/breakpoint_refinement/update_breakpoints.R \
-	scripts/breakpoint_refinement/refine_breakpoints.R \
 	utilities/line_ids.txt \
 	scripts/breakpoint_refinement/age_realign.sh \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
 	cd nanopore_sv_calling ; $(R_RUN_COMMAND) refine_breakpoints.R $(SAMTOOLS) $(MINIMAP2) $(AGE) $(WTDBG2) $(WTPOA_CNS) ; touch SV_REFINEMENT
 
-
-
 # Processing the refined VCFs to prepare them for input to SVmerge;
 # These files are also the reference Oxford Nanpore SVs for benchmarking
-nanopore_sv_calling/SV_NORMALIZATION : nanopore_sv_calling/SV_REFINEMENT \
-	$(NANOPORE_REFINED_SVS) \
+nanopore_sv_calling/SV_NORMALIZATION : nanopore_sv_calling/SV_REFINEMENT $(NANOPORE_REFINED_SVS) \
 	nanopore_sv_calling/process_vcf_files.sh \
 	nanopore_sv_calling/add_metainfo_all.R \
 	nanopore_sv_calling/fix_vcfs.R \
@@ -181,11 +194,22 @@ nanopore_sv_calling/SV_NORMALIZATION : nanopore_sv_calling/SV_REFINEMENT \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
 	cd nanopore_sv_calling ; ./process_vcf_files.sh $(BCFTOOLS) $(R_RUN_COMMAND) ; touch SV_NORMALIZATION
 
+# --- This section calls and filters the SVs from AsmVar following de novo assembly with SOAPdenovo2
+ASMVAR_VCFS := $(shell tail -n+2 utilities/all_lines.txt | cut -f2 | xargs -I {} echo illumina_sv_calling/asmvar/asmvar_calling/{}/asmvar_results_Gm01.vcf)
+
+# Filtering the VCFs resulting from calling AsmVar on assemblies
+illumina_sv_calling/asmvar/asmvar_filtering/asmvar_svs.vcf : $(ASMVAR_VCFS) \
+	illumina_sv_calling/asmvar/asmvar_filter.sh \
+	utilities/all_lines.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta.fai \
+	scripts/add_svtype.awk \
+	illumina_sv_calling/asmvar/svtype_header_line.txt \
+	scripts/extract_svs_50.awk
+	cd illumina_sv_calling/asmvar ; ./asmvar_filter.sh $(BCFTOOLS) $(BAYESTYPERTOOLS) ; touch asmvar_filtering/asmvar_svs.vcf
 
 # --- The next section prepares the Illumina SV benchmarks from the Paragraph vcfs
 ILLUMINA_BENCHMARK_VCFS := $(shell tail -n+2 utilities/line_ids.txt | cut -f2 | xargs -I {} echo sv_genotyping/illumina_svs/{}_results/genotypes.vcf.gz)
-.PRECIOUS : $(ILLUMINA_BENCHMARK_VCFS)
-
 # Benchmark of Illumina SVs in non-repeat regions
 sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData: \
 	nanopore_sv_calling/SV_NORMALIZATION \

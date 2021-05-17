@@ -21,6 +21,7 @@
 # Ignore large data files
 *bam
 *bai
+*fastq.gz
 *.vcf
 
 # Ignore reference data files
