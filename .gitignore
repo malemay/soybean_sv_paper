@@ -21,8 +21,10 @@
 # Ignore large data files
 *bam
 *bai
+*contig
 *fastq.gz
-*.vcf
+*maf
+*vcf
 
 # Ignore reference data files
 te_analysis/te_database/SoyBase_TE_Fasta.txt

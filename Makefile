@@ -4,6 +4,7 @@
 R_FIG_COMMAND = /usr/bin/Rscript
 R_RUN_COMMAND = /prg/R/4.0/bin/Rscript
 CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
+ASMVAR = /home/malem420/programs/AsmVar/src/AsmvarDetect/ASV_VariantDetector
 BAYESTYPERTOOLS = /home/malem420/programs/bayesTyper_v1.5_linux_x86_64/bin/bayesTyperTools
 BCFTOOLS = /home/malem420/programs/bcftools/bcftools
 SAMTOOLS = /home/malem420/programs/samtools/samtools
@@ -195,10 +196,18 @@ nanopore_sv_calling/SV_NORMALIZATION : nanopore_sv_calling/SV_REFINEMENT $(NANOP
 	cd nanopore_sv_calling ; ./process_vcf_files.sh $(BCFTOOLS) $(R_RUN_COMMAND) ; touch SV_NORMALIZATION
 
 # --- This section calls and filters the SVs from AsmVar following de novo assembly with SOAPdenovo2
-ASMVAR_VCFS := $(shell tail -n+2 utilities/all_lines.txt | cut -f2 | xargs -I {} echo illumina_sv_calling/asmvar/asmvar_calling/{}/asmvar_results_Gm01.vcf)
+LAST_ALIGNMENTS := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/last_alignment/{}_soapdenovo2_fm.maf)
+SOAPDENOVO_ASSEMBLIES :=  $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/soap_assembly/{}/{}.contig)
+ASMVAR_VCFS := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/asmvar_calling/{}/asmvar_results_Gm01.vcf)
+
+# Calling SVs with AsmVar on the aligned assemblies
+illumina_sv_calling/asmvar/ASMVAR_CALLING : $(LAST_ALIGNMENTS) $(SOAPDENOVO_ASSEMBLIES) \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	utilities/all_lines.txt
+	cd illumina_sv_calling/asmvar ; ./asmvar_call.sh $(ASMVAR) ; touch ASMVAR_CALLING
 
 # Filtering the VCFs resulting from calling AsmVar on assemblies
-illumina_sv_calling/asmvar/asmvar_filtering/asmvar_svs.vcf : $(ASMVAR_VCFS) \
+illumina_sv_calling/asmvar/asmvar_filtering/asmvar_svs.vcf : illumina_sv_calling/asmvar/ASMVAR_CALLING $(ASMVAR_VCFS) \
 	illumina_sv_calling/asmvar/asmvar_filter.sh \
 	utilities/all_lines.txt \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
