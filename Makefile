@@ -4,8 +4,10 @@
 AGE = /home/malem420/programs/AGE/age_align
 ASMVAR = /home/malem420/programs/AsmVar/src/AsmvarDetect/ASV_VariantDetector
 BAYESTYPERTOOLS = /home/malem420/programs/bayesTyper_v1.5_linux_x86_64/bin/bayesTyperTools
+BBDUK = /home/malem420/programs/bbmap/bbduk.sh
 BCFTOOLS = /home/malem420/programs/bcftools/bcftools
 CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
+FLASH = /home/malem420/programs/FLASH-1.2.11-Linux-x86_64/flash
 LASTAL = /home/malem420/programs/last-1047/src/lastal
 LASTSPLIT = /home/malem420/programs/last-1047/src/last-split
 MINIMAP2 = /home/malem420/programs/minimap2/minimap2
@@ -198,16 +200,32 @@ nanopore_sv_calling/SV_NORMALIZATION : nanopore_sv_calling/SV_REFINEMENT $(NANOP
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
 	cd nanopore_sv_calling ; ./process_vcf_files.sh $(BCFTOOLS) $(R_RUN_COMMAND) ; touch SV_NORMALIZATION
 
+# --- This section takes care of Illumina read trimming and alignment
+ILLUMINA_READS_1 = $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_data/raw_fastq/{}_R1.fastq.gz)
+ILLUMINA_READS_2 = $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_data/raw_fastq/{}_R2.fastq.gz)
+
+illumina_data/ILLUMINA_TRIMMING : $(ILLUMINA_READS_1) $(ILLUMINA_READS_2) \
+	illumina_data/bbduk_trimming.sh \
+	utilities/all_lines.txt
+	cd illumina_data ; ./bbduk_trimming.sh $(BBDUK) ; touch illumina_data/ILLUMINA_TRIMMING
+
 # --- This section calls and filters the SVs from AsmVar following de novo assembly with SOAPdenovo2
-ILLUMINA_SINGLE_TRIMMED = $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_data/trimmed_fastq/{}/{}_sing_trimmed.fastq.gz)
-FLASH_MERGED = $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/flash_merging/{}/out.extendedFrags.fastq.gz)
-FLASH_UNMERGED = $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/flash_merging/{}/out.notCombined_1.fastq.gz)
+ILLUMINA_PAIRED_TRIMMED := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_data/trimmed_fastq/{}/{}_R1_trimmed.fastq.gz)
+ILLUMINA_SINGLE_TRIMMED := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_data/trimmed_fastq/{}/{}_sing_trimmed.fastq.gz)
+FLASH_MERGED := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/flash_merging/{}/out.extendedFrags.fastq.gz)
+FLASH_UNMERGED := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/flash_merging/{}/out.notCombined_1.fastq.gz)
 LAST_ALIGNMENTS := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/last_alignment/{}_soapdenovo2_fm.maf)
 SOAPDENOVO_ASSEMBLIES :=  $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/soap_assembly/{}/{}.contig)
 ASMVAR_VCFS := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/asmvar_calling/{}/asmvar_results_Gm01.vcf)
 
+# Merging the trimmed sequences with FLASH
+illumina_sv_calling/asmvar/FLASH_MERGING : illumina_data/ILLUMINA_TRIMMING $(ILLUMINA_PAIRED_TRIMMED) \
+	illumina_sv_calling/asmvar/flash_merging.sh
+	cd illumina_sv_calling/asmvar ; ./flash_merging.sh $(FLASH) ; touch FLASH_MERGING
+
 # Assembling the sequences using SOAPdenovo2
-illumina_sv_calling/asmvar/SOAPDENOVO_ASSEMBLY : $(ILLUMINA_SINGLE_TRIMMED) $(FLASH_SEQUENCES) \
+illumina_sv_calling/asmvar/SOAPDENOVO_ASSEMBLY : illumina_data/ILLUMINA_TRIMMING $(ILLUMINA_SINGLE_TRIMMED) \
+	illumina_sv_calling/asmvar/FLASH_MERGING $(FLASH_SEQUENCES) \
 	illumina_sv_calling/asmvar/assembly.sh \
 	illumina_sv_calling/asmvar/soap_assembly/make_config.sh \
 	illumina_sv_calling/asmvar/soap_assembly/config_template.txt \
@@ -223,7 +241,7 @@ illumina_sv_calling/asmvar/LAST_ALIGNMENT : illumina_sv_calling/asmvar/SOAPDENOV
 
 # Calling SVs with AsmVar on the aligned assemblies
 illumina_sv_calling/asmvar/ASMVAR_CALLING : illumina_sv_calling/asmvar/LAST_ALIGNMENT $(LAST_ALIGNMENTS) \
-	$(SOAPDENOVO_ASSEMBLIES) \
+	illumina_sv_calling/asmvar/SOAPDENOVO_ASSEMBLY $(SOAPDENOVO_ASSEMBLIES) \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	utilities/all_lines.txt
 	cd illumina_sv_calling/asmvar ; ./asmvar_call.sh $(ASMVAR) ; touch ASMVAR_CALLING
