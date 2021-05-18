@@ -1,17 +1,19 @@
 
 # Creating some variables for executables
 # Using R 3.5.0 for figures because of a problem with resolution when using R 4.0
-R_FIG_COMMAND = /usr/bin/Rscript
-R_RUN_COMMAND = /prg/R/4.0/bin/Rscript
-CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
+AGE = /home/malem420/programs/AGE/age_align
 ASMVAR = /home/malem420/programs/AsmVar/src/AsmvarDetect/ASV_VariantDetector
 BAYESTYPERTOOLS = /home/malem420/programs/bayesTyper_v1.5_linux_x86_64/bin/bayesTyperTools
 BCFTOOLS = /home/malem420/programs/bcftools/bcftools
-SAMTOOLS = /home/malem420/programs/samtools/samtools
+CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
+LASTAL = /home/malem420/programs/last-1047/src/lastal
+LASTSPLIT = /home/malem420/programs/last-1047/src/last-split
 MINIMAP2 = /home/malem420/programs/minimap2/minimap2
 NGMLR = /home/malem420/programs/ngmlr/ngmlr-0.2.7/ngmlr
 PORECHOP = /home/malem420/programs/Porechop/porechop-runner.py
-AGE = /home/malem420/programs/AGE/age_align
+R_FIG_COMMAND = /usr/bin/Rscript
+R_RUN_COMMAND = /prg/R/4.0/bin/Rscript
+SAMTOOLS = /home/malem420/programs/samtools/samtools
 SNIFFLES = /home/malem420/programs/Sniffles-master/bin/sniffles-core-1.0.11/sniffles
 WTDBG2 = /home/malem420/programs/wtdbg2/wtdbg2
 WTPOA_CNS = /home/malem420/programs/wtdbg2/wtpoa-cns
@@ -200,8 +202,16 @@ LAST_ALIGNMENTS := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumi
 SOAPDENOVO_ASSEMBLIES :=  $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/soap_assembly/{}/{}.contig)
 ASMVAR_VCFS := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/asmvar_calling/{}/asmvar_results_Gm01.vcf)
 
+# Aligning the de novo assemblies to the reference genome using LAST
+illumina_sv_calling/asmvar/LAST_ALIGNMENT : $(SOAPDENOVO_ASSEMBLIES) \
+	illumina_sv_calling/asmvar/last_alignment.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	utilities/all_lines.txt
+	cd illumina_sv_calling/asmvar ; ./last_alignment.sh $(LASTAL) $(LASTSPLIT) ; touch LAST_ALIGNMENT
+
 # Calling SVs with AsmVar on the aligned assemblies
-illumina_sv_calling/asmvar/ASMVAR_CALLING : $(LAST_ALIGNMENTS) $(SOAPDENOVO_ASSEMBLIES) \
+illumina_sv_calling/asmvar/ASMVAR_CALLING : illumina_sv_calling/asmvar/LAST_ALIGNMENT $(LAST_ALIGNMENTS) \
+	$(SOAPDENOVO_ASSEMBLIES) \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	utilities/all_lines.txt
 	cd illumina_sv_calling/asmvar ; ./asmvar_call.sh $(ASMVAR) ; touch ASMVAR_CALLING
@@ -215,7 +225,7 @@ illumina_sv_calling/asmvar/asmvar_filtering/asmvar_svs.vcf : illumina_sv_calling
 	scripts/add_svtype.awk \
 	illumina_sv_calling/asmvar/svtype_header_line.txt \
 	scripts/extract_svs_50.awk
-	cd illumina_sv_calling/asmvar ; ./asmvar_filter.sh $(BCFTOOLS) $(BAYESTYPERTOOLS) ; touch asmvar_filtering/asmvar_svs.vcf
+	cd illumina_sv_calling/asmvar ; ./asmvar_filter.sh $(BCFTOOLS) $(BAYESTYPERTOOLS)
 
 # --- The next section prepares the Illumina SV benchmarks from the Paragraph vcfs
 ILLUMINA_BENCHMARK_VCFS := $(shell tail -n+2 utilities/line_ids.txt | cut -f2 | xargs -I {} echo sv_genotyping/illumina_svs/{}_results/genotypes.vcf.gz)
