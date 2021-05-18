@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # Creating a few variables to make scripting easier
 # DEPENDENCY : refgenome/Gmax_508_v4.0_mit_chlp.fasta

@@ -14,6 +14,7 @@ PORECHOP = /home/malem420/programs/Porechop/porechop-runner.py
 R_FIG_COMMAND = /usr/bin/Rscript
 R_RUN_COMMAND = /prg/R/4.0/bin/Rscript
 SAMTOOLS = /home/malem420/programs/samtools/samtools
+SOAPDENOVO2 = /prg/SOAPdenovo/2.04/SOAPdenovo-63mer
 SNIFFLES = /home/malem420/programs/Sniffles-master/bin/sniffles-core-1.0.11/sniffles
 WTDBG2 = /home/malem420/programs/wtdbg2/wtdbg2
 WTPOA_CNS = /home/malem420/programs/wtdbg2/wtpoa-cns
@@ -198,12 +199,23 @@ nanopore_sv_calling/SV_NORMALIZATION : nanopore_sv_calling/SV_REFINEMENT $(NANOP
 	cd nanopore_sv_calling ; ./process_vcf_files.sh $(BCFTOOLS) $(R_RUN_COMMAND) ; touch SV_NORMALIZATION
 
 # --- This section calls and filters the SVs from AsmVar following de novo assembly with SOAPdenovo2
+ILLUMINA_SINGLE_TRIMMED = $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_data/trimmed_fastq/{}/{}_sing_trimmed.fastq.gz)
+FLASH_MERGED = $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/flash_merging/{}/out.extendedFrags.fastq.gz)
+FLASH_UNMERGED = $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/flash_merging/{}/out.notCombined_1.fastq.gz)
 LAST_ALIGNMENTS := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/last_alignment/{}_soapdenovo2_fm.maf)
 SOAPDENOVO_ASSEMBLIES :=  $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/soap_assembly/{}/{}.contig)
 ASMVAR_VCFS := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/asmvar_calling/{}/asmvar_results_Gm01.vcf)
 
+# Assembling the sequences using SOAPdenovo2
+illumina_sv_calling/asmvar/SOAPDENOVO_ASSEMBLY : $(ILLUMINA_SINGLE_TRIMMED) $(FLASH_SEQUENCES) \
+	illumina_sv_calling/asmvar/assembly.sh \
+	illumina_sv_calling/asmvar/soap_assembly/make_config.sh \
+	illumina_sv_calling/asmvar/soap_assembly/config_template.txt \
+	utilities/all_lines.txt
+	cd illumina_sv_calling/asmvar ; ./assembly.sh $(SOAPDENOVO2) ; touch SOAPDENOVO_ASSEMBLY
+
 # Aligning the de novo assemblies to the reference genome using LAST
-illumina_sv_calling/asmvar/LAST_ALIGNMENT : $(SOAPDENOVO_ASSEMBLIES) \
+illumina_sv_calling/asmvar/LAST_ALIGNMENT : illumina_sv_calling/asmvar/SOAPDENOVO_ASSEMBLY $(SOAPDENOVO_ASSEMBLIES) \
 	illumina_sv_calling/asmvar/last_alignment.sh \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	utilities/all_lines.txt

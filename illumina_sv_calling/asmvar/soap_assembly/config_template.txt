@@ -1,0 +1,27 @@
+# SOAPdenovo2 config file for assembling soybean reads that have been merged using FLASH
+# Three libraries are being used
+# 1- A library of paired reads not merged by FLASH
+# 2- A library of reads merged by flash and thus unpaired
+# 3- A library of reads left unpaired after trimming tiwh bbduk
+
+# Maximum read length
+max_rd_len=250
+[LIB]
+# Average insert size
+avg_ins=130
+# Indicates a forward-reverse library
+reverse_seq=0
+# This library is only used to generate contigs, not scaffolds
+asm_flags=1
+# Paired reads left unmerged by FLASH
+q1=../../flash_merging/XXXX/out.notCombined_1.fastq.gz
+q2=../../flash_merging/XXXX/out.notCombined_2.fastq.gz
+
+[LIB]
+asm_flags=1
+q=../../flash_merging/XXXX/out.extendedFrags.fastq.gz
+
+[LIB]
+asm_flags=1
+q=../../../../illumina_data/trimmed_fastq/XXXX/XXXX_sing_trimmed.fastq.gz
+
