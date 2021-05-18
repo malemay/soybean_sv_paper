@@ -5,6 +5,8 @@ AGE = /home/malem420/programs/AGE/age_align
 ASMVAR = /home/malem420/programs/AsmVar/src/AsmvarDetect/ASV_VariantDetector
 BAYESTYPERTOOLS = /home/malem420/programs/bayesTyper_v1.5_linux_x86_64/bin/bayesTyperTools
 BBDUK = /home/malem420/programs/bbmap/bbduk.sh
+BAMADDRG = /prg/bamaddrg/1.0/bamaddrg
+BWA = /prg/bwa/0.7.17/bwa
 BCFTOOLS = /home/malem420/programs/bcftools/bcftools
 CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
 FLASH = /home/malem420/programs/FLASH-1.2.11-Linux-x86_64/flash
@@ -203,15 +205,22 @@ nanopore_sv_calling/SV_NORMALIZATION : nanopore_sv_calling/SV_REFINEMENT $(NANOP
 # --- This section takes care of Illumina read trimming and alignment
 ILLUMINA_READS_1 = $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_data/raw_fastq/{}_R1.fastq.gz)
 ILLUMINA_READS_2 = $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_data/raw_fastq/{}_R2.fastq.gz)
+ILLUMINA_PAIRED_TRIMMED := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_data/trimmed_fastq/{}/{}_R1_trimmed.fastq.gz)
+ILLUMINA_SINGLE_TRIMMED := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_data/trimmed_fastq/{}/{}_sing_trimmed.fastq.gz)
+ILLUMINA_ALIGNED_READS := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_data/aligned_reads/{}/{}_all.sort.bam)
 
 illumina_data/ILLUMINA_TRIMMING : $(ILLUMINA_READS_1) $(ILLUMINA_READS_2) \
 	illumina_data/bbduk_trimming.sh \
 	utilities/all_lines.txt
 	cd illumina_data ; ./bbduk_trimming.sh $(BBDUK) ; touch illumina_data/ILLUMINA_TRIMMING
 
+illumina_data/ILLUMINA_ALIGNMENT : illumina_data/ILLUMINA_TRIMMING $(ILLUMINA_PAIRED_TRIMMED) $(ILLUMINA_SINGLE_TRIMMED) \
+	illumina_data/bwa_alignment.sh \
+	utilities/all_lines.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	cd illumina_data ; ./bwa_alignment.sh $(BWA) $(SAMTOOLS) $(BAMADDRG) ; touch ILLUMINA_ALIGNMENT
+
 # --- This section calls and filters the SVs from AsmVar following de novo assembly with SOAPdenovo2
-ILLUMINA_PAIRED_TRIMMED := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_data/trimmed_fastq/{}/{}_R1_trimmed.fastq.gz)
-ILLUMINA_SINGLE_TRIMMED := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_data/trimmed_fastq/{}/{}_sing_trimmed.fastq.gz)
 FLASH_MERGED := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/flash_merging/{}/out.extendedFrags.fastq.gz)
 FLASH_UNMERGED := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/flash_merging/{}/out.notCombined_1.fastq.gz)
 LAST_ALIGNMENTS := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/asmvar/last_alignment/{}_soapdenovo2_fm.maf)
@@ -256,6 +265,9 @@ illumina_sv_calling/asmvar/asmvar_filtering/asmvar_svs.vcf : illumina_sv_calling
 	illumina_sv_calling/asmvar/svtype_header_line.txt \
 	scripts/extract_svs_50.awk
 	cd illumina_sv_calling/asmvar ; ./asmvar_filter.sh $(BCFTOOLS) $(BAYESTYPERTOOLS)
+
+# --- This section calls the SVs using manta
+
 
 # --- The next section prepares the Illumina SV benchmarks from the Paragraph vcfs
 ILLUMINA_BENCHMARK_VCFS := $(shell tail -n+2 utilities/line_ids.txt | cut -f2 | xargs -I {} echo sv_genotyping/illumina_svs/{}_results/genotypes.vcf.gz)
