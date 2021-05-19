@@ -11,6 +11,7 @@
 
 # Ignore the files from external software
 /external
+scripts/addMissingPaddingGmax4.py
 
 # Ignore R ouput files
 *Rout
@@ -18,11 +19,12 @@
 # Ignore vim swap files
 *.swp
 
-# Ignore large data files
+# Ignore large or intermediate data files
 *bam
 *bai
 *contig
 *fastq.gz
+*manifest.txt
 *maf
 *vcf
 *vcf.gz

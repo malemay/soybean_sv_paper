@@ -11,10 +11,12 @@ BWA = /prg/bwa/0.7.17/bwa
 BCFTOOLS = /home/malem420/programs/bcftools/bcftools
 CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
 FLASH = /home/malem420/programs/FLASH-1.2.11-Linux-x86_64/flash
+IDXDEPTH = /home/malem420/programs/paragraph/bin/idxdepth
 LASTAL = /home/malem420/programs/last-1047/src/lastal
 LASTSPLIT = /home/malem420/programs/last-1047/src/last-split
 MANTA = /home/malem420/programs/manta-1.6.0.centos6_x86_64/bin/configManta.py
 MINIMAP2 = /home/malem420/programs/minimap2/minimap2
+MULTIGRMPY = /home/malem420/programs/paragraph/bin/multigrmpy.py
 NGMLR = /home/malem420/programs/ngmlr/ngmlr-0.2.7/ngmlr
 PORECHOP = /home/malem420/programs/Porechop/porechop-runner.py
 R_FIG_COMMAND = /usr/bin/Rscript
@@ -24,6 +26,7 @@ SMOOVE = /home/malem420/programs/smoove/smoove
 SOAPDENOVO2 = /prg/SOAPdenovo/2.04/SOAPdenovo-63mer
 SNIFFLES = /home/malem420/programs/Sniffles-master/bin/sniffles-core-1.0.11/sniffles
 SVABA = /home/malem420/programs/svaba/bin/svaba
+SVMERGE = /home/malem420/programs/SVanalyzer-install/bin/SVmerge
 TABIX = /prg/htslib/1.10.2/bin/tabix
 WTDBG2 = /home/malem420/programs/wtdbg2/wtdbg2
 WTPOA_CNS = /home/malem420/programs/wtdbg2/wtpoa-cns
@@ -324,19 +327,46 @@ illumina_sv_calling/smoove/smoove_svs.vcf : illumina_sv_calling/smoove/all_sampl
 	scripts/extract_svs_50.awk
 	cd illumina_sv_calling/smoove ; ./smoove_filter.sh $(BCFTOOLS) $(BAYESTYPERTOOLS)
 
+# --- This section prepares the files that are needed for all Paragraph runs, irrespective of the SV dataset
+PARAGRAPH_MANIFEST_FILES := $(shell cat utilities/all_lines.txt | xargs -I {} echo sv_genotyping/manifest_files/{}_manifest.txt)
+
+sv_genotyping/MANIFEST_FILES : illumina_data/ILLUMINA_ALIGNMENT $(ILLUMINA_ALIGNED_READS) \
+	sv_genotyping/prepare_manifest_files.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	utilities/all_lines.txt \
+	utilities/read_lengths.txt
+	cd sv_genotyping ; ./prepare_manifest_files.sh $(IDXDEPTH) ; touch MANIFEST_FILES
+
+# --- This section genotypes the Illumina SVs using Paragraph, first preparing them with SVmerge
+sv_genotyping/illumina_svs/svmerged.clustered.vcf : sv_genotyping/illumina_svs/svmerge_files.txt \
+	illumina_sv_calling/asmvar/asmvar_filtering/asmvar_svs.vcf \
+	illumina_sv_calling/manta/manta_svs.vcf \
+	illumina_sv_calling/smoove/smoove_svs.vcf \
+	illumina_sv_calling/svaba/svaba_svs.vcf \
+	sv_genotyping/illumina_svs/SVmerge.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	cd sv_genotyping/illumina_svs ; ./SVmerge.sh $(SVMERGE)
+
+sv_genotyping/illumina_svs/PARAGRAPH_ILLUMINA_GENOTYPING : illumina_data/ILLUMINA_ALIGNMENT $(ILLUMINA_ALIGNED_READS) \
+	sv_genotyping/MANIFEST_FILES $(PARAGRAPH_MANIFEST_FILES) \
+	sv_genotyping/illumina_svs/svmerged.clustered.vcf \
+	sv_genotyping/illumina_svs/run_paragraph.sh \
+	scripts/addMissingPaddingGmax4.py \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	utilities/all_lines.txt
+	cd sv_genotyping/illumina_svs ; ./run_paragraph.sh $(BCFTOOLS) $(BGZIP) $(TABIX) $(MULTIGRMPY) ; touch PARAGRAPH_ILLUMINA_GENOTYPING
+
 # --- The next section prepares the Illumina SV benchmarks from the Paragraph vcfs
-ILLUMINA_BENCHMARK_VCFS := $(shell tail -n+2 utilities/line_ids.txt | cut -f2 | xargs -I {} echo sv_genotyping/illumina_svs/{}_results/genotypes.vcf.gz)
+PARAGRAPH_ILLUMINA_VCFS := $(shell tail -n+2 utilities/line_ids.txt | cut -f2 | xargs -I {} echo sv_genotyping/illumina_svs/{}_results/genotypes.vcf.gz)
 # Benchmark of Illumina SVs in non-repeat regions
 sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData: \
-	nanopore_sv_calling/SV_NORMALIZATION \
+	sv_genotyping/illumina_svs/PARAGRAPH_ILLUMINA_GENOTYPING $(PARAGRAPH_ILLUMINA_VCFS) \
+	nanopore_sv_calling/SV_NORMALIZATION $(NANOPORE_NORMALIZED_SVS) \
 	sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_benchmark.R \
 	utilities/line_ids.txt \
-	$(ILLUMINA_BENCHMARK_VCFS) \
-	$(NANOPORE_NORMALIZED_SVS) \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	refgenome/repeat_regions/non_repeated_regions.bed \
 	scripts/extract_rates.R \
 	scripts/read_filter_vcf.R
 	cd sv_genotyping/illumina_svs/sveval_benchmarks ; $(R_RUN_COMMAND) norepeat_benchmark.R
-
 

@@ -1,0 +1,4 @@
+../../illumina_sv_calling/asmvar/asmvar_filtering/asmvar_svs.vcf
+../../illumina_sv_calling/manta/manta_svs.vcf
+../../illumina_sv_calling/smoove/smoove_svs.vcf
+../../illumina_sv_calling/svaba/svaba_svs.vcf
