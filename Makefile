@@ -20,6 +20,7 @@ PORECHOP = /home/malem420/programs/Porechop/porechop-runner.py
 R_FIG_COMMAND = /usr/bin/Rscript
 R_RUN_COMMAND = /prg/R/4.0/bin/Rscript
 SAMTOOLS = /home/malem420/programs/samtools/samtools
+SMOOVE = /home/malem420/programs/smoove/smoove
 SOAPDENOVO2 = /prg/SOAPdenovo/2.04/SOAPdenovo-63mer
 SNIFFLES = /home/malem420/programs/Sniffles-master/bin/sniffles-core-1.0.11/sniffles
 SVABA = /home/malem420/programs/svaba/bin/svaba
@@ -307,6 +308,21 @@ illumina_sv_calling/svaba/svaba_svs.vcf : illumina_sv_calling/svaba/SVABA_CALLIN
 	illumina_sv_calling/svaba/ACO_header_line.txt \
 	scripts/extract_svs_50.awk
 	cd illumina_sv_calling/svaba ; $(R_RUN_COMMAND) convert_svaba.R ; ./svaba_filter.sh $(BGZIP) $(TABIX) $(BCFTOOLS)
+
+# --- This section calls and filters the SVs discovered using smoove
+illumina_sv_calling/smoove/all_samples.smoove.square.vcf.gz : illumina_data/ILLUMINA_ALIGNMENT $(ILLUMINA_ALIGNED_READS) \
+	illumina_sv_calling/smoove/smoove_call.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	utilities/all_lines.txt
+	cd illumina_sv_calling/smoove ; ./smoove_call.sh $(SMOOVE) $(TABIX)
+
+illumina_sv_calling/smoove/smoove_svs.vcf : illumina_sv_calling/smoove/all_samples.smoove.square.vcf.gz \
+	illumina_sv_calling/smoove/smoove_filter.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta.fai \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	illumina_sv_calling/smoove/ACO_header_line.txt \
+	scripts/extract_svs_50.awk
+	cd illumina_sv_calling/smoove ; ./smoove_filter.sh $(BCFTOOLS) $(BAYESTYPERTOOLS)
 
 # --- The next section prepares the Illumina SV benchmarks from the Paragraph vcfs
 ILLUMINA_BENCHMARK_VCFS := $(shell tail -n+2 utilities/line_ids.txt | cut -f2 | xargs -I {} echo sv_genotyping/illumina_svs/{}_results/genotypes.vcf.gz)
