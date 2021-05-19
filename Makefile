@@ -21,6 +21,7 @@ R_RUN_COMMAND = /prg/R/4.0/bin/Rscript
 SAMTOOLS = /home/malem420/programs/samtools/samtools
 SOAPDENOVO2 = /prg/SOAPdenovo/2.04/SOAPdenovo-63mer
 SNIFFLES = /home/malem420/programs/Sniffles-master/bin/sniffles-core-1.0.11/sniffles
+SVABA = /home/malem420/programs/svaba/bin/svaba
 TABIX = /prg/htslib/1.10.2/bin/tabix
 WTDBG2 = /home/malem420/programs/wtdbg2/wtdbg2
 WTPOA_CNS = /home/malem420/programs/wtdbg2/wtpoa-cns
@@ -273,7 +274,8 @@ MANTA_CANDIDATE_SVS := $(shell seq 1 10 | xargs -I {} echo illumina_sv_calling/m
 
 illumina_sv_calling/manta/MANTA_CALLING : illumina_data/ILLUMINA_ALIGNMENT $(ILLUMINA_ALIGNED_READS) \
 	illumina_sv_calling/manta/manta_call.sh \
-	illumina_sv_calling/manta/manta_config.txt 
+	illumina_sv_calling/manta/manta_config.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta
 	cd illumina_sv_calling/manta ; ./manta_call.sh $(MANTA) ; touch MANTA_CALLING
 
 illumina_sv_calling/manta/manta_svs.vcf : illumina_sv_calling/manta/MANTA_CALLING $(MANTA_CANDIDATE_SVS) \
@@ -284,6 +286,14 @@ illumina_sv_calling/manta/manta_svs.vcf : illumina_sv_calling/manta/MANTA_CALLIN
 	cd illumina_sv_calling/manta ; ./manta_filter.sh $(BCFTOOLS) $(BAYESTYPERTOOLS) $(TABIX)
 
 # --- This section calls and filters the SVs discovered using SvABA
+#SVABA_INDEL_VCFS := $(shell)
+#SVABA_SV_VCFS := $(shell)
+
+illumina_sv_calling/svaba/SVABA_CALLING : illumina_data/ILLUMINA_ALIGNMENT $(ILLUMINA_ALIGNED_READS) \
+	illumina_sv_calling/svaba/svaba_call.sh \
+	utilities/all_lines.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	cd illumina_sv_calling/svaba ; ./svaba_call.sh $(SVABA) ; touch SVABA_CALLING
 
 # --- The next section prepares the Illumina SV benchmarks from the Paragraph vcfs
 ILLUMINA_BENCHMARK_VCFS := $(shell tail -n+2 utilities/line_ids.txt | cut -f2 | xargs -I {} echo sv_genotyping/illumina_svs/{}_results/genotypes.vcf.gz)
