@@ -6,6 +6,7 @@ ASMVAR = /home/malem420/programs/AsmVar/src/AsmvarDetect/ASV_VariantDetector
 BAYESTYPERTOOLS = /home/malem420/programs/bayesTyper_v1.5_linux_x86_64/bin/bayesTyperTools
 BBDUK = /home/malem420/programs/bbmap/bbduk.sh
 BAMADDRG = /prg/bamaddrg/1.0/bamaddrg
+BGZIP = /prg/htslib/1.10.2/bin/bgzip
 BWA = /prg/bwa/0.7.17/bwa
 BCFTOOLS = /home/malem420/programs/bcftools/bcftools
 CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
@@ -286,14 +287,26 @@ illumina_sv_calling/manta/manta_svs.vcf : illumina_sv_calling/manta/MANTA_CALLIN
 	cd illumina_sv_calling/manta ; ./manta_filter.sh $(BCFTOOLS) $(BAYESTYPERTOOLS) $(TABIX)
 
 # --- This section calls and filters the SVs discovered using SvABA
-#SVABA_INDEL_VCFS := $(shell)
-#SVABA_SV_VCFS := $(shell)
+SVABA_INDEL_VCFS := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/svaba/{}.svaba.indel.vcf)
+SVABA_SV_VCFS := $(shell cat utilities/all_lines.txt | xargs -I {} echo illumina_sv_calling/svaba/{}.svaba.sv.vcf)
 
 illumina_sv_calling/svaba/SVABA_CALLING : illumina_data/ILLUMINA_ALIGNMENT $(ILLUMINA_ALIGNED_READS) \
 	illumina_sv_calling/svaba/svaba_call.sh \
 	utilities/all_lines.txt \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
 	cd illumina_sv_calling/svaba ; ./svaba_call.sh $(SVABA) ; touch SVABA_CALLING
+
+illumina_sv_calling/svaba/svaba_svs.vcf : illumina_sv_calling/svaba/SVABA_CALLING $(SVABA_INDEL_VCFS) $(SVABA_SV_VCFS) \
+	illumina_sv_calling/svaba/convert_svaba.R \
+	illumina_sv_calling/svaba/svaba_filter.sh \
+	scripts/svaba_process.R \
+	utilities/all_lines.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta.fai \
+	illumina_sv_calling/svaba/annotate_svtype.awk \
+	illumina_sv_calling/svaba/ACO_header_line.txt \
+	scripts/extract_svs_50.awk
+	cd illumina_sv_calling/svaba ; $(R_RUN_COMMAND) convert_svaba.R ; ./svaba_filter.sh $(BGZIP) $(TABIX) $(BCFTOOLS)
 
 # --- The next section prepares the Illumina SV benchmarks from the Paragraph vcfs
 ILLUMINA_BENCHMARK_VCFS := $(shell tail -n+2 utilities/line_ids.txt | cut -f2 | xargs -I {} echo sv_genotyping/illumina_svs/{}_results/genotypes.vcf.gz)
