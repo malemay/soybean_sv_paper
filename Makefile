@@ -12,6 +12,7 @@ CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
 FLASH = /home/malem420/programs/FLASH-1.2.11-Linux-x86_64/flash
 LASTAL = /home/malem420/programs/last-1047/src/lastal
 LASTSPLIT = /home/malem420/programs/last-1047/src/last-split
+MANTA = /home/malem420/programs/manta-1.6.0.centos6_x86_64/bin/configManta.py
 MINIMAP2 = /home/malem420/programs/minimap2/minimap2
 NGMLR = /home/malem420/programs/ngmlr/ngmlr-0.2.7/ngmlr
 PORECHOP = /home/malem420/programs/Porechop/porechop-runner.py
@@ -20,6 +21,7 @@ R_RUN_COMMAND = /prg/R/4.0/bin/Rscript
 SAMTOOLS = /home/malem420/programs/samtools/samtools
 SOAPDENOVO2 = /prg/SOAPdenovo/2.04/SOAPdenovo-63mer
 SNIFFLES = /home/malem420/programs/Sniffles-master/bin/sniffles-core-1.0.11/sniffles
+TABIX = /prg/htslib/1.10.2/bin/tabix
 WTDBG2 = /home/malem420/programs/wtdbg2/wtdbg2
 WTPOA_CNS = /home/malem420/programs/wtdbg2/wtpoa-cns
 
@@ -266,8 +268,22 @@ illumina_sv_calling/asmvar/asmvar_filtering/asmvar_svs.vcf : illumina_sv_calling
 	scripts/extract_svs_50.awk
 	cd illumina_sv_calling/asmvar ; ./asmvar_filter.sh $(BCFTOOLS) $(BAYESTYPERTOOLS)
 
-# --- This section calls the SVs using manta
+# --- This section calls and filters the SVs discovered using manta
+MANTA_CANDIDATE_SVS := $(shell seq 1 10 | xargs -I {} echo illumina_sv_calling/manta/manta_sample{}/MantaWorkflow/results/variants/candidateSV.vcf.gz)
 
+illumina_sv_calling/manta/MANTA_CALLING : illumina_data/ILLUMINA_ALIGNMENT $(ILLUMINA_ALIGNED_READS) \
+	illumina_sv_calling/manta/manta_call.sh \
+	illumina_sv_calling/manta/manta_config.txt 
+	cd illumina_sv_calling/manta ; ./manta_call.sh $(MANTA) ; touch MANTA_CALLING
+
+illumina_sv_calling/manta/manta_svs.vcf : illumina_sv_calling/manta/MANTA_CALLING $(MANTA_CANDIDATE_SVS) \
+	illumina_sv_calling/manta/manta_filter.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	illumina_sv_calling/manta/ACO_header_line.txt \
+	scripts/extract_svs_50.awk
+	cd illumina_sv_calling/manta ; ./manta_filter.sh $(BCFTOOLS) $(BAYESTYPERTOOLS) $(TABIX)
+
+# --- This section calls and filters the SVs discovered using SvABA
 
 # --- The next section prepares the Illumina SV benchmarks from the Paragraph vcfs
 ILLUMINA_BENCHMARK_VCFS := $(shell tail -n+2 utilities/line_ids.txt | cut -f2 | xargs -I {} echo sv_genotyping/illumina_svs/{}_results/genotypes.vcf.gz)

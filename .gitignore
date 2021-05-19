@@ -25,6 +25,7 @@
 *fastq.gz
 *maf
 *vcf
+*vcf.gz
 
 # Ignore reference data files
 te_analysis/te_database/SoyBase_TE_Fasta.txt
