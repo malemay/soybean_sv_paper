@@ -1,4 +1,3 @@
-
 # Creating some variables for executables
 # Using R 3.5.0 for figures because of a problem with resolution when using R 4.0
 AGE = /home/malem420/programs/AGE/age_align
@@ -357,8 +356,8 @@ sv_genotyping/illumina_svs/PARAGRAPH_ILLUMINA_GENOTYPING : illumina_data/ILLUMIN
 	cd sv_genotyping/illumina_svs ; ./run_paragraph.sh $(BCFTOOLS) $(BGZIP) $(TABIX) $(MULTIGRMPY) ; touch PARAGRAPH_ILLUMINA_GENOTYPING
 
 # --- This section genotypes the Oxford Nanopore SVs using Paragraph, first preparing them with SVmerge
-sv_genotyping/nanopore_svs/svmerged_clustered_sorted.vcf : nanopore_sv_calling/SV_NORMALIZATION $(NANOPORE_NORMALIZED_SVS) \
-	sv_genotyping/nanopore_svs/svmerge_files.txt \
+sv_genotyping/nanopore_svs/svmerged_clustered_sorted.vcf : sv_genotyping/nanopore_svs/svmerge_files.txt \
+	nanopore_sv_calling/SV_NORMALIZATION $(NANOPORE_NORMALIZED_SVS) \
 	sv_genotyping/nanopore_svs/SVmerge.sh \
 	sv_genotyping/nanopore_svs/merge_realigned.R \
 	scripts/merge_realigned_variants.R \
@@ -376,10 +375,29 @@ sv_genotyping/nanopore_svs/PARAGRAPH_NANOPORE_GENOTYPING : illumina_data/ILLUMIN
 	cd sv_genotyping/nanopore_svs ; ./run_paragraph.sh $(BCFTOOLS) $(BGZIP) $(TABIX) $(MULTIGRMPY) ; touch PARAGRAPH_NANOPORE_GENOTYPING
 
 # --- This section genotypes the combined Illumina/Oxford Nanopore SVs using Paragraph, first preparing them with SVmerge
+sv_genotyping/combined_svs/illumina_merged_sorted.vcf : sv_genotyping/combined_svs/svmerge_files.txt \
+	sv_genotyping/illumina_svs/svmerged.clustered.vcf \
+	sv_genotyping/nanopore_svs/svmerged_clustered_sorted.vcf \
+	sv_genotyping/combined_svs/SVmerge.sh \
+	sv_genotyping/combined_svs/header_lines.txt \
+	sv_genotyping/combined_svs/select_svs.R \
+	sv_genotyping/combined_svs/sort_vcfs.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta 
+	cd sv_genotyping/combined_svs ; ./SVmerge.sh $(BCFTOOLS) $(SVMERGE) ; $(R_RUN_COMMAND) select_svs.R ; ./sort_vcfs.sh $(BCFTOOLS)
 
+sv_genotyping/combined_svs/PARAGRAPH_COMBINED_GENOTYPING : illumina_data/ILLUMINA_ALIGNMENT $(ILLUMINA_ALIGNED_READS) \
+	sv_genotyping/MANIFEST_FILES $(PARAGRAPH_MANIFEST_FILES) \
+	sv_genotyping/combined_svs/illumina_merged_sorted.vcf \
+	sv_genotyping/combined_svs/run_paragraph.sh \
+	scripts/addMissingPaddingGmax4.py \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	utilities/all_lines.txt
+	cd sv_genotyping/combined_svs ; ./run_paragraph.sh $(BCFTOOLS) $(BGZIP) $(TABIX) $(MULTIGRMPY) ; touch PARAGRAPH_COMBINED_GENOTYPING
 
 # --- The next section prepares the Illumina SV benchmarks from the Paragraph vcfs
-PARAGRAPH_ILLUMINA_VCFS := $(shell tail -n+2 utilities/line_ids.txt | cut -f2 | xargs -I {} echo sv_genotyping/illumina_svs/{}_results/genotypes.vcf.gz)
+PARAGRAPH_ILLUMINA_VCFS := $(shell cat utilities/all_lines.txt | xargs -I {} echo sv_genotyping/illumina_svs/{}_results/genotypes.vcf.gz)
+
+
 # Benchmark of Illumina SVs in non-repeat regions
 sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData: \
 	sv_genotyping/illumina_svs/PARAGRAPH_ILLUMINA_GENOTYPING $(PARAGRAPH_ILLUMINA_VCFS) \
@@ -393,5 +411,8 @@ sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rate
 	cd sv_genotyping/illumina_svs/sveval_benchmarks ; $(R_RUN_COMMAND) norepeat_benchmark.R
 
 # --- The next section prepares the Oxford Nanopore SV benchmarks from the Paragraph vcfs
-PARAGRAPH_NANOPORE_VCFS := $(shell tail -n+2 utilities/line_ids.txt | cut -f2 | xargs -I {} echo sv_genotyping/nanopore_svs/{}_results/genotypes.vcf.gz)
+PARAGRAPH_NANOPORE_VCFS := $(shell cat utilities/all_lines.txt | xargs -I {} echo sv_genotyping/nanopore_svs/{}_results/genotypes.vcf.gz)
+
+# --- The next section prepares the combined Illumina/Oxford Nanopore SV benchmarks from the Paragraph vcfs
+PARAGRAPH_COMBINED_VCFS := $(shell cat utilities/all_lines.txt | xargs -I {} echo sv_genotyping/combined_svs/{}_results/genotypes.vcf.gz)
 
