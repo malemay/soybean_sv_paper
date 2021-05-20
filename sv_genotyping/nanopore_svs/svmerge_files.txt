@@ -1,0 +1,17 @@
+../../nanopore_sv_calling/AC2001_normalized_ids.vcf
+../../nanopore_sv_calling/ALTA_normalized_ids.vcf
+../../nanopore_sv_calling/MAPLE_ISLE_normalized_ids.vcf
+../../nanopore_sv_calling/MAPLE_PRESTO_normalized_ids.vcf
+../../nanopore_sv_calling/OAC_09_35C_normalized_ids.vcf
+../../nanopore_sv_calling/OAC_CARMAN_normalized_ids.vcf
+../../nanopore_sv_calling/OAC_DRAYTON_normalized_ids.vcf
+../../nanopore_sv_calling/OAC_EMBRO_normalized_ids.vcf
+../../nanopore_sv_calling/OAC_LAKEVIEW_normalized_ids.vcf
+../../nanopore_sv_calling/OAC_MADOC_normalized_ids.vcf
+../../nanopore_sv_calling/OAC_OXFORD_normalized_ids.vcf
+../../nanopore_sv_calling/OAC_PETREL_2_normalized_ids.vcf
+../../nanopore_sv_calling/OAC_PRUDENCE_normalized_ids.vcf
+../../nanopore_sv_calling/OAC_STRATFORD_normalized_ids.vcf
+../../nanopore_sv_calling/OT09-03_normalized_ids.vcf
+../../nanopore_sv_calling/QS5091.50J_normalized_ids.vcf
+../../nanopore_sv_calling/ROLAND_normalized_ids.vcf
