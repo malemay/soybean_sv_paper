@@ -1,4 +1,4 @@
-#!/prg/R/4.0/bin/Rscript
+#!/usr/bin/Rscript
 
 # Figure S6 shows the benchmarking of duplications and inversions discovered using Illumina sequencing
 # We only need a single panel to show inversions and another to show duplications because there are not many
@@ -13,12 +13,12 @@ library(ggplot2)
 library(grid)
 
 # Loading the data used for plotting
-# DEPENDENCY : sveval_frequency_rates.RData
-load("/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/svmerged_variants/paragraph/sveval_benchmarks/frequency_RData/sveval_frequency_rates.RData")
+# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/frequency_RData/sveval_frequency_rates.RData
+load("../sv_genotyping/illumina_svs/sveval_benchmarks/frequency_RData/sveval_frequency_rates.RData")
 
 # Also loading a script that will be used to prepare the data for plotting
-# DEPENDENCY : make_plot_data.R
-source("/home/malem420/scripts/make_plot_data.R")
+# DEPENDENCY : scripts/make_plot_data.R
+source("../scripts/make_plot_data.R")
 
 # Preparing the data for plotting
 dup_plot_data <- make_plot_data(sveval_frequency_rates, "DUP")
@@ -64,6 +64,7 @@ inversions_plot <-
 	common_theme
 
 # Saving as a png file
+# OUTPUT : figures/figure_s6.png
 png("figure_s6.png", width = 3, height = 6, units = "in", res = 500)
 grid.newpage()
 # Locating the subplots in the figure
