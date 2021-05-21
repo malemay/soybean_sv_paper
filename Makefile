@@ -160,6 +160,12 @@ figures/figure_5.png: figures/figure_5.R
 figures/figure_6.png: figures/figure_6.R
 	cd figures; $(R_FIG_COMMAND) figure_6.R
 
+# --- This section creates the bed file of repeats from the reference genome and Phytozome repeat annotation
+refgenome/repeat_regions/non_repeated_regions.bed : refgenome/repeat_regions/make_repeat_bed.R \
+	refgenome/Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3 \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	cd refgenome/repeat_regions ; $(R_RUN_COMMAND) make_repeat_bed.R
+
 # --- This section processes the raw basecalled Nanopore reads using Porechop and aligns them to the reference genome
 NANOPORE_READS := $(shell cat utilities/flowcell_names.txt | xargs -I {} echo nanopore_data/{}.fastq.gz)
 
