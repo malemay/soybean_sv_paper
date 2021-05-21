@@ -398,7 +398,7 @@ sv_genotyping/combined_svs/PARAGRAPH_COMBINED_GENOTYPING : illumina_data/ILLUMIN
 PARAGRAPH_ILLUMINA_VCFS := $(shell cat utilities/all_lines.txt | xargs -I {} echo sv_genotyping/illumina_svs/{}_results/genotypes.vcf.gz)
 
 # Benchmark of Illumina SVs genome-wide
-sv_genotyping/illumina_svs/sveval_benchmarks/ILLUMINA_GENOTYPING_BENCHMARK : \
+sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData : \
 	sv_genotyping/illumina_svs/PARAGRAPH_ILLUMINA_GENOTYPING $(PARAGRAPH_ILLUMINA_VCFS) \
 	nanopore_sv_calling/SV_NORMALIZATION $(NANOPORE_NORMALIZED_SVS) \
 	sv_genotyping/illumina_svs/sveval_benchmarks/benchmark.R \
@@ -409,7 +409,7 @@ sv_genotyping/illumina_svs/sveval_benchmarks/ILLUMINA_GENOTYPING_BENCHMARK : \
 	cd sv_genotyping/illumina_svs/sveval_benchmarks ; $(R_RUN_COMMAND) benchmark.R
 
 # Benchmark of Illumina SVs in non-repeat regions
-sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData: \
+sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData : \
 	sv_genotyping/illumina_svs/PARAGRAPH_ILLUMINA_GENOTYPING $(PARAGRAPH_ILLUMINA_VCFS) \
 	nanopore_sv_calling/SV_NORMALIZATION $(NANOPORE_NORMALIZED_SVS) \
 	sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_benchmark.R \
@@ -422,6 +422,29 @@ sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rate
 
 # --- The next section prepares the Oxford Nanopore SV benchmarks from the Paragraph vcfs
 PARAGRAPH_NANOPORE_VCFS := $(shell cat utilities/all_lines.txt | xargs -I {} echo sv_genotyping/nanopore_svs/{}_results/genotypes.vcf.gz)
+
+# Benchmark of Oxford Nanopore SVs genome-wide
+sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData : \
+	sv_genotyping/nanopore_svs/PARAGRAPH_NANOPORE_GENOTYPING $(PARAGRAPH_NANOPORE_VCFS) \
+	nanopore_sv_calling/SV_NORMALIZATION $(NANOPORE_NORMALIZED_SVS) \
+	sv_genotyping/nanopore_svs/sveval_benchmarks/benchmark.R \
+	utilities/line_ids.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	scripts/extract_rates.R \
+	scripts/read_filter_vcf.R
+	cd sv_genotyping/nanopore_svs/sveval_benchmarks ; $(R_RUN_COMMAND) benchmark.R
+
+# Benchmark of Oxford Nanopore SVs in non-repeat regions
+sv_genotyping/nanopore_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData : \
+	sv_genotyping/nanopore_svs/PARAGRAPH_NANOPORE_GENOTYPING $(PARAGRAPH_NANOPORE_VCFS) \
+	nanopore_sv_calling/SV_NORMALIZATION $(NANOPORE_NORMALIZED_SVS) \
+	sv_genotyping/nanopore_svs/sveval_benchmarks/norepeat_benchmark.R \
+	utilities/line_ids.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	refgenome/repeat_regions/non_repeated_regions.bed \
+	scripts/extract_rates.R \
+	scripts/read_filter_vcf.R
+	cd sv_genotyping/nanopore_svs/sveval_benchmarks ; $(R_RUN_COMMAND) norepeat_benchmark.R
 
 # --- The next section prepares the combined Illumina/Oxford Nanopore SV benchmarks from the Paragraph vcfs
 PARAGRAPH_COMBINED_VCFS := $(shell cat utilities/all_lines.txt | xargs -I {} echo sv_genotyping/combined_svs/{}_results/genotypes.vcf.gz)

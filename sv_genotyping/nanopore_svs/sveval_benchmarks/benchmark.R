@@ -1,11 +1,11 @@
 #!/usr/bin/Rscript
 
-# File initially created on Monday, December 14, 2020
+# File initially created on Thursday, December 3, 2020
 
-# Benchmarking the structural variants called by Illumina from the variants discovered by Illumina
+# Benchmarking the structural variants called by Illumina from the variants discovered by Oxford Nanopore
 #  on the fourth version of the soybean reference genome assembly with sveval. 
 
-# The variants against which the calls are benchmarked here have had their breakpoints refined using AGE
+# The variants benchmarked here have had their breakpoints refined using AGE
 
 # Structural variants will be filtered post-reading with read_sv_filter (a wrapper around readSVvcf)
 #  for the following criteria :
@@ -15,7 +15,7 @@
 #  - Removal of insertion alternate alleles containing N nucleotides or unknown sequence (<INS>)
 #  - Removal of insertion reference alleles with > 1 N nucleotide (to accomodate for Sniffles'
 #     default "N" reference allele for insertions); should have been removed already
-#  - Removal of deletions whose sequence contains any N (the threshold could be tuned)
+#  - Removal of deletions whose sequence contains > 10% of N (the threshold can be tuned)
 
 # Only the benchmark with geno.eval = FALSE is done because heterozygous variants
 # were not used for genotyping with Illumina
@@ -44,7 +44,7 @@ names(line_names) <- line_ids$id
 # Initializing a list to store the results of each iteration
 rates_list <- list()
 
-# Looping over all 17 samples
+# Looping over all 5 samples
 for(i in names(line_names)) {
 
 	# Reading the vcf file for the Nanopore variants
@@ -67,7 +67,7 @@ for(i in names(line_names)) {
 	message("Processing ", i, " --- ", j)
 
 	# Setting the name of the input vcf depending on the pipeline
-	# DEPENDENCY : Illumina SVs genotyped with Paragraph
+	# DEPENDENCY : Oxford Nanopore SVs genotyped with Paragraph
 	input_vcf  <- paste0("../", i, "_results/genotypes.vcf.gz")
 
 	# Reading the vcf file for the Illumina variants
@@ -77,7 +77,6 @@ for(i in names(line_names)) {
 				 remove_N_ins = TRUE, keep.ins.seq = TRUE, 
 				 keep.ref.seq = TRUE, sample.name = i,
 				 qual.field = "DP", check.inv = FALSE, 
-				 other.field = "ClusterIDs",
 				 keep.ids = FALSE, nocalls = FALSE,
 				 out.fmt = "gr", min.sv.size = 50)
 
@@ -98,11 +97,11 @@ for(i in names(line_names)) {
 				   log.level = "INFO",
 				   output.all = TRUE)
 
-	# Processing the results with extract_rates
-	ij_rates  <- extract_rates(sveval_output, c("DEL", "INS", "INV", "DUP"),
-				   cultivar = i, pipeline = j)	
-	rates_list[[paste0(i, "_", j)]] <- ij_rates
-}
+		# Processing the results with extract_rates
+	        ij_rates  <- extract_rates(sveval_output, c("DEL", "INS", "INV", "DUP"),
+					   cultivar = i, pipeline = j)	
+		rates_list[[paste0(i, "_", j)]] <- ij_rates
+	}
 
 # Merging the outputs of all analyses together
 deletions  <- do.call("rbind", lapply(rates_list, function(x) `[[`(x, "DEL")))
