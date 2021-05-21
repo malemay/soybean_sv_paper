@@ -57,6 +57,10 @@ figures/figure_s1.png: figures/figure_s1.R \
 	sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData \
 	scripts/make_plot_data.R
 
+figures/figure_s2.png: figures/figure_s2.R \
+	sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
+	scripts/make_plot_data.R
+
 tables/table_s1.csv tables/table_s2.csv tables/table_s3.csv: tables/formatting_sup_tables.R
 	cd tables; $(R_RUN_COMMAND) formatting_sup_tables.R
 
