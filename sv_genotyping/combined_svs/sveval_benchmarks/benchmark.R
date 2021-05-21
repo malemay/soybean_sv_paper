@@ -1,11 +1,11 @@
 #!/usr/bin/Rscript
 
-# File initially created on Thursday, December 3, 2020
+# File initially created on Monday, December 14, 2020
 
-# Benchmarking the structural variants called by Illumina from the variants discovered by Oxford Nanopore
-#  on the fourth version of the soybean reference genome assembly with sveval. 
+# Benchmarking the structural variants called by Illumina from the variants discovered by Illumina and Oxford Nanopore combined,
+#  but with Illumina variants being favoured at the SVmerge step, on the fourth version of the soybean reference genome assembly with sveval. 
 
-# The variants benchmarked here have had their breakpoints refined using AGE
+# The variants against which the calls are benchmarked here have had their breakpoints refined using AGE
 
 # Structural variants will be filtered post-reading with read_sv_filter (a wrapper around readSVvcf)
 #  for the following criteria :
@@ -15,7 +15,7 @@
 #  - Removal of insertion alternate alleles containing N nucleotides or unknown sequence (<INS>)
 #  - Removal of insertion reference alleles with > 1 N nucleotide (to accomodate for Sniffles'
 #     default "N" reference allele for insertions); should have been removed already
-#  - Removal of deletions whose sequence contains > 10% of N (the threshold can be tuned)
+#  - Removal of deletions whose sequence contains any N (the threshold could be tuned)
 
 # Only the benchmark with geno.eval = FALSE is done because heterozygous variants
 # were not used for genotyping with Illumina
@@ -23,13 +23,11 @@
 # Loading the sveval library (modified by me to allow for argument output.all)
 library(sveval)
 
-# Sourcing the extract_rates.R file which contains the fonction to gather 
-#  precision/sensitivity rates
+# Sourcing the extract_rates.R file which contains the fonction to gather precision/sensitivity rates
 # DEPENDENCY : scripts/extract_rates.R
 source("../../../scripts/extract_rates.R")
 
-# And another function that reads a vcf file into a GRanges object and filters
-#  it according to various criteria
+# And another function that reads a vcf file into a GRanges object and filters it according to various criteria
 # DEPENDENCY : scripts/read_filter_vcf.R
 source("../../../scripts/read_filter_vcf.R")
 
@@ -67,7 +65,7 @@ for(i in names(line_names)) {
 	message("Processing ", i, " --- ", j)
 
 	# Setting the name of the input vcf depending on the pipeline
-	# DEPENDENCY : Oxford Nanopore SVs genotyped with Paragraph
+	# DEPENDENCY : Combined Illumina/Oxford Nanopore SVs genotyped with Paragraph
 	input_vcf  <- paste0("../", i, "_results/genotypes.vcf.gz")
 
 	# Reading the vcf file for the Illumina variants
@@ -77,6 +75,7 @@ for(i in names(line_names)) {
 				 remove_N_ins = TRUE, keep.ins.seq = TRUE, 
 				 keep.ref.seq = TRUE, sample.name = i,
 				 qual.field = "DP", check.inv = FALSE, 
+				 other.field = "ClusterIDs",
 				 keep.ids = FALSE, nocalls = FALSE,
 				 out.fmt = "gr", min.sv.size = 50)
 
@@ -97,11 +96,11 @@ for(i in names(line_names)) {
 				   log.level = "INFO",
 				   output.all = TRUE)
 
-		# Processing the results with extract_rates
-	        ij_rates  <- extract_rates(sveval_output, c("DEL", "INS", "INV", "DUP"),
-					   cultivar = i, pipeline = j)	
-		rates_list[[paste0(i, "_", j)]] <- ij_rates
-	}
+	# Processing the results with extract_rates
+	ij_rates  <- extract_rates(sveval_output, c("DEL", "INS", "INV", "DUP"),
+				   cultivar = i, pipeline = j)	
+	rates_list[[paste0(i, "_", j)]] <- ij_rates
+}
 
 # Merging the outputs of all analyses together
 deletions  <- do.call("rbind", lapply(rates_list, function(x) `[[`(x, "DEL")))

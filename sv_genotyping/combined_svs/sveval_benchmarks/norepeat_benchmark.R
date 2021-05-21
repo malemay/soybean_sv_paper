@@ -1,35 +1,25 @@
 #!/usr/bin/Rscript
 
-# File initially created on Thursday, December 3, 2020
+# File initially created on Wednesday, January 20, 2021
 
-# Benchmarking the structural variants called by Illumina from the variants discovered by Oxford Nanopore
-#  on the fourth version of the soybean reference genome assembly with sveval. 
+# Benchmarking the structural variants called by Illumina from the variants discovered by Illumina and Oxford Nanopore combined,
+#  but with Illumina variants being favoured at the SVmerge step, on the fourth version of the soybean reference genome assembly with sveval. 
 
-# The variants benchmarked here have had their breakpoints refined using AGE
+# The only difference with the code in benchmark.R is that here we restrict our analysis to the non-repeated regions found in the imported bed file
 
-# Structural variants will be filtered post-reading with read_sv_filter (a wrapper around readSVvcf)
-#  for the following criteria :
-#  - Removal of variants that are not insertions, deletions, duplications or inversions (should have been removed already)
-#  - Optional removal of heterozygous, missing, and homozygous reference genotype calls
-#  - Removal of variants located on unmapped scaffolds or organellar genomes (should all have been removed already)
-#  - Removal of insertion alternate alleles containing N nucleotides or unknown sequence (<INS>)
-#  - Removal of insertion reference alleles with > 1 N nucleotide (to accomodate for Sniffles'
-#     default "N" reference allele for insertions); should have been removed already
-#  - Removal of deletions whose sequence contains > 10% of N (the threshold can be tuned)
+# Loading the required libraries
+library(rtracklayer)
+library(sveval) # (modified by me to allow for argument output.all)
 
-# Only the benchmark with geno.eval = FALSE is done because heterozygous variants
-# were not used for genotyping with Illumina
+# Loading the bed file that contains the non-repeat regions
+# DEPENDENCY : refgenome/repeat_regions/non_repeated_regions.bed
+non_repeats <- import("../../../refgenome/repeat_regions/non_repeated_regions.bed")
 
-# Loading the sveval library (modified by me to allow for argument output.all)
-library(sveval)
-
-# Sourcing the extract_rates.R file which contains the fonction to gather 
-#  precision/sensitivity rates
+# Sourcing the extract_rates.R file which contains the fonction to gather precision/sensitivity rates
 # DEPENDENCY : scripts/extract_rates.R
 source("../../../scripts/extract_rates.R")
 
-# And another function that reads a vcf file into a GRanges object and filters
-#  it according to various criteria
+# And another function that reads a vcf file into a GRanges object and filters it according to various criteria
 # DEPENDENCY : scripts/read_filter_vcf.R
 source("../../../scripts/read_filter_vcf.R")
 
@@ -48,7 +38,7 @@ rates_list <- list()
 for(i in names(line_names)) {
 
 	# Reading the vcf file for the Nanopore variants
-	# DEPENDENCY : Sniffles normalized VCf files
+	# DEPENDENCY : normalized SVs discovered by Sniffles from the Oxford Nanopore data
 	truth <- read_filter_vcf(vcf.file = paste0("../../../nanopore_sv_calling/", line_names[i], "_normalized_ids.vcf"),
 				 keep_hets = FALSE, max_N_del = 0, 
 				 # DEPENDENCY : refgenome/Gmax_508_v4.0_mit_chlp.fasta
@@ -67,7 +57,7 @@ for(i in names(line_names)) {
 	message("Processing ", i, " --- ", j)
 
 	# Setting the name of the input vcf depending on the pipeline
-	# DEPENDENCY : Oxford Nanopore SVs genotyped with Paragraph
+	# DEPENDENCY : Combined Illumina/Oxford Nanopore SVs genotyped with Paragraph
 	input_vcf  <- paste0("../", i, "_results/genotypes.vcf.gz")
 
 	# Reading the vcf file for the Illumina variants
@@ -77,6 +67,7 @@ for(i in names(line_names)) {
 				 remove_N_ins = TRUE, keep.ins.seq = TRUE, 
 				 keep.ref.seq = TRUE, sample.name = i,
 				 qual.field = "DP", check.inv = FALSE, 
+				 other.field = "ClusterIDs",
 				 keep.ids = FALSE, nocalls = FALSE,
 				 out.fmt = "gr", min.sv.size = 50)
 
@@ -94,14 +85,18 @@ for(i in names(line_names)) {
 				   stitch.hets = FALSE,
 				   merge.hets = FALSE,
 				   nb.cores = 1,
+				   # the bed file comes in here
+				   bed.regions = non_repeats,
+				   bed.regions.ol = 0.8,
 				   log.level = "INFO",
 				   output.all = TRUE)
 
-		# Processing the results with extract_rates
-	        ij_rates  <- extract_rates(sveval_output, c("DEL", "INS", "INV", "DUP"),
-					   cultivar = i, pipeline = j)	
-		rates_list[[paste0(i, "_", j)]] <- ij_rates
-	}
+	# Processing the results with extract_rates
+	ij_rates  <- extract_rates(sveval_output, c("DEL", "INS", "INV", "DUP"),
+				   cultivar = i, pipeline = j)	
+
+	rates_list[[paste0(i, "_", j)]] <- ij_rates
+}
 
 # Merging the outputs of all analyses together
 deletions  <- do.call("rbind", lapply(rates_list, function(x) `[[`(x, "DEL")))
@@ -110,8 +105,8 @@ inversions  <- do.call("rbind", lapply(rates_list, function(x) `[[`(x, "INV")))
 duplications  <- do.call("rbind", lapply(rates_list, function(x) `[[`(x, "DUP")))
 
 # Creating a merged dataset and saving it to file
-sveval_nogeno_rates <- list(DEL = deletions, INS = insertions,
+sveval_norepeat_rates <- list(DEL = deletions, INS = insertions,
 			    INV = inversions, DUP = duplications)
 
-save(sveval_nogeno_rates, file = "nogeno_RData/sveval_nogeno_rates.RData")
+save(sveval_norepeat_rates, file = "norepeat_RData/sveval_norepeat_rates.RData")
 
