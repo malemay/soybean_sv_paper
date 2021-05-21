@@ -15,12 +15,13 @@ library(ggplot2)
 library(grid)
 
 # Loading the data used for plotting
-# DEPENDENCY : sveval_ncallers_rates.RData
-load("/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/svmerged_variants/paragraph/sveval_benchmarks/ncallers_RData/sveval_ncallers_rates.RData")
+# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/sveval_ncallers_rates.RData
+# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/NCALLERS_ILLUMINA_BENCHMARK
+load("../sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/sveval_ncallers_rates.RData")
 
 # Also loading a script that will be used to prepare the data for plotting
-# DEPENDENCY : make_plot_data.R
-source("/home/malem420/scripts/make_plot_data.R")
+# DEPENDENCY : scripts/make_plot_data.R
+source("../scripts/make_plot_data.R")
 
 # Preparing the data for plotting
 del_plot_data <- make_plot_data(sveval_ncallers_rates, "DEL")
@@ -87,6 +88,7 @@ insertions_plot <-
 	common_theme
 
 # Saving as a png file
+# OUTPUT : figures/figure_s7.png
 png("figure_s7.png", width = 6, height = 9, units = "in", res = 500)
 grid.newpage()
 # Locating the subplots in the figure
