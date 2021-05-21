@@ -26,6 +26,7 @@ scripts/addMissingPaddingGmax4.py
 *fastq.gz
 *manifest.txt
 *maf
+sv_genotyping/illumina_svs/size_distribution.tsv
 *vcf
 *vcf.gz
 

@@ -1,4 +1,4 @@
-#!/prg/R/4.0/bin/Rscript
+#!/usr/bin/Rscript
 
 # Code for the Figure S8 of the manuscript
 # This figure is divided into two parts:
@@ -12,9 +12,8 @@ library(ggplot2)
 library(grid)
 
 # Reading in the data that will be used for plotting
-# DEPENDENCY : size_distribution.tsv
-sv_sizes <- read.table("/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/svmerged_variants/size_distribution.tsv",
-		       header = TRUE, stringsAsFactors = FALSE)
+# DEPENDENCY : sv_genotyping/illumina_svs/size_distribution.tsv
+sv_sizes <- read.table("../sv_genotyping/illumina_svs/size_distribution.tsv", header = TRUE, stringsAsFactors = FALSE)
 # nrow(sv_sizes)
 # [1] 140597
 
@@ -51,6 +50,7 @@ panelB <- ggplot(sv_sizes[sv_sizes$svtype == "DEL", ], aes(x = abs(size))) +
 	      panel.grid.minor.y = element_blank())
 
 # Assembling both panels in a single figure and saving to "figure_s8.png"
+# OUTPUT : figures/figure_s8.png
 png("figure_s8.png", width = 6, height = 6, units = "in", res = 500)
 grid.newpage()
 pushViewport(viewport(layout = grid.layout(1, 2)))

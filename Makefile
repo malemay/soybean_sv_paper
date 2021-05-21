@@ -69,6 +69,8 @@ figures/figure_s6.png : sv_genotyping/illumina_svs/sveval_benchmarks/frequency_R
 
 figures/figure_s7.png : sv_genotyping/illumina_svs/sveval_benchmarks/NCALLERS_ILLUMINA_BENCHMARK scripts/make_plot_data.R
 
+figures/figure_s8.png : sv_genotyping/illumina_svs/size_distribution.tsv
+
 tables/table_s1.csv tables/table_s2.csv tables/table_s3.csv: tables/formatting_sup_tables.R
 	cd tables; $(R_RUN_COMMAND) formatting_sup_tables.R
 
@@ -186,6 +188,11 @@ depth_distributions/average_depth.RData : \
 	scripts/depth_distribution.sh \
 	depth_distributions/compute_average_depth.R
 	cd depth_distributions/ ; ./depth_distributions.sh $(SAMTOOLS) ; $(R_RUN_COMMAND) compute_average_depth.R
+
+# --- Generating the SV size distributions necessary for figure S8
+sv_genotyping/illumina_svs/size_distribution.tsv : sv_genotyping/illumina_svs/svmerged.clustered.vcf \
+	sv_genotyping/illumina_svs/extract_size_distribution.sh
+	cd sv_genotyping/illumina_svs/ ; ./extract_size_distribution.sh $(BCFTOOLS)
 
 # --- This section processes the raw basecalled Nanopore reads using Porechop and aligns them to the reference genome
 NANOPORE_READS := $(shell cat utilities/flowcell_names.txt | xargs -I {} echo nanopore_data/{}.fastq.gz)
