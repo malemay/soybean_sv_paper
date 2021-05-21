@@ -11,17 +11,16 @@ library(ggplot2)
 library(grid)
 
 # Loading the sequencing depth data
-# DEPENDENCY : average_depth.RData
-load("/home/malem420/sv_manuscript/depth_distributions/average_depth.RData")
+# DEPENDENCY : depth_distributions/average_depth.RData
+load("../depth_distributions/average_depth.RData")
 
 # Loading the genotyping precision and sensitivity rates
-# DEPENDENCY : sveval_nogeno_rates.RData
-load("/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/svmerged_variants/paragraph/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData")
+# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
+load("../sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData")
 
 # We also load the correspondence between line names and their CAD IDs
-# DEPENDENCY : line_ids.txt
-line_ids <- read.table("/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/svmerged_variants/paragraph/sveval_benchmarks/line_ids.txt", 
-		       header = TRUE, stringsAsFactors = FALSE)
+# DEPENDENCY : utilities/line_ids.txt
+line_ids <- read.table("../utilities/line_ids.txt", header = TRUE, stringsAsFactors = FALSE)
 
 # Now we can extract and link the data through the IDs
 line_ids$sequencing_depth <- average_depth[match(line_ids$name, average_depth$sample), "depth"]
@@ -78,6 +77,7 @@ inv_plot <- ggplot(get_precision(line_ids, sveval_nogeno_rates, "INV"), aes(x = 
 	common_theme
 
 # Saving to disk as a png file
+# OUTPUT : figures/figure_s4.png
 png("figure_s4.png", width = 3, height = 3, units = "in", res = 500)
 grid.newpage()
 pushViewport(viewport(layout = grid.layout(nrow = 2, ncol = 2)))

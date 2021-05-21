@@ -4,7 +4,8 @@
 depth_data <- list()
 
 # Iterating over all the samples
-for(i in scan("/home/malem420/analyse_nanopore/genotyped_lines.txt", what = character(), sep = "\n", quiet = TRUE)) {
+# DEPENDENCY : utilities/line_ids.txt
+for(i in read.table("../utilities/line_ids.txt", header = TRUE, stringsAsFactors = FALSE)[[1]]) {
 	# Reading the data as a data.frame
 	depth_data[[i]] <- read.table(paste0(i, "_depth.txt"))
 	# Ordering the data.frame by number of reads covering the position
@@ -35,5 +36,6 @@ average_depth <- data.frame(sample = names(average_depth),
 			    stringsAsFactors = FALSE)
 
 # Saving the data.frame to file
+# OUTPUT : depth_distributions/average_depth.RData
 save(average_depth, file = "average_depth.RData")
 

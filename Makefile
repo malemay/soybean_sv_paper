@@ -53,11 +53,15 @@ Supplemental_Data.pdf : Supplemental_Data.tex references.bib genome_research.bst
 figures/figure_%.png : figures/figure_%.R
 	cd figures; $(R_FIG_COMMAND) $(<F)
 
-figures/figure_s1.png: sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData scripts/make_plot_data.R
+figures/figure_s1.png : sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData scripts/make_plot_data.R
 
-figures/figure_s2.png: sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData scripts/make_plot_data.R
+figures/figure_s2.png : sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData scripts/make_plot_data.R
 
-figures/figure_s3.png: sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData scripts/make_plot_data.R
+figures/figure_s3.png : sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData scripts/make_plot_data.R
+
+figures/figure_s4.png : depth_distributions/average_depth.RData \
+	utilities/line_ids.txt \
+	sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
 
 tables/table_s1.csv tables/table_s2.csv tables/table_s3.csv: tables/formatting_sup_tables.R
 	cd tables; $(R_RUN_COMMAND) formatting_sup_tables.R
@@ -167,6 +171,15 @@ refgenome/repeat_regions/non_repeated_regions.bed : refgenome/repeat_regions/mak
 	refgenome/Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3 \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
 	cd refgenome/repeat_regions ; $(R_RUN_COMMAND) make_repeat_bed.R
+
+# --- This section compute the average sequencing depths used for plotting figure S4
+depth_distributions/average_depth.RData : \
+	nanopore_data/NANOPORE_ALIGNMENT $(NANOPORE_SORTED_BAM) \
+	utilities/line_ids.txt \
+	depth_distributions/depth_distributions.sh \
+	scripts/depth_distribution.sh \
+	depth_distributions/compute_average_depth.R
+	cd depth_distributions/ ; ./depth_distributions.sh $(SAMTOOLS) ; $(R_RUN_COMMAND) compute_average_depth.R
 
 # --- This section processes the raw basecalled Nanopore reads using Porechop and aligns them to the reference genome
 NANOPORE_READS := $(shell cat utilities/flowcell_names.txt | xargs -I {} echo nanopore_data/{}.fastq.gz)
