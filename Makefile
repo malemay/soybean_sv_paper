@@ -8,6 +8,7 @@ BAMADDRG = /prg/bamaddrg/1.0/bamaddrg
 BGZIP = /prg/htslib/1.10.2/bin/bgzip
 BWA = /prg/bwa/0.7.17/bwa
 BCFTOOLS = /home/malem420/programs/bcftools/bcftools
+BCFTOOLS_PLUGIN_PATH = /home/malem420/programs/bcftools/plugins
 CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
 FLASH = /home/malem420/programs/FLASH-1.2.11-Linux-x86_64/flash
 IDXDEPTH = /home/malem420/programs/paragraph/bin/idxdepth
@@ -394,7 +395,7 @@ sv_genotyping/combined_svs/PARAGRAPH_COMBINED_GENOTYPING : illumina_data/ILLUMIN
 	utilities/all_lines.txt
 	cd sv_genotyping/combined_svs ; ./run_paragraph.sh $(BCFTOOLS) $(BGZIP) $(TABIX) $(MULTIGRMPY) ; touch PARAGRAPH_COMBINED_GENOTYPING
 
-# --- The next section prepares the Illumina SV benchmarks from the Paragraph vcfs
+# --- This section prepares the Illumina SV benchmarks from the Paragraph vcfs
 PARAGRAPH_ILLUMINA_VCFS := $(shell cat utilities/all_lines.txt | xargs -I {} echo sv_genotyping/illumina_svs/{}_results/genotypes.vcf.gz)
 
 # Benchmark of Illumina SVs genome-wide
@@ -419,6 +420,46 @@ sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rate
 	scripts/extract_rates.R \
 	scripts/read_filter_vcf.R
 	cd sv_genotyping/illumina_svs/sveval_benchmarks ; $(R_RUN_COMMAND) norepeat_benchmark.R
+
+# Benchmark of the Illumina SVs as a function of the homozygous ALT count
+# For this we first need to prepare the input vcf file for the benchmark
+sv_genotyping/illumina_svs/illumina_paragraph_merged.vcf : sv_genotyping/illumina_svs/PARAGRAPH_ILLUMINA_GENOTYPING $(PARAGRAPH_ILLUMINA_VCFS) \
+	sv_genotyping/illumina_svs/merge_vcf_files.sh \
+	utilities/all_lines.txt
+	cd sv_genotyping/illumina_svs ; ./merge_vcf_files.sh $(BCFTOOLS) $(TABIX)
+
+sv_genotyping/illumina_svs/sveval_benchmarks/paragraph_svs_minDP2_annotated.vcf : \
+	sv_genotyping/illumina_svs/illumina_paragraph_merged.vcf \
+	sv_genotyping/illumina_svs/sveval_benchmarks/annotate_filter_population_svs.sh
+	cd sv_genotyping/illumina_svs/sveval_benchmarks ; ./annotate_filter_population_svs.sh $(BCFTOOLS) $(BCFTOOLS_PLUGIN_PATH)
+
+# Computing the benchmarks using the number of ALT alleles in homozygous genotype calls (homozygous ALT counts) for the precision-recall curves
+sv_genotyping/illumina_svs/sveval_benchmarks/frequency_RData/sveval_frequency_rates.RData : \
+	sv_genotyping/illumina_svs/sveval_benchmarks/paragraph_svs_minDP2_annotated.vcf \
+	nanopore_sv_calling/SV_NORMALIZATION $(NANOPORE_NORMALIZED_SVS) \
+	sv_genotyping/illumina_svs/sveval_benchmarks/allele_frequency_benchmark.R \
+	utilities/line_ids.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	scripts/extract_rates.R \
+	scripts/read_filter_vcf.R
+	cd sv_genotyping/illumina_svs/sveval_benchmarks ; $(R_RUN_COMMAND) allele_frequency_benchmark.R
+
+# Computing the benchmarks using the number of SV calling tools for the precision-recall curves
+sv_genotyping/illumina_svs/sveval_benchmarks/paragraph_svs_minAC4_ncallers.vcf : \
+	sv_genotyping/illumina_svs/sveval_benchmarks/paragraph_svs_minDP2_annotated.vcf \
+	sv_genotyping/illumina_svs/sveval_benchmarks/filter_minAC_annotateCallers.sh \
+	sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_header_line.txt
+	cd sv_genotyping/illumina_svs/sveval_benchmarks ; ./filter_minAC_annotateCallers.sh $(BCFTOOLS)
+
+sv_genotyping/illumina_svs/sveval_benchmarks/NCALLERS_ILLUMINA_BENCHMARK : \
+	sv_genotyping/illumina_svs/sveval_benchmarks/paragraph_svs_minAC4_ncallers.vcf \
+	nanopore_sv_calling/SV_NORMALIZATION $(NANOPORE_NORMALIZED_SVS) \
+	sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_benchmark.R \
+	utilities/line_ids.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	scripts/extract_rates.R \
+	scripts/read_filter_vcf.R
+	cd sv_genotyping/illumina_svs/sveval_benchmarks ; $(R_RUN_COMMAND) ncallers_benchmark.R
 
 # --- The next section prepares the Oxford Nanopore SV benchmarks from the Paragraph vcfs
 PARAGRAPH_NANOPORE_VCFS := $(shell cat utilities/all_lines.txt | xargs -I {} echo sv_genotyping/nanopore_svs/{}_results/genotypes.vcf.gz)

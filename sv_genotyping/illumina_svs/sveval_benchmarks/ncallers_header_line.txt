@@ -1,0 +1,1 @@
+##INFO=<ID=NCALLERS,Number=1,Type=Integer,Description="Number of independent variant callers supporting the variant">
