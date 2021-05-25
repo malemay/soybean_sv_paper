@@ -71,6 +71,8 @@ figures/figure_s7.png : sv_genotyping/illumina_svs/sveval_benchmarks/NCALLERS_IL
 
 figures/figure_s8.png : sv_genotyping/illumina_svs/size_distribution.tsv
 
+figures/figure_s9.png : sv_genotyping/illumina_svs/sveval_benchmarks/NCALLERS_ILLUMINA_BENCHMARK scripts/format_sveval_plotting_data.R
+
 tables/table_s1.csv tables/table_s2.csv tables/table_s3.csv: tables/formatting_sup_tables.R
 	cd tables; $(R_RUN_COMMAND) formatting_sup_tables.R
 
