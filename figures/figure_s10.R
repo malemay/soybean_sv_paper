@@ -1,4 +1,4 @@
-#!/prg/R/4.0/bin/Rscript
+#!/usr/bin/Rscript
 
 # Figure S10 shows the proportion of true positive and false positive insertion calls for
 #  different SV calling program combinations and different SV sizes
@@ -8,8 +8,8 @@ library(ggplot2)
 library(GenomicRanges)
 
 # Loading the rates for all samples so we can identify a sample to use
-# DEPENDENCY : sveval_ncallers.RData
-load("/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/svmerged_variants/paragraph/sveval_benchmarks/ncallers_RData/sveval_ncallers_rates.RData")
+# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/sveval_ncallers_rates.RData
+load("../sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/sveval_ncallers_rates.RData")
 
 # Finding the median f-score among the overall results
 insertions <- sveval_ncallers_rates$INS
@@ -45,16 +45,16 @@ insertions$f1_score <- 2 * (insertions$precision * insertions$sensitivity) / (in
 # CAD1015_paragraph.2        all    0.260521 0.7483801        0.7361268 paragraph  CAD1015         1 0.3864973
 
 # So we will be using sample CAD1015. Let us load the data for that sample
-# DEPENDENCY : CAD1015_paragraph.RData
-load("/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/svmerged_variants/paragraph/sveval_benchmarks/ncallers_RData/CAD1015_paragraph.RData")
+# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/CAD1015_paragraph.RData
+load("../sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/CAD1015_paragraph.RData")
 
 # We get the list element for which the ncallers threshold was 1
 sveval_output <- sveval_output$eval[[2]]$regions
 
 # From here we use a function defined in another file to extract the relevant data
 # for plotting
-# DEPENDENCY : format_sveval_plotting_data.R
-source("/home/malem420/sv_manuscript/figures/format_sveval_plotting_data.R")
+# DEPENDENCY : scripts/format_sveval_plotting_data.R
+source("../scripts/format_sveval_plotting_data.R")
 plotting_data <- format_sveval_plotting_data(sveval_output, "INS")
 
 # Creating the plot
@@ -72,6 +72,7 @@ figure_s10 <- ggplot(plotting_data, aes(x = size, fill = truepos)) +
           legend.direction = "horizontal")
 
 # Also saving as a png file
+# OUTPUT : figures/figure_s10.png
 png("figure_s10.png", width = 6, height = 6, units = "in", res = 500)
 print(figure_s10)
 dev.off()
