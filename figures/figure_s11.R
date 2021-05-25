@@ -1,4 +1,4 @@
-#!/prg/R/4.0/bin/Rscript
+#!/usr/bin/Rscript
 
 # Code to create Figure S11 of the manuscript
 # This figure is a scatter plot of the precision of insertion genotyping
@@ -14,17 +14,16 @@ library(ggplot2)
 library(grid)
 
 # Loading the N50 data
-# DEPENDENCY : N50_stats.txt
-N50_stats <- read.table("/home/malem420/sv_manuscript/nanoplot_stats/N50_stats.txt", header = TRUE, stringsAsFactors = FALSE)
+# DEPENDENCY : nanoplot_stats/N50_stats.txt
+N50_stats <- read.table("../nanoplot_stats/N50_stats.txt", header = TRUE, stringsAsFactors = FALSE)
 
 # Loading the genotyping precision and sensitivity rates
-# DEPENDENCY : sveval_nogeno_rates.RData
-load("/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_nanopore/genotyping/svmerged/paragraph/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData")
+# DEPENDENCY : sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
+load("../sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData")
 
 # We also load the correspondence between line names and their CAD IDs
-# DEPENDENCY : line_ids.txt
-line_ids <- read.table("/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/svmerged_variants/paragraph/sveval_benchmarks/line_ids.txt", 
-		       header = TRUE, stringsAsFactors = FALSE)
+# DEPENDENCY : utilities/line_ids.txt
+line_ids <- read.table("../utilities/line_ids.txt", header = TRUE, stringsAsFactors = FALSE)
 
 # Now we can extract and link the data through the IDs
 line_ids$N50 <- N50_stats[match(line_ids$name, N50_stats$sample), "N50"]
@@ -61,6 +60,7 @@ panelB <- ggplot(line_ids, aes(x = N50 / 1000, y = insertions_10000)) +
 	      text = element_text(size = 10))
 
 # Saving to the png format
+# OUTPUT : figures/figure_s11.png
 png("figure_s11.png", width = 6, height = 3, units = "in", res = 500)
 pushViewport(viewport(layout = grid.layout(1, 2)))
 

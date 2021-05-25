@@ -17,6 +17,7 @@ LASTSPLIT = /home/malem420/programs/last-1047/src/last-split
 MANTA = /home/malem420/programs/manta-1.6.0.centos6_x86_64/bin/configManta.py
 MINIMAP2 = /home/malem420/programs/minimap2/minimap2
 MULTIGRMPY = /home/malem420/programs/paragraph/bin/multigrmpy.py
+NANOPLOT = /home/malem420/.local/bin/NanoPlot
 NGMLR = /home/malem420/programs/ngmlr/ngmlr-0.2.7/ngmlr
 PORECHOP = /home/malem420/programs/Porechop/porechop-runner.py
 R_FIG_COMMAND = /usr/bin/Rscript
@@ -74,6 +75,10 @@ figures/figure_s8.png : sv_genotyping/illumina_svs/size_distribution.tsv
 figures/figure_s9.png : sv_genotyping/illumina_svs/sveval_benchmarks/NCALLERS_ILLUMINA_BENCHMARK scripts/format_sveval_plotting_data.R
 
 figures/figure_s10.png : sv_genotyping/illumina_svs/sveval_benchmarks/NCALLERS_ILLUMINA_BENCHMARK scripts/format_sveval_plotting_data.R
+
+figures/figure_s11.png : nanoplot_stats/N50_stats.txt \
+	utilities/line_ids.txt \
+	sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
 
 tables/table_s1.csv tables/table_s2.csv tables/table_s3.csv: tables/formatting_sup_tables.R
 	cd tables; $(R_RUN_COMMAND) formatting_sup_tables.R
@@ -197,6 +202,17 @@ depth_distributions/average_depth.RData : \
 sv_genotyping/illumina_svs/size_distribution.tsv : sv_genotyping/illumina_svs/svmerged.clustered.vcf \
 	sv_genotyping/illumina_svs/extract_size_distribution.sh
 	cd sv_genotyping/illumina_svs/ ; ./extract_size_distribution.sh $(BCFTOOLS)
+
+# --- Generating the Nanoplot N50 data for figure S11
+nanoplot_stats/NANOPLOT_BAM_STATS : nanopore_data/NANOPORE_ALIGNMENT $(NANOPORE_SORTED_BAM) \
+	nanoplot_stats/nanoplot_sorted_bam_all.sh \
+	utilities/line_ids.txt
+	cd nanoplot_stats ; ./nanoplot_sorted_bam_all.sh $(NANOPLOT) ; touch nanoplot_stats/NANOPLOT_BAM_STATS
+
+nanoplot_stats/N50_stats.txt : nanoplot_stats/NANOPLOT_BAM_STATS \
+	nanoplot_stats/gather_N50_stats.sh \
+	utilities/line_ids.txt
+	cd nanoplot_stats ; ./gather_N50_stats.sh > N50_stats.txt
 
 # --- This section processes the raw basecalled Nanopore reads using Porechop and aligns them to the reference genome
 NANOPORE_READS := $(shell cat utilities/flowcell_names.txt | xargs -I {} echo nanopore_data/{}.fastq.gz)
