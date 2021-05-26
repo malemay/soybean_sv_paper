@@ -31,6 +31,7 @@ SNIFFLES = /home/malem420/programs/Sniffles-master/bin/sniffles-core-1.0.11/snif
 SVABA = /home/malem420/programs/svaba/bin/svaba
 SVMERGE = /home/malem420/programs/SVanalyzer-install/bin/SVmerge
 TABIX = /prg/htslib/1.10.2/bin/tabix
+VG = /home/malem420/programs/vg/vg
 WTDBG2 = /home/malem420/programs/wtdbg2/wtdbg2
 WTPOA_CNS = /home/malem420/programs/wtdbg2/wtpoa-cns
 
@@ -615,4 +616,22 @@ breakpoint_refinement_analysis/raw_svs/bayestyper/bt_cluster_unit_1/bt_genotypes
 	refgenome/Gmax_508_v4.0.fa \
 	refgenome/bt_decoy_sequences.fasta
 	cd breakpoint_refinement_analysis/raw_svs/bayestyper ; ./bayestyper.sh $(BAYESTYPER)
+
+# Genotyping with Paragraph
+breakpoint_refinement_analysis/raw_svs/paragraph/PARAGRAPH_RAW_GENOTYPING : illumina_data/ILLUMINA_ALIGNMENT $(ILLUMINA_ALIGNED_READS) \
+	sv_genotyping/MANIFEST_FILES $(PARAGRAPH_MANIFEST_FILES) \
+	breakpoint_refinement_analysis/raw_svs/svmerged.clustered.vcf \
+	breakpoint_refinement_analysis/raw_svs/paragraph/run_paragraph.sh \
+	scripts/addMissingPaddingGmax4.py \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	breakpoint_refinement_analysis/illumina_ids.txt
+	cd breakpoint_refinement_analysis/raw_svs/paragraph ; ./run_paragraph.sh $(BCFTOOLS) $(BGZIP) $(TABIX) $(MULTIGRMPY) ; touch PARAGRAPH_RAW_GENOTYPING
+
+# Genotyping raw variants with vg
+breakpoint_refinement_analysis/raw_svs/vg/VG_GENOTYPING : illumina_data/ILLUMINA_TRIMMING \
+	breakpoint_refinement_analysis/raw_svs/vg/vg.sh \
+	breakpoint_refinement_analysis/raw_svs/svmerged.clustered.vcf \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	breakpoint_refinement_analysis/illumina_ids.txt 
+	cd breakpoint_refinement_analysis/raw_svs/vg ; ./vg.sh $(BGZIP) $(TABIX) $(VG) ; touch VG_GENOTYPING
 
