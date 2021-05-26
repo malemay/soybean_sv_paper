@@ -2,6 +2,7 @@
 # Using R 3.5.0 for figures because of a problem with resolution when using R 4.0
 AGE = /home/malem420/programs/AGE/age_align
 ASMVAR = /home/malem420/programs/AsmVar/src/AsmvarDetect/ASV_VariantDetector
+BAYESTYPER = /home/malem420/programs/bayesTyper_v1.5_linux_x86_64/bin/bayesTyper
 BAYESTYPERTOOLS = /home/malem420/programs/bayesTyper_v1.5_linux_x86_64/bin/bayesTyperTools
 BBDUK = /home/malem420/programs/bbmap/bbduk.sh
 BAMADDRG = /prg/bamaddrg/1.0/bamaddrg
@@ -12,6 +13,7 @@ BCFTOOLS_PLUGIN_PATH = /home/malem420/programs/bcftools/plugins
 CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
 FLASH = /home/malem420/programs/FLASH-1.2.11-Linux-x86_64/flash
 IDXDEPTH = /home/malem420/programs/paragraph/bin/idxdepth
+KMC = /home/malem420/programs/KMC3.linux/kmc
 LASTAL = /home/malem420/programs/last-1047/src/lastal
 LASTSPLIT = /home/malem420/programs/last-1047/src/last-split
 MANTA = /home/malem420/programs/manta-1.6.0.centos6_x86_64/bin/configManta.py
@@ -89,6 +91,8 @@ figures/figure_s14.png : sv_genotyping/nanopore_svs/sveval_benchmarks/norepeat_R
 figures/figure_s15.png : sv_genotyping/combined_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData scripts/make_plot_data.R
 
 figures/figure_s16.png : sv_genotyping/combined_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData scripts/make_plot_data.R
+
+figures/figure_s17.png : breakpoint_refinement_analysis/deletions.RData breakpoint_refinement_analysis/insertions.RData
 
 tables/table_s1.csv tables/table_s2.csv tables/table_s3.csv: tables/formatting_sup_tables.R
 	cd tables; $(R_RUN_COMMAND) formatting_sup_tables.R
@@ -576,4 +580,39 @@ sv_genotyping/combined_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rate
 	scripts/extract_rates.R \
 	scripts/read_filter_vcf.R
 	cd sv_genotyping/combined_svs/sveval_benchmarks ; $(R_RUN_COMMAND) norepeat_benchmark.R
+
+# --- This section generates the results for the analysis of refined versus raw SVs
+
+# Filtering and normalizing the raw SVs used for the benchmarks
+breakpoint_refinement_analysis/raw_svs/RAW_SV_CALLS : \
+	nanopore_sv_calling/SV_CALLING $(NANOPORE_FILTERED_SVS) \
+	breakpoint_refinement_analysis/raw_svs/process_vcf_files.sh \
+	breakpoint_refinement_analysis/raw_svs/fix_vcfs.R \
+	breakpoint_refinement_analysis/nanopore_ids.txt \
+	scripts/fix_sniffles.R \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	cd breakpoint_refinement_analysis/raw_svs ; ./process_vcf_files.sh $(BCFTOOLS) $(R_RUN_COMMAND) ; touch RAW_SV_CALLS
+
+# Merging the raw variants together with SVmerge
+breakpoint_refinement_analysis/raw_svs/svmerged.clustered.vcf : breakpoint_refinement_analysis/raw_svs/RAW_SV_CALLS \
+	breakpoint_refinement_analysis/raw_svs/SVmerge_variants.sh \
+	breakpoint_refinement_analysis/raw_svs/files.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	cd breakpoint_refinement_analysis/raw_svs ; ./SVmerge_variants.sh $(SVMERGE)
+
+# Computing the k-mers for BayesTyper
+breakpoint_refinement_analysis/bayestyper_kmers/BAYESTYPER_KMERS : illumina_data/ILLUMINA_TRIMMING \
+	breakpoint_refinement_analysis/bayestyper_kmers/kmc_bloom.sh \
+	breakpoint_refinement_analysis/illumina_ids.txt
+	cd breakpoint_refinement_analysis/bayestyper_kmers ; ./kmc_bloom.sh $(KMC) $(BAYESTYPERTOOLS); touch BAYESTYPER_KMERS
+
+# Performing the clustering and genotyping on raw variants with Bayestyper
+breakpoint_refinement_analysis/raw_svs/bayestyper/bt_cluster_unit_1/bt_genotypes.vcf : \
+	breakpoint_refinement_analysis/raw_svs/svmerged.clustered.vcf \
+	breakpoint_refinement_analysis/bayestyper_kmers/BAYESTYPER_KMERS \
+	breakpoint_refinement_analysis/raw_svs/bayestyper/bayestyper.sh \
+	breakpoint_refinement_analysis/raw_svs/bayestyper/samples.tsv \
+	refgenome/Gmax_508_v4.0.fa \
+	refgenome/bt_decoy_sequences.fasta
+	cd breakpoint_refinement_analysis/raw_svs/bayestyper ; ./bayestyper.sh $(BAYESTYPER)
 

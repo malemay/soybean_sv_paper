@@ -5,9 +5,9 @@ library(ggplot2)
 library(grid)
 
 # Loading the plotting data for deletions
-# DEPENDENCY : ../breakpoint_refinement_analysis/deletions.RData
+# DEPENDENCY : breakpoint_refinement_analysis/deletions.RData
 load("../breakpoint_refinement_analysis/deletions.RData")
-# DEPENDENCY : ../breakpoint_refinement_analysis/insertions.RData
+# DEPENDENCY : breakpoint_refinement_analysis/insertions.RData
 load("../breakpoint_refinement_analysis/insertions.RData")
 
 # Defining a common theme for both plots
@@ -73,6 +73,7 @@ panelB <-
 	#               legend.key = element_rect(fill = "white"))
 
 # Saving as a png file
+# OUTPUT : figures/figure_s17.png
 png("figure_s17.png", width = 12, height = 6, units = "in", res = 500)
 
 grid.newpage()
