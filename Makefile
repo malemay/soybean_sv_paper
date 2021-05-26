@@ -88,6 +88,8 @@ figures/figure_s14.png : sv_genotyping/nanopore_svs/sveval_benchmarks/norepeat_R
 
 figures/figure_s15.png : sv_genotyping/combined_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData scripts/make_plot_data.R
 
+figures/figure_s16.png : sv_genotyping/combined_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData scripts/make_plot_data.R
+
 tables/table_s1.csv tables/table_s2.csv tables/table_s3.csv: tables/formatting_sup_tables.R
 	cd tables; $(R_RUN_COMMAND) formatting_sup_tables.R
 

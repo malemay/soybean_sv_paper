@@ -13,12 +13,12 @@ library(ggplot2)
 library(grid)
 
 # Loading the data used for plotting
-# DEPENDENCY : sveval_norepeat_rates.RData
-load("/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_all/paragraph_illumina/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData")
+# DEPENDENCY : sv_genotyping/combined_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData
+load("../sv_genotyping/combined_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData")
 
 # Also loading a script that will be used to prepare the data for plotting
-# DEPENDENCY : make_plot_data.R
-source("/home/malem420/scripts/make_plot_data.R")
+# DEPENDENCY : scripts/make_plot_data.R
+source("../scripts/make_plot_data.R")
 
 # Preparing the data for plotting
 del_plot_data <- make_plot_data(sveval_norepeat_rates, "DEL")
@@ -80,6 +80,7 @@ insertions_plot <-
 	common_theme
 
 # Saving to disk as "figure_s16.png"
+# OUTPUT : figures/figure_s16.png
 png("figure_s16.png", width = 12, height = 6, units = "in", res = 500)
 grid.newpage()
 # Locating the subplots in the figure, leaving some space for the "A" and "B" plot labels
