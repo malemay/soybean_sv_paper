@@ -110,9 +110,9 @@ tables/table_%.csv : tables/table_%.R
 
 tables/table_s1.csv : tables/lab_methods_table.csv
 
-tables/table_s2.csv : 
+tables/table_s2.csv : tables/lab_methods_table.csv
 
-tables/table_s3.csv : 
+tables/table_s3.csv : tables/table_s3_data.txt
 
 tables/table_s4.csv : 
 
@@ -245,6 +245,13 @@ nanoplot_stats/N50_stats.txt : nanoplot_stats/NANOPLOT_BAM_STATS \
 	nanoplot_stats/gather_N50_stats.sh \
 	utilities/line_ids.txt
 	cd nanoplot_stats ; ./gather_N50_stats.sh > N50_stats.txt
+
+# Generating the data for Table S3
+tables/table_s3_data.txt : utilities/line_ids.txt \
+       	tables/gather_table_s3_data.sh \
+       	nanopore_sv_calling/SV_NORMALIZATION \
+	scripts/count_svtypes_svsizes.awk
+	cd tables ; ./gather_table_s3_data.sh
 
 # --- This section processes the raw basecalled Nanopore reads using Porechop and aligns them to the reference genome
 NANOPORE_READS := $(shell cat utilities/flowcell_names.txt | xargs -I {} echo nanopore_data/{}.fastq.gz)
