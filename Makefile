@@ -605,8 +605,11 @@ breakpoint_refinement_analysis/raw_svs/svmerged.clustered.vcf : breakpoint_refin
 breakpoint_refinement_analysis/refined_svs/svmerged_clustered_sorted.vcf : nanopore_sv_calling/SV_NORMALIZATION \
 	breakpoint_refinement_analysis/refined_svs/SVmerge_variants.sh \
 	breakpoint_refinement_analysis/refined_svs/files.txt \
-	refgenome/Gmax_508_v4.0_mit_chlp.fasta
-	cd breakpoint_refinement_analysis/refined_svs ; ./SVmerge_variants.sh $(SVMERGE) ; process_sort_svmerged.sh $(R_RUN_COMMAND)
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	breakpoint_refinement_analysis/refined_svs/select_svs.R \
+	scripts/merge_realigned_variants.R \
+	breakpoint_refinement_analysis/refined_svs/process_sort_svmerged.sh
+	cd breakpoint_refinement_analysis/refined_svs ; ./SVmerge_variants.sh $(SVMERGE) ; process_sort_svmerged.sh $(R_RUN_COMMAND) $(BCFTOOLS)
 
 # Computing the k-mers for BayesTyper
 breakpoint_refinement_analysis/bayestyper_kmers/BAYESTYPER_KMERS : illumina_data/ILLUMINA_TRIMMING \
@@ -635,10 +638,39 @@ breakpoint_refinement_analysis/raw_svs/paragraph/PARAGRAPH_RAW_GENOTYPING : illu
 	cd breakpoint_refinement_analysis/raw_svs/paragraph ; ./run_paragraph.sh $(BCFTOOLS) $(BGZIP) $(TABIX) $(MULTIGRMPY) ; touch PARAGRAPH_RAW_GENOTYPING
 
 # Genotyping raw variants with vg
-breakpoint_refinement_analysis/raw_svs/vg/VG_GENOTYPING : illumina_data/ILLUMINA_TRIMMING \
+breakpoint_refinement_analysis/raw_svs/vg/VG_RAW_GENOTYPING : illumina_data/ILLUMINA_TRIMMING \
 	breakpoint_refinement_analysis/raw_svs/vg/vg.sh \
 	breakpoint_refinement_analysis/raw_svs/svmerged.clustered.vcf \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	breakpoint_refinement_analysis/illumina_ids.txt 
-	cd breakpoint_refinement_analysis/raw_svs/vg ; ./vg.sh $(BGZIP) $(TABIX) $(VG) ; touch VG_GENOTYPING
+	cd breakpoint_refinement_analysis/raw_svs/vg ; ./vg.sh $(BGZIP) $(TABIX) $(VG) ; touch VG_RAW_GENOTYPING
+
+# Genotyping refined variants with Bayestyper
+breakpoint_refinement_analysis/refined_svs/bayestyper/bt_cluster_unit_1/bt_genotypes.vcf : \
+	breakpoint_refinement_analysis/refined_svs/svmerged_clustered_sorted.vcf \
+	breakpoint_refinement_analysis/bayestyper_kmers/BAYESTYPER_KMERS \
+	breakpoint_refinement_analysis/refined_svs/bayestyper/bayestyper.sh \
+	breakpoint_refinement_analysis/refined_svs/bayestyper/samples.tsv \
+	refgenome/Gmax_508_v4.0.fa \
+	refgenome/bt_decoy_sequences.fasta
+	cd breakpoint_refinement_analysis/refined_svs/bayestyper ; ./bayestyper.sh $(BAYESTYPER)
+
+# Genotyping refined variants with Paragraph
+breakpoint_refinement_analysis/refined_svs/paragraph/PARAGRAPH_REFINED_GENOTYPING : illumina_data/ILLUMINA_ALIGNMENT $(ILLUMINA_ALIGNED_READS) \
+	sv_genotyping/MANIFEST_FILES $(PARAGRAPH_MANIFEST_FILES) \
+	breakpoint_refinement_analysis/refined_svs/svmerged_clustered_sorted.vcf \
+	breakpoint_refinement_analysis/refined_svs/paragraph/run_paragraph.sh \
+	scripts/addMissingPaddingGmax4.py \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	breakpoint_refinement_analysis/illumina_ids.txt
+	cd breakpoint_refinement_analysis/refined_svs/paragraph ; ./run_paragraph.sh $(BCFTOOLS) $(BGZIP) $(TABIX) $(MULTIGRMPY) ; touch PARAGRAPH_REFINED_GENOTYPING
+
+# Genotyping refined variants with vg
+breakpoint_refinement_analysis/refined_svs/vg/VG_REFINED_GENOTYPING : illumina_data/ILLUMINA_TRIMMING \
+	breakpoint_refinement_analysis/refined_svs/vg/vg.sh \
+	breakpoint_refinement_analysis/refined_svs/svmerged_clustered_sorted.vcf \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	breakpoint_refinement_analysis/illumina_ids.txt 
+	cd breakpoint_refinement_analysis/refined_svs/vg ; ./vg.sh $(BGZIP) $(TABIX) $(VG) ; touch VG_REFINED_GENOTYPING
+
 
