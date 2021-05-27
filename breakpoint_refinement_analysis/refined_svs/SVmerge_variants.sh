@@ -5,7 +5,7 @@
 # enable genotyping from Illumina data, so we won't merge variants
 # that are too different
 
-# Some programs may need to be added to $PATH for SVmerge to work properly
+# WARNING : some programs may need to be available in $PATH for SVmerge to work properly
 # Loading modules that may be required
 # module load samtools/1.8
 # module load bedtools/2.26.0
@@ -17,11 +17,11 @@ SVmerge=$1
 
 # Running the command
 # DEPENDENCY : refgenome/Gmax_508_v4.0_mit_chlp.fasta
-# DEPENDENCY : breakpoint_refinement_analysis/raw_svs/files.txt
-# DEPENDENCY : the raw (unrefined) SV calls made with Sniffles
+# DEPENDENCY : breakpoint_refinement_analysis/refined_svs/files.txt
+# DEPENDENCY : normalized refined SVs called by Sniffles
 $SVmerge -ref ../../refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	-fof files.txt \
-	-prefix svmerged \
+	-prefix svmerged_preliminary \
 	-maxdist 15 \
 	-reldist 0.1 \
 	-relsizediff 0.1 \

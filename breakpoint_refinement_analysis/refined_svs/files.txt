@@ -1,0 +1,4 @@
+../../nanopore_sv_calling/MAPLE_PRESTO_normalized_ids.vcf
+../../nanopore_sv_calling/OAC_CARMAN_normalized_ids.vcf
+../../nanopore_sv_calling/OAC_EMBRO_normalized_ids.vcf
+../../nanopore_sv_calling/QS5091.50J_normalized_ids.vcf

@@ -601,13 +601,20 @@ breakpoint_refinement_analysis/raw_svs/svmerged.clustered.vcf : breakpoint_refin
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
 	cd breakpoint_refinement_analysis/raw_svs ; ./SVmerge_variants.sh $(SVMERGE)
 
+# Merging the refined variants together with SVmerge
+breakpoint_refinement_analysis/refined_svs/svmerged_clustered_sorted.vcf : nanopore_sv_calling/SV_NORMALIZATION \
+	breakpoint_refinement_analysis/refined_svs/SVmerge_variants.sh \
+	breakpoint_refinement_analysis/refined_svs/files.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	cd breakpoint_refinement_analysis/refined_svs ; ./SVmerge_variants.sh $(SVMERGE) ; process_sort_svmerged.sh $(R_RUN_COMMAND)
+
 # Computing the k-mers for BayesTyper
 breakpoint_refinement_analysis/bayestyper_kmers/BAYESTYPER_KMERS : illumina_data/ILLUMINA_TRIMMING \
 	breakpoint_refinement_analysis/bayestyper_kmers/kmc_bloom.sh \
 	breakpoint_refinement_analysis/illumina_ids.txt
 	cd breakpoint_refinement_analysis/bayestyper_kmers ; ./kmc_bloom.sh $(KMC) $(BAYESTYPERTOOLS); touch BAYESTYPER_KMERS
 
-# Performing the clustering and genotyping on raw variants with Bayestyper
+# Genotyping raw variants with Bayestyper
 breakpoint_refinement_analysis/raw_svs/bayestyper/bt_cluster_unit_1/bt_genotypes.vcf : \
 	breakpoint_refinement_analysis/raw_svs/svmerged.clustered.vcf \
 	breakpoint_refinement_analysis/bayestyper_kmers/BAYESTYPER_KMERS \
@@ -617,7 +624,7 @@ breakpoint_refinement_analysis/raw_svs/bayestyper/bt_cluster_unit_1/bt_genotypes
 	refgenome/bt_decoy_sequences.fasta
 	cd breakpoint_refinement_analysis/raw_svs/bayestyper ; ./bayestyper.sh $(BAYESTYPER)
 
-# Genotyping with Paragraph
+# Genotyping raw variants with Paragraph
 breakpoint_refinement_analysis/raw_svs/paragraph/PARAGRAPH_RAW_GENOTYPING : illumina_data/ILLUMINA_ALIGNMENT $(ILLUMINA_ALIGNED_READS) \
 	sv_genotyping/MANIFEST_FILES $(PARAGRAPH_MANIFEST_FILES) \
 	breakpoint_refinement_analysis/raw_svs/svmerged.clustered.vcf \
