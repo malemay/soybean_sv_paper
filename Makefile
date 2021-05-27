@@ -108,7 +108,7 @@ figures/figure_s19.png : breakpoint_refinement_analysis/raw_svs/sveval_benchmark
 tables/table_%.csv : tables/table_%.R
 	cd tables ; $(R_RUN_COMMAND) $(<F)
 
-tables/table_s1.csv : 
+tables/table_s1.csv : tables/lab_methods_table.csv
 
 tables/table_s2.csv : 
 

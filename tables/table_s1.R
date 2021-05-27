@@ -1,6 +1,7 @@
 #!/prg/R/4.0/bin/Rscript
 
 # Reading in the csv file with the full table
+# DEPENDENCY : tables/lab_methods_table.csv
 lab_methods <- read.table("lab_methods_table.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 
 # The first table will contain the first 8 columns, except date
@@ -29,5 +30,6 @@ table_s1$extraction <- protocol[table_s1$extraction]
 table_s1$size <- size_selection[table_s1$size]
 
 # Writing the contents of the table to table_s1.csv
+# OUTPUT : tables/table_s1.csv
 write.table(table_s1, file = "table_s1.csv", col.names = TRUE, row.names = FALSE, quote = FALSE, sep = ",")
 
