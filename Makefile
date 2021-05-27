@@ -618,14 +618,14 @@ breakpoint_refinement_analysis/bayestyper_kmers/BAYESTYPER_KMERS : illumina_data
 	cd breakpoint_refinement_analysis/bayestyper_kmers ; ./kmc_bloom.sh $(KMC) $(BAYESTYPERTOOLS); touch BAYESTYPER_KMERS
 
 # Genotyping raw variants with Bayestyper
-breakpoint_refinement_analysis/raw_svs/bayestyper/bt_cluster_unit_1/bt_genotypes.vcf : \
+breakpoint_refinement_analysis/raw_svs/bayestyper/bayestyper_split.vcf : \
 	breakpoint_refinement_analysis/raw_svs/svmerged.clustered.vcf \
 	breakpoint_refinement_analysis/bayestyper_kmers/BAYESTYPER_KMERS \
 	breakpoint_refinement_analysis/raw_svs/bayestyper/bayestyper.sh \
 	breakpoint_refinement_analysis/raw_svs/bayestyper/samples.tsv \
 	refgenome/Gmax_508_v4.0.fa \
 	refgenome/bt_decoy_sequences.fasta
-	cd breakpoint_refinement_analysis/raw_svs/bayestyper ; ./bayestyper.sh $(BAYESTYPER)
+	cd breakpoint_refinement_analysis/raw_svs/bayestyper ; ./bayestyper.sh $(BAYESTYPER) $(BAYESTYPERTOOLS) $(BCFTOOLS)
 
 # Genotyping raw variants with Paragraph
 breakpoint_refinement_analysis/raw_svs/paragraph/PARAGRAPH_RAW_GENOTYPING : illumina_data/ILLUMINA_ALIGNMENT $(ILLUMINA_ALIGNED_READS) \
@@ -645,15 +645,27 @@ breakpoint_refinement_analysis/raw_svs/vg/VG_RAW_GENOTYPING : illumina_data/ILLU
 	breakpoint_refinement_analysis/illumina_ids.txt 
 	cd breakpoint_refinement_analysis/raw_svs/vg ; ./vg.sh $(BGZIP) $(TABIX) $(VG) ; touch VG_RAW_GENOTYPING
 
+# Benchmarking the raw variants genotyped with all three genotyping tools
+breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData : \
+	breakpoint_refinement_analysis/raw_svs/RAW_SV_CALLS \
+	breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/raw_nogeno_analysis.R \
+	scripts/extract_rates.R \
+	scripts/read_filter_vcf.R \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	breakpoint_refinement_analysis/raw_svs/bayestyper/bayestyper_split.vcf \
+	breakpoint_refinement_analysis/raw_svs/paragraph/PARAGRAPH_RAW_GENOTYPING \
+	breakpoint_refinement_analysis/raw_svs/vg/VG_RAW_GENOTYPING
+	cd breakpoint_refinement_analysis/raw_svs/sveval_benchmarks ; $(R_RUN_COMMAND) raw_nogeno_analysis.R
+
 # Genotyping refined variants with Bayestyper
-breakpoint_refinement_analysis/refined_svs/bayestyper/bt_cluster_unit_1/bt_genotypes.vcf : \
+breakpoint_refinement_analysis/refined_svs/bayestyper/bayestyper_split.vcf : \
 	breakpoint_refinement_analysis/refined_svs/svmerged_clustered_sorted.vcf \
 	breakpoint_refinement_analysis/bayestyper_kmers/BAYESTYPER_KMERS \
 	breakpoint_refinement_analysis/refined_svs/bayestyper/bayestyper.sh \
 	breakpoint_refinement_analysis/refined_svs/bayestyper/samples.tsv \
 	refgenome/Gmax_508_v4.0.fa \
 	refgenome/bt_decoy_sequences.fasta
-	cd breakpoint_refinement_analysis/refined_svs/bayestyper ; ./bayestyper.sh $(BAYESTYPER)
+	cd breakpoint_refinement_analysis/refined_svs/bayestyper ; ./bayestyper.sh $(BAYESTYPER) $(BAYESTYPERTOOLS) $(BCFTOOLS)
 
 # Genotyping refined variants with Paragraph
 breakpoint_refinement_analysis/refined_svs/paragraph/PARAGRAPH_REFINED_GENOTYPING : illumina_data/ILLUMINA_ALIGNMENT $(ILLUMINA_ALIGNED_READS) \
@@ -672,5 +684,17 @@ breakpoint_refinement_analysis/refined_svs/vg/VG_REFINED_GENOTYPING : illumina_d
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	breakpoint_refinement_analysis/illumina_ids.txt 
 	cd breakpoint_refinement_analysis/refined_svs/vg ; ./vg.sh $(BGZIP) $(TABIX) $(VG) ; touch VG_REFINED_GENOTYPING
+
+# Benchmarking the refined variants genotyped with all three genotyping tools
+breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData : \
+	nanopore_sv_calling/SV_NORMALIZATION \
+	breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/refined_nogeno_analysis.R \
+	scripts/extract_rates.R \
+	scripts/read_filter_vcf.R \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	breakpoint_refinement_analysis/refined_svs/bayestyper/bayestyper_split.vcf \
+	breakpoint_refinement_analysis/refined_svs/paragraph/PARAGRAPH_REFINED_GENOTYPING \
+	breakpoint_refinement_analysis/refined_svs/vg/VG_REFINED_GENOTYPING
+	cd breakpoint_refinement_analysis/refined_svs/sveval_benchmarks ; $(R_RUN_COMMAND) refined_nogeno_analysis.R
 
 
