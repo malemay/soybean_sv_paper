@@ -1,8 +1,8 @@
 #!/prg/R/4.0/bin/Rscript
 
 # Loading the dataset about breakpoint refinement
-# DEPENDENCY : alle_metainfo.RData
-load("/home/malem420/WGS_data/bbduk_trimmed/LongAGE_tests/realign_dir/all_metainfo.RData")
+# DEPENDENCY : nanopore_sv_calling/all_metainfo.RData
+load("../nanopore_sv_calling/all_metainfo.RData")
 
 # Generating a table of the number of (not) realigned variants for each sample
 bp_table <- table(all_metainfo$flag, all_metainfo$sample)
@@ -26,5 +26,6 @@ line_names <- c("MAPLE_PRESTO" = "Maple Presto",
 bp_table$sample <- line_names[bp_table$sample]
 
 # Writing to file for inclusion in the .tex document
+# OUTPUT : tables/table_s4.csv
 write.table(bp_table, file = "table_s4.csv", sep = ",", col.names = TRUE, row.names = FALSE, quote = FALSE)
 

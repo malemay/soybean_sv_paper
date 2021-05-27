@@ -114,7 +114,7 @@ tables/table_s2.csv : tables/lab_methods_table.csv
 
 tables/table_s3.csv : tables/table_s3_data.txt
 
-tables/table_s4.csv : 
+tables/table_s4.csv : nanopore_sv_calling/all_metainfo.RData
 
 tables/table_s5.csv : 
 
@@ -252,6 +252,11 @@ tables/table_s3_data.txt : utilities/line_ids.txt \
        	nanopore_sv_calling/SV_NORMALIZATION \
 	scripts/count_svtypes_svsizes.awk
 	cd tables ; ./gather_table_s3_data.sh
+
+# Generation the data for Table S4
+nanopore_sv_calling/all_metainfo.RData : nanopore_sv_calling/SV_NORMALIZATION \
+	nanopore_sv_calling/gather_metainfo.R
+	cd nanopore_sv_calling/ ; $(R_RUN_COMMAND) gather_metainfo.R $(BCFTOOLS)
 
 # --- This section processes the raw basecalled Nanopore reads using Porechop and aligns them to the reference genome
 NANOPORE_READS := $(shell cat utilities/flowcell_names.txt | xargs -I {} echo nanopore_data/{}.fastq.gz)
