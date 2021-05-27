@@ -105,17 +105,24 @@ figures/figure_s19.png : breakpoint_refinement_analysis/raw_svs/sveval_benchmark
 	breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
 	scripts/make_plot_data.R
 
-tables/table_s1.csv tables/table_s2.csv tables/table_s3.csv: tables/formatting_sup_tables.R
-	cd tables; $(R_RUN_COMMAND) formatting_sup_tables.R
+tables/table_%.csv : tables/table_%.R
+	cd tables ; $(R_RUN_COMMAND) $(<F)
 
-tables/table_s4.csv: tables/table_s4.R
-	cd tables; $(R_RUN_COMMAND) table_s4.R
+tables/table_s1.csv : 
 
-tables/table_s5.csv: tables/table_s5.R
-	cd tables; $(R_RUN_COMMAND) table_s5.R
+tables/table_s2.csv : 
 
-tables/table_s6.csv tables/table_s7.csv tables/table_s8.csv: tables/tables_s6_s7_s8.R 
-	cd tables; $(R_RUN_COMMAND) tables_s6_s7_s8.R
+tables/table_s3.csv : 
+
+tables/table_s4.csv : 
+
+tables/table_s5.csv : 
+
+tables/table_s6.csv : 
+
+tables/table_s7.csv : 
+
+tables/table_s8.csv : 
 
 supfigures : $(SUPFIGURES)
 
