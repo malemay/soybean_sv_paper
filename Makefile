@@ -159,8 +159,7 @@ tables/table_3.csv: tables/table_3.R
 # --- The following section prepares the main figures for inclusion in the manuscript
 figures : $(FIGURES)
 
-figures/figure_1.png: figures/figure_1.R
-	cd figures; $(R_FIG_COMMAND) figure_1.R
+figures/figure_1.png : sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData scripts/make_plot_data.R
 
 figures/figure_2.png: figures/figure_2.R
 	cd figures; $(R_FIG_COMMAND) figure_2.R
