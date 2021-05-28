@@ -1,3 +1,5 @@
+#!/prg/R/4.0/bin/Rscript
+
 # File initially created on April 19, 2021
 
 # The code in this file will test the pairwise differences between the allele
@@ -12,7 +14,7 @@
 # will be applied to compensate for multiple testing.
 
 # Loading the data.frame of allele frequencies and genic feature overlap
-# DEPENDENCY : overlap_data.txt
+# DEPENDENCY : gene_analysis/overlap_data.txt
 overlap_data <- read.table("overlap_data.txt", header = TRUE, stringsAsFactors = FALSE)
 
 # Removing the entries with allele frequences = 1 because they might represent errors in the reference
@@ -75,6 +77,7 @@ insertion_permutations <- as.data.frame(insertion_permutations)
 names(insertion_permutations) <- c("cds", "gene", "intergenic", "upstream5kb")
 
 # Saving some of the objects in a RData file
+# OUTPUT gene_analysis/allele_frequency_permutations.RData
 save(deletion_means, deletion_differences, deletion_permutations, 
      insertion_means, insertion_differences, insertion_permutations,
      file = "allele_frequency_permutations.RData")

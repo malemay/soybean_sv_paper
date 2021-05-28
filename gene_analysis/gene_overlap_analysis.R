@@ -7,8 +7,8 @@ library(rtracklayer)
 
 # First I read the filtered population-scale Paragraph dataset
 # We only need to read the allele frequencies (AF) and SV type (SVTYPE)
-# DEPENDENCY: /home/malem420/analyse_nanopore/transposons/paragraph_filtered.vcf
-vcf <- readVcf("/home/malem420/analyse_nanopore/transposons/paragraph_filtered.vcf",
+# DEPENDENCY: sv_genotyping/combined_svs/combined_paragraph_filtered.vcf
+vcf <- readVcf("../sv_genotyping/combined_svs/combined_paragraph_filtered.vcf",
 	       param = ScanVcfParam(fixed = NA,
 				    info = c("AF", "SVTYPE"),
 				    geno = NA))
@@ -23,16 +23,16 @@ rm(vcf)
 # and excludes the unanchored scaffolds
 
 # Reading the fasta index of the reference genome and pruning the unanchored scaffolds
-# DEPENDENCY : /home/malem420/refgenome/Gmax_v4/Gmax_508_v4.0_mit_chlp.fasta
-refgenome <- scanFaIndex("/home/malem420/refgenome/Gmax_v4/Gmax_508_v4.0_mit_chlp.fasta")
+# DEPENDENCY : refgenome/Gmax_508_v4.0_mit_chlp.fasta
+refgenome <- scanFaIndex("../refgenome/Gmax_508_v4.0_mit_chlp.fasta")
 chrs <- paste0("Gm", sprintf("%0.2d", 1:20))
 seqlevels(refgenome, pruning.mod = "coarse") <- chrs
 
 # Now we either read the annotation from disk or generate it from the GFF3 file
 if(!file.exists("genes.RData") || !file.exists("cds.RData") || !file.exists("upstream5kb.RData")) {
 	# Generating the database from the GFF3 file
-	# DEPENDENCY : /home/malem420/refgenome/Gmax_v4/Wm82.a4.v1/annotation/Gmax_508_Wm82.a4.v1.gene_exons.gff3
-	annotations <- makeTxDbFromGFF("/home/malem420/refgenome/Gmax_v4/Wm82.a4.v1/annotation/Gmax_508_Wm82.a4.v1.gene_exons.gff3")
+	# DEPENDENCY : refgenome/Gmax_508_Wm82.a4.v1.gene_exons.gff3
+	annotations <- makeTxDbFromGFF("../refgenome/Gmax_508_Wm82.a4.v1.gene_exons.gff3")
 
 	# From the TxDb object we extract the objects for which we will want to test overlap
 	# We also restrict them to those found on the reference chromosomes
@@ -72,6 +72,7 @@ vcf_ranges$overlap[overlapsAny(vcf_ranges, cds)] <- "cds"
 overlap_data <- as.data.frame(vcf_ranges)
 
 # Saving the overlap_data as text file for retrieval from disk later on
+# OUTPUT : gene_analysis/overlap_data.txt
 write.table(overlap_data, file = "overlap_data.txt", 
 	    col.names = TRUE, row.names = FALSE,
 	    quote = FALSE, sep = "\t")
@@ -100,12 +101,13 @@ feature_widths["intergenic"] <- sum(width(intergenic_ranges))
 stopifnot(sum(width(refgenome)) == sum(feature_widths))
 
 # Saving the object to file
+# OUTPUT : gene_analysis/feature_widths.RData
 save(feature_widths, file = "feature_widths.RData")
 
 # Let us restrict our attention to the non-repeated regions
 # We can simply read the bed file that we generated before for the benchmarks in non-repeat regions
-# DEPENDENCY : /home/malem420/WGS_data/bbduk_trimmed/repeat_regions/non_repeated_regions.bed
-non_repeats <- import("/home/malem420/WGS_data/bbduk_trimmed/repeat_regions/non_repeated_regions.bed")
+# DEPENDENCY : refgenome/repeat_regions/non_repeated_regions.bed
+non_repeats <- import("../refgenome/repeat_regions/non_repeated_regions.bed")
 
 # We can find the intersection between each set of genic feature ranges and non_repeat ranges
 # in order to find the regions of each that are in non-repeat regions
@@ -127,6 +129,7 @@ norepeat_widths["intergenic"] <- sum(width(intergenic_norepeat))
 stopifnot(sum(norepeat_widths) == sum(width(non_repeats)))
 
 # Saving this to file for use in reporting results
+# OUTPUT : gene_analysis/norepeat_widths.RData
 save(norepeat_widths, file = "norepeat_widths.RData")
 
 # Now we can restrict the SVs to those that overlap non-repeat regions
@@ -144,6 +147,7 @@ norepeat_vcf$overlap[overlapsAny(norepeat_vcf, cds_norepeat)] <- "cds"
 overlap_norepeat <- as.data.frame(norepeat_vcf)
 
 # Also saving this table to file for reporting the results
+# OUTPUT : gene_analysis/overlap_norepeat.txt
 write.table(overlap_norepeat, file = "overlap_norepeat.txt", 
 	    col.names = TRUE, row.names = FALSE,
 	    quote = FALSE, sep = "\t")

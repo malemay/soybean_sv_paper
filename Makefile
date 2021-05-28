@@ -116,7 +116,7 @@ tables/table_s3.csv : tables/table_s3_data.txt
 
 tables/table_s4.csv : nanopore_sv_calling/all_metainfo.RData
 
-tables/table_s5.csv : 
+tables/table_s5.csv : gene_analysis/allele_frequency_permutations.RData
 
 tables/table_s6.csv : 
 
@@ -257,6 +257,26 @@ tables/table_s3_data.txt : utilities/line_ids.txt \
 nanopore_sv_calling/all_metainfo.RData : nanopore_sv_calling/SV_NORMALIZATION \
 	nanopore_sv_calling/gather_metainfo.R
 	cd nanopore_sv_calling/ ; $(R_RUN_COMMAND) gather_metainfo.R $(BCFTOOLS)
+
+# Generating the data for Table S5
+gene_analysis/allele_frequency_permutations.RData : gene_analysis/allele_frequency_permutations.R \
+	gene_analysis/GENE_OVERLAP_ANALYSIS
+	cd gene_analysis ; $(R_RUN_COMMAND) allele_frequency_permutations.R
+
+# GENE_OVERLAP_ANALYSIS includes :
+# gene_analysis/overlap_data.txt
+# gene_analysis/overlap_norepeat.txt
+# gene_analysis/genes.RData
+# gene_analysis/cds.RData
+# gene_analysis/upstream5kb.RData
+# gene_analysis/feature_widths.RData
+# gene_analysis/norepeat_widths.RData
+gene_analysis/GENE_OVERLAP_ANALYSIS : sv_genotyping/combined_svs/combined_paragraph_filtered.vcf \
+	gene_analysis/gene_overlap_analysis.R \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	refgenome/Gmax_508_Wm82.a4.v1.gene_exons.gff3 \
+	refgenome/repeat_regions/non_repeated_regions.bed
+	cd gene_analysis/ ; $(R_RUN_COMMAND) gene_overlap_analysis.R
 
 # --- This section processes the raw basecalled Nanopore reads using Porechop and aligns them to the reference genome
 NANOPORE_READS := $(shell cat utilities/flowcell_names.txt | xargs -I {} echo nanopore_data/{}.fastq.gz)
@@ -492,6 +512,17 @@ sv_genotyping/combined_svs/PARAGRAPH_COMBINED_GENOTYPING : illumina_data/ILLUMIN
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	utilities/all_lines.txt
 	cd sv_genotyping/combined_svs ; ./run_paragraph.sh $(BCFTOOLS) $(BGZIP) $(TABIX) $(MULTIGRMPY) ; touch PARAGRAPH_COMBINED_GENOTYPING
+
+# Merging the VCF files of the combined Illumina/Nanopore SVs genotyped by Paragraph
+sv_genotyping/combined_svs/combined_paragraph_merged.vcf : sv_genotyping/combined_svs/PARAGRAPH_COMBINED_GENOTYPING \
+	sv_genotyping/combined_svs/merge_vcf_files.sh \
+	utilities/all_lines.txt
+	cd sv_genotyping/combined_svs ; ./merge_vcf_files.sh $(BCFTOOLS) $(TABIX)
+
+# Filtering the merged vcf file for minimum number of supporting reads, minimum homozygous ALT count, and removing inversions/duplications
+sv_genotyping/combined_svs/combined_paragraph_filtered.vcf : sv_genotyping/combined_svs/combined_paragraph_merged.vcf \
+	sv_genotyping/combined_svs/filter_merged_vcf.sh
+	cd sv_genotyping/combined_svs ; ./filter_merged_vcf.sh $(BCFTOOLS) $(BCFTOOLS_PLUGIN_PATH)
 
 # --- This section prepares the Illumina SV benchmarks from the Paragraph vcfs
 PARAGRAPH_ILLUMINA_VCFS := $(shell cat utilities/all_lines.txt | xargs -I {} echo sv_genotyping/illumina_svs/{}_results/genotypes.vcf.gz)
