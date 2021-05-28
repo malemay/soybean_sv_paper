@@ -33,7 +33,7 @@ sv_genotyping/illumina_svs/size_distribution.tsv
 *vcf.gz
 
 # Ignore reference data files
-te_analysis/te_database/SoyBase_TE_Fasta.txt
+te_analysis/te_database/SoyBase_TE_Fasta.txt*
 te_analysis/tian2012_tes.txt
 *fasta
 *fai

@@ -9,8 +9,8 @@ library(VariantAnnotation)
 library(GenomicRanges)
 
 # Reading the filtered SV vcf file
-# DEPENDENCY: sv_genotyping/paragraph_filtered_svs.vcf
-vcf <- readVcf("../../sv_genotyping/paragraph_filtered_svs.vcf",
+# DEPENDENCY: sv_genotyping/combined_svs/combined_paragraph_filtered.vcf
+vcf <- readVcf("../../sv_genotyping/combined_svs/combined_paragraph_filtered.vcf",
 	       param = ScanVcfParam(info = "SVTYPE", geno = NA))
 
 deletions  <- vcf[info(vcf)$SVTYPE == "DEL"]

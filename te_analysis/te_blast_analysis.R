@@ -5,11 +5,11 @@ library(VariantAnnotation)
 library(rtracklayer)
 
 # Reading the VCF containing the information on the queried SVs
-# DEPENDENCY : query_all.vcf
+# DEPENDENCY : te_analysis/query_all.vcf
 vcf <- readVcf("query_all.vcf", param = ScanVcfParam(info = c("SVTYPE", "AF"), geno = NA))
 
 # Reading the results of the blastn query
-# DEPENDENCY : blast_svs.txt
+# DEPENDENCY : te_analysis/blast_svs.txt
 blastn_results <- read.table("blast_svs.txt", header = FALSE, stringsAsFactors = FALSE,
 			     col.names = c("qseqid", "qlen", "sseqid", "slen", "length", "qstart", 
 					   "qend", "sstart", "send", "bitscore", "evalue", "pident"))
@@ -131,5 +131,6 @@ stopifnot(identical(polymorphic_tes$name, te_metadata$name))
 polymorphic_tes <- cbind(polymorphic_tes, te_metadata[, -1])
 
 # We save those polymorphic TEs to file so we can use thse data for downstream analyses
+# OUTPUT : te_analysis/polymorphic_tes.tsv
 write.table(polymorphic_tes, file = "polymorphic_tes.tsv", col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
 

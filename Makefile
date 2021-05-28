@@ -10,6 +10,7 @@ BGZIP = /prg/htslib/1.10.2/bin/bgzip
 BWA = /prg/bwa/0.7.17/bwa
 BCFTOOLS = /home/malem420/programs/bcftools/bcftools
 BCFTOOLS_PLUGIN_PATH = /home/malem420/programs/bcftools/plugins
+BLASTN = /home/malem420/programs/ncbi-blast-2.11.0+/bin/blastn
 CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
 FASTSTRUCTURE = /prg/fastStructure/1.0/structure.py
 FLASH = /home/malem420/programs/FLASH-1.2.11-Linux-x86_64/flash
@@ -17,6 +18,7 @@ IDXDEPTH = /home/malem420/programs/paragraph/bin/idxdepth
 KMC = /home/malem420/programs/KMC3.linux/kmc
 LASTAL = /home/malem420/programs/last-1047/src/lastal
 LASTSPLIT = /home/malem420/programs/last-1047/src/last-split
+MAKEBLASTDB = /home/malem420/programs/ncbi-blast-2.11.0+/bin/makeblastdb
 MANTA = /home/malem420/programs/manta-1.6.0.centos6_x86_64/bin/configManta.py
 MINIMAP2 = /home/malem420/programs/minimap2/minimap2
 MULTIGRMPY = /home/malem420/programs/paragraph/bin/multigrmpy.py
@@ -191,7 +193,7 @@ $(CIRCD)/gmax4_3Mb_bins.RData: $(CIRCD)/make_3Mb_bins.R refgenome/Gmax_508_v4.0_
 $(CIRCD)/snp_density.txt: $(CIRCD)/make_snp_track.R structure_analysis/platypus_filtered_snps.vcf $(CIRCD)/gmax4_3Mb_bins.RData
 	cd $(CIRCD); $(R_RUN_COMMAND) make_snp_track.R
 
-$(CIRCD)/sv_counts.txt: $(CIRCD)/make_SV_track.R $(CIRCD)/gmax4_3Mb_bins.RData
+$(CIRCD)/sv_counts.txt: $(CIRCD)/make_SV_track.R $(CIRCD)/gmax4_3Mb_bins.RData sv_genotyping/combined_svs/combined_paragraph_filtered.vcf
 	cd $(CIRCD); $(R_RUN_COMMAND) make_SV_track.R
 
 $(CIRCD)/ref_ltr.txt $(CIRCD)/poly_ltr.txt $(CIRCD)/ref_dna.txt $(CIRCD)/poly_dna.txt: $(CIRCD)/make_te_tracks.R \
@@ -791,4 +793,21 @@ structure_analysis/platypus_filtered_snps.vcf : structure_analysis/platypus_snps
 structure_analysis/structure.5.meanQ : structure_analysis/platypus_filtered_snps.vcf \
 	structure_analysis/compute_structure.sh
 	cd structure_analysis ; ./compute_structure.sh $(FASTSTRUCTURE) $(VCFTOOLS) $(PLINK)
+
+# --- This section analyses the TEs found in the combined Illumina/Oxford Nanopore SV dataset
+te_analysis/polymorphic_tes.tsv : te_analysis/query_all.vcf \
+	te_analysis/blast_svs.txt \
+	te_analysis/te_blast_analysis.R \
+	te_analysis/extract_te_metadata.sh \
+	te_analysis/te_database/SoyBase_TE_Fasta.txt
+	cd te_analysis ; $(R_RUN_COMMAND) te_blast_analysis.R
+
+te_analysis/query_all.vcf : sv_genotyping/combined_svs/combined_paragraph_filtered.vcf \
+	te_analysis/extract_query_vcf.sh
+	cd te_analysis ; ./extract_query_vcf.sh
+
+te_analysis/blast_svs.txt : te_analysis/query_all.vcf \
+	te_analysis/blast_tes.sh \
+	te_analysis/te_database/SoyBase_TE_Fasta.txt
+	cd te_analysis ; ./blast_tes.sh $(BLASTN) $(MAKEBLASTDB)
 
