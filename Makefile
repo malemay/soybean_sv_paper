@@ -11,6 +11,7 @@ BWA = /prg/bwa/0.7.17/bwa
 BCFTOOLS = /home/malem420/programs/bcftools/bcftools
 BCFTOOLS_PLUGIN_PATH = /home/malem420/programs/bcftools/plugins
 CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
+FASTSTRUCTURE = /prg/fastStructure/1.0/structure.py
 FLASH = /home/malem420/programs/FLASH-1.2.11-Linux-x86_64/flash
 IDXDEPTH = /home/malem420/programs/paragraph/bin/idxdepth
 KMC = /home/malem420/programs/KMC3.linux/kmc
@@ -21,6 +22,8 @@ MINIMAP2 = /home/malem420/programs/minimap2/minimap2
 MULTIGRMPY = /home/malem420/programs/paragraph/bin/multigrmpy.py
 NANOPLOT = /home/malem420/.local/bin/NanoPlot
 NGMLR = /home/malem420/programs/ngmlr/ngmlr-0.2.7/ngmlr
+PLATYPUS = /prg/platypus/0.8.1.1/bin/Platypus.py
+PLINK = /prg/plink/1.90b5.3/bin/plink
 PORECHOP = /home/malem420/programs/Porechop/porechop-runner.py
 R_FIG_COMMAND = /usr/bin/Rscript
 R_RUN_COMMAND = /prg/R/4.0/bin/Rscript
@@ -31,6 +34,7 @@ SNIFFLES = /home/malem420/programs/Sniffles-master/bin/sniffles-core-1.0.11/snif
 SVABA = /home/malem420/programs/svaba/bin/svaba
 SVMERGE = /home/malem420/programs/SVanalyzer-install/bin/SVmerge
 TABIX = /prg/htslib/1.10.2/bin/tabix
+VCFTOOLS = /prg/vcftools/0.1.16/bin/vcftools
 VG = /home/malem420/programs/vg/vg
 WTDBG2 = /home/malem420/programs/wtdbg2/wtdbg2
 WTPOA_CNS = /home/malem420/programs/wtdbg2/wtpoa-cns
@@ -178,7 +182,7 @@ figures/figure_3.png: $(CIRCD)/circos.conf $(EXTDIR)/housekeeping.conf $(EXTDIR)
 $(CIRCD)/Gmax_karyotype.txt: $(CIRCD)/make_karyotype_file.R refgenome/Gmax_508_v4.0_mit_chlp.fasta
 	cd $(CIRCD); $(R_RUN_COMMAND) make_karyotype_file.R
 
-$(CIRCD)/genes_heatmap.txt: $(CIRCD)/make_genes_heatmap_data.R $(CIRCD)/gmax4_3Mb_bins.RData
+$(CIRCD)/genes_heatmap.txt: $(CIRCD)/make_genes_heatmap_data.R $(CIRCD)/gmax4_3Mb_bins.RData gene_analysis/GENE_OVERLAP_ANALYSIS
 	cd $(CIRCD); $(R_RUN_COMMAND) make_genes_heatmap_data.R
 
 $(CIRCD)/gmax4_3Mb_bins.RData: $(CIRCD)/make_3Mb_bins.R refgenome/Gmax_508_v4.0_mit_chlp.fasta
@@ -765,4 +769,26 @@ breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/nogeno_RData/sveval
 	breakpoint_refinement_analysis/refined_svs/vg/VG_REFINED_GENOTYPING
 	cd breakpoint_refinement_analysis/refined_svs/sveval_benchmarks ; $(R_RUN_COMMAND) refined_nogeno_analysis.R
 
+# --- This section performs the fastStructure analysis on SNPs
+
+# Calling the SNPs using Platypus
+structure_analysis/platypus_snps.vcf : illumina_data/ILLUMINA_ALIGNMENT \
+	structure_analysis/call_snps.sh \
+	structure_analysis/platypus102_Gmax_v4_bamfiles.txt \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	cd structure_analysis ; ./call_snps.sh $(PLATYPUS)
+
+# Filtering the SNPs called with Platypus
+structure_analysis/platypus_filtered_snps.vcf : structure_analysis/platypus_snps.vcf \
+	structure_analysis/filter_platypus_snps.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	scripts/het_counts.awk \
+	scripts/het_stats.awk \
+	scripts/filter_hetsites.R
+	cd structure_analysis ; ./filter_platypus_snps.sh $(BCFTOOLS) $(VCFTOOLS) $(R_RUN_COMMAND)
+
+# Computing the fastStructure results from the filtered Platypus SNPs
+structure_analysis/structure.5.meanQ : structure_analysis/platypus_filtered_snps.vcf \
+	structure_analysis/compute_structure.sh
+	cd structure_analysis ; ./compute_structure.sh $(FASTSTRUCTURE) $(VCFTOOLS) $(PLINK)
 
