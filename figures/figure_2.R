@@ -1,4 +1,4 @@
-#!/prg/R/4.0/bin/Rscript
+#!/usr/bin/Rscript
 
 # Figure 2 shows the benchmarking of SVs discovered using Oxford Nanopore sequencing
 #  but genotyped using Illumina sequencing data
@@ -9,13 +9,13 @@
 library(ggplot2)
 library(grid)
 
-# DEPENDENCY : sveval_nogeno_rates.RData
+# DEPENDENCY : sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
 # Loading the data used for plotting
-load("/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_nanopore/genotyping/svmerged/paragraph/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData")
+load("../sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData")
 
 # Also loading a script that will be used to prepare the data for plotting
-# DEPENDENCY : make_plot_data.R
-source("/home/malem420/scripts/make_plot_data.R")
+# DEPENDENCY : scripts/make_plot_data.R
+source("../scripts/make_plot_data.R")
 
 # Preparing the data for plotting
 del_plot_data <- make_plot_data(sveval_nogeno_rates, "DEL")
@@ -77,6 +77,7 @@ insertions_plot <-
 
 
 # Saving to disk as "figure_2.png"
+# OUTPUT : figures/figure_2.png
 png("figure_2.png", width = 12, height = 6, units = "in", res = 500)
 grid.newpage()
 # Locating the subplots in the figure, leaving some space for the "A" and "B" plot labels

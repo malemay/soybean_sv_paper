@@ -161,8 +161,7 @@ figures : $(FIGURES)
 
 figures/figure_1.png : sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData scripts/make_plot_data.R
 
-figures/figure_2.png: figures/figure_2.R
-	cd figures; $(R_FIG_COMMAND) figure_2.R
+figures/figure_2.png : sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData scripts/make_plot_data.R 
 
 # --- Section for the Circos figure
 CIRCD = figures/figure_3_circos
