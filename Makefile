@@ -118,11 +118,11 @@ tables/table_s4.csv : nanopore_sv_calling/all_metainfo.RData
 
 tables/table_s5.csv : gene_analysis/allele_frequency_permutations.RData
 
-tables/table_s6.csv : 
+tables/table_s6.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 
-tables/table_s7.csv : 
+tables/table_s7.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 
-tables/table_s8.csv : 
+tables/table_s8.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 
 supfigures : $(SUPFIGURES)
 
@@ -277,6 +277,16 @@ gene_analysis/GENE_OVERLAP_ANALYSIS : sv_genotyping/combined_svs/combined_paragr
 	refgenome/Gmax_508_Wm82.a4.v1.gene_exons.gff3 \
 	refgenome/repeat_regions/non_repeated_regions.bed
 	cd gene_analysis/ ; $(R_RUN_COMMAND) gene_overlap_analysis.R
+
+# Generating the data for tables S6, S7 and S8
+# Outputs the following files :
+# bp_over_summary.RData
+# bp_under_summary.RData
+# pfam_over_summary.RData
+gene_analysis/GO_ANALYSIS : gene_analysis/GENE_OVERLAP_ANALYSIS \
+	gene_analysis/go_analysis.R \
+	gene_analysis/soybase_genome_annotation_v4.0_04-20-2021.txt
+	cd gene_analysis/ ; $(R_RUN_COMMAND) go_analysis.R
 
 # --- This section processes the raw basecalled Nanopore reads using Porechop and aligns them to the reference genome
 NANOPORE_READS := $(shell cat utilities/flowcell_names.txt | xargs -I {} echo nanopore_data/{}.fastq.gz)

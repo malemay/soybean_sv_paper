@@ -18,11 +18,11 @@ library(GSEABase)
 library(PFAM.db)
 
 # Loading the GRanges object of genes
-# DEPENDENCY : genes.RData
+# DEPENDENCY : gene_analysis/genes.RData
 load("genes.RData")
 
 #----- Preparing the list of genes that overlap high-frequency SVs
-# DEPENDENCY : overlap_data.txt
+# DEPENDENCY : gene_analysis/overlap_data.txt
 overlap_data <- read.table("overlap_data.txt", header = TRUE, stringsAsFactors = FALSE)
 
 # Extracting the SVs that overlap genes (either coding or non-coding sequence)
@@ -44,9 +44,8 @@ sv_genes <- toupper(sv_genes)
 
 # Reading the annotation in the file retrieved from Soybease on April 20, 2021
 # First using a system call to simplify the file to only what we need
-# DEPENDENCY : soybase_genome_annotation_v4.0_04-20-2021.txt
+# DEPENDENCY : gene_analysis/soybase_genome_annotation_v4.0_04-20-2021.txt
 system("tail -n +14 soybase_genome_annotation_v4.0_04-20-2021.txt | cut -f 1,12-18 > gmax_go_annotations.txt")
-# annotations <- read.table("gmax_go_annotations.txt", header = TRUE, sep = "\t")
 
 # read.table does not seem able to read the data properly, so I will have to set the data.frame manually
 fields <- strsplit(scan("gmax_go_annotations.txt", what = character(), sep = "\n", quiet = TRUE), "\t")
@@ -276,6 +275,9 @@ pfam_under_test$Pvalue <- pfam_under_test$Pvalue * nrow(pfam_under_test)
 stopifnot(nrow(pfam_under_test) != 0)
 
 # Saving the objects from the GO analysis to file
+# OUTPUT : bp_over_summary.RData
+# OUTPUT : bp_under_summary.RData
+# OUTPUT : pfam_over_summary.RData
 save(bp_over_summary, file = "bp_over_summary.RData")
 save(bp_under_summary, file = "bp_under_summary.RData")
 save(pfam_over_summary, file = "pfam_over_summary.RData")
