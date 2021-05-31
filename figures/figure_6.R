@@ -15,11 +15,11 @@ library(grid)
 library(ggplot2)
 
 # Reading in the polymorphic_tes as identified in our data
-# DEPENDENCY : ../te_analysis/polymorphic_tes.tsv
+# DEPENDENCY : te_analysis/polymorphic_tes.tsv
 polymorphic_tes <- read.table("../te_analysis/polymorphic_tes.tsv", sep = "\t", header = TRUE, stringsAsFactors = FALSE)
 
 # Reading in the polymorphic TEs found by Tian et al. (2012)
-# DEPENDENCY : ../te_analysis/tian2012_tes.txt
+# DEPENDENCY : te_analysis/tian2012_tes.txt
 tian_tes <- read.table("../te_analysis/tian2012_tes.txt", header = FALSE, stringsAsFactors = FALSE)
 names(tian_tes) <- c("accession", "chrom", "pos", "family", "category", "boundary")
 
@@ -120,7 +120,7 @@ figure_6b <- ggplot(dna_counts, aes(x = count, y = tian_count)) +
 # 
 
 # Reading the data for plotting
-# DEPENDENCY : ../te_analysis/multiple_alignments/filtered_alignments/tir_similarity_noref.txt
+# DEPENDENCY : te_analysis/multiple_alignments/filtered_alignments/tir_similarity_noref.txt
 noref_means <- read.table("../te_analysis/multiple_alignments/filtered_alignments/tir_similarity_noref.txt", header = TRUE, stringsAsFactors = FALSE)
 
 figure_6c <- ggplot(noref_means, aes(x = family, y = similarity, color = superfamily)) +
@@ -143,9 +143,9 @@ theme(text = element_text(size = 8),
       panel.grid.minor.y = element_blank())
 
 # Preparing panel D of the figure
-# DEPENDENCY : ../te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/plotting_df.RData
+# DEPENDENCY : te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/plotting_df.RData
 load("../te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/plotting_df.RData")
-# DEPENDENCY : ../te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/diverging_snps.RData
+# DEPENDENCY : te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/diverging_snps.RData
 load("../te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/diverging_snps.RData")
 
 # Adding a column for the position of the SNPs to the diverging_snps data.frame
@@ -175,6 +175,7 @@ theme(text = element_text(size = 8),
       panel.border = element_blank())
 
 # Now arranging the panels in the single figure and saving it to file
+# OUTPUT : figures/figure_6.png
 png("figure_6.png", width = 6, height = 9, units = "in", res = 500)
 grid.newpage()
 # Preparing the 3 x 2 layout for the plots

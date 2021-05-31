@@ -14,6 +14,8 @@ BLASTN = /home/malem420/programs/ncbi-blast-2.11.0+/bin/blastn
 CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
 FASTSTRUCTURE = /prg/fastStructure/1.0/structure.py
 FLASH = /home/malem420/programs/FLASH-1.2.11-Linux-x86_64/flash
+GINSI = /home/malem420/.local/bin/ginsi
+GRF = /home/malem420/programs/GenericRepeatFinder/bin/grf-main
 IDXDEPTH = /home/malem420/programs/paragraph/bin/idxdepth
 KMC = /home/malem420/programs/KMC3.linux/kmc
 LASTAL = /home/malem420/programs/last-1047/src/lastal
@@ -214,8 +216,11 @@ figures/figure_4.png : structure_analysis/snp_pca/SNP_PCA structure_analysis/sv_
 
 figures/figure_5.png : gene_analysis/GENE_OVERLAP_ANALYSIS gene_analysis/permutation_all_100kb.RData
 
-figures/figure_6.png: figures/figure_6.R
-	cd figures; $(R_FIG_COMMAND) figure_6.R
+figures/figure_6.png : te_analysis/polymorphic_tes.tsv \
+	te_analysis/tian2012_tes.txt \
+	te_analysis/multiple_alignments/TIR_TSD_ANALYSIS \
+	te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/plotting_df.RData \
+	te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/diverging_snps.RData
 
 # --- This section creates the bed file of repeats from the reference genome and Phytozome repeat annotation
 refgenome/repeat_regions/non_repeated_regions.bed : refgenome/repeat_regions/make_repeat_bed.R \
@@ -811,6 +816,8 @@ structure_analysis/sv_pca/SV_PCA : sv_genotyping/combined_svs/combined_paragraph
 	cd structure_analysis/sv_pca ; ./sv_pca.sh $(VCFTOOLS) $(PLINK) ; touch SV_PCA
 
 # --- This section analyses the TEs found in the combined Illumina/Oxford Nanopore SV dataset
+
+# Identifying polymoprhic TEs within the combined Illumina/Oxford Nanopore SV dataset
 te_analysis/polymorphic_tes.tsv : te_analysis/query_all.vcf \
 	te_analysis/blast_svs.txt \
 	te_analysis/te_blast_analysis.R \
@@ -818,12 +825,52 @@ te_analysis/polymorphic_tes.tsv : te_analysis/query_all.vcf \
 	te_analysis/te_database/SoyBase_TE_Fasta.txt
 	cd te_analysis ; $(R_RUN_COMMAND) te_blast_analysis.R
 
+# Extracting a VCF of the sequences to query against the soybean TE database with BLASTN
 te_analysis/query_all.vcf : sv_genotyping/combined_svs/combined_paragraph_filtered.vcf \
 	te_analysis/extract_query_vcf.sh
 	cd te_analysis ; ./extract_query_vcf.sh
 
+# Querying the SV sequences against the SoyTEdb database retrieved from SoyBase
 te_analysis/blast_svs.txt : te_analysis/query_all.vcf \
 	te_analysis/blast_tes.sh \
 	te_analysis/te_database/SoyBase_TE_Fasta.txt
 	cd te_analysis ; ./blast_tes.sh $(BLASTN) $(MAKEBLASTDB)
+
+# Extracting VCF files corresponding to DNA TE SVs that have at least 3 matches in the dataset
+te_analysis/DNA_TE_VCFS : te_analysis/query_all.vcf \
+	te_analysis/polymorphic_tes.tsv \
+	te_analysis/extract_dna_te_vcfs.R
+	cd te_analysis ; $(R_RUN_COMMAND) extract_dna_te_vcfs.R ; touch DNA_TE_VCFS
+
+# Assembling the sequences around DNA TE SVs and performing multiple alignments with MAFFT (ginsi command)
+te_analysis/multiple_alignments/MULTIPLE_ALIGNMENTS : te_analysis/DNA_TE_VCFS \
+	nanopore_data/NANOPORE_ALIGNMENT \
+	te_analysis/multiple_alignments/make_symbolic_links.sh \
+	te_analysis/multiple_alignments/assemble_align_all.R \
+	te_analysis/multiple_alignments/age_realign.sh \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta
+	cd te_analysis/multiple_alignments ; ./make_symbolic_links.sh ; \
+		$(R_RUN_COMMAND) assemble_align_all.R $(SAMTOOLS) $(MINIMAP2) $(WTDBG2) $(WTPOA_CNS) $(GINSI) ; touch MULTIPLE_ALIGNMENTS
+
+# Filtering the multiple alignments, keeping only those with a conspicuous presence/absence polymorphism
+# Also removing aligned sequences that have poor (< 0.75) identity to the reference sequence in their 500-nucleotide ends
+te_analysis/multiple_alignments/FILTERED_ALIGNMENTS : te_analysis/multiple_alignments/MULTIPLE_ALIGNMENTS \
+	te_analysis/multiple_alignments/filter_alignments.R \
+	te_analysis/multiple_alignments/mafft_metadata.txt
+	cd te_analysis/multiple_alignments ; $(R_RUN_COMMAND) filter_alignments.R ; touch FILTERED_ALIGNMENTS
+
+te_analysis/multiple_alignments/TIR_TSD_ANALYSIS : te_analysis/multiple_alignments/FILTERED_ALIGNMENTS \
+	te_analysis/multiple_alignments/mafft_metadata.txt \
+	te_analysis/multiple_alignments/extract_te_sequences.R \
+	te_analysis/multiple_alignments/grf_analysis.R \
+	te_analysis/multiple_alignments/analyse_tir_sequences.R \
+	te_analysis/multiple_alignments/filtered_alignments/correct_tsd_tir_sequences.txt
+	cd te_analysis/multiple_alignments ; $(R_RUN_COMMAND) extract_te_sequences.R ; \
+		$(R_RUN_COMMAND) grf_analysis.R $(GRF) ; \
+		$(R_RUN_COMMAND) analyse_tir_sequences.R ; \
+		touch TIR_TSD_ANALYSIS
+
+te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/plotting_df.RData :
+
+te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/diverging_snps.RData :
 

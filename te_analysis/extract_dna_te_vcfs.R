@@ -6,10 +6,10 @@
 # Loading the required package
 library(VariantAnnotation)
 
-# DEPENDENCY : query_all.vcf
+# DEPENDENCY : te_analysis/query_all.vcf
 vcf <- readVcf("query_all.vcf", param = ScanVcfParam(info = c("SVTYPE", "AF"), geno = NA))
 
-# DEPENDENCY : polymorphic_tes.tsv
+# DEPENDENCY : te_analysis/polymorphic_tes.tsv
 polymorphic_tes <- read.table("polymorphic_tes.tsv", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
 
 # Extracting a character vector of DNA TE families that are highly polymorphic (their name occurs >= 3 in the polymorphic_tes)
