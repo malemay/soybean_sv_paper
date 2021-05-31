@@ -1,4 +1,4 @@
-#!/prg/R/4.0/bin/Rscript
+#!/usr/bin/Rscript
 
 # Figure 5 shows the allele frequencies of various SVs depending
 # on the gene features (intergenic, 5 kb upstream, gene, exon)
@@ -9,9 +9,8 @@ library(ggplot2)
 library(grid)
 
 # First reading the dataset of overlapping features and frequencies
-# DEPENDENCY : overlap_data.txt
-overlap_data <- read.table("../gene_analysis/overlap_data.txt",
-			   header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+# DEPENDENCY : gene_analysis/overlap_data.txt
+overlap_data <- read.table("../gene_analysis/overlap_data.txt", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
 
 # Ordering the levels of the features
 overlap_data$overlap <- factor(overlap_data$overlap, levels = c("cds", "gene", "upstream5kb", "intergenic"))
@@ -44,7 +43,7 @@ figure_5a <- ggplot(overlap_data[overlap_data$ af != 1, ], aes(x = af_class, fil
 	      panel.grid.minor = element_blank())
 
 # Loading the data on the randomly shuffled SVs and gene overlaps
-# DEPENDENCY : ../gene_analysis/permutation_all_100kb.RData
+# DEPENDENCY : gene_analysis/permutation_all_100kb.RData
 load("../gene_analysis/permutation_all_100kb.RData")
 
 # Formatting this data for plotting with ggplot2
@@ -91,6 +90,7 @@ figure_5b <- ggplot(random_proportions, aes(x = proportion)) +
 	      panel.spacing = unit(0.01, "npc"))
 
 # Arranging the two panels horizontally and saving as a png file
+# OUTPUT : figures/figure_5.png
 png("figure_5.png", width = 6, height = 3, units = "in", res = 500)
 grid.newpage()
 

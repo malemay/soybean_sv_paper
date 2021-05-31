@@ -8,9 +8,9 @@
 
 # The randomization will be performed as follows:
 #
-# SV start positions will be randomly shuffled within 100-kb or 500-kb
+# SV start positions will be randomly shuffled within 100-kb
 # bins while keeping their width constant. The reason for
-# performing the randomization within 100/500-kb bins is that the
+# performing the randomization within 100-kb bins is that the
 # genome has local peculiarities that may be difficult to explicitly
 # account for. By reshuffling the SV positions within those bins, we
 # preserve the local SV distribution while allowing the positions of
@@ -23,7 +23,7 @@ library(VariantAnnotation)
 library(rtracklayer)
 
 # This function takes the GRanges object of SVs and splits it into
-# a GRangesList object with one element for each 100/500-kb bin of the
+# a GRangesList object with one element for each bin of the
 # genome
 split_ranges <- function(sv_ranges, refgenome, binwidth) {
 	# Generating a tiling of the genome from the reference genome
@@ -89,7 +89,6 @@ check_overlap <- function(sv_ranges, cds_ranges, gene_ranges, upstream_ranges, n
 
 # Creating a function that replicates the analysis a given number of time,
 # given some bin width
-# Splitting the SV ranges into 500-kb tiles
 sv_permute <- function(sv_ranges, cds_ranges, gene_ranges, upstream_ranges, niter, binsize, norepeats = NULL) {
 
 	sv_ranges_split <- split_ranges(sv_ranges, refgenome, binsize)
@@ -115,14 +114,14 @@ sv_permute <- function(sv_ranges, cds_ranges, gene_ranges, upstream_ranges, nite
 # Now that we have all the functions, we can perform the analysis
 
 # Creating a GRanges representation of the reference genome with only chromsomes Gm01 to Gm20
-# DEPENDENCY : /home/malem420/refgenome/Gmax_v4/Gmax_508_v4.0_mit_chlp.fasta
-refgenome <- scanFaIndex("/home/malem420/refgenome/Gmax_v4/Gmax_508_v4.0_mit_chlp.fasta")
+# DEPENDENCY : refgenome/Gmax_508_v4.0_mit_chlp.fasta
+refgenome <- scanFaIndex("../refgenome/Gmax_508_v4.0_mit_chlp.fasta")
 chrs <- paste0("Gm", sprintf("%0.2d", 1:20))
 seqlevels(refgenome, pruning.mod = "coarse") <- chrs
 
 # Reading the SV GRanges from the vcf file
-# DEPENDENCY : /home/malem420/analyse_nanopore/transposons/paragraph_filtered.vcf
-vcf <- readVcf("/home/malem420/analyse_nanopore/transposons/paragraph_filtered.vcf",
+# DEPENDENCY : sv_genotyping/combined_svs/combined_paragraph_filtered.vcf
+vcf <- readVcf("../sv_genotyping/combined_svs/combined_paragraph_filtered.vcf",
 	       param = ScanVcfParam(fixed = NA,
 				    info = c("AF", "SVTYPE"),
 				    geno = NA))
@@ -132,12 +131,12 @@ vcf_ranges$svtype <- info(vcf)$SVTYPE
 vcf_ranges$REF <- NULL
 rm(vcf)
 
-# Reading the genes, cds and upstream5kb GRanges from file (created in gene_impacts.Rmd)
-# DEPENDENCY : genes.RData
+# Reading the genes, cds and upstream5kb GRanges from file 
+# DEPENDENCY : gene_analysis/genes.RData
 load("genes.RData")
-# DEPENDENCY : cds.RData
+# DEPENDENCY : gene_analysis/cds.RData
 load("cds.RData")
-# DEPENDENCY : upstream5kb.RData
+# DEPENDENCY : gene_analysis/upstream5kb.RData
 load("upstream5kb.RData")
 
 # First testing the functions to make sure that everything works as intended
@@ -175,5 +174,6 @@ if(interactive()) sv_permute(vcf_ranges, cds, genes, upstream5kb, 10, 500000)
 permutation_all_100kb <- sv_permute(vcf_ranges, cds, genes, upstream5kb, 5000, 100000)
 
 # Saving these objects to file
+# OUTPUT : gene_analysis/permutation_all_100kb.RData
 save(permutation_all_100kb, file = "permutation_all_100kb.RData")
 
