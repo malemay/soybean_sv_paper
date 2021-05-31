@@ -210,8 +210,7 @@ $(CIRCD)/sv_highlights.txt $(CIRCD)/ltr_highlights.txt $(CIRCD)/dna_highlights.t
 
 # --- End of the Circos figure section
 
-figures/figure_4.png: figures/figure_4.R
-	cd figures; $(R_FIG_COMMAND) figure_4.R
+figures/figure_4.png: structure_analysis/snp_pca/SNP_PCA structure_analysis/sv_pca/SV_PCA structure_analysis/structure.5.meanQ
 
 figures/figure_5.png: figures/figure_5.R
 	cd figures; $(R_FIG_COMMAND) figure_5.R
@@ -793,6 +792,17 @@ structure_analysis/platypus_filtered_snps.vcf : structure_analysis/platypus_snps
 structure_analysis/structure.5.meanQ : structure_analysis/platypus_filtered_snps.vcf \
 	structure_analysis/compute_structure.sh
 	cd structure_analysis ; ./compute_structure.sh $(FASTSTRUCTURE) $(VCFTOOLS) $(PLINK)
+
+# Computing the PCA on the SNPs called with Platypus
+structure_analysis/snp_pca/SNP_PCA : structure_analysis/platypus_filtered_snps.vcf \
+	structure_analysis/snp_pca/snp_pca.sh
+	cd structure_analysis/snp_pca ; ./snp_pca.sh $(VCFTOOLS) $(PLINK) ; touch SNP_PCA
+
+# Computing the PCA on the combined Illumina/Oxford Nanopore SVs genotyped by Paragraph
+structure_analysis/sv_pca/SV_PCA : sv_genotyping/combined_svs/combined_paragraph_filtered.vcf \
+	structure_analysis/sv_pca/sv_pca.sh \
+	scripts/recode_alleles.awk
+	cd structure_analysis/sv_pca ; ./sv_pca.sh $(VCFTOOLS) $(PLINK) ; touch SV_PCA
 
 # --- This section analyses the TEs found in the combined Illumina/Oxford Nanopore SV dataset
 te_analysis/polymorphic_tes.tsv : te_analysis/query_all.vcf \
