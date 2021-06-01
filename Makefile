@@ -219,8 +219,7 @@ figures/figure_5.png : gene_analysis/GENE_OVERLAP_ANALYSIS gene_analysis/permuta
 figures/figure_6.png : te_analysis/polymorphic_tes.tsv \
 	te_analysis/tian2012_tes.txt \
 	te_analysis/multiple_alignments/TIR_TSD_ANALYSIS \
-	te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/plotting_df.RData \
-	te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/diverging_snps.RData
+	te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/STOWAWAY_MITE_ANALYSIS
 
 # --- This section creates the bed file of repeats from the reference genome and Phytozome repeat annotation
 refgenome/repeat_regions/non_repeated_regions.bed : refgenome/repeat_regions/make_repeat_bed.R \
@@ -870,7 +869,10 @@ te_analysis/multiple_alignments/TIR_TSD_ANALYSIS : te_analysis/multiple_alignmen
 		$(R_RUN_COMMAND) analyse_tir_sequences.R ; \
 		touch TIR_TSD_ANALYSIS
 
-te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/plotting_df.RData :
-
-te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/diverging_snps.RData :
+te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/STOWAWAY_MITE_ANALYSIS : structure_analysis/platypus_snps.vcf \
+	te_analysis/query_all.vcf \
+	te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/stowaway_mite_analysis.R
+	cd te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis ; \
+		$(R_RUN_COMMAND) stowaway_mite_analysis.R $(BCFTOOLS) $(PLINK) $(BGZIP) $(TABIX) ; \
+		touch STOWAWAY_MITE_ANALYSIS
 

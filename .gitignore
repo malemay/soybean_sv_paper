@@ -27,12 +27,15 @@ scripts/addMissingPaddingGmax4.py
 *eigenvec
 *fa
 *fastq.gz
+*ld
 *manifest.txt
 *maf
 *meanQ
+*nosex
 sv_genotyping/illumina_svs/size_distribution.tsv
 *NanoStats.txt
 *ped
+*tbi
 *vcf
 *vcf.gz
 
