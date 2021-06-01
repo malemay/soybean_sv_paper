@@ -6,9 +6,8 @@ library(rtracklayer)
 # Printing a table of the number of matches to different TE types according to SV type
 # First loading the TE dataset
 
-# DEPENDENCY : polymorphic_tes.tsv
-tes <- read.table("/home/malem420/analyse_nanopore/transposons/analyse_100bp/polymorphic_tes.tsv",
-		  header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+# DEPENDENCY : te_analysis/polymorphic_tes.tsv
+tes <- read.table("../te_analysis/polymorphic_tes.tsv", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
 
 te_table <- as.matrix(table(tes$te_group, tes$svtype))
 
@@ -46,8 +45,8 @@ te_table <- te_table[c(1, 3, 4, 2),]
 # reference genome (their absolute number and bases occupied) so we can compare
 # them to the values obtained for the polymorphic elements
 # For this we need to read the reference TEs from file
-# DEPENDENCY : 
-ref_tes <- import("/home/malem420/refgenome/Gmax_v4/Wm82.a4.v1/annotation/Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3")
+# DEPENDENCY : refgenome/Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3
+ref_tes <- import("../refgenome/Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3")
 
 # Let us have a look at the number of elements in each class
 table(ref_tes$class)
@@ -88,5 +87,6 @@ te_table$refprop <- sprintf("%.1f", te_table$ref / sum(te_table$ref) * 100)
 te_table$refmbprop <- sprintf("%.1f", te_table$refmb / sum(te_table$refmb) * 100)
 
 # Writing the table to a .csv file so it can be used by Latex
+# OUTPUT : tables/table_2.csv
 write.table(te_table, file = "table_2.csv", col.names = TRUE, row.names = FALSE, quote = FALSE, sep = ",")
 

@@ -6,16 +6,16 @@
 #  This table is valid for the programs calling SVs from Illumina data.
 
 # Looping over the files that contain all the SVs from every tool
-# DEPENDENCY : asmvar_svs.vcf
-# DEPENDENCY : manta_svs.vcf
-# DEPENDENCY : smoove_svs.vcf
-# DEPENDENCY : svaba_svs.vcf
-# DEPENDENCY : svmerged.clustered.vcf
-asmvar=/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/asmvar_variants/asmvar_svs.vcf
-manta=/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/manta_variants/manta_svs.vcf
-smoove=/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/smoove_variants/smoove_svs.vcf
-svaba=/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/svaba_variants/svaba_svs.vcf
-all=/home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/svmerged_variants/svmerged.clustered.vcf
+# DEPENDENCY : illumina_sv_calling/asmvar/asmvar_filtering/asmvar_svs.vcf
+# DEPENDENCY : illumina_sv_calling/manta/manta_svs.vcf
+# DEPENDENCY : illumina_sv_calling/smoove/smoove_svs.vcf
+# DEPENDENCY : illumina_sv_calling/svaba/svaba_svs.vcf
+# DEPENDENCY : sv_genotyping/illumina_svs/svmerged.clustered.vcf
+asmvar=../illumina_sv_calling/asmvar/asmvar_filtering/asmvar_svs.vcf
+manta=../illumina_sv_calling/manta/manta_svs.vcf
+smoove=../illumina_sv_calling/smoove/smoove_svs.vcf
+svaba=../illumina_sv_calling/svaba/svaba_svs.vcf
+all=../sv_genotyping/illumina_svs/svmerged.clustered.vcf
 
 # Printing the header of the file
 printf "program smalldel mediumdel largedel hugedel smallins mediumins largeins hugeins smalldup mediumdup largedup hugedup smallinv mediuminv largeinv hugeinv\n" > table_1_data.txt
@@ -23,7 +23,7 @@ printf "program smalldel mediumdel largedel hugedel smallins mediumins largeins 
 # DEPENDENCY : genotyped_lines.txt
 for i in $asmvar $manta $smoove $svaba $all
 do
-	# DEPENDENCY : ../scripts/count_svtypes_svsizes.awk
+	# DEPENDENCY : scripts/count_svtypes_svsizes.awk
 	printf "$i " >> table_1_data.txt
 	../scripts/count_svtypes_svsizes.awk $i >> table_1_data.txt
 done

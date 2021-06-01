@@ -140,29 +140,21 @@ suptables : $(SUPTABLES)
 
 tables: $(TABLES)
 
-tables/table_1.png : tables/table_1.tex tables/table_1.csv
-	cd tables; \
-	pdflatex table_1.tex; \
-	pdftoppm table_1.pdf -singlefile -r 500 -png table_1
+tables/%.png : tables/%.R tables/%.tex
+	cd tables ; $(R_RUN_COMMAND) $(*F).R ; pdflatex $(*F).tex ; pdftoppm $(*F).pdf -singlefile -r 500 -png $(*F)
 
-tables/table_2.png : tables/table_2.tex tables/table_2.csv
-	cd tables; \
-	pdflatex table_2.tex; \
-	pdftoppm table_2.pdf -singlefile -r 500 -png table_2
+tables/table_1.png : tables/gather_table_1_data.sh \
+	illumina_sv_calling/asmvar/asmvar_filtering/asmvar_svs.vcf \
+	illumina_sv_calling/manta/manta_svs.vcf \
+	illumina_sv_calling/smoove/smoove_svs.vcf \
+	illumina_sv_calling/svaba/svaba_svs.vcf \
+	sv_genotyping/illumina_svs/svmerged.clustered.vcf \
+	scripts/count_svtypes_svsizes.awk
 
-tables/table_3.png : tables/table_3.tex tables/table_3.csv
-	cd tables; \
-	pdflatex table_3.tex; \
-	pdftoppm table_3.pdf -singlefile -r 500 -png table_3
+tables/table_2.png : te_analysis/polymorphic_tes.tsv \
+	refgenome/Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3
 
-tables/table_1.csv: tables/gather_table_1_data.sh
-	cd tables; ./gather_table_1_data.sh
-
-tables/table_2.csv: tables/table_2.R
-	cd tables; $(R_RUN_COMMAND) table_2.R
-
-tables/table_3.csv: tables/table_3.R
-	cd tables; $(R_RUN_COMMAND) table_3.R
+tables/table_3.png : gene_analysis/GENE_OVERLAP_ANALYSIS
 
 # --- The following section prepares the main figures for inclusion in the manuscript
 figures : $(FIGURES)
