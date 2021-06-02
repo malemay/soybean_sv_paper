@@ -13,6 +13,9 @@
 /external
 scripts/addMissingPaddingGmax4.py
 
+# Ignore the files that will be uploaded to Figshare
+/figshare
+
 # Ignore R ouput files
 *Rout
 

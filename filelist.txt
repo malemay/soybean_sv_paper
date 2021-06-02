@@ -1,160 +1,123 @@
 .:
 total 12M
--rw-r--r--  1 malem420 soyagen    0 May 21 16:54 filelist.txt
--rw-r--r--  1 malem420 soyagen  31K May 21 16:52 Supplemental_Data.log
--rw-r--r--  1 malem420 soyagen  12M May 21 16:52 Supplemental_Data.pdf
--rw-r--r--  1 malem420 soyagen 3.8K May 21 16:52 Supplemental_Data.lof
--rw-r--r--  1 malem420 soyagen 1.5K May 21 16:52 Supplemental_Data.lot
--rw-r--r--  1 malem420 soyagen 1.8K May 21 16:52 Supplemental_Data.toc
--rw-r--r--  1 malem420 soyagen 3.6K May 21 16:52 Supplemental_Data.out
--rw-r--r--  1 malem420 soyagen  17K May 21 16:52 Supplemental_Data.aux
--rw-r--r--  1 malem420 soyagen  998 May 21 16:52 Supplemental_Data.blg
--rw-r--r--  1 malem420 soyagen 5.6K May 21 16:52 Supplemental_Data.bbl
--rw-r--r--  1 malem420 soyagen  29K May 21 16:49 Makefile
-drwxr-xr-x  3 malem420 soyagen 4.0K May 21 16:49 figures
+-rw-r--r--  1 malem420 soyagen    0 Jun  1 14:13 filelist.txt
+drwxr-xr-x  3 malem420 soyagen 4.0K Jun  1 14:12 figures
+-rw-r--r--  1 malem420 soyagen  12M Jun  1 13:54 Supplemental_Data.pdf
+-rw-r--r--  1 malem420 soyagen  48K Jun  1 13:54 Makefile
+drwxr-xr-x  3 malem420 soyagen 4.0K Jun  1 13:54 tables
+drwxr-xr-x  4 malem420 soyagen 4.0K Jun  1 11:29 structure_analysis
+drwxr-xr-x  4 malem420 soyagen 4.0K May 31 18:08 te_analysis
+drwxr-xr-x  2 malem420 soyagen 4.0K May 31 15:50 gene_analysis
+drwxr-xr-x  3 malem420 soyagen 4.0K May 31 14:45 scripts
+drwxr-xr-x  7 malem420 soyagen 4.0K May 28 15:39 sv_genotyping
+-rw-r--r--  1 malem420 soyagen  31K May 28 13:28 Supplemental_Data.log
+-rw-r--r--  1 malem420 soyagen 3.8K May 28 13:28 Supplemental_Data.lof
+-rw-r--r--  1 malem420 soyagen 1.5K May 28 13:28 Supplemental_Data.lot
+-rw-r--r--  1 malem420 soyagen 1.8K May 28 13:28 Supplemental_Data.toc
+-rw-r--r--  1 malem420 soyagen 3.6K May 28 13:28 Supplemental_Data.out
+-rw-r--r--  1 malem420 soyagen  17K May 28 13:28 Supplemental_Data.aux
+-rw-r--r--  1 malem420 soyagen 5.6K May 28 13:28 Supplemental_Data.bbl
+-rw-r--r--  1 malem420 soyagen  998 May 28 13:28 Supplemental_Data.blg
+drwxr-xr-x  3 malem420 soyagen 4.0K May 28 11:10 refgenome
+drwxr-xr-x 19 malem420 soyagen 4.0K May 27 18:40 nanopore_sv_calling
+drwxr-xr-x  5 malem420 soyagen  131 May 27 15:41 breakpoint_refinement_analysis
+drwxr-xr-x 19 malem420 soyagen 4.0K May 25 17:51 nanoplot_stats
 drwxr-xr-x  2 malem420 soyagen 4.0K May 21 16:18 depth_distributions
-drwxr-xr-x  3 malem420 soyagen 4.0K May 21 16:18 scripts
-drwxr-xr-x 19 malem420 soyagen 4.0K May 21 15:12 nanopore_sv_calling
 drwxr-xr-x  2 malem420 soyagen 4.0K May 21 15:12 nanopore_data
-drwxr-xr-x  7 malem420 soyagen 4.0K May 21 15:11 sv_genotyping
 drwxr-xr-x  5 malem420 soyagen 4.0K May 21 15:11 illumina_data
 drwxr-xr-x  2 malem420 soyagen  113 May 20 18:55 utilities
 drwxr-xr-x  6 malem420 soyagen   76 May 17 15:51 illumina_sv_calling
--rwxr--r--  1 malem420 soyagen  307 May 14 17:57 reset_timestamps.sh
-drwxr-xr-x  3 malem420 soyagen 4.0K May 13 17:18 refgenome
 -rw-r--r--  1 malem420 soyagen  58K May 12 16:14 Supplemental_Data.tex
-drwxr-xr-x  3 malem420 soyagen 4.0K May 12 12:55 tables
-drwxr-xr-x  2 malem420 soyagen 4.0K May 11 18:44 gene_analysis
-drwxr-xr-x  2 malem420 soyagen   97 May 11 18:00 breakpoint_refinement_analysis
 -rw-r--r--  1 malem420 soyagen  15K May 11 17:51 references.bib
 drwxr-xr-x  3 malem420 soyagen   40 Apr 29 18:29 external
-drwxr-xr-x  2 malem420 soyagen   47 Apr 29 17:49 structure_analysis
-drwxr-xr-x  4 malem420 soyagen 4.0K Apr 29 15:14 te_analysis
-drwxr-xr-x  2 malem420 soyagen   10 Feb 11 14:27 illumina_snp_calling
-drwxr-xr-x  2 malem420 soyagen   64 Jan 25 12:20 nanoplot_stats
 -rw-r--r--  1 malem420 soyagen  23K Sep 25  2018 genres.bst
 -rw-r--r--  1 malem420 soyagen  31K Jan 19  2011 genome_research.bst
 -rw-r--r--  1 malem420 soyagen  29K Dec 20  2007 genomeresearch.bst
 
 ./figures:
 total 17M
--rw-r--r-- 1 malem420 soyagen 1.2M May 21 16:52 figure_s7.png
+-rw-r--r-- 1 malem420 soyagen 459K Jun  1 13:54 figure_6.png
+-rw-r--r-- 1 malem420 soyagen 146K Jun  1 13:54 figure_5.png
+-rw-r--r-- 1 malem420 soyagen 479K Jun  1 13:54 figure_4.png
+-rw-r--r-- 1 malem420 soyagen 2.1M Jun  1 13:54 figure_3.png
+-rw-r--r-- 1 malem420 soyagen 1.1M Jun  1 13:54 figure_1.png
+-rw-r--r-- 1 malem420 soyagen 1.2M Jun  1 13:54 figure_s16.png
+-rw-r--r-- 1 malem420 soyagen 1.2M Jun  1 13:54 figure_s15.png
+-rw-r--r-- 1 malem420 soyagen 219K Jun  1 13:54 figure_s10.png
+-rw-r--r-- 1 malem420 soyagen 216K Jun  1 13:54 figure_s9.png
+-rw-r--r-- 1 malem420 soyagen 277K Jun  1 13:54 figure_s8.png
+-rw-r--r-- 1 malem420 soyagen 1.2M Jun  1 13:54 figure_s7.png
+-rw-r--r-- 1 malem420 soyagen 488K Jun  1 13:54 figure_s6.png
+-rw-r--r-- 1 malem420 soyagen 1.2M Jun  1 13:54 figure_s5.png
+-rw-r--r-- 1 malem420 soyagen 142K Jun  1 13:54 figure_s4.png
+-rw-r--r-- 1 malem420 soyagen 442K Jun  1 13:54 figure_s3.png
+-rw-r--r-- 1 malem420 soyagen 469K Jun  1 13:54 figure_s2.png
+-rw-r--r-- 1 malem420 soyagen 892K Jun  1 13:54 figure_s1.png
+-rwxr-xr-x 1 malem420 soyagen 9.4K May 31 18:09 figure_6.R
+-rwxr-xr-x 1 malem420 soyagen 5.1K May 31 15:50 figure_5.R
+-rwxr--r-- 1 malem420 soyagen 6.3K May 31 15:19 figure_4.R
+drwxr-xr-x 2 malem420 soyagen 4.0K May 28 16:58 figure_3_circos
+-rw-r--r-- 1 malem420 soyagen 1.1M May 28 15:40 figure_2.png
+-rw-r--r-- 1 malem420 soyagen 459K May 28 15:40 figure_s19.png
+-rw-r--r-- 1 malem420 soyagen 322K May 28 15:40 figure_s17.png
+-rw-r--r-- 1 malem420 soyagen 447K May 28 15:40 figure_s18.png
+-rw-r--r-- 1 malem420 soyagen 444K May 28 15:40 figure_s13.png
+-rw-r--r-- 1 malem420 soyagen 398K May 28 15:40 figure_s14.png
+-rw-r--r-- 1 malem420 soyagen 1.1M May 28 15:40 figure_s12.png
+-rw-r--r-- 1 malem420 soyagen 130K May 28 15:40 figure_s11.png
+-rwxr--r-- 1 malem420 soyagen 3.7K May 28 14:02 figure_2.R
+-rwxr-xr-x 1 malem420 soyagen 4.5K May 28 13:54 figure_1.R
+-rwxr--r-- 1 malem420 soyagen 5.1K May 27 15:52 figure_s19.R
+-rwxr--r-- 1 malem420 soyagen 5.1K May 27 15:47 figure_s18.R
+-rwxr--r-- 1 malem420 soyagen 5.5K May 27 15:42 figure_s17.R
+-rwxr--r-- 1 malem420 soyagen 3.9K May 26 14:05 figure_s16.R
+-rwxr--r-- 1 malem420 soyagen 3.7K May 26 12:03 figure_s15.R
+-rwxr-xr-x 1 malem420 soyagen 3.0K May 26 11:09 figure_s14.R
+-rwxr-xr-x 1 malem420 soyagen 3.0K May 26 11:02 figure_s13.R
+-rwxr--r-- 1 malem420 soyagen 3.8K May 26 10:53 figure_s12.R
+-rwxr-xr-x 1 malem420 soyagen 3.5K May 25 17:21 figure_s11.R
+-rwxr--r-- 1 malem420 soyagen 4.8K May 25 16:57 figure_s10.R
+-rwxr--r-- 1 malem420 soyagen 3.9K May 25 16:06 figure_s9.R
+-rwxr-xr-x 1 malem420 soyagen 2.5K May 21 17:35 figure_s8.R
 -rwxr-xr-x 1 malem420 soyagen 4.3K May 21 16:49 figure_s7.R
--rw-r--r-- 1 malem420 soyagen 488K May 21 16:41 figure_s6.png
--rw-r--r-- 1 malem420 soyagen 1.2M May 21 16:41 figure_s5.png
--rw-r--r-- 1 malem420 soyagen 442K May 21 16:41 figure_s3.png
--rw-r--r-- 1 malem420 soyagen 469K May 21 16:41 figure_s2.png
--rw-r--r-- 1 malem420 soyagen 892K May 21 16:41 figure_s1.png
--rw-r--r-- 1 malem420 soyagen 142K May 21 16:40 figure_s4.png
 -rwxr-xr-x 1 malem420 soyagen 3.4K May 21 16:39 figure_s6.R
 -rwxr-xr-x 1 malem420 soyagen 4.0K May 21 16:31 figure_s5.R
 -rwxr-xr-x 1 malem420 soyagen 3.9K May 21 15:44 figure_s4.R
 -rwxr-xr-x 1 malem420 soyagen 3.0K May 21 15:34 figure_s3.R
 -rwxr-xr-x 1 malem420 soyagen 2.9K May 21 15:20 figure_s2.R
--rw-r--r-- 1 malem420 soyagen 460K May 14 18:22 figure_6.png
--rw-r--r-- 1 malem420 soyagen 146K May 14 18:22 figure_5.png
--rw-r--r-- 1 malem420 soyagen 479K May 14 18:22 figure_4.png
--rw-r--r-- 1 malem420 soyagen  816 May 14 18:22 sv_samples.txt
--rw-r--r-- 1 malem420 soyagen 1.7K May 14 18:22 snp_samples.txt
--rw-r--r-- 1 malem420 soyagen 2.1M May 14 18:22 figure_3.png
--rw-r--r-- 1 malem420 soyagen 1.1M May 14 18:20 figure_2.png
--rw-r--r-- 1 malem420 soyagen 1.1M May 14 18:20 figure_1.png
--rw-r--r-- 1 malem420 soyagen 459K May 14 18:19 figure_s19.png
--rw-r--r-- 1 malem420 soyagen 447K May 14 18:19 figure_s18.png
--rw-r--r-- 1 malem420 soyagen 322K May 14 18:19 figure_s17.png
--rw-r--r-- 1 malem420 soyagen 1.2M May 14 18:19 figure_s16.png
--rw-r--r-- 1 malem420 soyagen 1.2M May 14 18:19 figure_s15.png
--rw-r--r-- 1 malem420 soyagen 398K May 14 18:19 figure_s14.png
--rw-r--r-- 1 malem420 soyagen 444K May 14 18:19 figure_s13.png
--rw-r--r-- 1 malem420 soyagen 1.1M May 14 18:19 figure_s12.png
--rw-r--r-- 1 malem420 soyagen 130K May 14 18:18 figure_s11.png
--rw-r--r-- 1 malem420 soyagen 219K May 14 18:18 figure_s10.png
--rw-r--r-- 1 malem420 soyagen 216K May 14 18:18 figure_s9.png
--rw-r--r-- 1 malem420 soyagen 277K May 14 18:18 figure_s8.png
--rwxr-xr-x 1 malem420 soyagen 2.5K May 14 18:16 figure_s8.R
--rwxr--r-- 1 malem420 soyagen 3.9K May 14 18:16 figure_s9.R
--rw-r--r-- 1 malem420 soyagen 1.7K May 14 18:16 format_sveval_plotting_data.R
--rwxr--r-- 1 malem420 soyagen 3.2K May 14 18:16 figure_s18.R
--rwxr--r-- 1 malem420 soyagen 3.2K May 14 18:16 figure_s19.R
 -rwxr-xr-x 1 malem420 soyagen 4.5K May 14 18:16 figure_s1.R
--rwxr--r-- 1 malem420 soyagen 3.7K May 14 18:16 figure_s15.R
--rwxr--r-- 1 malem420 soyagen 3.9K May 14 18:16 figure_s16.R
--rwxr--r-- 1 malem420 soyagen 3.6K May 14 18:16 figure_s17.R
--rwxr-xr-x 1 malem420 soyagen 3.6K May 14 18:16 figure_s11.R
--rwxr--r-- 1 malem420 soyagen 3.8K May 14 18:16 figure_s12.R
--rwxr-xr-x 1 malem420 soyagen 2.9K May 14 18:16 figure_s13.R
--rwxr-xr-x 1 malem420 soyagen 3.0K May 14 18:16 figure_s14.R
 -rwxr--r-- 1 malem420 soyagen 4.8K May 14 18:16 figure_duptools_obsolete.R
 -rwxr--r-- 1 malem420 soyagen 4.7K May 14 18:16 figure_invtools_obsolete.R
--rwxr--r-- 1 malem420 soyagen 4.8K May 14 18:16 figure_s10.R
--rwxr--r-- 1 malem420 soyagen 8.8K May 14 18:16 figure_4.R
--rwxr-xr-x 1 malem420 soyagen 5.1K May 14 18:16 figure_5.R
--rwxr-xr-x 1 malem420 soyagen 9.4K May 14 18:16 figure_6.R
--rwxr-xr-x 1 malem420 soyagen 4.5K May 14 18:16 figure_1.R
--rwxr--r-- 1 malem420 soyagen 3.7K May 14 18:16 figure_2.R
-drwxr-xr-x 2 malem420 soyagen 4.0K May 14 11:16 figure_3_circos
--rw-r--r-- 1 malem420 soyagen 5.9K May 13 18:08 figure_s1.Rout
 -rw-rw-r-- 1 malem420 soyagen  60K May 13 16:06 Gm04_2254504_annotated.png
--rw-r--r-- 1 malem420 soyagen  11K May 13 16:00 figure_6.Rout
--rw-r--r-- 1 malem420 soyagen 5.1K May 13 15:57 figure_2.Rout
--rw-r--r-- 1 malem420 soyagen 5.9K May 13 15:56 figure_1.Rout
--rw-r--r-- 1 malem420 soyagen 5.1K May 13 13:38 figure_s15.Rout
--rw-r--r-- 1 malem420 soyagen  11K May 12 12:32 figure_4.Rout
--rw-r--r-- 1 malem420 soyagen 5.1K May 11 18:49 figure_s4.Rout
--rw-r--r-- 1 malem420 soyagen 4.3K May  5 18:54 figure_s14.Rout
--rw-r--r-- 1 malem420 soyagen 4.2K May  5 18:54 figure_s13.Rout
--rw-r--r-- 1 malem420 soyagen 5.4K May  5 18:54 figure_s7.Rout
--rw-r--r-- 1 malem420 soyagen 4.4K May  5 18:54 figure_s6.Rout
--rw-r--r-- 1 malem420 soyagen 5.1K May  5 18:54 figure_s5.Rout
--rw-r--r-- 1 malem420 soyagen 4.3K May  5 18:54 figure_s3.Rout
--rw-r--r-- 1 malem420 soyagen 4.2K May  5 18:54 figure_s2.Rout
 -rw-rw-r-- 1 malem420 soyagen  60K May  4 19:58 Gm04_2257090_annotated.png
 -rw-rw-r-- 1 malem420 soyagen  33K May  4 19:32 Gm04_2227385_annotated.png
--rw-r--r-- 1 malem420 soyagen 6.2K Apr 29 18:37 figure_5.Rout
--rw-r--r-- 1 malem420 soyagen 4.7K Apr 29 15:08 figure_s11.Rout
--rw-r--r-- 1 malem420 soyagen 3.5K Apr 29 15:08 figure_s8.Rout
--rw-r--r-- 1 malem420 soyagen 4.5K Apr 27 19:01 figure_s19.Rout
--rw-r--r-- 1 malem420 soyagen 4.5K Apr 27 19:01 figure_s18.Rout
--rw-r--r-- 1 malem420 soyagen 4.8K Apr 27 19:01 figure_s17.Rout
--rw-r--r-- 1 malem420 soyagen 5.3K Apr 27 19:00 figure_s16.Rout
--rw-r--r-- 1 malem420 soyagen 5.3K Apr 27 19:00 figure_s12.Rout
--rw-r--r-- 1 malem420 soyagen 7.0K Apr 27 19:00 figure_s10.Rout
--rw-r--r-- 1 malem420 soyagen 6.1K Apr 27 19:00 figure_s9.Rout
 -rw-rw-r-- 1 malem420 soyagen  50K Apr 13 18:05 Gm04_2254504.png
 -rw-rw-r-- 1 malem420 soyagen  42K Apr 13 18:01 Gm04_2239774.png
 -rw-rw-r-- 1 malem420 soyagen  46K Apr 13 17:59 Gm04_2227385.png
 -rw-rw-r-- 1 malem420 soyagen  49K Apr 13 17:51 Gm04_2257090.png
 
 ./figures/figure_3_circos:
-total 240K
--rw-r--r-- 1 malem420 soyagen  718 May 14 18:21 dna_highlights.txt
--rw-r--r-- 1 malem420 soyagen  696 May 14 18:21 ltr_highlights.txt
--rw-r--r-- 1 malem420 soyagen  775 May 14 18:21 sv_highlights.txt
--rw-r--r-- 1 malem420 soyagen   62 May 14 18:21 dna_axis_max.txt
--rw-r--r-- 1 malem420 soyagen   59 May 14 18:21 dna_axis_min.txt
--rw-r--r-- 1 malem420 soyagen   63 May 14 18:21 ltr_axis_max.txt
--rw-r--r-- 1 malem420 soyagen   59 May 14 18:21 ltr_axis_min.txt
--rw-r--r-- 1 malem420 soyagen 7.8K May 14 18:21 poly_dna.txt
--rw-r--r-- 1 malem420 soyagen 8.0K May 14 18:21 poly_ltr.txt
--rw-r--r-- 1 malem420 soyagen 8.5K May 14 18:21 ref_dna.txt
--rw-r--r-- 1 malem420 soyagen 8.5K May 14 18:21 ref_ltr.txt
--rw-r--r-- 1 malem420 soyagen 9.3K May 14 18:21 sv_counts.txt
--rw-r--r-- 1 malem420 soyagen 8.7K May 14 18:20 snp_density.txt
--rw-r--r-- 1 malem420 soyagen 8.3K May 14 18:20 genes_heatmap.txt
--rw-r--r-- 1 malem420 soyagen  974 May 14 18:20 gmax4_3Mb_bins.RData
+total 196K
+-rw-r--r-- 1 malem420 soyagen  718 Jun  1 13:54 dna_highlights.txt
+-rw-r--r-- 1 malem420 soyagen  696 Jun  1 13:54 ltr_highlights.txt
+-rw-r--r-- 1 malem420 soyagen  775 Jun  1 13:54 sv_highlights.txt
+-rw-r--r-- 1 malem420 soyagen   63 Jun  1 13:54 ltr_axis_max.txt
+-rw-r--r-- 1 malem420 soyagen   59 Jun  1 13:54 ltr_axis_min.txt
+-rw-r--r-- 1 malem420 soyagen   62 Jun  1 13:54 dna_axis_max.txt
+-rw-r--r-- 1 malem420 soyagen   59 Jun  1 13:54 dna_axis_min.txt
+-rw-r--r-- 1 malem420 soyagen 7.8K Jun  1 13:54 poly_dna.txt
+-rw-r--r-- 1 malem420 soyagen 8.5K Jun  1 13:54 ref_dna.txt
+-rw-r--r-- 1 malem420 soyagen 8.0K Jun  1 13:54 poly_ltr.txt
+-rw-r--r-- 1 malem420 soyagen 8.5K Jun  1 13:54 ref_ltr.txt
+-rw-r--r-- 1 malem420 soyagen 9.3K Jun  1 13:54 sv_counts.txt
+-rw-r--r-- 1 malem420 soyagen 8.3K Jun  1 13:54 genes_heatmap.txt
+-rw-r--r-- 1 malem420 soyagen 8.7K Jun  1 11:23 snp_density.txt
+-rwxr-xr-x 1 malem420 soyagen 1.5K May 28 15:39 make_SV_track.R
+-rw-r--r-- 1 malem420 soyagen  974 May 28 14:10 gmax4_3Mb_bins.RData
+-rw-r--r-- 1 malem420 soyagen  651 May 28 14:10 Gmax_karyotype.txt
 -rwxr-xr-x 1 malem420 soyagen  884 May 14 18:17 make_3Mb_bins.R
--rw-r--r-- 1 malem420 soyagen  651 May 14 17:58 Gmax_karyotype.txt
 -rw-r--r-- 1 malem420 soyagen  210 May 14 11:16 image.conf
--rw-r--r-- 1 malem420 soyagen 3.4K May 13 16:00 make_highlights_tracks.Rout
--rw-r--r-- 1 malem420 soyagen 4.0K May 13 16:00 make_axis_labels.Rout
--rw-r--r-- 1 malem420 soyagen 5.8K May 13 16:00 make_te_tracks.Rout
--rw-r--r-- 1 malem420 soyagen 5.5K May 13 15:59 make_SV_track.Rout
--rw-r--r-- 1 malem420 soyagen 5.3K May 13 15:59 make_snp_track.Rout
--rw-r--r-- 1 malem420 soyagen 3.1K May 13 15:58 make_genes_heatmap_data.Rout
--rw-r--r-- 1 malem420 soyagen 3.1K May 13 15:58 make_3Mb_bins.Rout
--rw-r--r-- 1 malem420 soyagen 3.4K May 13 15:58 make_karyotype_file.Rout
 -rw-r--r-- 1 malem420 soyagen  352 Apr 29 20:13 ticks.conf
--rwxr-xr-x 1 malem420 soyagen 1.5K Apr 29 20:10 make_SV_track.R
 -rwxr-xr-x 1 malem420 soyagen 3.5K Apr 29 20:10 make_te_tracks.R
 -rwxr-xr-x 1 malem420 soyagen 2.4K Apr 29 20:10 make_highlights_tracks.R
 -rwxr--r-- 1 malem420 soyagen 1.1K Apr 29 20:10 make_karyotype_file.R
@@ -172,35 +135,274 @@ total 240K
 -rw-r--r-- 1 malem420 soyagen   19 Feb  3 16:22 legendD.txt
 -rw-r--r-- 1 malem420 soyagen   19 Feb  3 16:22 legendE.txt
 
-./depth_distributions:
-total 24K
--rw-r--r-- 1 malem420 soyagen  460 May 21 16:21 average_depth.RData
--rwxr--r-- 1 malem420 soyagen  444 May 21 16:18 depth_distributions.sh
--rwxr--r-- 1 malem420 soyagen 1.7K May 21 15:59 compute_average_depth.R
--rw-r--r-- 1 malem420 soyagen 4.7K Jan 22 13:37 OAC_PETREL_2_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   87 Jan 22 12:57 QS5091.50J_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/QS5091.50J_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   83 Jan 22 12:57 ROLAND_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/ROLAND_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   89 Jan 22 12:57 OAC_PRUDENCE_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_PRUDENCE_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   90 Jan 22 12:57 OAC_STRATFORD_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_STRATFORD_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   84 Jan 22 12:57 OT09-03_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OT09-03_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   86 Jan 22 12:57 OAC_MADOC_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_MADOC_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   87 Jan 22 12:57 OAC_OXFORD_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_OXFORD_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   87 Jan 22 12:57 OAC_PETREL_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_PETREL_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   88 Jan 22 12:57 OAC_DRAYTON_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_DRAYTON_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   86 Jan 22 12:57 OAC_EMBRO_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_EMBRO_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   89 Jan 22 12:57 OAC_LAKEVIEW_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_LAKEVIEW_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   89 Jan 22 12:57 MAPLE_PRESTO_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/MAPLE_PRESTO_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   87 Jan 22 12:57 OAC_09_35C_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_09_35C_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   87 Jan 22 12:57 OAC_CARMAN_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_CARMAN_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   85 Jan 22 12:57 MANDARIN_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/MANDARIN_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   87 Jan 22 12:57 MAPLE_ISLE_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/MAPLE_ISLE_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   83 Jan 22 12:57 AC2001_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/AC2001_depth.txt
-lrwxrwxrwx 1 malem420 soyagen   81 Jan 22 12:57 ALTA_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/ALTA_depth.txt
--rw-r--r-- 1 malem420 soyagen    0 Jan 22 12:56 depth_OAC_PETREL_2_14042934.out
--rwxr--r-- 1 malem420 soyagen  821 Jan 22 12:56 depth_OAC_PETREL_2.sh
+./tables:
+total 836K
+-rw-r--r-- 1 malem420 soyagen 144K Jun  1 13:57 table_3.png
+-rw-r--r-- 1 malem420 soyagen 8.3K Jun  1 13:57 table_3.log
+-rw-r--r-- 1 malem420 soyagen  30K Jun  1 13:57 table_3.pdf
+-rw-r--r-- 1 malem420 soyagen   32 Jun  1 13:57 table_3.aux
+-rw-r--r-- 1 malem420 soyagen  305 Jun  1 13:57 table_3.csv
+-rw-r--r-- 1 malem420 soyagen 212K Jun  1 13:57 table_2.png
+-rw-r--r-- 1 malem420 soyagen 8.2K Jun  1 13:57 table_2.log
+-rw-r--r-- 1 malem420 soyagen  60K Jun  1 13:57 table_2.pdf
+-rw-r--r-- 1 malem420 soyagen   32 Jun  1 13:57 table_2.aux
+-rw-r--r-- 1 malem420 soyagen  436 Jun  1 13:57 table_2.csv
+-rw-r--r-- 1 malem420 soyagen 165K Jun  1 13:56 table_1.png
+-rw-r--r-- 1 malem420 soyagen 7.9K Jun  1 13:56 table_1.log
+-rw-r--r-- 1 malem420 soyagen  51K Jun  1 13:56 table_1.pdf
+-rw-r--r-- 1 malem420 soyagen   32 Jun  1 13:56 table_1.aux
+-rw-r--r-- 1 malem420 soyagen  495 Jun  1 13:56 table_1.csv
+-rw-r--r-- 1 malem420 soyagen  708 Jun  1 13:56 table_1_data.txt
+-rwxr-xr-x 1 malem420 soyagen 2.4K Jun  1 13:55 table_3.R
+-rw-r--r-- 1 malem420 soyagen  107 Jun  1 13:55 table_1.R
+-rwxr--r-- 1 malem420 soyagen 4.2K Jun  1 13:55 table_2.R
+-rw-r--r-- 1 malem420 soyagen  845 Jun  1 13:54 table_s8.csv
+-rw-r--r-- 1 malem420 soyagen 2.3K Jun  1 13:54 table_s7.csv
+-rw-r--r-- 1 malem420 soyagen  492 Jun  1 13:54 table_s6.csv
+-rw-r--r-- 1 malem420 soyagen  798 Jun  1 13:54 table_s5.csv
+-rwxr--r-- 1 malem420 soyagen 1.7K Jun  1 13:47 gather_table_1_data.sh
+-rw-r--r-- 1 malem420 soyagen 1.6K Jun  1 13:27 table_1.tex
+-rw-r--r-- 1 malem420 soyagen 2.0K Jun  1 13:27 table_2.tex
+-rw-r--r-- 1 malem420 soyagen 1.4K Jun  1 13:27 table_3.tex
+-rw-r--r-- 1 malem420 soyagen  157 May 28 15:40 table_s4.csv
+-rw-r--r-- 1 malem420 soyagen 1.4K May 28 15:40 table_s3.csv
+-rw-r--r-- 1 malem420 soyagen 1.4K May 28 15:40 table_s3_data.txt
+-rwxr--r-- 1 malem420 soyagen 1.2K May 27 18:21 table_s4.R
+-rw-r--r-- 1 malem420 soyagen 1.1K May 27 18:09 table_s3.R
+-rwxr--r-- 1 malem420 soyagen  701 May 27 18:02 gather_table_s3_data.sh
+-rw-r--r-- 1 malem420 soyagen  924 May 27 17:48 table_s2.csv
+-rw-r--r-- 1 malem420 soyagen  901 May 27 17:48 table_s1.csv
+-rw-rw-r-- 1 malem420 soyagen 2.7K May 27 17:47 lab_methods_table.csv
+-rw-r--r-- 1 malem420 soyagen  638 May 27 17:47 table_s2.R
+-rw-r--r-- 1 malem420 soyagen 1.4K May 27 17:43 table_s1.R
+-rw-r--r-- 1 malem420 soyagen  427 May 27 17:21 table_s8.R
+-rw-r--r-- 1 malem420 soyagen  423 May 27 17:19 table_s7.R
+-rw-r--r-- 1 malem420 soyagen  420 May 27 17:19 table_s6.R
+-rwxr--r-- 1 malem420 soyagen 2.8K May 14 18:17 table_s5.R
+drwxr-xr-x 2 malem420 soyagen  130 Feb 11 09:37 table1_data
+
+./tables/table1_data:
+total 3.6M
+-rw-r--r-- 1 malem420 soyagen 1.9K Jan 21 16:59 tabulate_data.R
+-rw-r--r-- 1 malem420 soyagen 3.6M Jan 21 16:46 size_distribution.tsv
+-rw-r--r-- 1 malem420 soyagen    0 Jan 21 16:45 extract_data_14042910.out
+-rwxr--r-- 1 malem420 soyagen 2.2K Jan 21 16:45 extract_data.sh
+
+./structure_analysis:
+total 912K
+-rw-r--r-- 1 malem420 soyagen 891K Jun  1 11:29 platypus_snps.vcf.tbi
+lrwxrwxrwx 1 malem420 soyagen   95 Jun  1 11:19 platypus_snps.vcf -> /home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/platypus/platypus102_Gmax_v4.vcf.gz
+drwxr-xr-x 2 malem420 soyagen  126 May 31 15:18 sv_pca
+drwxr-xr-x 2 malem420 soyagen  140 May 31 15:18 snp_pca
+lrwxrwxrwx 1 malem420 soyagen   71 May 31 15:06 structure.5.meanQ -> /home/malem420/WGS_data/bbduk_trimmed/structure/Gmax_v4/CADtest.5.meanQ
+-rwxr--r-- 1 malem420 soyagen  746 May 28 15:29 compute_structure.sh
+-rwxr--r-- 1 malem420 soyagen 2.2K May 28 14:58 filter_platypus_snps.sh
+-rwxr-xr-x 1 malem420 soyagen  994 May 28 14:33 call_snps.sh
+-rw-r--r-- 1 malem420 soyagen 6.0K May 28 14:28 platypus102_Gmax_v4_bamfiles.txt
+lrwxrwxrwx 1 malem420 soyagen   63 Apr 29 17:49 platypus_filtered_snps.vcf -> /home/malem420/WGS_data/bbduk_trimmed/structure/Gmax_v4/CAD.vcf
+
+./structure_analysis/sv_pca:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen    0 Jun  1 13:54 SV_PCA
+-rwxr--r-- 1 malem420 soyagen 1.2K May 31 15:15 sv_pca.sh
+lrwxrwxrwx 1 malem420 soyagen  138 May 31 15:11 sv_pca.eigenval -> /home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_all/paragraph_illumina/pca_analysis/pca_final/paragraph_pca.eigenval
+lrwxrwxrwx 1 malem420 soyagen  138 May 31 15:11 sv_pca.eigenvec -> /home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_all/paragraph_illumina/pca_analysis/pca_final/paragraph_pca.eigenvec
+lrwxrwxrwx 1 malem420 soyagen  129 May 31 15:03 sv_pca_input.ped -> /home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_all/paragraph_illumina/pca_analysis/pca_final/paragraph.ped
+
+./structure_analysis/snp_pca:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen   0 Jun  1 11:23 SNP_PCA
+lrwxrwxrwx 1 malem420 soyagen  72 May 31 15:11 snp_pca.eigenvec -> /home/malem420/WGS_data/bbduk_trimmed/structure/Gmax_v4/CAD_pca.eigenvec
+lrwxrwxrwx 1 malem420 soyagen  72 May 31 15:11 snp_pca.eigenval -> /home/malem420/WGS_data/bbduk_trimmed/structure/Gmax_v4/CAD_pca.eigenval
+lrwxrwxrwx 1 malem420 soyagen  63 May 31 15:01 platypus_filtered_snps.ped -> /home/malem420/WGS_data/bbduk_trimmed/structure/Gmax_v4/CAD.ped
+-rwxr--r-- 1 malem420 soyagen 543 May 31 14:54 snp_pca.sh
+
+./te_analysis:
+total 2.8M
+-rw-r--r-- 1 malem420 soyagen    0 Jun  1 13:54 DNA_TE_VCFS
+-rw-r--r-- 1 malem420 soyagen 1.2M Jun  1 13:54 polymorphic_tes.tsv
+drwxr-xr-x 4 malem420 soyagen 4.0K May 31 18:21 multiple_alignments
+-rwxr-xr-x 1 malem420 soyagen 1.1K May 31 16:12 extract_dna_te_vcfs.R
+-rw-r--r-- 1 malem420 soyagen 1.7M May 28 16:50 te_metadata.txt
+-rwxr-xr-x 1 malem420 soyagen 6.0K May 28 16:47 te_blast_analysis.R
+-rwxr--r-- 1 malem420 soyagen  902 May 28 16:43 blast_tes.sh
+drwxr-xr-x 2 malem420 soyagen 4.0K May 28 16:38 te_database
+-rwxr--r-- 1 malem420 soyagen  580 May 28 16:07 extract_query_vcf.sh
+-rwxr-xr-x 1 malem420 soyagen 1.2K Apr 29 15:14 extract_te_metadata.sh
+lrwxrwxrwx 1 malem420 soyagen   74 Apr 29 12:02 tian2012_tes.txt -> /home/malem420/analyse_nanopore/transposons/analyse_100bp/tian2012_tes.txt
+lrwxrwxrwx 1 malem420 soyagen   71 Apr 28 16:54 query_all.vcf -> /home/malem420/analyse_nanopore/transposons/analyse_100bp/query_all.vcf
+lrwxrwxrwx 1 malem420 soyagen   71 Apr 28 16:52 blast_svs.txt -> /home/malem420/analyse_nanopore/transposons/analyse_100bp/blast_svs.txt
+
+./te_analysis/multiple_alignments:
+total 1.4M
+-rw-r--r-- 1 malem420 soyagen    0 Jun  1 13:54 TIR_TSD_ANALYSIS
+-rw-r--r-- 1 malem420 soyagen    0 Jun  1 13:54 FILTERED_ALIGNMENTS
+-rw-r--r-- 1 malem420 soyagen    0 Jun  1 13:54 MULTIPLE_ALIGNMENTS
+drwxr-xr-x 2 malem420 soyagen 4.0K Jun  1 11:53 Gm04_2257090_INS_480_analysis
+-rwxr--r-- 1 malem420 soyagen 6.0K May 31 18:05 analyse_tir_sequences.R
+drwxr-xr-x 2 malem420 soyagen  118 May 31 18:01 filtered_alignments
+-rwxr--r-- 1 malem420 soyagen 6.3K May 31 17:50 grf_analysis.R
+-rwxr--r-- 1 malem420 soyagen 6.5K May 31 17:45 extract_te_sequences.R
+-rwxr--r-- 1 malem420 soyagen 2.6K May 31 17:25 filter_alignments.R
+-rw-r--r-- 1 malem420 soyagen  12K May 31 17:16 mafft_metadata.txt
+-rwxr--r-- 1 malem420 soyagen  10K May 31 17:00 assemble_align_all.R
+-rwxr--r-- 1 malem420 soyagen 2.2K May 31 16:48 age_realign.sh
+lrwxrwxrwx 1 malem420 soyagen   55 May 31 16:33 ROLAND_porechopped_aligned.sort.bam -> ../../nanopore_data/ROLAND_porechopped_aligned.sort.bam
+lrwxrwxrwx 1 malem420 soyagen   59 May 31 16:33 ROLAND_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/ROLAND_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   59 May 31 16:33 QS5091.50J_porechopped_aligned.sort.bam -> ../../nanopore_data/QS5091.50J_porechopped_aligned.sort.bam
+lrwxrwxrwx 1 malem420 soyagen   63 May 31 16:33 QS5091.50J_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/QS5091.50J_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   56 May 31 16:33 OT09-03_porechopped_aligned.sort.bam -> ../../nanopore_data/OT09-03_porechopped_aligned.sort.bam
+lrwxrwxrwx 1 malem420 soyagen   60 May 31 16:33 OT09-03_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/OT09-03_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   65 May 31 16:33 OAC_PRUDENCE_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/OAC_PRUDENCE_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   62 May 31 16:33 OAC_STRATFORD_porechopped_aligned.sort.bam -> ../../nanopore_data/OAC_STRATFORD_porechopped_aligned.sort.bam
+lrwxrwxrwx 1 malem420 soyagen   66 May 31 16:33 OAC_STRATFORD_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/OAC_STRATFORD_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   65 May 31 16:33 OAC_PETREL_2_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/OAC_PETREL_2_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   61 May 31 16:33 OAC_PRUDENCE_porechopped_aligned.sort.bam -> ../../nanopore_data/OAC_PRUDENCE_porechopped_aligned.sort.bam
+lrwxrwxrwx 1 malem420 soyagen   63 May 31 16:33 OAC_OXFORD_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/OAC_OXFORD_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   61 May 31 16:33 OAC_PETREL_2_porechopped_aligned.sort.bam -> ../../nanopore_data/OAC_PETREL_2_porechopped_aligned.sort.bam
+lrwxrwxrwx 1 malem420 soyagen   58 May 31 16:33 OAC_MADOC_porechopped_aligned.sort.bam -> ../../nanopore_data/OAC_MADOC_porechopped_aligned.sort.bam
+lrwxrwxrwx 1 malem420 soyagen   62 May 31 16:33 OAC_MADOC_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/OAC_MADOC_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   59 May 31 16:33 OAC_OXFORD_porechopped_aligned.sort.bam -> ../../nanopore_data/OAC_OXFORD_porechopped_aligned.sort.bam
+lrwxrwxrwx 1 malem420 soyagen   61 May 31 16:33 OAC_LAKEVIEW_porechopped_aligned.sort.bam -> ../../nanopore_data/OAC_LAKEVIEW_porechopped_aligned.sort.bam
+lrwxrwxrwx 1 malem420 soyagen   65 May 31 16:33 OAC_LAKEVIEW_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/OAC_LAKEVIEW_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   64 May 31 16:33 OAC_DRAYTON_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/OAC_DRAYTON_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   58 May 31 16:33 OAC_EMBRO_porechopped_aligned.sort.bam -> ../../nanopore_data/OAC_EMBRO_porechopped_aligned.sort.bam
+lrwxrwxrwx 1 malem420 soyagen   62 May 31 16:33 OAC_EMBRO_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/OAC_EMBRO_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   63 May 31 16:33 OAC_CARMAN_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/OAC_CARMAN_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   60 May 31 16:33 OAC_DRAYTON_porechopped_aligned.sort.bam -> ../../nanopore_data/OAC_DRAYTON_porechopped_aligned.sort.bam
+lrwxrwxrwx 1 malem420 soyagen   59 May 31 16:33 OAC_CARMAN_porechopped_aligned.sort.bam -> ../../nanopore_data/OAC_CARMAN_porechopped_aligned.sort.bam
+lrwxrwxrwx 1 malem420 soyagen   63 May 31 16:33 OAC_09_35C_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/OAC_09_35C_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   59 May 31 16:33 OAC_09_35C_porechopped_aligned.sort.bam -> ../../nanopore_data/OAC_09_35C_porechopped_aligned.sort.bam
+lrwxrwxrwx 1 malem420 soyagen   61 May 31 16:33 MAPLE_PRESTO_porechopped_aligned.sort.bam -> ../../nanopore_data/MAPLE_PRESTO_porechopped_aligned.sort.bam
+lrwxrwxrwx 1 malem420 soyagen   65 May 31 16:33 MAPLE_PRESTO_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/MAPLE_PRESTO_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   57 May 31 16:33 ALTA_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/ALTA_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   59 May 31 16:33 MAPLE_ISLE_porechopped_aligned.sort.bam -> ../../nanopore_data/MAPLE_ISLE_porechopped_aligned.sort.bam
+lrwxrwxrwx 1 malem420 soyagen   63 May 31 16:33 MAPLE_ISLE_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/MAPLE_ISLE_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   59 May 31 16:33 AC2001_porechopped_aligned.sort.bam.bai -> ../../nanopore_data/AC2001_porechopped_aligned.sort.bam.bai
+lrwxrwxrwx 1 malem420 soyagen   53 May 31 16:33 ALTA_porechopped_aligned.sort.bam -> ../../nanopore_data/ALTA_porechopped_aligned.sort.bam
+lrwxrwxrwx 1 malem420 soyagen   55 May 31 16:33 AC2001_porechopped_aligned.sort.bam -> ../../nanopore_data/AC2001_porechopped_aligned.sort.bam
+-rwxr--r-- 1 malem420 soyagen  326 May 31 16:32 make_symbolic_links.sh
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTT_uuu_Gm3_82.vcf
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTT_uuu_Gm15_59.vcf
+-rw-r--r-- 1 malem420 soyagen  17K Apr 29 13:24 DTT_uuu_Gm14_13.vcf
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTT_uuu_Gm12_37.vcf
+-rw-r--r-- 1 malem420 soyagen  19K Apr 29 13:24 DTM_uuu_Gm8_97.vcf
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTM_uuu_Gm8_84.vcf
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTM_uuu_Gm8_29.vcf
+-rw-r--r-- 1 malem420 soyagen  67K Apr 29 13:24 DTM_uuu_Gm6_48.vcf
+-rw-r--r-- 1 malem420 soyagen  20K Apr 29 13:24 DTM_uuu_Gm6_19.vcf
+-rw-r--r-- 1 malem420 soyagen  26K Apr 29 13:24 DTM_uuu_Gm5_94.vcf
+-rw-r--r-- 1 malem420 soyagen  45K Apr 29 13:24 DTM_uuu_Gm5_111.vcf
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTM_uuu_Gm4_4.vcf
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTM_uuu_Gm4_124.vcf
+-rw-r--r-- 1 malem420 soyagen  20K Apr 29 13:24 DTM_uuu_Gm20_8.vcf
+-rw-r--r-- 1 malem420 soyagen  18K Apr 29 13:24 DTM_uuu_Gm20_12.vcf
+-rw-r--r-- 1 malem420 soyagen  60K Apr 29 13:24 DTM_uuu_Gm2_63.vcf
+-rw-r--r-- 1 malem420 soyagen  17K Apr 29 13:24 DTM_uuu_Gm2_124.vcf
+-rw-r--r-- 1 malem420 soyagen  18K Apr 29 13:24 DTM_uuu_Gm2_118.vcf
+-rw-r--r-- 1 malem420 soyagen  23K Apr 29 13:24 DTM_uuu_Gm19_135.vcf
+-rw-r--r-- 1 malem420 soyagen  23K Apr 29 13:24 DTM_uuu_Gm18_11.vcf
+-rw-r--r-- 1 malem420 soyagen  18K Apr 29 13:24 DTM_uuu_Gm17_5.vcf
+-rw-r--r-- 1 malem420 soyagen  20K Apr 29 13:24 DTM_uuu_Gm17_26.vcf
+-rw-r--r-- 1 malem420 soyagen  48K Apr 29 13:24 DTM_uuu_Gm15_94.vcf
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTM_uuu_Gm14_19.vcf
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTM_uuu_Gm13_55.vcf
+-rw-r--r-- 1 malem420 soyagen  20K Apr 29 13:24 DTM_uuu_Gm11_79.vcf
+-rw-r--r-- 1 malem420 soyagen  19K Apr 29 13:24 DTM_uuu_Gm11_30.vcf
+-rw-r--r-- 1 malem420 soyagen  33K Apr 29 13:24 DTM_uuu_Gm11_12.vcf
+-rw-r--r-- 1 malem420 soyagen  66K Apr 29 13:24 DTM_uuu_Gm10_98.vcf
+-rw-r--r-- 1 malem420 soyagen  56K Apr 29 13:24 DTM_uuu_Gm1_84.vcf
+-rw-r--r-- 1 malem420 soyagen  26K Apr 29 13:24 DTM_uuu_Gm1_72.vcf
+-rw-r--r-- 1 malem420 soyagen  44K Apr 29 13:24 DTH_uuu_Gm8_8.vcf
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTH_uuu_Gm8_18.vcf
+-rw-r--r-- 1 malem420 soyagen  22K Apr 29 13:24 DTH_uuu_Gm7_61.vcf
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTH_uuu_Gm2_76.vcf
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTH_uuu_Gm18_92.vcf
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTH_uuu_Gm18_31.vcf
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTH_uuu_Gm18_18.vcf
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTH_uuu_Gm17_59.vcf
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTH_uuu_Gm15_31.vcf
+-rw-r--r-- 1 malem420 soyagen  17K Apr 29 13:24 DTH_uuu_Gm10_16.vcf
+-rw-r--r-- 1 malem420 soyagen  27K Apr 29 13:24 DTH_uuu_Gm1_68.vcf
+-rw-r--r-- 1 malem420 soyagen  39K Apr 29 13:24 DTH_uuu_Gm1_66.vcf
+-rw-r--r-- 1 malem420 soyagen  16K Apr 29 13:24 DTH_uuu_Gm1_52.vcf
+-rw-r--r-- 1 malem420 soyagen  34K Apr 29 13:24 DTA_uuu_Gm8_2.vcf
+-rw-r--r-- 1 malem420 soyagen  33K Apr 29 13:24 DTA_uuu_Gm8_1.vcf
+-rw-r--r-- 1 malem420 soyagen  25K Apr 29 13:24 DTA_uuu_Gm7_5.vcf
+-rw-r--r-- 1 malem420 soyagen  39K Apr 29 13:24 DTA_uuu_Gm4_2.vcf
+-rw-r--r-- 1 malem420 soyagen  25K Apr 29 13:24 DTA_uuu_Gm18_5.vcf
+-rw-r--r-- 1 malem420 soyagen  34K Apr 29 13:24 DTA_uuu_Gm17_2.vcf
+-rw-r--r-- 1 malem420 soyagen  25K Apr 29 13:24 DTA_uuu_Gm15_1.vcf
+
+./te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis:
+total 61M
+-rw-r--r-- 1 malem420 soyagen    0 Jun  1 13:54 STOWAWAY_MITE_ANALYSIS
+-rwxr--r-- 1 malem420 soyagen 8.9K Jun  1 11:53 stowaway_mite_analysis.R
+-rw-r--r-- 1 malem420 soyagen 4.9M Jun  1 11:38 Rplots.pdf
+-rw-r--r-- 1 malem420 soyagen 2.3K Jun  1 11:38 freq_df.RData
+-rw-r--r-- 1 malem420 soyagen  579 Jun  1 11:38 genotype_df.RData
+-rw-r--r-- 1 malem420 soyagen  25K Jun  1 11:38 Gm04_2257090.vcf
+-rw-r--r-- 1 malem420 soyagen  18K Jun  1 11:38 Gm04_2257092.vcf
+-rw-r--r-- 1 malem420 soyagen  972 Jun  1 11:38 plink.log
+-rw-r--r-- 1 malem420 soyagen 133K Jun  1 11:38 plink.ld
+-rw-r--r-- 1 malem420 soyagen 1.6K Jun  1 11:38 plink.nosex
+-rw-r--r-- 1 malem420 soyagen 481K Jun  1 11:38 Gm04_2220398_2259326.vcf
+-rw-r--r-- 1 malem420 soyagen 2.2M Jun  1 11:37 Gm04_2157090_2357090.vcf
+-rw-r--r-- 1 malem420 soyagen 165K Jun  1 11:37 query_all.vcf.gz.tbi
+-rw-r--r-- 1 malem420 soyagen  53M Jun  1 11:37 query_all.vcf.gz
+lrwxrwxrwx 1 malem420 soyagen  128 Apr 29 13:38 diverging_snps.RData -> /home/malem420/analyse_nanopore/transposons/analyse_100bp/multiple_alignments/Gm04_2257090_INS_480_analysis/diverging_snps.RData
+lrwxrwxrwx 1 malem420 soyagen  125 Apr 29 13:38 plotting_df.RData -> /home/malem420/analyse_nanopore/transposons/analyse_100bp/multiple_alignments/Gm04_2257090_INS_480_analysis/plotting_df.RData
+
+./te_analysis/multiple_alignments/filtered_alignments:
+total 8.0K
+-rw-r--r-- 1 malem420 soyagen 4.9K May 31 18:01 correct_tsd_tir_sequences.txt
+lrwxrwxrwx 1 malem420 soyagen  122 Apr 29 13:37 tir_similarity_noref.txt -> /home/malem420/analyse_nanopore/transposons/analyse_100bp/multiple_alignments/filtered_alignments/tir_similarity_noref.txt
+lrwxrwxrwx 1 malem420 soyagen  120 Apr 29 13:37 tir_similarity_all.txt -> /home/malem420/analyse_nanopore/transposons/analyse_100bp/multiple_alignments/filtered_alignments/tir_similarity_all.txt
+
+./te_analysis/te_database:
+total 52M
+-rw-r--r-- 1 malem420 soyagen  16K May 28 16:38 SoyBase_TE_Fasta.txt.ntf
+-rw-r--r-- 1 malem420 soyagen 152K May 28 16:38 SoyBase_TE_Fasta.txt.nto
+-rw-r--r-- 1 malem420 soyagen 454K May 28 16:38 SoyBase_TE_Fasta.txt.not
+-rw-r--r-- 1 malem420 soyagen  20K May 28 16:38 SoyBase_TE_Fasta.txt.ndb
+-rw-r--r-- 1 malem420 soyagen  41M May 28 16:38 SoyBase_TE_Fasta.txt.nsq
+-rw-r--r-- 1 malem420 soyagen 9.4M May 28 16:38 SoyBase_TE_Fasta.txt.nhr
+-rw-r--r-- 1 malem420 soyagen 454K May 28 16:38 SoyBase_TE_Fasta.txt.nin
+lrwxrwxrwx 1 malem420 soyagen   73 Apr 28 16:58 SoyBase_TE_Fasta.txt -> /home/malem420/analyse_nanopore/transposons/database/SoyBase_TE_Fasta.txt
+
+./gene_analysis:
+total 22M
+-rw-r--r-- 1 malem420 soyagen    0 Jun  1 13:54 GO_ANALYSIS
+-rw-r--r-- 1 malem420 soyagen    0 Jun  1 13:54 GENE_OVERLAP_ANALYSIS
+-rwxr-xr-x 1 malem420 soyagen 7.5K May 31 15:48 gprop_permutations.R
+-rw-r--r-- 1 malem420 soyagen 2.0M May 28 15:43 overlap_norepeat.txt
+-rw-r--r-- 1 malem420 soyagen  161 May 28 15:43 norepeat_widths.RData
+-rw-r--r-- 1 malem420 soyagen  161 May 28 15:42 feature_widths.RData
+-rw-r--r-- 1 malem420 soyagen 2.9M May 28 15:42 overlap_data.txt
+-rw-r--r-- 1 malem420 soyagen 7.3K May 28 13:28 pfam_over_summary.RData
+-rw-r--r-- 1 malem420 soyagen 105K May 28 13:28 bp_under_summary.RData
+-rw-r--r-- 1 malem420 soyagen  55K May 28 13:28 bp_over_summary.RData
+-rw-r--r-- 1 malem420 soyagen  14M May 28 13:24 gmax_go_annotations.txt
+-rwxr-xr-x 1 malem420 soyagen  12K May 28 13:22 go_analysis.R
+-rw-r--r-- 1 malem420 soyagen 482K May 28 11:25 upstream5kb.RData
+-rw-r--r-- 1 malem420 soyagen 2.5M May 28 11:25 cds.RData
+-rw-r--r-- 1 malem420 soyagen 601K May 28 11:25 genes.RData
+-rwxr-xr-x 1 malem420 soyagen 6.8K May 28 11:17 gene_overlap_analysis.R
+-rwxr-xr-x 1 malem420 soyagen 3.8K May 28 10:23 allele_frequency_permutations.R
+-rw-r--r-- 1 malem420 soyagen  16K Apr 27 18:29 go_analysis.Rout
+-rw-r--r-- 1 malem420 soyagen  12K Apr 27 17:47 gene_overlap_analysis.Rout
+lrwxrwxrwx 1 malem420 soyagen   90 Apr 27 15:55 soybase_genome_annotation_v4.0_04-20-2021.txt -> /home/malem420/analyse_nanopore/gene_impacts/soybase_genome_annotation_v4.0_04-20-2021.txt
+lrwxrwxrwx 1 malem420 soyagen   72 Apr 27 15:52 permutation_all_100kb.RData -> /home/malem420/analyse_nanopore/gene_impacts/permutation_all_100kb.RData
+lrwxrwxrwx 1 malem420 soyagen   80 Apr 27 15:52 allele_frequency_permutations.RData -> /home/malem420/analyse_nanopore/gene_impacts/allele_frequency_permutations.RData
 
 ./scripts:
-total 84K
+total 108K
+-rwxr--r-- 1 malem420 soyagen  477 May 31 14:43 recode_alleles.awk
+-rwxr--r-- 1 malem420 soyagen  486 May 28 14:53 filter_hetsites.R
+-rwxr--r-- 1 malem420 soyagen 1.2K May 28 14:51 het_stats.awk
+-rwxr--r-- 1 malem420 soyagen 1.1K May 28 14:50 het_counts.awk
+-rw-r--r-- 1 malem420 soyagen  290 May 27 17:14 format_go_table.R
+-rw-r--r-- 1 malem420 soyagen 1.7K May 25 16:58 format_sveval_plotting_data.R
 -rw-r--r-- 1 malem420 soyagen  928 May 21 16:40 make_plot_data.R
 -rwxr--r-- 1 malem420 soyagen  652 May 21 16:17 depth_distribution.sh
 -rw-r--r-- 1 malem420 soyagen  15K May 20 18:55 svaba_process.R
@@ -227,214 +429,566 @@ total 44K
 -rw-r--r-- 1 malem420 soyagen 2.9K May 17 17:42 call_age.R
 -rwxr-xr-x 1 malem420 soyagen 2.8K May 17 17:42 age_realign.sh
 
-./nanopore_sv_calling:
-total 28K
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:21 SV_NORMALIZATION
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:21 SV_REFINEMENT
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:21 SV_CALLING
--rwxr-xr-x 1 malem420 soyagen 1.7K May 17 17:42 sniffles_calling.sh
--rw-r--r-- 1 malem420 soyagen 5.5K May 17 17:42 refine_breakpoints.R
--rwxr-xr-x 1 malem420 soyagen 1.1K May 17 17:42 process_vcf_files.sh
--rwxr-xr-x 1 malem420 soyagen  714 May 17 17:42 fix_vcfs.R
--rwxr-xr-x 1 malem420 soyagen 2.1K May 17 17:42 filter_sniffles_vcfs.R
--rwxr-xr-x 1 malem420 soyagen 1.6K May 17 17:42 add_metainfo_all.R
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 ROLAND_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 QS5091.50J_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OT09-03_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_STRATFORD_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_PRUDENCE_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_PETREL_2_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_OXFORD_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_MADOC_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_LAKEVIEW_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_EMBRO_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_DRAYTON_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_CARMAN_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_09_35C_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 MAPLE_PRESTO_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 MAPLE_ISLE_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 ALTA_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 AC2001_normalized_ids.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:35 AC2001_hom70_filtered.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 14 17:54 ALTA_hom70_filtered.vcf
-drwxr-xr-x 2 malem420 soyagen   41 May 14 17:53 ROLAND
-drwxr-xr-x 2 malem420 soyagen   45 May 14 17:53 QS5091.50J
-drwxr-xr-x 2 malem420 soyagen   42 May 14 17:53 OT09-03
-drwxr-xr-x 2 malem420 soyagen   48 May 14 17:53 OAC_STRATFORD
-drwxr-xr-x 2 malem420 soyagen   47 May 14 17:53 OAC_PRUDENCE
-drwxr-xr-x 2 malem420 soyagen   47 May 14 17:53 OAC_PETREL_2
-drwxr-xr-x 2 malem420 soyagen   45 May 14 17:53 OAC_OXFORD
-drwxr-xr-x 2 malem420 soyagen   44 May 14 17:53 OAC_MADOC
-drwxr-xr-x 2 malem420 soyagen   47 May 14 17:53 OAC_LAKEVIEW
-drwxr-xr-x 2 malem420 soyagen   44 May 14 17:53 OAC_EMBRO
-drwxr-xr-x 2 malem420 soyagen   46 May 14 17:53 OAC_DRAYTON
-drwxr-xr-x 2 malem420 soyagen   45 May 14 17:53 OAC_CARMAN
-drwxr-xr-x 2 malem420 soyagen   45 May 14 17:53 OAC_09_35C
-drwxr-xr-x 2 malem420 soyagen   47 May 14 17:53 MAPLE_PRESTO
-drwxr-xr-x 2 malem420 soyagen   45 May 14 17:53 MAPLE_ISLE
-drwxr-xr-x 2 malem420 soyagen   39 May 14 17:53 ALTA
-drwxr-xr-x 2 malem420 soyagen   41 May 14 17:53 AC2001
--rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 ROLAND_hom70_filtered.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 QS5091.50J_hom70_filtered.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_STRATFORD_hom70_filtered.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OT09-03_hom70_filtered.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_PRUDENCE_hom70_filtered.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_OXFORD_hom70_filtered.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_PETREL_2_hom70_filtered.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_MADOC_hom70_filtered.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_EMBRO_hom70_filtered.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_LAKEVIEW_hom70_filtered.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_DRAYTON_hom70_filtered.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_09_35C_hom70_filtered.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_CARMAN_hom70_filtered.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 MAPLE_PRESTO_hom70_filtered.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 MAPLE_ISLE_hom70_filtered.vcf
-
-./nanopore_sv_calling/ROLAND:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 ROLAND_realigned.vcf
-
-./nanopore_sv_calling/QS5091.50J:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 QS5091.50J_realigned.vcf
-
-./nanopore_sv_calling/OT09-03:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OT09-03_realigned.vcf
-
-./nanopore_sv_calling/OAC_STRATFORD:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_STRATFORD_realigned.vcf
-
-./nanopore_sv_calling/OAC_PRUDENCE:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_PRUDENCE_realigned.vcf
-
-./nanopore_sv_calling/OAC_PETREL_2:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_PETREL_2_realigned.vcf
-
-./nanopore_sv_calling/OAC_OXFORD:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_OXFORD_realigned.vcf
-
-./nanopore_sv_calling/OAC_MADOC:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_MADOC_realigned.vcf
-
-./nanopore_sv_calling/OAC_LAKEVIEW:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_LAKEVIEW_realigned.vcf
-
-./nanopore_sv_calling/OAC_EMBRO:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_EMBRO_realigned.vcf
-
-./nanopore_sv_calling/OAC_DRAYTON:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_DRAYTON_realigned.vcf
-
-./nanopore_sv_calling/OAC_CARMAN:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_CARMAN_realigned.vcf
-
-./nanopore_sv_calling/OAC_09_35C:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_09_35C_realigned.vcf
-
-./nanopore_sv_calling/MAPLE_PRESTO:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 MAPLE_PRESTO_realigned.vcf
-
-./nanopore_sv_calling/MAPLE_ISLE:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 MAPLE_ISLE_realigned.vcf
-
-./nanopore_sv_calling/ALTA:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 ALTA_realigned.vcf
-
-./nanopore_sv_calling/AC2001:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 AC2001_realigned.vcf
-
-./nanopore_data:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:21 NANOPORE_ALIGNMENT
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:19 AC2001_1.fastq.gz
--rwxr-xr-x 1 malem420 soyagen 3.7K May 17 17:42 read_processing_alignment.sh
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 QS5091.50J.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 ROLAND.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OT09-03.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_PRUDENCE.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_STRATFORD.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_PETREL_2.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_OXFORD.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_LAKEVIEW_2.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_MADOC.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_LAKEVIEW_1.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_EMBRO.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_DRAYTON.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_09_35C.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_CARMAN.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 MAPLE_PRESTO.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 MAPLE_ISLE_2.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 ALTA.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 MAPLE_ISLE_1.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 AC2001_2.fastq.gz
--rw-r--r-- 1 malem420 soyagen    0 May 17 14:40 OAC_EMBRO_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 ROLAND_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_PRUDENCE_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_STRATFORD_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OT09-03_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 QS5091.50J_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_LAKEVIEW_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_MADOC_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_OXFORD_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_PETREL_2_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_CARMAN_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_DRAYTON_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 ALTA_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 MAPLE_ISLE_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 MAPLE_PRESTO_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_09_35C_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 AC2001_porechopped_aligned.sort.bam
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 ROLAND_porechopped_aligned.sort.bam.bai
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OT09-03_porechopped_aligned.sort.bam.bai
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 QS5091.50J_porechopped_aligned.sort.bam.bai
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_STRATFORD_porechopped_aligned.sort.bam.bai
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_PETREL_2_porechopped_aligned.sort.bam.bai
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_PRUDENCE_porechopped_aligned.sort.bam.bai
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_OXFORD_porechopped_aligned.sort.bam.bai
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_LAKEVIEW_porechopped_aligned.sort.bam.bai
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_MADOC_porechopped_aligned.sort.bam.bai
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_EMBRO_porechopped_aligned.sort.bam.bai
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_CARMAN_porechopped_aligned.sort.bam.bai
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_DRAYTON_porechopped_aligned.sort.bam.bai
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 MAPLE_PRESTO_porechopped_aligned.sort.bam.bai
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_09_35C_porechopped_aligned.sort.bam.bai
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 MAPLE_ISLE_porechopped_aligned.sort.bam.bai
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 AC2001_porechopped_aligned.sort.bam.bai
--rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 ALTA_porechopped_aligned.sort.bam.bai
-
 ./sv_genotyping:
 total 36K
--rw-r--r--   1 malem420 soyagen    0 May 21 16:40 MANIFEST_FILES
-drwxr-xr-x 105 malem420 soyagen 4.0K May 21 16:33 illumina_svs
-drwxr-xr-x 105 malem420 soyagen 4.0K May 21 11:26 combined_svs
-drwxr-xr-x 105 malem420 soyagen 4.0K May 20 19:48 nanopore_svs
+drwxr-xr-x 105 malem420 soyagen 4.0K May 28 16:04 combined_svs
+-rw-r--r--   1 malem420 soyagen    0 May 28 15:40 MANIFEST_FILES
+drwxr-xr-x 105 malem420 soyagen 4.0K May 28 10:50 illumina_svs
+drwxr-xr-x 105 malem420 soyagen 4.0K May 25 17:49 nanopore_svs
 -rwxr-xr-x   1 malem420 soyagen 1.6K May 20 18:55 prepare_manifest_files.sh
 drwxr-xr-x   2 malem420 soyagen   10 May 19 15:50 idxdepth
 drwxr-xr-x   2 malem420 soyagen 4.0K May 19 15:30 manifest_files
-lrwxrwxrwx   1 malem420 soyagen   80 Apr 29 17:42 paragraph_filtered_svs.vcf -> /home/malem420/analyse_nanopore/transposons/analyse_100bp/paragraph_filtered.vcf
+
+./sv_genotyping/combined_svs:
+total 36K
+-rw-r--r-- 1 malem420 soyagen    0 Jun  1 13:54 combined_paragraph_merged.vcf
+-rw-r--r-- 1 malem420 soyagen    0 Jun  1 13:54 PARAGRAPH_COMBINED_GENOTYPING
+-rw-r--r-- 1 malem420 soyagen    0 Jun  1 13:54 illumina_merged_sorted.vcf
+lrwxrwxrwx 1 malem420 soyagen   66 May 28 11:04 combined_paragraph_filtered.vcf -> /home/malem420/analyse_nanopore/transposons/paragraph_filtered.vcf
+-rwxr--r-- 1 malem420 soyagen  929 May 28 10:58 filter_merged_vcf.sh
+-rwxr-xr-x 1 malem420 soyagen  673 May 28 10:49 merge_vcf_files.sh
+drwxr-xr-x 4 malem420 soyagen  111 May 21 14:33 sveval_benchmarks
+-rw-r--r-- 1 malem420 soyagen   34 May 20 18:55 svmerge_files.txt
+-rwxr-xr-x 1 malem420 soyagen 4.4K May 20 18:55 select_svs.R
+-rwxr-xr-x 1 malem420 soyagen  377 May 20 18:55 sort_vcfs.sh
+-rwxr-xr-x 1 malem420 soyagen 1.8K May 20 18:55 run_paragraph.sh
+-rw-r--r-- 1 malem420 soyagen  189 May 20 18:55 header_lines.txt
+-rwxr-xr-x 1 malem420 soyagen 2.3K May 20 18:55 SVmerge.sh
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1103_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1102_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1101_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1100_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1099_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1098_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1097_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1096_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1095_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1094_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1093_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1092_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1091_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1090_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1089_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1088_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1087_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1086_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1085_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1084_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1083_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1082_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1081_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1080_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1079_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1078_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1077_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1076_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1075_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1074_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1073_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1072_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1071_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1070_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1069_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1068_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1067_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1066_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1065_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1064_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1063_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1062_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1061_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1060_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1059_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1058_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1057_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1056_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1055_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1054_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1053_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1052_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1051_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1050_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1049_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1048_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1047_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1046_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1045_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1044_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1043_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1042_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1041_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1040_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1039_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1038_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1037_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1036_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1035_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1034_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1033_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1032_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1031_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1030_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1029_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1028_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1027_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1026_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1025_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1023_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1022_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1021_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1020_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1019_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1018_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1017_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1016_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1015_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1014_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1013_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1012_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1011_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1010_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1009_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1008_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1007_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1006_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1005_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1004_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1003_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1002_results
+drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1001_results
+
+./sv_genotyping/combined_svs/sveval_benchmarks:
+total 16K
+drwxr-xr-x 2 malem420 soyagen   48 May 26 11:49 norepeat_RData
+drwxr-xr-x 2 malem420 soyagen   46 May 26 11:48 nogeno_RData
+-rwxr-xr-x 1 malem420 soyagen 4.5K May 21 14:33 norepeat_benchmark.R
+-rwxr-xr-x 1 malem420 soyagen 5.0K May 21 14:33 benchmark.R
+
+./sv_genotyping/combined_svs/sveval_benchmarks/norepeat_RData:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 153 May 26 11:49 sveval_norepeat_rates.RData -> /home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_all/paragraph_illumina/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData
+
+./sv_genotyping/combined_svs/sveval_benchmarks/nogeno_RData:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 149 May 26 11:48 sveval_nogeno_rates.RData -> /home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_all/paragraph_illumina/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
+
+./sv_genotyping/combined_svs/CAD1103_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1102_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1101_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1100_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1099_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1098_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1097_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1096_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1095_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1094_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1093_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1092_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1091_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1090_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1089_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1088_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1087_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1086_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1085_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1084_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1083_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1082_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1081_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1080_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1079_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1078_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1077_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1076_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1075_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1074_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1073_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1072_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1071_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1070_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1069_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1068_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1067_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1066_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1065_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1064_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1063_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1062_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1061_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1060_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1059_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1058_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1057_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1056_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1055_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1054_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1053_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1052_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1051_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1050_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1049_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1048_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1047_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1046_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1045_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1044_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1043_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1042_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1041_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1040_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1039_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1038_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1037_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1036_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1035_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1034_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1033_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1032_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1031_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1030_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1029_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1028_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1027_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1026_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1025_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1023_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1022_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1021_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1020_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1019_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1018_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1017_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1016_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1015_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1014_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1013_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1012_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1011_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1010_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1009_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1008_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1007_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1006_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1005_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1004_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1003_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1002_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
+
+./sv_genotyping/combined_svs/CAD1001_results:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
 
 ./sv_genotyping/illumina_svs:
-total 20K
-drwxr-xr-x 6 malem420 soyagen 4.0K May 21 16:51 sveval_benchmarks
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:40 illumina_paragraph_merged.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:40 PARAGRAPH_ILLUMINA_GENOTYPING
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:40 svmerged.clustered.vcf
--rwxr-xr-x 1 malem420 soyagen  639 May 21 14:33 merge_vcf_files.sh
+total 2.1M
+-rw-r--r-- 1 malem420 soyagen 2.1M Jun  1 13:54 size_distribution.tsv
+-rw-r--r-- 1 malem420 soyagen    0 Jun  1 13:54 illumina_paragraph_merged.vcf
+-rw-r--r-- 1 malem420 soyagen    0 Jun  1 13:54 PARAGRAPH_ILLUMINA_GENOTYPING
+drwxr-xr-x 6 malem420 soyagen 4.0K May 28 10:51 sveval_benchmarks
+-rwxr-xr-x 1 malem420 soyagen  648 May 28 10:50 merge_vcf_files.sh
+-rwxr--r-- 1 malem420 soyagen 1.1K May 21 17:33 extract_size_distribution.sh
+lrwxrwxrwx 1 malem420 soyagen  121 May 21 17:05 svmerged.clustered.vcf -> /home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/svmerged_variants/svmerged.clustered.vcf
 -rw-r--r-- 1 malem420 soyagen  205 May 20 18:55 svmerge_files.txt
 -rwxr-xr-x 1 malem420 soyagen 1.8K May 20 18:55 run_paragraph.sh
 -rwxr-xr-x 1 malem420 soyagen  743 May 20 18:55 SVmerge.sh
@@ -543,10 +1097,10 @@ drwxr-xr-x 2 malem420 soyagen   37 May 14 18:08 CAD1001_results
 
 ./sv_genotyping/illumina_svs/sveval_benchmarks:
 total 44K
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:51 NCALLERS_ILLUMINA_BENCHMARK
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:51 paragraph_svs_minAC4_ncallers.vcf
-drwxr-xr-x 2 malem420 soyagen   48 May 21 16:46 ncallers_RData
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:40 paragraph_svs_minDP2_annotated.vcf
+-rw-r--r-- 1 malem420 soyagen    0 Jun  1 13:54 NCALLERS_ILLUMINA_BENCHMARK
+-rw-r--r-- 1 malem420 soyagen    0 Jun  1 13:54 paragraph_svs_minAC4_ncallers.vcf
+-rw-r--r-- 1 malem420 soyagen    0 Jun  1 13:54 paragraph_svs_minDP2_annotated.vcf
+drwxr-xr-x 2 malem420 soyagen  116 May 25 16:26 ncallers_RData
 drwxr-xr-x 2 malem420 soyagen   49 May 21 16:29 frequency_RData
 drwxr-xr-x 2 malem420 soyagen   46 May 21 15:07 nogeno_RData
 -rwxr-xr-x 1 malem420 soyagen 6.6K May 21 14:33 norepeat_benchmark.R
@@ -559,7 +1113,9 @@ drwxr-xr-x 2 malem420 soyagen   46 May 21 15:07 nogeno_RData
 drwxr-xr-x 2 malem420 soyagen   48 May 13 15:38 norepeat_RData
 
 ./sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData:
-total 4.0K
+total 12K
+lrwxrwxrwx 1 malem420 soyagen 165 May 25 16:26 CAD1015_paragraph.RData -> /home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/svmerged_variants/paragraph/sveval_benchmarks/ncallers_RData/CAD1015_paragraph.RData
+lrwxrwxrwx 1 malem420 soyagen 165 May 25 16:16 CAD1049_paragraph.RData -> /home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/svmerged_variants/paragraph/sveval_benchmarks/ncallers_RData/CAD1049_paragraph.RData
 lrwxrwxrwx 1 malem420 soyagen 169 May 21 16:46 sveval_ncallers_rates.RData -> /home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/svmerged_variants/paragraph/sveval_benchmarks/ncallers_RData/sveval_ncallers_rates.RData
 
 ./sv_genotyping/illumina_svs/sveval_benchmarks/frequency_RData:
@@ -982,549 +1538,16 @@ total 0
 total 0
 -rw-r--r-- 1 malem420 soyagen 0 May 14 18:08 genotypes.vcf.gz
 
-./sv_genotyping/combined_svs:
-total 28K
-drwxr-xr-x 4 malem420 soyagen  111 May 21 14:33 sveval_benchmarks
--rw-r--r-- 1 malem420 soyagen   34 May 20 18:55 svmerge_files.txt
--rwxr-xr-x 1 malem420 soyagen 4.4K May 20 18:55 select_svs.R
--rwxr-xr-x 1 malem420 soyagen  377 May 20 18:55 sort_vcfs.sh
--rwxr-xr-x 1 malem420 soyagen 1.8K May 20 18:55 run_paragraph.sh
--rw-r--r-- 1 malem420 soyagen  189 May 20 18:55 header_lines.txt
--rwxr-xr-x 1 malem420 soyagen 2.3K May 20 18:55 SVmerge.sh
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1103_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1102_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1101_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1100_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1099_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1098_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1097_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1096_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1095_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1094_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1093_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1092_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1091_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1090_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1089_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1088_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1087_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1086_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1085_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1084_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1083_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1082_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1081_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1080_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1079_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1078_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1077_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1076_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1075_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1074_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1073_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1072_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1071_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1070_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1069_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1068_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1067_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1066_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1065_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1064_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1063_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1062_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1061_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1060_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1059_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1058_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1057_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1056_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1055_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1054_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1053_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1052_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1051_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1050_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1049_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1048_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1047_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1046_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1045_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1044_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1043_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1042_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1041_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1040_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1039_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1038_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1037_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1036_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1035_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1034_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1033_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1032_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1031_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1030_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1029_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1028_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1027_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1026_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1025_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1023_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1022_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1021_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1020_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1019_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1018_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1017_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1016_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1015_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1014_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1013_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1012_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1011_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1010_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1009_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1008_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1007_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1006_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1005_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1004_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1003_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1002_results
-drwxr-xr-x 2 malem420 soyagen   37 May 20 18:35 CAD1001_results
--rw-r--r-- 1 malem420 soyagen    0 May 20 18:21 illumina_merged_sorted.vcf
-
-./sv_genotyping/combined_svs/sveval_benchmarks:
-total 16K
--rwxr-xr-x 1 malem420 soyagen 4.5K May 21 14:33 norepeat_benchmark.R
--rwxr-xr-x 1 malem420 soyagen 5.0K May 21 14:33 benchmark.R
-drwxr-xr-x 2 malem420 soyagen   10 May 21 11:35 norepeat_RData
-drwxr-xr-x 2 malem420 soyagen   10 May 21 11:35 nogeno_RData
-
-./sv_genotyping/combined_svs/sveval_benchmarks/norepeat_RData:
-total 0
-
-./sv_genotyping/combined_svs/sveval_benchmarks/nogeno_RData:
-total 0
-
-./sv_genotyping/combined_svs/CAD1103_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1102_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1101_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1100_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1099_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1098_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1097_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1096_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1095_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1094_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1093_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1092_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1091_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1090_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1089_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1088_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1087_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1086_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1085_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1084_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1083_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1082_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1081_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1080_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1079_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1078_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1077_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1076_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1075_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1074_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1073_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1072_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1071_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1070_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1069_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1068_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1067_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1066_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1065_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1064_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1063_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1062_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1061_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1060_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1059_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1058_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1057_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1056_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1055_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1054_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1053_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1052_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1051_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1050_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1049_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1048_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1047_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1046_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1045_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1044_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1043_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1042_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1041_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1040_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1039_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1038_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1037_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1036_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1035_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1034_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1033_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1032_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1031_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1030_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1029_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1028_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1027_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1026_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1025_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1023_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1022_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1021_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1020_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1019_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1018_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1017_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1016_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1015_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1014_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1013_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1012_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1011_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1010_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1009_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1008_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1007_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1006_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1005_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1004_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1003_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1002_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
-./sv_genotyping/combined_svs/CAD1001_results:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 20 18:35 genotypes.vcf.gz
-
 ./sv_genotyping/nanopore_svs:
 total 20K
+-rw-r--r-- 1 malem420 soyagen    0 May 28 15:40 PARAGRAPH_NANOPORE_GENOTYPING
+-rw-r--r-- 1 malem420 soyagen    0 May 28 15:40 svmerged_clustered_sorted.vcf
 drwxr-xr-x 4 malem420 soyagen  111 May 21 14:33 sveval_benchmarks
 -rwxr-xr-x 1 malem420 soyagen  198 May 20 18:55 svmerged_sort.sh
 -rw-r--r-- 1 malem420 soyagen  945 May 20 18:55 svmerge_files.txt
 -rwxr-xr-x 1 malem420 soyagen 2.0K May 20 18:55 run_paragraph.sh
 -rwxr-xr-x 1 malem420 soyagen  575 May 20 18:55 merge_realigned.R
 -rwxr-xr-x 1 malem420 soyagen  977 May 20 18:55 SVmerge.sh
--rw-r--r-- 1 malem420 soyagen    0 May 20 17:29 svmerged_clustered_sorted.vcf
 drwxr-xr-x 2 malem420 soyagen   37 May 20 17:26 CAD1103_results
 drwxr-xr-x 2 malem420 soyagen   37 May 20 17:26 CAD1102_results
 drwxr-xr-x 2 malem420 soyagen   37 May 20 17:26 CAD1101_results
@@ -1630,16 +1653,18 @@ drwxr-xr-x 2 malem420 soyagen   37 May 20 17:26 CAD1001_results
 
 ./sv_genotyping/nanopore_svs/sveval_benchmarks:
 total 16K
+drwxr-xr-x 2 malem420 soyagen   48 May 26 10:51 norepeat_RData
+drwxr-xr-x 2 malem420 soyagen   46 May 25 17:54 nogeno_RData
 -rwxr-xr-x 1 malem420 soyagen 4.4K May 21 14:33 norepeat_benchmark.R
 -rwxr-xr-x 1 malem420 soyagen 4.9K May 21 14:33 benchmark.R
-drwxr-xr-x 2 malem420 soyagen   10 May 20 20:09 norepeat_RData
-drwxr-xr-x 2 malem420 soyagen   10 May 20 20:09 nogeno_RData
 
 ./sv_genotyping/nanopore_svs/sveval_benchmarks/norepeat_RData:
-total 0
+total 4.0K
+lrwxrwxrwx 1 malem420 soyagen 169 May 26 10:51 sveval_norepeat_rates.RData -> /home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_nanopore/genotyping/svmerged/paragraph/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData
 
 ./sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RData:
-total 0
+total 4.0K
+lrwxrwxrwx 1 malem420 soyagen 165 May 25 17:54 sveval_nogeno_rates.RData -> /home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_nanopore/genotyping/svmerged/paragraph/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
 
 ./sv_genotyping/nanopore_svs/CAD1103_results:
 total 0
@@ -2157,10 +2182,435 @@ total 0
 -rw-r--r-- 1 malem420 soyagen 0 May 19 15:30 CAD1001_manifest.txt
 -rw-r--r-- 1 malem420 soyagen 0 May 19 15:30 CAD1002_manifest.txt
 
+./refgenome:
+total 0
+lrwxrwxrwx 1 malem420 soyagen  90 May 28 11:10 Gmax_508_Wm82.a4.v1.gene_exons.gff3 -> /home/malem420/refgenome/Gmax_v4/Wm82.a4.v1/annotation/Gmax_508_Wm82.a4.v1.gene_exons.gff3
+lrwxrwxrwx 1 malem420 soyagen  49 May 26 15:25 Gmax_508_v4.0.fa -> /home/malem420/refgenome/Gmax_v4/Gmax_508_v4.0.fa
+lrwxrwxrwx 1 malem420 soyagen  49 May 26 15:23 bt_decoy_sequences.fasta -> /home/malem420/refgenome/bt_decoy_sequences.fasta
+drwxr-xr-x 2 malem420 soyagen  73 May 21 14:58 repeat_regions
+lrwxrwxrwx 1 malem420 soyagen  65 Apr 29 18:02 Gmax_508_v4.0_mit_chlp.fasta.fai -> /home/malem420/refgenome/Gmax_v4/Gmax_508_v4.0_mit_chlp.fasta.fai
+lrwxrwxrwx 1 malem420 soyagen  61 Apr 29 18:02 Gmax_508_v4.0_mit_chlp.fasta -> /home/malem420/refgenome/Gmax_v4/Gmax_508_v4.0_mit_chlp.fasta
+lrwxrwxrwx 1 malem420 soyagen  84 Apr 29 17:21 Gmax_508_Wm82.a4.v1.gene.gff3 -> /home/malem420/refgenome/Gmax_v4/Wm82.a4.v1/annotation/Gmax_508_Wm82.a4.v1.gene.gff3
+lrwxrwxrwx 1 malem420 soyagen 106 Apr 29 17:14 Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3 -> /home/malem420/refgenome/Gmax_v4/Wm82.a4.v1/annotation/Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3
+
+./refgenome/repeat_regions:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 1.6K May 21 14:56 make_repeat_bed.R
+lrwxrwxrwx 1 malem420 soyagen   77 May 13 17:18 non_repeated_regions.bed -> /home/malem420/WGS_data/bbduk_trimmed/repeat_regions/non_repeated_regions.bed
+
+./nanopore_sv_calling:
+total 32K
+-rw-r--r-- 1 malem420 soyagen    0 May 28 15:40 SV_NORMALIZATION
+-rw-r--r-- 1 malem420 soyagen    0 May 28 15:40 SV_REFINEMENT
+-rw-r--r-- 1 malem420 soyagen    0 May 28 15:40 SV_CALLING
+lrwxrwxrwx 1 malem420 soyagen   82 May 27 18:40 all_metainfo.RData -> /home/malem420/WGS_data/bbduk_trimmed/LongAGE_tests/realign_dir/all_metainfo.RData
+-rwxr--r-- 1 malem420 soyagen 2.6K May 27 18:36 gather_metainfo.R
+-rwxr-xr-x 1 malem420 soyagen 1.7K May 17 17:42 sniffles_calling.sh
+-rw-r--r-- 1 malem420 soyagen 5.5K May 17 17:42 refine_breakpoints.R
+-rwxr-xr-x 1 malem420 soyagen 1.1K May 17 17:42 process_vcf_files.sh
+-rwxr-xr-x 1 malem420 soyagen  714 May 17 17:42 fix_vcfs.R
+-rwxr-xr-x 1 malem420 soyagen 2.1K May 17 17:42 filter_sniffles_vcfs.R
+-rwxr-xr-x 1 malem420 soyagen 1.6K May 17 17:42 add_metainfo_all.R
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 ROLAND_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 QS5091.50J_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OT09-03_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_STRATFORD_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_PRUDENCE_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_PETREL_2_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_OXFORD_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_MADOC_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_LAKEVIEW_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_EMBRO_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_DRAYTON_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_CARMAN_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 OAC_09_35C_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 MAPLE_PRESTO_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 MAPLE_ISLE_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 ALTA_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:49 AC2001_normalized_ids.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:35 AC2001_hom70_filtered.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 14 17:54 ALTA_hom70_filtered.vcf
+drwxr-xr-x 2 malem420 soyagen   41 May 14 17:53 ROLAND
+drwxr-xr-x 2 malem420 soyagen   45 May 14 17:53 QS5091.50J
+drwxr-xr-x 2 malem420 soyagen   42 May 14 17:53 OT09-03
+drwxr-xr-x 2 malem420 soyagen   48 May 14 17:53 OAC_STRATFORD
+drwxr-xr-x 2 malem420 soyagen   47 May 14 17:53 OAC_PRUDENCE
+drwxr-xr-x 2 malem420 soyagen   47 May 14 17:53 OAC_PETREL_2
+drwxr-xr-x 2 malem420 soyagen   45 May 14 17:53 OAC_OXFORD
+drwxr-xr-x 2 malem420 soyagen   44 May 14 17:53 OAC_MADOC
+drwxr-xr-x 2 malem420 soyagen   47 May 14 17:53 OAC_LAKEVIEW
+drwxr-xr-x 2 malem420 soyagen   44 May 14 17:53 OAC_EMBRO
+drwxr-xr-x 2 malem420 soyagen   46 May 14 17:53 OAC_DRAYTON
+drwxr-xr-x 2 malem420 soyagen   45 May 14 17:53 OAC_CARMAN
+drwxr-xr-x 2 malem420 soyagen   45 May 14 17:53 OAC_09_35C
+drwxr-xr-x 2 malem420 soyagen   47 May 14 17:53 MAPLE_PRESTO
+drwxr-xr-x 2 malem420 soyagen   45 May 14 17:53 MAPLE_ISLE
+drwxr-xr-x 2 malem420 soyagen   39 May 14 17:53 ALTA
+drwxr-xr-x 2 malem420 soyagen   41 May 14 17:53 AC2001
+-rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 ROLAND_hom70_filtered.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 QS5091.50J_hom70_filtered.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_STRATFORD_hom70_filtered.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OT09-03_hom70_filtered.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_PRUDENCE_hom70_filtered.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_OXFORD_hom70_filtered.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_PETREL_2_hom70_filtered.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_MADOC_hom70_filtered.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_EMBRO_hom70_filtered.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_LAKEVIEW_hom70_filtered.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_DRAYTON_hom70_filtered.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_09_35C_hom70_filtered.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 OAC_CARMAN_hom70_filtered.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 MAPLE_PRESTO_hom70_filtered.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 14 17:51 MAPLE_ISLE_hom70_filtered.vcf
+
+./nanopore_sv_calling/ROLAND:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 ROLAND_realigned.vcf
+
+./nanopore_sv_calling/QS5091.50J:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 QS5091.50J_realigned.vcf
+
+./nanopore_sv_calling/OT09-03:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OT09-03_realigned.vcf
+
+./nanopore_sv_calling/OAC_STRATFORD:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_STRATFORD_realigned.vcf
+
+./nanopore_sv_calling/OAC_PRUDENCE:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_PRUDENCE_realigned.vcf
+
+./nanopore_sv_calling/OAC_PETREL_2:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_PETREL_2_realigned.vcf
+
+./nanopore_sv_calling/OAC_OXFORD:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_OXFORD_realigned.vcf
+
+./nanopore_sv_calling/OAC_MADOC:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_MADOC_realigned.vcf
+
+./nanopore_sv_calling/OAC_LAKEVIEW:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_LAKEVIEW_realigned.vcf
+
+./nanopore_sv_calling/OAC_EMBRO:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_EMBRO_realigned.vcf
+
+./nanopore_sv_calling/OAC_DRAYTON:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_DRAYTON_realigned.vcf
+
+./nanopore_sv_calling/OAC_CARMAN:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_CARMAN_realigned.vcf
+
+./nanopore_sv_calling/OAC_09_35C:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 OAC_09_35C_realigned.vcf
+
+./nanopore_sv_calling/MAPLE_PRESTO:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 MAPLE_PRESTO_realigned.vcf
+
+./nanopore_sv_calling/MAPLE_ISLE:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 MAPLE_ISLE_realigned.vcf
+
+./nanopore_sv_calling/ALTA:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 ALTA_realigned.vcf
+
+./nanopore_sv_calling/AC2001:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen 2 May 15 16:49 AC2001_realigned.vcf
+
+./breakpoint_refinement_analysis:
+total 16K
+drwxr-xr-x 6 malem420 soyagen 4.0K May 27 15:21 refined_svs
+drwxr-xr-x 6 malem420 soyagen 4.0K May 27 14:15 raw_svs
+drwxr-xr-x 2 malem420 soyagen   60 May 26 17:03 bayestyper_kmers
+-rw-r--r-- 1 malem420 soyagen   32 May 26 14:57 illumina_ids.txt
+-rw-r--r-- 1 malem420 soyagen   45 May 26 14:56 nanopore_ids.txt
+
+./breakpoint_refinement_analysis/refined_svs:
+total 16K
+-rw-r--r-- 1 malem420 soyagen    0 May 28 15:40 svmerged_clustered_sorted.vcf
+drwxr-xr-x 2 malem420 soyagen   58 May 27 15:21 vg
+drwxr-xr-x 2 malem420 soyagen   76 May 27 15:21 paragraph
+drwxr-xr-x 3 malem420 soyagen  115 May 27 15:21 bayestyper
+drwxr-xr-x 3 malem420 soyagen   69 May 27 14:51 sveval_benchmarks
+-rwxr--r-- 1 malem420 soyagen  376 May 27 11:32 process_sort_svmerged.sh
+-rwxr--r-- 1 malem420 soyagen  496 May 27 11:28 select_svs.R
+-rwxr--r-- 1 malem420 soyagen 1009 May 27 11:24 SVmerge_variants.sh
+-rw-r--r-- 1 malem420 soyagen  225 May 27 11:16 files.txt
+
+./breakpoint_refinement_analysis/refined_svs/vg:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen    0 May 28 15:40 VG_REFINED_GENOTYPING
+-rwxr--r-- 1 malem420 soyagen 2.3K May 27 12:14 vg.sh
+
+./breakpoint_refinement_analysis/refined_svs/paragraph:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen    0 May 28 15:40 PARAGRAPH_REFINED_GENOTYPING
+-rwxr-xr-x 1 malem420 soyagen 2.1K May 27 12:03 run_paragraph.sh
+
+./breakpoint_refinement_analysis/refined_svs/bayestyper:
+total 8.0K
+-rw-r--r-- 1 malem420 soyagen    0 May 28 15:40 bayestyper_split.vcf
+-rwxr-xr-x 1 malem420 soyagen 1.6K May 27 14:06 bayestyper.sh
+-rw-r--r-- 1 malem420 soyagen  196 May 27 11:51 samples.tsv
+drwxr-xr-x 2 malem420 soyagen   37 May 27 11:39 bt_cluster_unit_1
+
+./breakpoint_refinement_analysis/refined_svs/bayestyper/bt_cluster_unit_1:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 27 11:39 bt_genotypes.vcf
+
+./breakpoint_refinement_analysis/refined_svs/sveval_benchmarks:
+total 8.0K
+-rwxr--r-- 1 malem420 soyagen 5.1K May 27 14:51 refined_nogeno_analysis.R
+drwxr-xr-x 2 malem420 soyagen   46 May 27 14:41 nogeno_RData
+
+./breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/nogeno_RData:
+total 40K
+-rw-r--r-- 1 malem420 soyagen 40K May 28 15:40 sveval_nogeno_rates.RData
+
+./breakpoint_refinement_analysis/raw_svs:
+total 16K
+-rw-r--r-- 1 malem420 soyagen   0 May 28 15:40 svmerged.clustered.vcf
+-rw-r--r-- 1 malem420 soyagen   0 May 28 15:40 RAW_SV_CALLS
+drwxr-xr-x 2 malem420 soyagen  54 May 27 15:21 vg
+drwxr-xr-x 3 malem420 soyagen 115 May 27 15:21 bayestyper
+drwxr-xr-x 3 malem420 soyagen  65 May 27 14:51 sveval_benchmarks
+drwxr-xr-x 2 malem420 soyagen  72 May 26 19:31 paragraph
+-rwxr-xr-x 1 malem420 soyagen 949 May 26 16:57 process_vcf_files.sh
+-rwxr-xr-x 1 malem420 soyagen 781 May 26 16:53 fix_vcfs.R
+-rw-r--r-- 1 malem420 soyagen 121 May 26 16:32 files.txt
+-rwxr--r-- 1 malem420 soyagen 985 May 26 16:14 SVmerge_variants.sh
+
+./breakpoint_refinement_analysis/raw_svs/vg:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen    0 May 28 15:40 VG_RAW_GENOTYPING
+-rwxr--r-- 1 malem420 soyagen 2.3K May 26 19:29 vg.sh
+
+./breakpoint_refinement_analysis/raw_svs/bayestyper:
+total 8.0K
+-rw-r--r-- 1 malem420 soyagen    0 May 28 15:40 bayestyper_split.vcf
+-rwxr-xr-x 1 malem420 soyagen 1.6K May 27 14:02 bayestyper.sh
+drwxr-xr-x 2 malem420 soyagen   37 May 27 11:38 bt_cluster_unit_1
+-rw-r--r-- 1 malem420 soyagen  196 May 26 15:35 samples.tsv
+
+./breakpoint_refinement_analysis/raw_svs/bayestyper/bt_cluster_unit_1:
+total 0
+-rw-r--r-- 1 malem420 soyagen 0 May 27 11:38 bt_genotypes.vcf
+
+./breakpoint_refinement_analysis/raw_svs/sveval_benchmarks:
+total 8.0K
+-rwxr--r-- 1 malem420 soyagen 5.1K May 27 14:51 raw_nogeno_analysis.R
+drwxr-xr-x 2 malem420 soyagen   46 May 27 14:08 nogeno_RData
+
+./breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/nogeno_RData:
+total 40K
+-rw-r--r-- 1 malem420 soyagen 39K May 28 15:40 sveval_nogeno_rates.RData
+
+./breakpoint_refinement_analysis/raw_svs/paragraph:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen    0 May 28 15:40 PARAGRAPH_RAW_GENOTYPING
+-rwxr-xr-x 1 malem420 soyagen 2.1K May 26 18:53 run_paragraph.sh
+
+./breakpoint_refinement_analysis/bayestyper_kmers:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen   0 May 27 16:48 BAYESTYPER_KMERS
+-rwxr-xr-x 1 malem420 soyagen 498 May 26 17:03 kmc_bloom.sh
+
+./nanoplot_stats:
+total 12K
+-rw-r--r-- 1 malem420 soyagen 290 May 28 15:40 N50_stats.txt
+-rw-r--r-- 1 malem420 soyagen   0 May 28 15:40 NANOPLOT_BAM_STATS
+-rwxr--r-- 1 malem420 soyagen 395 May 25 17:47 gather_N50_stats.sh
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 ROLAND
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 QS5091.50J
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 OT09-03
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 OAC_STRATFORD
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 OAC_PRUDENCE
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 OAC_PETREL_2
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 OAC_OXFORD
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 OAC_MADOC
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 OAC_LAKEVIEW
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 OAC_EMBRO
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 OAC_DRAYTON
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 OAC_CARMAN
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 OAC_09_35C
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 MAPLE_PRESTO
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 MAPLE_ISLE
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 ALTA
+drwxr-xr-x 2 malem420 soyagen  34 May 25 17:46 AC2001
+-rwxr--r-- 1 malem420 soyagen 568 May 25 17:43 nanoplot_sorted_bam_all.sh
+
+./nanoplot_stats/ROLAND:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 93 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/ROLAND/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./nanoplot_stats/QS5091.50J:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 97 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/QS5091.50J/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./nanoplot_stats/OT09-03:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 94 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/OT09-03/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./nanoplot_stats/OAC_STRATFORD:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 100 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/OAC_STRATFORD/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./nanoplot_stats/OAC_PRUDENCE:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 99 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/OAC_PRUDENCE/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./nanoplot_stats/OAC_PETREL_2:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 99 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/OAC_PETREL_2/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./nanoplot_stats/OAC_OXFORD:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 97 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/OAC_OXFORD/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./nanoplot_stats/OAC_MADOC:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 96 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/OAC_MADOC/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./nanoplot_stats/OAC_LAKEVIEW:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 99 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/OAC_LAKEVIEW/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./nanoplot_stats/OAC_EMBRO:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 96 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/OAC_EMBRO/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./nanoplot_stats/OAC_DRAYTON:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 98 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/OAC_DRAYTON/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./nanoplot_stats/OAC_CARMAN:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 97 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/OAC_CARMAN/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./nanoplot_stats/OAC_09_35C:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 97 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/OAC_09_35C/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./nanoplot_stats/MAPLE_PRESTO:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 99 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/MAPLE_PRESTO/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./nanoplot_stats/MAPLE_ISLE:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 97 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/MAPLE_ISLE/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./nanoplot_stats/ALTA:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 91 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/ALTA/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./nanoplot_stats/AC2001:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 93 May 25 17:46 NanoStats.txt -> /home/malem420/analyse_nanopore/AC2001/guppy_4.0.11/nanoplots/sorted_bam_Gmaxv4/NanoStats.txt
+
+./depth_distributions:
+total 24K
+-rw-r--r-- 1 malem420 soyagen  460 May 28 15:40 average_depth.RData
+-rwxr--r-- 1 malem420 soyagen  444 May 21 16:18 depth_distributions.sh
+-rwxr--r-- 1 malem420 soyagen 1.7K May 21 15:59 compute_average_depth.R
+-rw-r--r-- 1 malem420 soyagen 4.7K Jan 22 13:37 OAC_PETREL_2_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   87 Jan 22 12:57 QS5091.50J_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/QS5091.50J_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   83 Jan 22 12:57 ROLAND_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/ROLAND_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   89 Jan 22 12:57 OAC_PRUDENCE_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_PRUDENCE_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   90 Jan 22 12:57 OAC_STRATFORD_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_STRATFORD_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   84 Jan 22 12:57 OT09-03_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OT09-03_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   86 Jan 22 12:57 OAC_MADOC_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_MADOC_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   87 Jan 22 12:57 OAC_OXFORD_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_OXFORD_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   87 Jan 22 12:57 OAC_PETREL_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_PETREL_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   88 Jan 22 12:57 OAC_DRAYTON_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_DRAYTON_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   86 Jan 22 12:57 OAC_EMBRO_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_EMBRO_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   89 Jan 22 12:57 OAC_LAKEVIEW_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_LAKEVIEW_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   89 Jan 22 12:57 MAPLE_PRESTO_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/MAPLE_PRESTO_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   87 Jan 22 12:57 OAC_09_35C_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_09_35C_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   87 Jan 22 12:57 OAC_CARMAN_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/OAC_CARMAN_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   85 Jan 22 12:57 MANDARIN_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/MANDARIN_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   87 Jan 22 12:57 MAPLE_ISLE_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/MAPLE_ISLE_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   83 Jan 22 12:57 AC2001_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/AC2001_depth.txt
+lrwxrwxrwx 1 malem420 soyagen   81 Jan 22 12:57 ALTA_depth.txt -> /home/malem420/analyse_nanopore/depth_analysis/depth_distributions/ALTA_depth.txt
+-rw-r--r-- 1 malem420 soyagen    0 Jan 22 12:56 depth_OAC_PETREL_2_14042934.out
+-rwxr--r-- 1 malem420 soyagen  821 Jan 22 12:56 depth_OAC_PETREL_2.sh
+
+./nanopore_data:
+total 4.0K
+-rw-r--r-- 1 malem420 soyagen    0 May 28 15:40 NANOPORE_ALIGNMENT
+-rw-r--r-- 1 malem420 soyagen    0 May 27 15:57 OAC_EMBRO_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 27 15:49 OAC_EMBRO.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 27 15:27 AC2001_1.fastq.gz
+-rwxr-xr-x 1 malem420 soyagen 3.7K May 17 17:42 read_processing_alignment.sh
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 QS5091.50J.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 ROLAND.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OT09-03.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_PRUDENCE.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_STRATFORD.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_PETREL_2.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_OXFORD.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_LAKEVIEW_2.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_MADOC.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_LAKEVIEW_1.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_DRAYTON.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_09_35C.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 OAC_CARMAN.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 MAPLE_PRESTO.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 MAPLE_ISLE_2.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 ALTA.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 MAPLE_ISLE_1.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 17 14:51 AC2001_2.fastq.gz
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 ROLAND_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_PRUDENCE_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_STRATFORD_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OT09-03_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 QS5091.50J_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_LAKEVIEW_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_MADOC_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_OXFORD_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_PETREL_2_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_CARMAN_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_DRAYTON_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 ALTA_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 MAPLE_ISLE_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 MAPLE_PRESTO_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 OAC_09_35C_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 15 16:16 AC2001_porechopped_aligned.sort.bam
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 ROLAND_porechopped_aligned.sort.bam.bai
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OT09-03_porechopped_aligned.sort.bam.bai
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 QS5091.50J_porechopped_aligned.sort.bam.bai
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_STRATFORD_porechopped_aligned.sort.bam.bai
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_PETREL_2_porechopped_aligned.sort.bam.bai
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_PRUDENCE_porechopped_aligned.sort.bam.bai
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_OXFORD_porechopped_aligned.sort.bam.bai
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_LAKEVIEW_porechopped_aligned.sort.bam.bai
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_MADOC_porechopped_aligned.sort.bam.bai
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_EMBRO_porechopped_aligned.sort.bam.bai
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_CARMAN_porechopped_aligned.sort.bam.bai
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_DRAYTON_porechopped_aligned.sort.bam.bai
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 MAPLE_PRESTO_porechopped_aligned.sort.bam.bai
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 OAC_09_35C_porechopped_aligned.sort.bam.bai
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 MAPLE_ISLE_porechopped_aligned.sort.bam.bai
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 AC2001_porechopped_aligned.sort.bam.bai
+-rw-r--r-- 1 malem420 soyagen    0 May 14 18:04 ALTA_porechopped_aligned.sort.bam.bai
+
 ./illumina_data:
 total 28K
--rw-r--r--   1 malem420 soyagen    0 May 21 16:40 ILLUMINA_ALIGNMENT
--rw-r--r--   1 malem420 soyagen    0 May 21 16:40 ILLUMINA_TRIMMING
+-rw-r--r--   1 malem420 soyagen    0 May 28 15:40 ILLUMINA_ALIGNMENT
+-rw-r--r--   1 malem420 soyagen    0 May 27 16:48 ILLUMINA_TRIMMING
 -rwxr-xr-x   1 malem420 soyagen 1.6K May 20 18:55 bwa_alignment.sh
 -rwxr-xr-x   1 malem420 soyagen  734 May 20 18:55 bbduk_trimming.sh
 drwxr-xr-x 104 malem420 soyagen 4.0K May 18 16:51 aligned_reads
@@ -2784,7 +3234,7 @@ total 0
 
 ./illumina_data/raw_fastq:
 total 0
--rw-r--r-- 1 malem420 soyagen 0 May 21 16:53 CAD1001_R1.fastq.gz
+-rw-r--r-- 1 malem420 soyagen 0 May 27 15:57 CAD1001_R1.fastq.gz
 -rw-r--r-- 1 malem420 soyagen 0 May 18 15:10 CAD1103_R2.fastq.gz
 -rw-r--r-- 1 malem420 soyagen 0 May 18 15:10 CAD1103_R1.fastq.gz
 -rw-r--r-- 1 malem420 soyagen 0 May 18 15:10 CAD1102_R1.fastq.gz
@@ -3715,15 +4165,15 @@ total 16K
 
 ./illumina_sv_calling:
 total 24K
-drwxr-xr-x  2 malem420 soyagen 8.0K May 21 15:12 svaba
-drwxr-xr-x 12 malem420 soyagen 4.0K May 21 15:12 manta
+drwxr-xr-x  2 malem420 soyagen 8.0K Jun  1 13:39 svaba
+drwxr-xr-x  2 malem420 soyagen 4.0K Jun  1 13:39 smoove
+drwxr-xr-x 12 malem420 soyagen 4.0K Jun  1 13:38 manta
 drwxr-xr-x  7 malem420 soyagen 4.0K May 21 15:12 asmvar
-drwxr-xr-x  2 malem420 soyagen 4.0K May 20 18:55 smoove
 
 ./illumina_sv_calling/svaba:
 total 20K
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:40 svaba_svs.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:40 SVABA_CALLING
+lrwxrwxrwx 1 malem420 soyagen  109 Jun  1 13:39 svaba_svs.vcf -> /home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/svaba_variants/svaba_svs.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 28 15:40 SVABA_CALLING
 -rwxr-xr-x 1 malem420 soyagen 3.0K May 20 18:55 svaba_filter.sh
 -rwxr-xr-x 1 malem420 soyagen  514 May 20 18:55 svaba_call.sh
 -rwxr-xr-x 1 malem420 soyagen  984 May 20 18:55 convert_svaba.R
@@ -3934,10 +4384,18 @@ total 20K
 -rw-r--r-- 1 malem420 soyagen    0 May 19 11:26 CAD1002.svaba.indel.vcf
 -rw-r--r-- 1 malem420 soyagen    0 May 19 11:26 CAD1001.svaba.indel.vcf
 
+./illumina_sv_calling/smoove:
+total 12K
+lrwxrwxrwx 1 malem420 soyagen  111 Jun  1 13:39 smoove_svs.vcf -> /home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/smoove_variants/smoove_svs.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 28 15:40 all_samples.smoove.square.vcf.gz
+-rwxr-xr-x 1 malem420 soyagen 2.5K May 20 18:55 smoove_filter.sh
+-rwxr-xr-x 1 malem420 soyagen 1.4K May 20 18:55 smoove_call.sh
+-rw-r--r-- 1 malem420 soyagen   94 May 20 18:55 ACO_header_line.txt
+
 ./illumina_sv_calling/manta:
 total 24K
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:40 manta_svs.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:40 MANTA_CALLING
+lrwxrwxrwx 1 malem420 soyagen  109 Jun  1 13:38 manta_svs.vcf -> /home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/manta_variants/manta_svs.vcf
+-rw-r--r-- 1 malem420 soyagen    0 May 28 15:40 MANTA_CALLING
 -rwxr-xr-x 1 malem420 soyagen 2.6K May 20 18:55 manta_filter.sh
 -rw-r--r-- 1 malem420 soyagen 2.8K May 20 18:55 manta_config.txt
 -rwxr-xr-x 1 malem420 soyagen  11K May 20 18:55 manta_call.sh
@@ -4115,10 +4573,11 @@ total 0
 
 ./illumina_sv_calling/asmvar:
 total 52K
--rw-r--r--   1 malem420 soyagen    0 May 21 16:40 ASMVAR_CALLING
--rw-r--r--   1 malem420 soyagen    0 May 21 16:40 LAST_ALIGNMENT
--rw-r--r--   1 malem420 soyagen    0 May 21 16:40 SOAPDENOVO_ASSEMBLY
--rw-r--r--   1 malem420 soyagen    0 May 21 16:40 FLASH_MERGING
+drwxr-xr-x   2 malem420 soyagen   35 Jun  1 13:37 asmvar_filtering
+-rw-r--r--   1 malem420 soyagen    0 May 28 15:40 ASMVAR_CALLING
+-rw-r--r--   1 malem420 soyagen    0 May 28 15:40 LAST_ALIGNMENT
+-rw-r--r--   1 malem420 soyagen    0 May 27 16:48 SOAPDENOVO_ASSEMBLY
+-rw-r--r--   1 malem420 soyagen    0 May 27 16:48 FLASH_MERGING
 drwxr-xr-x 104 malem420 soyagen 4.0K May 20 18:55 soap_assembly
 -rwxr-xr-x   1 malem420 soyagen  548 May 20 18:55 last_alignment.sh
 -rwxr-xr-x   1 malem420 soyagen 1.5K May 20 18:55 flash_merging.sh
@@ -4128,8 +4587,11 @@ drwxr-xr-x 104 malem420 soyagen 4.0K May 18 13:52 flash_merging
 drwxr-xr-x   2 malem420 soyagen 8.0K May 17 18:13 last_alignment
 -rw-r--r--   1 malem420 soyagen   81 May 17 17:42 svtype_header_line.txt
 -rwxr-xr-x   1 malem420 soyagen 5.6K May 17 17:42 asmvar_filter.sh
-drwxr-xr-x   2 malem420 soyagen   35 May 17 17:34 asmvar_filtering
 drwxr-xr-x 104 malem420 soyagen 4.0K May 17 16:08 asmvar_calling
+
+./illumina_sv_calling/asmvar/asmvar_filtering:
+total 0
+lrwxrwxrwx 1 malem420 soyagen 111 Jun  1 13:37 asmvar_svs.vcf -> /home/malem420/WGS_data/bbduk_trimmed/bwa_alignment_Gmax_v4/paragraph_genotyping/asmvar_variants/asmvar_svs.vcf
 
 ./illumina_sv_calling/asmvar/soap_assembly:
 total 8.0K
@@ -5468,10 +5930,6 @@ total 0
 -rw-r--r-- 1 malem420 soyagen 0 May 17 18:13 CAD1003_soapdenovo2_fm.maf
 -rw-r--r-- 1 malem420 soyagen 0 May 17 18:13 CAD1001_soapdenovo2_fm.maf
 
-./illumina_sv_calling/asmvar/asmvar_filtering:
-total 0
--rw-r--r-- 1 malem420 soyagen 0 May 21 16:40 asmvar_svs.vcf
-
 ./illumina_sv_calling/asmvar/asmvar_calling:
 total 0
 drwxr-xr-x 2 malem420 soyagen 44 May 17 16:08 CAD1103
@@ -5985,110 +6443,6 @@ total 0
 total 0
 -rw-r--r-- 1 malem420 soyagen 0 May 17 17:35 asmvar_results_Gm01.vcf
 
-./illumina_sv_calling/smoove:
-total 12K
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:40 smoove_svs.vcf
--rw-r--r-- 1 malem420 soyagen    0 May 21 16:40 all_samples.smoove.square.vcf.gz
--rwxr-xr-x 1 malem420 soyagen 2.5K May 20 18:55 smoove_filter.sh
--rwxr-xr-x 1 malem420 soyagen 1.4K May 20 18:55 smoove_call.sh
--rw-r--r-- 1 malem420 soyagen   94 May 20 18:55 ACO_header_line.txt
-
-./refgenome:
-total 0
-drwxr-xr-x 2 malem420 soyagen  73 May 21 14:58 repeat_regions
-lrwxrwxrwx 1 malem420 soyagen  65 Apr 29 18:02 Gmax_508_v4.0_mit_chlp.fasta.fai -> /home/malem420/refgenome/Gmax_v4/Gmax_508_v4.0_mit_chlp.fasta.fai
-lrwxrwxrwx 1 malem420 soyagen  61 Apr 29 18:02 Gmax_508_v4.0_mit_chlp.fasta -> /home/malem420/refgenome/Gmax_v4/Gmax_508_v4.0_mit_chlp.fasta
-lrwxrwxrwx 1 malem420 soyagen  84 Apr 29 17:21 Gmax_508_Wm82.a4.v1.gene.gff3 -> /home/malem420/refgenome/Gmax_v4/Wm82.a4.v1/annotation/Gmax_508_Wm82.a4.v1.gene.gff3
-lrwxrwxrwx 1 malem420 soyagen 106 Apr 29 17:14 Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3 -> /home/malem420/refgenome/Gmax_v4/Wm82.a4.v1/annotation/Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3
-
-./refgenome/repeat_regions:
-total 4.0K
--rw-r--r-- 1 malem420 soyagen 1.6K May 21 14:56 make_repeat_bed.R
-lrwxrwxrwx 1 malem420 soyagen   77 May 13 17:18 non_repeated_regions.bed -> /home/malem420/WGS_data/bbduk_trimmed/repeat_regions/non_repeated_regions.bed
-
-./tables:
-total 844K
--rw-r--r-- 1 malem420 soyagen 144K May 14 18:20 table_3.png
--rw-r--r-- 1 malem420 soyagen 8.3K May 14 18:20 table_3.log
--rw-r--r-- 1 malem420 soyagen  30K May 14 18:20 table_3.pdf
--rw-r--r-- 1 malem420 soyagen   32 May 14 18:20 table_3.aux
--rw-r--r-- 1 malem420 soyagen  305 May 14 18:20 table_3.csv
--rw-r--r-- 1 malem420 soyagen 212K May 14 18:20 table_2.png
--rw-r--r-- 1 malem420 soyagen 8.2K May 14 18:19 table_2.log
--rw-r--r-- 1 malem420 soyagen  60K May 14 18:19 table_2.pdf
--rw-r--r-- 1 malem420 soyagen   32 May 14 18:19 table_2.aux
--rw-r--r-- 1 malem420 soyagen  436 May 14 18:19 table_2.csv
--rw-r--r-- 1 malem420 soyagen  845 May 14 18:19 table_s8.csv
--rw-r--r-- 1 malem420 soyagen 2.3K May 14 18:19 table_s7.csv
--rw-r--r-- 1 malem420 soyagen  492 May 14 18:19 table_s6.csv
--rw-r--r-- 1 malem420 soyagen  798 May 14 18:19 table_s5.csv
--rw-r--r-- 1 malem420 soyagen  157 May 14 18:19 table_s4.csv
--rw-r--r-- 1 malem420 soyagen 1.4K May 14 18:19 table_s3.csv
--rw-r--r-- 1 malem420 soyagen  901 May 14 18:19 table_s1.csv
--rw-r--r-- 1 malem420 soyagen  924 May 14 18:19 table_s2.csv
--rwxr--r-- 1 malem420 soyagen 2.8K May 14 18:17 table_s5.R
--rwxr--r-- 1 malem420 soyagen 1.2K May 14 18:17 tables_s6_s7_s8.R
--rwxr--r-- 1 malem420 soyagen 4.1K May 14 18:17 table_2.R
--rwxr-xr-x 1 malem420 soyagen 2.4K May 14 18:17 table_3.R
--rwxr--r-- 1 malem420 soyagen 1.1K May 14 18:17 table_s4.R
--rwxr--r-- 1 malem420 soyagen 2.7K May 14 18:17 formatting_sup_tables.R
--rw-r--r-- 1 malem420 soyagen 2.1K May 13 16:04 table_s4.Rout
--rw-r--r-- 1 malem420 soyagen 2.0K May 12 12:43 table_2.tex
--rw-r--r-- 1 malem420 soyagen 1.4K May  4 20:51 table_3.tex
--rw-r--r-- 1 malem420 soyagen 2.1K May  3 18:41 tables_s6_s7_s8.Rout
--rw-r--r-- 1 malem420 soyagen 3.8K May  3 15:56 table_s5.Rout
--rw-r--r-- 1 malem420 soyagen 3.3K Apr 30 17:06 table_3.Rout
--rw-r--r-- 1 malem420 soyagen 7.3K Apr 27 19:01 table_2.Rout
--rw-r--r-- 1 malem420 soyagen 3.7K Apr 27 19:01 formatting_sup_tables.Rout
--rw-r--r-- 1 malem420 soyagen 165K Feb 17 16:59 table_1.png
--rw-r--r-- 1 malem420 soyagen 7.9K Feb 17 16:59 table_1.log
--rw-r--r-- 1 malem420 soyagen  51K Feb 17 16:59 table_1.pdf
--rw-r--r-- 1 malem420 soyagen   32 Feb 17 16:59 table_1.aux
--rw-r--r-- 1 malem420 soyagen 1.6K Feb 17 15:01 table_1.tex
--rw-r--r-- 1 malem420 soyagen  495 Feb 11 11:07 table_1.csv
--rw-r--r-- 1 malem420 soyagen 1.1K Feb 11 11:07 table_1_data.txt
--rwxr--r-- 1 malem420 soyagen 1.9K Feb 11 11:06 gather_table_1_data.sh
-drwxr-xr-x 2 malem420 soyagen  130 Feb 11 09:37 table1_data
--rw-r--r-- 1 malem420 soyagen 1.4K Feb 10 17:46 table_s3_data.txt
--rwxr--r-- 1 malem420 soyagen  755 Feb 10 17:45 gather_table_s3_data.sh
--rw-rw-r-- 1 malem420 soyagen 2.7K Feb  4 13:48 lab_methods_table.csv
-
-./tables/table1_data:
-total 3.6M
--rw-r--r-- 1 malem420 soyagen 1.9K Jan 21 16:59 tabulate_data.R
--rw-r--r-- 1 malem420 soyagen 3.6M Jan 21 16:46 size_distribution.tsv
--rw-r--r-- 1 malem420 soyagen    0 Jan 21 16:45 extract_data_14042910.out
--rwxr--r-- 1 malem420 soyagen 2.2K Jan 21 16:45 extract_data.sh
-
-./gene_analysis:
-total 19M
--rwxr-xr-x 1 malem420 soyagen 7.5K Apr 28 16:45 gprop_permutations.R
--rwxr-xr-x 1 malem420 soyagen  12K Apr 28 16:45 go_analysis.R
--rwxr-xr-x 1 malem420 soyagen 6.8K Apr 28 16:45 gene_overlap_analysis.R
--rwxr-xr-x 1 malem420 soyagen 3.7K Apr 28 16:45 allele_frequency_permutations.R
--rw-r--r-- 1 malem420 soyagen  16K Apr 27 18:29 go_analysis.Rout
--rw-r--r-- 1 malem420 soyagen 7.3K Apr 27 18:29 pfam_over_summary.RData
--rw-r--r-- 1 malem420 soyagen 105K Apr 27 18:29 bp_under_summary.RData
--rw-r--r-- 1 malem420 soyagen  55K Apr 27 18:29 bp_over_summary.RData
--rw-r--r-- 1 malem420 soyagen  14M Apr 27 18:26 gmax_go_annotations.txt
--rw-r--r-- 1 malem420 soyagen  12K Apr 27 17:47 gene_overlap_analysis.Rout
--rw-r--r-- 1 malem420 soyagen 2.0M Apr 27 17:47 overlap_norepeat.txt
--rw-r--r-- 1 malem420 soyagen  161 Apr 27 17:47 norepeat_widths.RData
--rw-r--r-- 1 malem420 soyagen  161 Apr 27 17:47 feature_widths.RData
--rw-r--r-- 1 malem420 soyagen 2.9M Apr 27 17:47 overlap_data.txt
-lrwxrwxrwx 1 malem420 soyagen   90 Apr 27 15:55 soybase_genome_annotation_v4.0_04-20-2021.txt -> /home/malem420/analyse_nanopore/gene_impacts/soybase_genome_annotation_v4.0_04-20-2021.txt
-lrwxrwxrwx 1 malem420 soyagen   62 Apr 27 15:54 upstream5kb.RData -> /home/malem420/analyse_nanopore/gene_impacts/upstream5kb.RData
-lrwxrwxrwx 1 malem420 soyagen   54 Apr 27 15:54 cds.RData -> /home/malem420/analyse_nanopore/gene_impacts/cds.RData
-lrwxrwxrwx 1 malem420 soyagen   56 Apr 27 15:54 genes.RData -> /home/malem420/analyse_nanopore/gene_impacts/genes.RData
-lrwxrwxrwx 1 malem420 soyagen   72 Apr 27 15:52 permutation_all_100kb.RData -> /home/malem420/analyse_nanopore/gene_impacts/permutation_all_100kb.RData
-lrwxrwxrwx 1 malem420 soyagen   80 Apr 27 15:52 allele_frequency_permutations.RData -> /home/malem420/analyse_nanopore/gene_impacts/allele_frequency_permutations.RData
-
-./breakpoint_refinement_analysis:
-total 56K
--rwxr--r-- 1 malem420 soyagen 2.4K Apr 27 15:31 prepare_plotting_data.R
--rw-r--r-- 1 malem420 soyagen  22K Feb 12 11:50 insertions.RData
--rw-r--r-- 1 malem420 soyagen  25K Feb 12 11:50 deletions.RData
-
 ./external:
 total 4.0K
 drwxr-xr-x 3 malem420 soyagen 4.0K Apr 29 18:32 circos_config_files
@@ -6132,99 +6486,3 @@ total 48K
 -rw-r--r-- 1 malem420 soyagen 102 Apr 29 18:32 connector.conf
 -rw-r--r-- 1 malem420 soyagen  31 Apr 29 18:32 axis.conf
 -rw-r--r-- 1 malem420 soyagen 220 Apr 29 18:32 README
-
-./structure_analysis:
-total 0
-lrwxrwxrwx 1 malem420 soyagen 63 Apr 29 17:49 platypus_filtered_snps.vcf -> /home/malem420/WGS_data/bbduk_trimmed/structure/Gmax_v4/CAD.vcf
-
-./te_analysis:
-total 2.8M
--rw-r--r-- 1 malem420 soyagen 1.2M Apr 29 20:10 polymorphic_tes.tsv
--rwxr-xr-x 1 malem420 soyagen 5.9K Apr 29 15:14 te_blast_analysis.R
--rwxr-xr-x 1 malem420 soyagen 1.2K Apr 29 15:14 extract_te_metadata.sh
--rwxr-xr-x 1 malem420 soyagen 1.1K Apr 29 15:14 extract_dna_te_vcfs.R
-drwxr-xr-x 4 malem420 soyagen 4.0K Apr 29 13:45 multiple_alignments
--rw-r--r-- 1 malem420 soyagen  11K Apr 29 13:13 te_blast_analysis.Rout
--rw-r--r-- 1 malem420 soyagen 1.7M Apr 29 13:13 te_metadata.txt
-lrwxrwxrwx 1 malem420 soyagen   74 Apr 29 12:02 tian2012_tes.txt -> /home/malem420/analyse_nanopore/transposons/analyse_100bp/tian2012_tes.txt
-drwxr-xr-x 2 malem420 soyagen   41 Apr 28 16:58 te_database
-lrwxrwxrwx 1 malem420 soyagen   71 Apr 28 16:54 query_all.vcf -> /home/malem420/analyse_nanopore/transposons/analyse_100bp/query_all.vcf
-lrwxrwxrwx 1 malem420 soyagen   71 Apr 28 16:52 blast_svs.txt -> /home/malem420/analyse_nanopore/transposons/analyse_100bp/blast_svs.txt
-
-./te_analysis/multiple_alignments:
-total 1.4M
-drwxr-xr-x 2 malem420 soyagen  69 Apr 29 13:38 Gm04_2257090_INS_480_analysis
-drwxr-xr-x 2 malem420 soyagen  78 Apr 29 13:37 filtered_alignments
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTT_uuu_Gm3_82.vcf
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTT_uuu_Gm15_59.vcf
--rw-r--r-- 1 malem420 soyagen 17K Apr 29 13:24 DTT_uuu_Gm14_13.vcf
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTT_uuu_Gm12_37.vcf
--rw-r--r-- 1 malem420 soyagen 19K Apr 29 13:24 DTM_uuu_Gm8_97.vcf
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTM_uuu_Gm8_84.vcf
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTM_uuu_Gm8_29.vcf
--rw-r--r-- 1 malem420 soyagen 67K Apr 29 13:24 DTM_uuu_Gm6_48.vcf
--rw-r--r-- 1 malem420 soyagen 20K Apr 29 13:24 DTM_uuu_Gm6_19.vcf
--rw-r--r-- 1 malem420 soyagen 26K Apr 29 13:24 DTM_uuu_Gm5_94.vcf
--rw-r--r-- 1 malem420 soyagen 45K Apr 29 13:24 DTM_uuu_Gm5_111.vcf
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTM_uuu_Gm4_4.vcf
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTM_uuu_Gm4_124.vcf
--rw-r--r-- 1 malem420 soyagen 20K Apr 29 13:24 DTM_uuu_Gm20_8.vcf
--rw-r--r-- 1 malem420 soyagen 18K Apr 29 13:24 DTM_uuu_Gm20_12.vcf
--rw-r--r-- 1 malem420 soyagen 60K Apr 29 13:24 DTM_uuu_Gm2_63.vcf
--rw-r--r-- 1 malem420 soyagen 17K Apr 29 13:24 DTM_uuu_Gm2_124.vcf
--rw-r--r-- 1 malem420 soyagen 18K Apr 29 13:24 DTM_uuu_Gm2_118.vcf
--rw-r--r-- 1 malem420 soyagen 23K Apr 29 13:24 DTM_uuu_Gm19_135.vcf
--rw-r--r-- 1 malem420 soyagen 23K Apr 29 13:24 DTM_uuu_Gm18_11.vcf
--rw-r--r-- 1 malem420 soyagen 18K Apr 29 13:24 DTM_uuu_Gm17_5.vcf
--rw-r--r-- 1 malem420 soyagen 20K Apr 29 13:24 DTM_uuu_Gm17_26.vcf
--rw-r--r-- 1 malem420 soyagen 48K Apr 29 13:24 DTM_uuu_Gm15_94.vcf
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTM_uuu_Gm14_19.vcf
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTM_uuu_Gm13_55.vcf
--rw-r--r-- 1 malem420 soyagen 20K Apr 29 13:24 DTM_uuu_Gm11_79.vcf
--rw-r--r-- 1 malem420 soyagen 19K Apr 29 13:24 DTM_uuu_Gm11_30.vcf
--rw-r--r-- 1 malem420 soyagen 33K Apr 29 13:24 DTM_uuu_Gm11_12.vcf
--rw-r--r-- 1 malem420 soyagen 66K Apr 29 13:24 DTM_uuu_Gm10_98.vcf
--rw-r--r-- 1 malem420 soyagen 56K Apr 29 13:24 DTM_uuu_Gm1_84.vcf
--rw-r--r-- 1 malem420 soyagen 26K Apr 29 13:24 DTM_uuu_Gm1_72.vcf
--rw-r--r-- 1 malem420 soyagen 44K Apr 29 13:24 DTH_uuu_Gm8_8.vcf
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTH_uuu_Gm8_18.vcf
--rw-r--r-- 1 malem420 soyagen 22K Apr 29 13:24 DTH_uuu_Gm7_61.vcf
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTH_uuu_Gm2_76.vcf
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTH_uuu_Gm18_92.vcf
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTH_uuu_Gm18_31.vcf
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTH_uuu_Gm18_18.vcf
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTH_uuu_Gm17_59.vcf
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTH_uuu_Gm15_31.vcf
--rw-r--r-- 1 malem420 soyagen 17K Apr 29 13:24 DTH_uuu_Gm10_16.vcf
--rw-r--r-- 1 malem420 soyagen 27K Apr 29 13:24 DTH_uuu_Gm1_68.vcf
--rw-r--r-- 1 malem420 soyagen 39K Apr 29 13:24 DTH_uuu_Gm1_66.vcf
--rw-r--r-- 1 malem420 soyagen 16K Apr 29 13:24 DTH_uuu_Gm1_52.vcf
--rw-r--r-- 1 malem420 soyagen 34K Apr 29 13:24 DTA_uuu_Gm8_2.vcf
--rw-r--r-- 1 malem420 soyagen 33K Apr 29 13:24 DTA_uuu_Gm8_1.vcf
--rw-r--r-- 1 malem420 soyagen 25K Apr 29 13:24 DTA_uuu_Gm7_5.vcf
--rw-r--r-- 1 malem420 soyagen 39K Apr 29 13:24 DTA_uuu_Gm4_2.vcf
--rw-r--r-- 1 malem420 soyagen 25K Apr 29 13:24 DTA_uuu_Gm18_5.vcf
--rw-r--r-- 1 malem420 soyagen 34K Apr 29 13:24 DTA_uuu_Gm17_2.vcf
--rw-r--r-- 1 malem420 soyagen 25K Apr 29 13:24 DTA_uuu_Gm15_1.vcf
-
-./te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis:
-total 0
-lrwxrwxrwx 1 malem420 soyagen 128 Apr 29 13:38 diverging_snps.RData -> /home/malem420/analyse_nanopore/transposons/analyse_100bp/multiple_alignments/Gm04_2257090_INS_480_analysis/diverging_snps.RData
-lrwxrwxrwx 1 malem420 soyagen 125 Apr 29 13:38 plotting_df.RData -> /home/malem420/analyse_nanopore/transposons/analyse_100bp/multiple_alignments/Gm04_2257090_INS_480_analysis/plotting_df.RData
-
-./te_analysis/multiple_alignments/filtered_alignments:
-total 0
-lrwxrwxrwx 1 malem420 soyagen 122 Apr 29 13:37 tir_similarity_noref.txt -> /home/malem420/analyse_nanopore/transposons/analyse_100bp/multiple_alignments/filtered_alignments/tir_similarity_noref.txt
-lrwxrwxrwx 1 malem420 soyagen 120 Apr 29 13:37 tir_similarity_all.txt -> /home/malem420/analyse_nanopore/transposons/analyse_100bp/multiple_alignments/filtered_alignments/tir_similarity_all.txt
-
-./te_analysis/te_database:
-total 0
-lrwxrwxrwx 1 malem420 soyagen 73 Apr 28 16:58 SoyBase_TE_Fasta.txt -> /home/malem420/analyse_nanopore/transposons/database/SoyBase_TE_Fasta.txt
-
-./illumina_snp_calling:
-total 0
-
-./nanoplot_stats:
-total 8.0K
--rw-r--r-- 1 malem420 soyagen 290 Jan 25 12:20 N50_stats.txt
--rwxr--r-- 1 malem420 soyagen 383 Jan 25 12:20 gather_N50_stats.sh
