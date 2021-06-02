@@ -1,47 +1,49 @@
+
 ##### CREATING SOME VARIABLES FOR EXECUTABLES
-AGE = /home/malem420/programs/AGE/age_align
-ASMVAR = /home/malem420/programs/AsmVar/src/AsmvarDetect/ASV_VariantDetector
-BAYESTYPER = /home/malem420/programs/bayesTyper_v1.5_linux_x86_64/bin/bayesTyper
-BAYESTYPERTOOLS = /home/malem420/programs/bayesTyper_v1.5_linux_x86_64/bin/bayesTyperTools
-BBDUK = /home/malem420/programs/bbmap/bbduk.sh
+
+AGE = ~/programs/AGE/age_align
+ASMVAR = ~/programs/AsmVar/src/AsmvarDetect/ASV_VariantDetector
+BAYESTYPER = ~/programs/bayesTyper_v1.5_linux_x86_64/bin/bayesTyper
+BAYESTYPERTOOLS = ~/programs/bayesTyper_v1.5_linux_x86_64/bin/bayesTyperTools
+BBDUK = ~/programs/bbmap/bbduk.sh
 BAMADDRG = /prg/bamaddrg/1.0/bamaddrg
 BGZIP = /prg/htslib/1.10.2/bin/bgzip
 BWA = /prg/bwa/0.7.17/bwa
-BCFTOOLS = /home/malem420/programs/bcftools/bcftools
-BCFTOOLS_PLUGIN_PATH = /home/malem420/programs/bcftools/plugins
-BLASTN = /home/malem420/programs/ncbi-blast-2.11.0+/bin/blastn
-CIRCOS = /home/malem420/programs/circos-0.69-9/bin/circos
+BCFTOOLS = ~/programs/bcftools/bcftools
+BCFTOOLS_PLUGIN_PATH = ~/programs/bcftools/plugins
+BLASTN = ~/programs/ncbi-blast-2.11.0+/bin/blastn
+CIRCOS = ~/programs/circos-0.69-9/bin/circos
 FASTSTRUCTURE = /prg/fastStructure/1.0/structure.py
-FLASH = /home/malem420/programs/FLASH-1.2.11-Linux-x86_64/flash
-GINSI = /home/malem420/.local/bin/ginsi
-GRF = /home/malem420/programs/GenericRepeatFinder/bin/grf-main
-IDXDEPTH = /home/malem420/programs/paragraph/bin/idxdepth
-KMC = /home/malem420/programs/KMC3.linux/kmc
-LASTAL = /home/malem420/programs/last-1047/src/lastal
-LASTSPLIT = /home/malem420/programs/last-1047/src/last-split
-MAKEBLASTDB = /home/malem420/programs/ncbi-blast-2.11.0+/bin/makeblastdb
-MANTA = /home/malem420/programs/manta-1.6.0.centos6_x86_64/bin/configManta.py
-MINIMAP2 = /home/malem420/programs/minimap2/minimap2
-MULTIGRMPY = /home/malem420/programs/paragraph/bin/multigrmpy.py
-NANOPLOT = /home/malem420/.local/bin/NanoPlot
-NGMLR = /home/malem420/programs/ngmlr/ngmlr-0.2.7/ngmlr
+FLASH = ~/programs/FLASH-1.2.11-Linux-x86_64/flash
+GINSI = ~/.local/bin/ginsi
+GRF = ~/programs/GenericRepeatFinder/bin/grf-main
+IDXDEPTH = ~/programs/paragraph/bin/idxdepth
+KMC = ~/programs/KMC3.linux/kmc
+LASTAL = ~/programs/last-1047/src/lastal
+LASTSPLIT = ~/programs/last-1047/src/last-split
+MAKEBLASTDB = ~/programs/ncbi-blast-2.11.0+/bin/makeblastdb
+MANTA = ~/programs/manta-1.6.0.centos6_x86_64/bin/configManta.py
+MINIMAP2 = ~/programs/minimap2/minimap2
+MULTIGRMPY = ~/programs/paragraph/bin/multigrmpy.py
+NANOPLOT = ~/.local/bin/NanoPlot
+NGMLR = ~/programs/ngmlr/ngmlr-0.2.7/ngmlr
 PLATYPUS = /prg/platypus/0.8.1.1/bin/Platypus.py
 PLINK = /prg/plink/1.90b5.3/bin/plink
-PORECHOP = /home/malem420/programs/Porechop/porechop-runner.py
+PORECHOP = ~/programs/Porechop/porechop-runner.py
 # Using R 3.5.0 for figures because of a problem with resolution when using R 4.0
 R_FIG_COMMAND = /usr/bin/Rscript
 R_RUN_COMMAND = /prg/R/4.0/bin/Rscript
-SAMTOOLS = /home/malem420/programs/samtools/samtools
-SMOOVE = /home/malem420/programs/smoove/smoove
+SAMTOOLS = ~/programs/samtools/samtools
+SMOOVE = ~/programs/smoove/smoove
 SOAPDENOVO2 = /prg/SOAPdenovo/2.04/SOAPdenovo-63mer
-SNIFFLES = /home/malem420/programs/Sniffles-master/bin/sniffles-core-1.0.11/sniffles
-SVABA = /home/malem420/programs/svaba/bin/svaba
-SVMERGE = /home/malem420/programs/SVanalyzer-install/bin/SVmerge
+SNIFFLES = ~/programs/Sniffles-master/bin/sniffles-core-1.0.11/sniffles
+SVABA = ~/programs/svaba/bin/svaba
+SVMERGE = ~/programs/SVanalyzer-install/bin/SVmerge
 TABIX = /prg/htslib/1.10.2/bin/tabix
 VCFTOOLS = /prg/vcftools/0.1.16/bin/vcftools
-VG = /home/malem420/programs/vg/vg
-WTDBG2 = /home/malem420/programs/wtdbg2/wtdbg2
-WTPOA_CNS = /home/malem420/programs/wtdbg2/wtpoa-cns
+VG = ~/programs/vg/vg
+WTDBG2 = ~/programs/wtdbg2/wtdbg2
+WTPOA_CNS = ~/programs/wtdbg2/wtpoa-cns
 
 
 ##### CREATING SOME VARIABLES AND MAIN TARGETS
@@ -136,6 +138,7 @@ figures/figure_6.png : te_analysis/polymorphic_tes.tsv \
 	te_analysis/multiple_alignments/TIR_TSD_ANALYSIS \
 	te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/STOWAWAY_MITE_ANALYSIS
 
+
 #### CREATING THE MAIN RESULTS TABLES
 
 # Creating a pattern rule that will be used to generate the tables in PNG format from the R code and .tex file
@@ -210,7 +213,7 @@ tables/table_s7.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 tables/table_s8.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 
 
-##### CREATING SOME INTERMEDIATE DATA FOR THE FIGURES AND TABLES OR ANALYSES
+##### CREATING SOME INTERMEDIATE DATA FOR THE FIGURES AND TABLES
 
 # Computing the average sequencing depths used for plotting figure S4
 depth_distributions/average_depth.RData : nanopore_data/NANOPORE_ALIGNMENT \
@@ -249,7 +252,7 @@ nanopore_sv_calling/all_metainfo.RData : nanopore_sv_calling/SV_NORMALIZATION \
 	cd nanopore_sv_calling/ ; $(R_RUN_COMMAND) gather_metainfo.R $(BCFTOOLS)
 
 
-##### ANALYZING ON THE OXFORD NANOPORE SEQUENCING DATA
+##### ANALYZING THE OXFORD NANOPORE SEQUENCING DATA
 
 # This variable stores the paths to the Oxford Nanopore fastq files
 NANOPORE_READS := $(shell cat utilities/flowcell_names.txt | xargs -I {} echo nanopore_data/{}.fastq.gz)
@@ -753,6 +756,7 @@ structure_analysis/sv_pca/SV_PCA : sv_genotyping/combined_svs/combined_paragraph
 	structure_analysis/sv_pca/sv_pca.sh \
 	scripts/recode_alleles.awk
 	cd structure_analysis/sv_pca ; ./sv_pca.sh $(VCFTOOLS) $(PLINK) ; touch SV_PCA
+
 
 ##### GENE FEATURE OVERLAP ANALYSES
 
