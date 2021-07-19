@@ -19,8 +19,8 @@ overlap_data$overlap <- factor(overlap_data$overlap, levels = c("cds", "gene", "
 overlap_data$af_class <- cut(overlap_data$af, seq(0, 1, 0.1))
 
 
-# Creating panel A of the plot
-figure_5a <- ggplot(overlap_data[overlap_data$ af != 1, ], aes(x = af_class, fill = overlap)) +
+# Creating panel B of the plot
+figure_5b <- ggplot(overlap_data[overlap_data$ af != 1, ], aes(x = af_class, fill = overlap)) +
 	geom_bar(width = 0.6, position = position_dodge()) +
 	facet_wrap(~svtype, ncol = 1,
 		   labeller = labeller(svtype = c("DEL" = "Deletions", "INS" = "Insertions"))) +
@@ -70,8 +70,9 @@ observed_proportions <- data.frame(proportion = c(gene_table$DELprop, gene_table
 				   svtype = rep(c("DEL", "INS"), each = nrow(gene_table)),
 				   stringsAsFactors = FALSE)
 observed_proportions$feature <- factor(observed_proportions$feature, levels = c("cds", "gene", "upstream5kb", "intergenic"))
-# Creating panel B of the plot
-figure_5b <- ggplot(random_proportions, aes(x = proportion)) +
+
+# Creating panel A of the plot
+figure_5a <- ggplot(random_proportions, aes(x = proportion)) +
 	geom_histogram(fill = "white", color = "blue", bins = 60, size = 0.1) +
 	geom_vline(data = observed_proportions, mapping = aes(xintercept = proportion), linetype = 3, color = "black", size = 0.15) +
 	geom_blank(data = data.frame(proportion = c(0.09, 0.32), svtype = c("INS", "INS"), feature = c("gene", "upstream5kb"))) +
