@@ -54,8 +54,8 @@ FIGURES := $(shell seq 1 6 | xargs -I {} echo figures/figure_{}.png)
 # Tables 1 to 3
 TABLES := $(shell seq 1 3 | xargs -I {} echo tables/table_{}.png)
 
-# Supplemental figures S1 to S19 plus figures S20 and S21 which depend on other files
-SUPFIGURES := $(shell seq 1 19 | xargs -I {} echo figures/figure_s{}.png) figures/Gm04_2257090_annotated.png figures/Gm04_2254504_annotated.png
+# Supplemental figures S1 to S19 plus figure S20 which depends on another file
+SUPFIGURES := $(shell seq 1 19 | xargs -I {} echo figures/figure_s{}.png) figures/Gm04_2257090_annotated.png 
 
 # Supplemental tables S1 to S8
 SUPTABLES := $(shell seq 1 8 | xargs -I {} echo tables/table_s{}.csv)
