@@ -97,16 +97,16 @@ This alignment is then used to update the breakpoints and inserted sequence of t
 
 This alignment pipeline is largely inspired by the guidelines suggested by the authors of AGE in their newer LongAGE paper \citep{longage} and the authors of wtdbg2 \citep{wtdbg2} and consists of the following steps:
 
-\begin{itemize}
+\begin{enumerate}
 	\item For every insertion or deletion, Oxford Nanopore reads overlapping the region of interest are extracted from the NGMLR \citep{ngmlr} BAM file. 
-		The region of interest is a window spanning ± 200 nucleotides from the SV breakpoints (start and end of the deletion for deletions, and single location for insertions).
+		The region of interest is a window spanning ± 200 nucleotides from the SV breakpoints (start and end of the breakpoint for deletions, and single location for insertions).
 \item  The reads extracted in this way are assembled using wtdbg2. 
 	We use preset values for Oxford Nanopore sequencing (\texttt{-x ont}) except for the following parameters: \texttt{-S 1} (no subsampling of reads), \texttt{-e} 2 (minimum read coverage of 2 for an edge in the graph), \texttt{-L 1000} (minimum read size of 1 kb), \texttt{-g 500000} (expected genome size of 500 kb).
 \item A consensus sequence for the assembly is produced using the \texttt{wtpoa-cns} command from wtdbg2 with default parameters.
 \item This assembly is polished using Oxford Nanopore data. For this, the same reads that were used for assembly are aligned to the consensus sequence using minimap2 \citep{minimap2} with options \texttt{-ax map-ont -r2k}. These aligned reads are used to update the consensus sequence with \texttt{wtpoa-cns}.
 \item Following assembly and polishing, the reference sequence is extracted ± 500 nucleotides from the SV breakpoints for the assembled contig to be aligned against it.
 \item The largest of the assembled contigs (there is usually only one) is then aligned to the reference sequence using AGE with parameters \texttt{-allpos}, \texttt{-go=-1} (gap opening penalty of -1 to account for the high indel error rate of Oxford Nanopore data), \texttt{-indel} (the expected excised region is an indel) and \texttt{-both} (try alignment of both the sequence and its reverse complement, and report the best alignment).
-\end{itemize}
+\end{enumerate}
 
 Once the alignment is completed, the results are parsed and used to extract the location of the regions excised by AGE from both the assembled contig and the reference genome.
 In the case of a deletion, we expect a fragment of the reference genome to be excised, whereas in the case of a insertion, we expect a fragment of the assembled contig to be excised.
@@ -117,9 +117,9 @@ The following metrics are then computed in order to compare the (refined) deleti
 	\item For deletions, the reciprocal overlap between the raw deletion and its refined counterpart. The reciprocal overlap is the minimum of the two following values: proportion of deletion 1 covered by deletion 2, and proportion of deletion 2 covered by deletion 1. This overlap is computed using functions from the GenomicRanges R package \citep{granges}.
 	\item For insertions, the offset of the two insertions, i.e. the (absolute) physical distance in base pairs between the positions of the raw and refined insertion.
 	\item For insertions, the Levenshtein (edit) distance between the two inserted sequences, as computed by the R function \texttt{adist}. From this distance, a {\em distance ratio} is computed, which corresponds to the Levensthein distance between the two insertions divided by the length of the longest insertion. This provides a relative measure of the difference in sequence content between the two insertions.
+	\item In addition to the metrics related to the excised fragments themselves, the percentage of nucleotides that share identity and the percentage of nucleotides affected by gaps in the aligned flanking regions are also extracted from the output of AGE.
 \end{itemize}
 
-In addition to the metrics related to the excised fragments themselves, the percentage of nucleotides that share identity and the percentage of nucleotides affected by gaps in the aligned regions are also extracted from the output of AGE.
 
 Note that SVs longer than 50 kb are excluded from the pipeline because of the high memory and computing time requirements of aligning to those variants using AGE.
 Although a newer version of AGE called LongAGE \citep{longage} requiring less memory has been recently released, we found it unsuitable for our needs due to cryptic error messages and slower speed.
@@ -127,16 +127,16 @@ Although a newer version of AGE called LongAGE \citep{longage} requiring less me
 \subsection{Parameters determining whether SVs are updated or not}
 
 Our objective is to update the position of the breakpoints and the sequence content such that the SVs updated in this way are closer to the actual sequence, and thus both easier to genotype from Illumina data and more representative of reality.
-However, we must also avoid updating the variant in a way that is irrelevant (as would occur if, for example, AGE identified a deletion or insertion different from the target one).
+However, we must also avoid updating the variant in a way that is inaccurate (as would occur if, for example, AGE identified a deletion or insertion different from the target one).
 Therefore, we established conditions to decide whether or not an SV should be updated.
 Based on analyses carried out during the development of the pipeline, we have settled on the following thresholds to decide whether a variant should be updated:
 
 \begin{itemize}
+\item Reciprocal overlap $\geq$ 0.5 (for deletions)
+\item Offset $\leq$ 50 (for insertions)
+\item Edit distance ratio $\leq$ 0.5 (for insertions)
 \item Percent identity of the alignment $\geq$ 85
 \item Percentage of gaps in the assembly $\leq$ 15
-\item Reciprocal overlap $\geq$ 0.5 (for deletions)
-\item Edit distance ratio $\leq$ 0.5 (for insertions)
-\item Offset $\leq$ 50 (for insertions)
 \end{itemize}
 
 \subsection{Testing the effect of refined SVs on genotyping performance}
@@ -223,7 +223,7 @@ Nevertheless, the improvement in sensitivity obtained by using refined SVs sugge
 
 Figure \ref{fig_s18} shows the benchmarking results obtained for vg.
 Refining the deletions does seem to have improved the results, although only very slightly.
-For insertions, however, the improvement resulting from realignment is obvious, both in terms of sensitivity and precision.
+For insertions, however, the improvement resulting from refinement is obvious, both in terms of sensitivity and precision.
 Again, this suggests that the breakpoint refinement pipeline improved the accuracy of the sequence content of insertions, such that they could be more accurately genotyped by vg.
 
 \paragraph{Paragraph}
@@ -256,7 +256,7 @@ This represented 51 TEs in the database and 237 individual SVs.
 For each of these SVs, we extracted the Oxford Nanopore reads at the location of the SV and assembled them individually for each sample following methods similar to those used for the breakpoint refinement pipeline.
 Briefly, reads overlapping positions ± 200 bp from the SV were used for assembly with wtdbg2 and polishing with wtpoa\_cns after re-aligning the reads to the assembly with minimap2.
 
-The assemblies were then used for multiple alignment in order to identify TE boundaries as well as target site duplication (TSD) and terminal inverted repeat (TIR) sequences.
+The assemblies were then used for multiple alignment across samples in order to identify TE boundaries as well as target site duplication (TSD) and terminal inverted repeat (TIR) sequences.
 We used the \texttt{PairwiseAlignment} function from the Bioconductor Biostrings package \citep{biostrings} to individually align all assemblies to a section of the reference genome ±~500 bp from the putative TE insertion site.
 This pairwise alignment was only done in order to extract the part of the assemblies that was of interest.
 
@@ -272,9 +272,9 @@ Typically, only short TEs ($<$ 500 bp, essentially MITEs) remained following the
 A total of 72 SV events representing 25 individual entries in the TE database remained following filtering.
 The sequences that remained following these filtering steps typically differed only in the presence or absence of the TE sequence.
 Sequences that contained the TE sequence could be analyzed further to identify TSD and TIR sequences from the TE insertion sequence.
-Seventy (70) out of the 72 SVs had at least one sequence bearing the insertion after filtering.
+70 out of the 72 SVs had at least one sequence bearing the insertion after filtering.
 In total, 301 sequences bearing the insertion could be queried for TSD and TIR sequences.
-Thirty-one (31) of these 301 were extracted from insertions that are present in the reference, whereas the 270 remaining insertion sequences were extracted from the local assemblies of the Oxford Nanopore reads.
+31 of these 301 were extracted from insertions that are present in the reference, whereas the 270 remaining insertion sequences were extracted from the local assemblies of the Oxford Nanopore reads.
 
 We analyzed the insertion sequences using the GenericRepeatFinder software \citep{grf} with the following command:
 
@@ -314,7 +314,7 @@ In a single case however, that of a 480-bp insertion of a Tc1-Mariner (DTT) elem
 	\item A 6-bp insertion of nucleotides TACGAG 
 \end{itemize}
 
-This last allele is very likely to have resulted from the excision of the TE insertion.
+We speculate that this last allele results from the excision of the TE insertion.
 Indeed, the TA part of the insertion corresponds to the expected TSD sequence for a Tc1-Mariner element.
 The remaining CGAG nucleotides would likely have been inserted during the repair of the DNA break following excision of the TE.
 Interestingly, this insertion is by far the one for which the similarity between the two TIR sequences was highest among the ones studied, at 96.3\%.
@@ -322,7 +322,7 @@ Interestingly, this insertion is by far the one for which the similarity between
 To investigate this question further, we analysed the SNV patterns surrounding the insertion site.
 If the TACGAG indeed resulted from the excision of the TE, then the haplotypes corresponding to the TE insertion and the 6-bp insertion should be more similar to each other than to the reference sequence, as the excision would have occurred within the TE insertion genetic background.
 
-The SNVs with FILTER = PASS among those discovered by Platypus \citep{platypus} were extracted from the VCF file of the 102 samples sequenced by Illumina to carry this analysis.
+The SNVs with FILTER = PASS among those discovered by Platypus \citep{platypus} were extracted from the VCF file of the 102 samples sequenced by Illumina to perform this analysis.
 The analysis of linkage disequilibrium (LD) using PLINK \citep{plink} in a 200-kb window surrounding the insertion location at Gm04:2,257,090 revealed a high-LD block spanning positions 2,220,398 to 2,259,326 that included the location of the insertion.
 The SNVs in that 39-kb window were therefore extracted from the Platypus VCF file and used for downstream analyses.
 
@@ -349,7 +349,7 @@ Therefore, samples that were heterozygous at that site were classified as "excis
 Samples that were called as homozygous for the reference allele at the 6-bp insertion position were classified as "absent".
 Finally, eight (8) samples for which missing genotype calls did not allow unambiguous classification were discarded and not used for further analysis.
 
-Using this classification, we averaged the alternate allele frequency over the 156 SNVs in the 39-kb LD block for each of the three allele classes.
+Using this classification, we computed the alternate allele frequency within each of the three allele classes of the 156 SNVs in the 39-kb LD block.
 These results are visualized in figure 6d of the main text.
 They show clear similarity between the "present" and "excised" haplotypes, which is indeed consistent with the 6-bp insertion being a remnant from the excision of the 480-bp TE.
 
