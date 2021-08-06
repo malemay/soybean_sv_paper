@@ -54,6 +54,12 @@ FIGURES := $(shell seq 1 6 | xargs -I {} echo figures/figure_{}.png)
 # Tables 1 to 3
 TABLES := $(shell seq 1 3 | xargs -I {} echo tables/table_{}.png)
 
+# Supplemental files
+SDIR := additional_files
+SUPFILES := $(SDIR)/additional_file_1.pdf $(SDIR)/additional_te_file.csv \
+	$(SDIR)/additional_bp_over_file.csv $(SDIR)/additional_bp_under_file.csv \
+	$(SDIR)/additional_pfam_over_file.csv  $(SDIR)/additional_pfam_under_file.csv
+
 # Supplemental figures S1 to S19 plus figure S20 which depends on another file
 SUPFIGURES := $(shell seq 1 19 | xargs -I {} echo figures/figure_s{}.png) figures/Gm04_2257090_annotated.png 
 
@@ -61,7 +67,7 @@ SUPFIGURES := $(shell seq 1 19 | xargs -I {} echo figures/figure_s{}.png) figure
 SUPTABLES := $(shell seq 1 8 | xargs -I {} echo tables/table_s{}.csv)
 
 # --- This target prepares all the figures, tables, and supplemental data
-all: $(FIGURES) $(TABLES) additional_files/additional_file_1.pdf additional_files/additional_te_file.csv
+all: $(FIGURES) $(TABLES) $(SUPFILES)
 
 # A target for all main figures
 figures : $(FIGURES)
@@ -76,13 +82,19 @@ supfigures : $(SUPFIGURES)
 subtables : $(SUPTABLES)
 
 # Compiling the Supplemental Data file from the .tex file as well as supplementary tables and figures
-additional_files/additional_file_1.pdf : $(SUPFIGURES) $(SUPTABLES) \
-	additional_files/additional_file_1.tex additional_files/references.bib additional_files/genome_research.bst
-	cd additional_files/ ; pdflatex additional_file_1.tex; bibtex additional_file_1; pdflatex additional_file_1.tex; pdflatex additional_file_1.tex
+$(SDIR)/additional_file_1.pdf : $(SUPFIGURES) $(SUPTABLES) \
+	$(SDIR)/additional_file_1.tex $(SDIR)/references.bib $(SDIR)/genome_research.bst
+	cd $(SDIR) ; pdflatex additional_file_1.tex; bibtex additional_file_1; pdflatex additional_file_1.tex; pdflatex additional_file_1.tex
 
-# Generating the additional file with TE metadata 
-additional_files/additional_te_file.csv : te_analysis/polymorphic_tes.tsv additional_files/additional_te_file.R
-	cd additional_files/ ; $(R_RUN_COMMAND) additional_te_file.R
+# Generating the additional CSV files
+$(SDIR)/additional_%.csv : $(SDIR)/additional_%.R
+	cd $(SDIR) ; $(R_RUN_COMMAND) $(<F)
+
+$(SDIR)/additional_te_file.csv : te_analysis/polymorphic_tes.tsv
+$(SDIR)/additional_bp_over_file.csv : scripts/format_go_csv.R gene_analysis/GO_ANALYSIS
+$(SDIR)/additional_bp_under_file.csv : scripts/format_go_csv.R gene_analysis/GO_ANALYSIS
+$(SDIR)/additional_pfam_over_file.csv : scripts/format_go_csv.R gene_analysis/GO_ANALYSIS
+$(SDIR)/additional_pfam_under_file.csv : scripts/format_go_csv.R gene_analysis/GO_ANALYSIS
 
 ##### CREATING THE MAIN FIGURES
 
