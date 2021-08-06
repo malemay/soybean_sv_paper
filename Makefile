@@ -58,7 +58,8 @@ TABLES := $(shell seq 1 3 | xargs -I {} echo tables/table_{}.png)
 SDIR := additional_files
 SUPFILES := $(SDIR)/additional_file_1.pdf $(SDIR)/additional_te_file.csv \
 	$(SDIR)/additional_bp_over_file.csv $(SDIR)/additional_bp_under_file.csv \
-	$(SDIR)/additional_pfam_over_file.csv  $(SDIR)/additional_pfam_under_file.csv
+	$(SDIR)/additional_pfam_over_file.csv  $(SDIR)/additional_pfam_under_file.csv \
+	$(SDIR)/additional_tir_similarity_file.csv
 
 # Supplemental figures S1 to S19 plus figure S20 which depends on another file
 SUPFIGURES := $(shell seq 1 19 | xargs -I {} echo figures/figure_s{}.png) figures/Gm04_2257090_annotated.png 
@@ -81,6 +82,9 @@ supfigures : $(SUPFIGURES)
 # A target for all supplemental tables
 subtables : $(SUPTABLES)
 
+# A target for all supplemental files
+supfiles : $(SUPFILES)
+
 # Compiling the Supplemental Data file from the .tex file as well as supplementary tables and figures
 $(SDIR)/additional_file_1.pdf : $(SUPFIGURES) $(SUPTABLES) \
 	$(SDIR)/additional_file_1.tex $(SDIR)/references.bib $(SDIR)/genome_research.bst
@@ -95,6 +99,7 @@ $(SDIR)/additional_bp_over_file.csv : scripts/format_go_csv.R gene_analysis/GO_A
 $(SDIR)/additional_bp_under_file.csv : scripts/format_go_csv.R gene_analysis/GO_ANALYSIS
 $(SDIR)/additional_pfam_over_file.csv : scripts/format_go_csv.R gene_analysis/GO_ANALYSIS
 $(SDIR)/additional_pfam_under_file.csv : scripts/format_go_csv.R gene_analysis/GO_ANALYSIS
+$(SDIR)/additional_tir_similarity_file.csv : te_analysis/multiple_alignments/TIR_TSD_ANALYSIS
 
 ##### CREATING THE MAIN FIGURES
 
