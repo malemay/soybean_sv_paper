@@ -61,7 +61,7 @@ SUPFIGURES := $(shell seq 1 19 | xargs -I {} echo figures/figure_s{}.png) figure
 SUPTABLES := $(shell seq 1 8 | xargs -I {} echo tables/table_s{}.csv)
 
 # --- This target prepares all the figures, tables, and supplemental data
-all: $(FIGURES) $(TABLES) Supplemental_Data.pdf
+all: $(FIGURES) $(TABLES) additional_files/additional_file_1.pdf additional_files/additional_te_file.csv
 
 # A target for all main figures
 figures : $(FIGURES)
@@ -76,9 +76,13 @@ supfigures : $(SUPFIGURES)
 subtables : $(SUPTABLES)
 
 # Compiling the Supplemental Data file from the .tex file as well as supplementary tables and figures
-Supplemental_Data.pdf : $(SUPFIGURES) $(SUPTABLES) Supplemental_Data.tex references.bib genome_research.bst
-	pdflatex Supplemental_Data.tex; bibtex Supplemental_Data; pdflatex Supplemental_Data.tex; pdflatex Supplemental_Data.tex
+additional_files/additional_file_1.pdf : $(SUPFIGURES) $(SUPTABLES) \
+	additional_files/additional_file_1.tex additional_files/references.bib additional_files/genome_research.bst
+	cd additional_files/ ; pdflatex additional_file_1.tex; bibtex additional_file_1; pdflatex additional_file_1.tex; pdflatex additional_file_1.tex
 
+# Generating the additional file with TE metadata 
+additional_files/additional_te_file.csv : te_analysis/polymorphic_tes.tsv additional_files/additional_te_file.R
+	cd additional_files/ ; $(R_RUN_COMMAND) additional_te_file.R
 
 ##### CREATING THE MAIN FIGURES
 
@@ -794,7 +798,7 @@ gene_analysis/GENE_OVERLAP_ANALYSIS : sv_genotyping/combined_svs/combined_paragr
 gene_analysis/GO_ANALYSIS : gene_analysis/GENE_OVERLAP_ANALYSIS \
 	gene_analysis/go_analysis.R \
 	gene_analysis/soybase_genome_annotation_v4.0_04-20-2021.txt
-	cd gene_analysis/ ; $(R_RUN_COMMAND) go_analysis.R
+	cd gene_analysis/ ; $(R_RUN_COMMAND) go_analysis.R; touch GO_ANALYSIS
 
 # Generating the permutation test data for figure 5
 gene_analysis/permutation_all_100kb.RData : gene_analysis/gprop_permutations.R \

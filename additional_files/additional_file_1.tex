@@ -31,7 +31,7 @@
 \setlength{\cftfignumwidth}{6em} % Spacing before captions
 \setlength{\cftbeforetabskip}{1ex} % Vertical spacing between entries
 
-\graphicspath{ {figures/} } % tell Latex to look for figures in figures/
+\graphicspath{ {../figures/} } % tell Latex to look for figures in figures/
 
 % Format figure and table numbers to follow S1, S2, ...
 \renewcommand\thefigure{S\arabic{figure}} 
@@ -52,7 +52,7 @@
 
 % Information for the title page
 \title{Supplemental data to ``Combined use of Oxford Nanopore and Illumina sequencing yields insights into soybean structural variation biology''}
-\author{Marc-André Lemay \and Jonas Andreas Sibbesen \and Davoud Torkamaneh \and Jérémie Hamel \and Roger Lévesque \and François Belzile}
+\author{Marc-André Lemay \and Jonas Andreas Sibbesen \and Davoud Torkamaneh \and Jérémie Hamel \and Roger C. Levesque \and François Belzile}
 \date{}
 
 % END OF PREAMBLE
@@ -369,7 +369,7 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 			     Extraction\tnote{d} & RNase T (\textdegree{}C)\tnote{e} & Size selection\tnote{f} & Combined\tnote{g} \\\midrule,
 		table foot = \bottomrule]%
 % DEPENDENCY : table_s1.csv
-		{tables/table_s1.csv}%
+		{../tables/table_s1.csv}%
 		{}%
 		{\sample & \growing & \grinding & \extraction & \rnase & \size & \combined}
 
@@ -409,7 +409,7 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 		Mass (ng)\tnote{d} & Run time (h)\tnote{e} & Yield (Gb)\tnote{f} & Read N50 (kb)\tnote{g} \\\midrule,
 		table foot = \bottomrule]%
 % DEPENDENCY : table_s2.csv
-		{tables/table_s2.csv}%
+		{../tables/table_s2.csv}%
 		{}%
 		{\sample & \date & \pores & \mass & \runtime & \yield & \nfifty}
 
@@ -446,7 +446,7 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 			& DEL & INS & DUP & INV & & DEL & INS & DUP & INV & & DEL & INS & DUP & INV & & DEL & INS & DUP & INV %
 			\\[0.5ex] \cmidrule{2-5} \cmidrule{7-10} \cmidrule{12-15} \cmidrule{17-20}},%
 			late after last line = { \\ \bottomrule \end{tabular}}]%
-		{tables/table_s3.csv}%
+		{../tables/table_s3.csv}%
 		{}%
 		{\sample & \smalldel  & \smallins  & \smalldup  & \smallinv  & & %
 		           \mediumdel & \mediumins & \mediumdup & \mediuminv & & %
@@ -478,7 +478,7 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 		table head = {\toprule Sample & Refined\tnote{a} & Below thresholds\tnote{b} & Above max. SVLEN\tnote{c} & No alignment\tnote{d} \\\midrule},%
 			table foot = {\bottomrule}]%
 			% DEPENDENCY: tables/table_s4.csv
-		{tables/table_s4.csv}%
+		{../tables/table_s4.csv}%
 		{}%
 		{\sample & \refined & \belowthr & \svlen & \noalignment}
 
@@ -509,7 +509,7 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 			Genic features & Observed difference\tnote{a} & p-value\tnote{b} & & Observed difference & p-value \\\midrule},
 		late after last line = {\\ \bottomrule \end{tabular}}]%
 		% DEPENDENCY: tables/table_s5.csv
-		{tables/table_s5.csv}%
+		{../tables/table_s5.csv}%
 		{}%
 		{\regionfmt & \deldiff & \delp & & \insdiff & \insp \\}
 
@@ -540,7 +540,7 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 		table head = {\toprule GO ID & Description & Number of genes\tnote{a} & Expected\tnote{b} & Observed\tnote{c} & p-value\tnote{d} \\\midrule},
 		table foot = {\bottomrule}]%
 		% DEPENDENCY: tables/table_s6.csv
-		{tables/table_s6.csv}%
+		{../tables/table_s6.csv}%
 		{}%
 		{\GOBPID & \Term & \Size & \ExpCount & \Count & \Pvalue}
 
@@ -572,7 +572,7 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 		table head = {\toprule GO ID & Description & Number of genes\tnote{a} & Expected\tnote{b} & Observed\tnote{c} & p-value\tnote{d} \\\midrule},
 		table foot = {\bottomrule}]%
 		% DEPENDENCY: tables/table_s7.csv
-		{tables/table_s7.csv}%
+		{../tables/table_s7.csv}%
 		{}%
 		{\GOBPID & \Term & \Size & \ExpCount & \Count & \Pvalue}
 
@@ -604,7 +604,7 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 		table head = {\toprule PFAM ID & Description & Number of genes\tnote{a} & Expected\tnote{b} & Observed\tnote{c} & p-value\tnote{d} \\\midrule},
 		table foot = {\bottomrule}]%
 		% DEPENDENCY: tables/table_s8.csv
-		{tables/table_s8.csv}%
+		{../tables/table_s8.csv}%
 		{}%
 		{\PFAMID & \Term & \Size & \ExpCount & \Count & \Pvalue}
 

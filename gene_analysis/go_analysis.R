@@ -272,13 +272,16 @@ pfam_over_summary <- pfam_over_test
 pfam_under_test <- pfam_hyperGTest(pfam_genes, pfam_frame, categorySize = 10, over = FALSE)
 pfam_under_test$Pvalue <- pfam_under_test$Pvalue * nrow(pfam_under_test)
 # We should not get any significant hits for this test but we'll test jsut in case in changes over time
-stopifnot(nrow(pfam_under_test) != 0)
+if(any(pfam_under_test$Pvalue < 0.05)) stop("Significant comparison obtained for PFAM under-representation test")
+pfam_under_summary <- pfam_under_test
 
 # Saving the objects from the GO analysis to file
-# OUTPUT : bp_over_summary.RData
-# OUTPUT : bp_under_summary.RData
-# OUTPUT : pfam_over_summary.RData
+# OUTPUT : gene_analysis/bp_over_summary.RData
+# OUTPUT : gene_analysis/bp_under_summary.RData
+# OUTPUT : gene_analysis/pfam_over_summary.RData
+# OUTPUT : gene_analysis/pfam_under_summary.RData
 save(bp_over_summary, file = "bp_over_summary.RData")
 save(bp_under_summary, file = "bp_under_summary.RData")
 save(pfam_over_summary, file = "pfam_over_summary.RData")
+save(pfam_under_summary, file = "pfam_under_summary.RData")
 
