@@ -19,8 +19,8 @@ tir_data$sv_length <- as.numeric(sapply(strsplit(tir_data$tir_file, "_"), FUN = 
 # Reordering and renaming the columns as necessary
 tir_data <- tir_data[, c("sv_chrom", "sv_pos", "sv_type", "sv_length", "family", "superfamily", "similarity")]
 names(tir_data)[5] <- "soytedb_match_id"
-names(tir_data)[7] <- "tir_sequence_similarity"
-tir_data <- tir_data[order(tir_data$tir_sequence_similarity, decreasing = TRUE), ]
+names(tir_data)[7] <- "tir_proportion_matching_nucleotides"
+tir_data <- tir_data[order(tir_data$tir_proportion_matching_nucleotides, decreasing = TRUE), ]
 
 # Outputting to file
 write.table(tir_data, file = "additional_tir_similarity_file.csv", sep = ",", col.names = TRUE, row.names = FALSE, quote = FALSE)
