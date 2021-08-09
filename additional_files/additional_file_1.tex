@@ -12,7 +12,7 @@
 \usepackage{booktabs} % prettier tables
 \usepackage{threeparttable} % easy addition of footnotes below tables
 \usepackage{textcomp} % makes the \textdegree command available
-\usepackage{natbib} % bibliography commands
+\usepackage[numbers]{natbib} % bibliography commands
 \usepackage{tocloft} % formatting the lists of tables and figures
 \usepackage{xcolor} % enable text coloring
 
@@ -68,11 +68,13 @@
 \listoftables
 
 \thispagestyle{empty}
-\clearpage
+%\clearpage
+
+\vspace{4ex}
 
 \listoffigures
 
-\thispagestyle{empty}
+%\thispagestyle{empty}
 
 \clearpage
 
@@ -982,7 +984,7 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 
 % DEPENDENCY : genome_research.bst
-\bibliographystyle{genome_research}
+\bibliographystyle{vancouver}
 % DEPENDENCY : references.bib
 \addcontentsline{toc}{section}{References}
 \bibliography{references}

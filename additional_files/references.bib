@@ -1,12 +1,13 @@
 @article{bayestyper,
-  title={Accurate genotyping across variant classes and lengths using variant graphs},
-  author={Sibbesen, Jonas Andreas and Maretty, Lasse and Krogh, Anders},
-  journal={Nature genetics},
-  volume={50},
-  number={7},
-  pages={1054--1059},
-  year={2018},
-  publisher={Nature Publishing Group}
+  title = {Accurate genotyping across variant classes and lengths using variant graphs},
+  author = {Sibbesen, Jonas Andreas and Maretty, Lasse and Krogh, Anders},
+  journal = {Nat Genet},
+  volume = {50},
+  number = {7},
+  pages = {1054--1059},
+  year = {2018},
+  publisher = {Nature Publishing Group},
+  url = {https://doi.org/10.1038/s41588-018-0145-5},
 }
 
 @article{age,
@@ -17,7 +18,6 @@
     number = {5},
     pages = {595-603},
     year = {2011},
-    month = {01},
     abstract = "{Motivation: Defining the precise location of structural variations (SVs) at single-nucleotide breakpoint resolution is an important problem, as it is a prerequisite for classifying SVs, evaluating their functional impact and reconstructing personal genome sequences. Given approximate breakpoint locations and a bridging assembly or split read, the problem essentially reduces to finding a correct sequence alignment. Classical algorithms for alignment and their generalizations guarantee finding the optimal (in terms of scoring) global or local alignment of two sequences. However, they cannot generally be applied to finding the biologically correct alignment of genomic sequences containing SVs because of the need to simultaneously span the SV (e.g. make a large gap) and perform precise local alignments at the flanking ends.Results: Here, we formulate the computations involved in this problem and describe a dynamic-programming algorithm for its solution. Specifically, our algorithm, called AGE for Alignment with Gap Excision, finds the optimal solution by simultaneously aligning the 5′ and 3′ ends of two given sequences and introducing a ‘large-gap jump’ between the local end alignments to maximize the total alignment score. We also describe extensions allowing the application of AGE to tandem duplications, inversions and complex events involving two large gaps. We develop a memory-efficient implementation of AGE (allowing application to long contigs) and make it available as a downloadable software package. Finally, we applied AGE for breakpoint determination and standardization in the 1000 Genomes Project by aligning locally assembled contigs to the human genome.Availability and Implementation: AGE is freely available at http://sv.gersteinlab.org/age.Contact:pi@gersteinlab.orgSupplementary information:Supplementary data are available at Bioinformatics online.}",
     issn = {1367-4803},
     doi = {10.1093/bioinformatics/btq713},
@@ -28,23 +28,25 @@
 @article{wtdbg2,
   title={Fast and accurate long-read assembly with wtdbg2},
   author={Ruan, Jue and Li, Heng},
-  journal={Nature methods},
+  journal={Nat Methods},
   volume={17},
   number={2},
   pages={155--158},
   year={2020},
-  publisher={Nature Publishing Group}
+  publisher={Nature Publishing Group},
+  url = {https://doi.org/10.1038/s41592-019-0669-3},
 }
 
 @article{ngmlr,
   title={Accurate detection of complex structural variations using single-molecule sequencing},
   author={Sedlazeck, Fritz J and Rescheneder, Philipp and Smolka, Moritz and Fang, Han and Nattestad, Maria and Von Haeseler, Arndt and Schatz, Michael C},
-  journal={Nature methods},
+  journal={Nat Methods},
   volume={15},
   number={6},
   pages={461--468},
   year={2018},
-  publisher={Nature Publishing Group}
+  publisher={Nature Publishing Group},
+  url = {https://doi.org/10.1038/s41592-018-0001-7},
 }
 
 @article{minimap2,
@@ -55,7 +57,6 @@
     number = {18},
     pages = {3094-3100},
     year = {2018},
-    month = {05},
     abstract = "{Recent advances in sequencing technologies promise ultra-long reads of ∼100 kb in average, full-length mRNA or cDNA reads in high throughput and genomic contigs over 100 Mb in length. Existing alignment programs are unable or inefficient to process such data at scale, which presses for the development of new alignment algorithms.Minimap2 is a general-purpose alignment program to map DNA or long mRNA sequences against a large reference database. It works with accurate short reads of ≥100 bp in length, ≥1 kb genomic reads at error rate ∼15\\%, full-length noisy Direct RNA or cDNA reads and assembly contigs or closely related full chromosomes of hundreds of megabases in length. Minimap2 does split-read alignment, employs concave gap cost for long insertions and deletions and introduces new heuristics to reduce spurious alignments. It is 3–4 times as fast as mainstream short-read mappers at comparable accuracy, and is ≥30 times faster than long-read genomic or cDNA mappers at higher accuracy, surpassing most aligners specialized in one type of alignment.https://github.com/lh3/minimap2Supplementary data are available at Bioinformatics online.}",
     issn = {1367-4803},
     doi = {10.1093/bioinformatics/bty191},
@@ -71,7 +72,8 @@
   number={8},
   pages={e1003118},
   year={2013},
-  publisher={Public Library of Science}
+  publisher={Public Library of Science},
+  url = {https://doi.org/10.1371/journal.pcbi.1003118},
 }
 
 @article{longage,
@@ -79,37 +81,37 @@
     title = "{LongAGE: defining breakpoints of genomic structural variants through optimal and memory efficient alignments of long reads}",
     journal = {Bioinformatics},
     year = {2020},
-    month = {08},
     abstract = "{Defining the precise location of structural variations (SVs) at single-nucleotide breakpoint resolution is a challenging problem due to large gaps in alignment. Previously, Alignment with Gap Excision (AGE) enabled us to define breakpoints of SVs at single-nucleotide resolution; however, AGE requires a vast amount of memory when aligning a pair of long sequences. To address this, we developed a memory-efficient implementation—LongAGE—based on the classical Hirschberg algorithm. We demonstrate an application of LongAGE for resolving breakpoints of SVs embedded into segmental duplications on Pacific Biosciences (PacBio) reads that can be longer than 10 kb. Furthermore, we observed different breakpoints for a deletion and a duplication in the same locus, providing direct evidence that such multi-allelic copy number variants (mCNVs) arise from two or more independent ancestral mutations.LongAGE is implemented in C++ and available on Github at https://github.com/Coaxecva/LongAGE.Supplementary data are available at Bioinformatics online.}",
     issn = {1367-4803},
     doi = {10.1093/bioinformatics/btaa703},
     url = {https://doi.org/10.1093/bioinformatics/btaa703},
-    note = {btaa703},
     eprint = {https://academic.oup.com/bioinformatics/advance-article-pdf/doi/10.1093/bioinformatics/btaa703/34127021/btaa703.pdf},
 }
 
 @article{vg,
   title={Genotyping structural variants in pangenome graphs using the vg toolkit},
   author={Hickey, Glenn and Heller, David and Monlong, Jean and Sibbesen, Jonas A and Sir{\'e}n, Jouni and Eizenga, Jordan and Dawson, Eric T and Garrison, Erik and Novak, Adam M and Paten, Benedict},
-  journal={Genome biology},
+  journal={Genome Biol},
   volume={21},
   number={1},
   pages={1--17},
   year={2020},
   doi = {10.1186/s13059-020-1941-7},
-  publisher={BioMed Central}
+  publisher={BioMed Central},
+  url = {https://doi.org/10.1186/s13059-020-1941-7},
 }
 
 @article{paragraph,
   title={Paragraph: a graph-based structural variant genotyper for short-read sequence data},
   author={Chen, Sai and Krusche, Peter and Dolzhenko, Egor and Sherman, Rachel M and Petrovski, Roman and Schlesinger, Felix and Kirsche, Melanie and Bentley, David R and Schatz, Michael C and Sedlazeck, Fritz J and others},
-  journal={Genome biology},
+  journal={Genome Biol},
   volume={20},
   number={1},
   pages={1--13},
   year={2019},
   doi = {10.1186/s13059-019-1909-7},
-  publisher={Springer}
+  publisher={Springer},
+  url = {https://doi.org/10.1186/s13059-019-1909-7},
 }
 
 @article{kmc,
@@ -120,7 +122,6 @@
     number = {17},
     pages = {2759-2761},
     year = {2017},
-    month = {05},
     abstract = "{Counting all k-mers in a given dataset is a standard procedure in many bioinformatics applications. We introduce KMC3, a significant improvement of the former KMC2 algorithm together with KMC tools for manipulating k-mer databases. Usefulness of the tools is shown on a few real problems.Program is freely available at http://sun.aei.polsl.pl/REFRESH/kmc.Supplementary data are available at Bioinformatics online.}",
     issn = {1367-4803},
     doi = {10.1093/bioinformatics/btx304},
@@ -136,7 +137,6 @@
     number = {2},
     pages = {257-258},
     year = {2006},
-    month = {11},
     abstract = "{Motivation: Functional analyses based on the association of Gene Ontology (GO) terms to genes in a selected gene list are useful bioinformatic tools and the GOstats package has been widely used to perform such computations. In this paper we report significant improvements and extensions such as support for conditional testing.Results: We discuss the capabilities of GOstats, a Bioconductor package written in R, that allows users to test GO terms for over or under-representation using either a classical hypergeometric test or a conditional hypergeometric that uses the relationships among GO terms to decorrelate the results.Availability: GOstats is available as an R package from the Bioconductor project: Contact:sfalcon@fhcrc.org}",
     issn = {1367-4803},
     doi = {10.1093/bioinformatics/btl567},
@@ -155,12 +155,11 @@
 @article{mafft,
     author = {Katoh, Kazutaka and Misawa, Kazuharu and Kuma, Kei‐ichi and Miyata, Takashi},
     title = "{MAFFT: a novel method for rapid multiple sequence alignment based on fast Fourier transform}",
-    journal = {Nucleic Acids Research},
+    journal = {Nucleic Acids Res},
     volume = {30},
     number = {14},
     pages = {3059-3066},
     year = {2002},
-    month = {07},
     abstract = "{A multiple sequence alignment program, MAFFT, has been developed. The CPU time is drastically reduced as compared with existing methods. MAFFT includes two novel techniques. (i) Homo logous regions are rapidly identified by the fast Fourier transform (FFT), in which an amino acid sequence is converted to a sequence composed of volume and polarity values of each amino acid residue. (ii) We propose a simplified scoring system that performs well for reducing CPU time and increasing the accuracy of alignments even for sequences having large insertions or extensions as well as distantly related sequences of similar length. Two different heuristics, the progressive method (FFT‐NS‐2) and the iterative refinement method (FFT‐NS‐i), are implemented in MAFFT. The performances of FFT‐NS‐2 and FFT‐NS‐i were compared with other methods by computer simulations and benchmark tests; the CPU time of FFT‐NS‐2 is drastically reduced as compared with CLUSTALW with comparable accuracy. FFT‐NS‐i is over 100 times faster than T‐COFFEE, when the number of input sequences exceeds 60, without sacrificing the accuracy.}",
     issn = {0305-1048},
     doi = {10.1093/nar/gkf436},
@@ -171,56 +170,61 @@
 @article{platypus,
   title={Integrating mapping-, assembly-and haplotype-based approaches for calling variants in clinical sequencing applications},
   author={Rimmer, Andy and Phan, Hang and Mathieson, Iain and Iqbal, Zamin and Twigg, Stephen RF and Wilkie, Andrew OM and McVean, Gil and Lunter, Gerton},
-  journal={Nature genetics},
+  journal={Nat Genet},
   volume={46},
   number={8},
   pages={912--918},
   year={2014},
-  publisher={Nature Publishing Group}
+  publisher={Nature Publishing Group},
+  url = {https://doi.org/10.1038/ng.3036},
 }
 
 @article{grf,
   title={Generic Repeat Finder: a high-sensitivity tool for genome-wide de novo repeat detection},
   author={Shi, Jieming and Liang, Chun},
-  journal={Plant physiology},
+  journal={Plant Physiol},
   volume={180},
   number={4},
   pages={1803--1815},
   year={2019},
-  publisher={Am Soc Plant Biol}
+  publisher={Am Soc Plant Biol},
+  url = {https://doi.org/10.1104/pp.19.00386},
 }
 
 @article{plink,
   title={PLINK: a tool set for whole-genome association and population-based linkage analyses},
   author={Purcell, Shaun and Neale, Benjamin and Todd-Brown, Kathe and Thomas, Lori and Ferreira, Manuel AR and Bender, David and Maller, Julian and Sklar, Pamela and De Bakker, Paul IW and Daly, Mark J and others},
-  journal={The American journal of human genetics},
+  journal={Am J Hum Genet},
   volume={81},
   number={3},
   pages={559--575},
   year={2007},
-  publisher={Elsevier}
+  publisher={Elsevier},
+  url = {https://doi.org/10.1086/519795},
 }
 
 @article{soytedb,
   title={SoyTEdb: a comprehensive database of transposable elements in the soybean genome},
   author={Du, Jianchang and Grant, David and Tian, Zhixi and Nelson, Rex T and Zhu, Liucun and Shoemaker, Randy C and Ma, Jianxin},
-  journal={Bmc Genomics},
+  journal={BMC Genomics},
   volume={11},
   number={1},
   pages={1--7},
   year={2010},
-  publisher={BioMed Central}
+  publisher={BioMed Central},
+  url = {https://doi.org/10.1186/1471-2164-11-113},
 }
 
 @article{svmerge,
   title={Enhanced structural variant and breakpoint detection using SVMerge by integration of multiple detection methods and local assembly},
   author={Wong, Kim and Keane, Thomas M and Stalker, James and Adams, David J},
-  journal={Genome biology},
+  journal={Genome Biol},
   volume={11},
   number={12},
   pages={1--9},
   year={2010},
-  publisher={BioMed Central}
+  publisher={BioMed Central},
+  url = {https://doi.org/10.1186/gb-2010-11-12-r128},
 }
 
 @article{bcftools,
@@ -231,6 +235,7 @@
   number={16},
   pages={2078--2079},
   year={2009},
-  publisher={Oxford University Press}
+  publisher={Oxford University Press},
+  url = {https://doi.org/10.1093/bioinformatics/btp352},
 }
 

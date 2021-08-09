@@ -87,7 +87,7 @@ supfiles : $(SUPFILES)
 
 # Compiling the Supplemental Data file from the .tex file as well as supplementary tables and figures
 $(SDIR)/additional_file_1.pdf : $(SUPFIGURES) $(SUPTABLES) \
-	$(SDIR)/additional_file_1.tex $(SDIR)/references.bib $(SDIR)/genome_research.bst
+	$(SDIR)/additional_file_1.tex $(SDIR)/references.bib $(SDIR)/vancouver.bst
 	cd $(SDIR) ; pdflatex additional_file_1.tex; bibtex additional_file_1; pdflatex additional_file_1.tex; pdflatex additional_file_1.tex
 
 # Generating the additional CSV files
