@@ -297,13 +297,7 @@ nanopore_sv_calling/SV_CALLING : nanopore_data/NANOPORE_ALIGNMENT \
 # Refining the SV breakpoints
 nanopore_sv_calling/SV_REFINEMENT : nanopore_sv_calling/SV_CALLING \
 	nanopore_data/NANOPORE_ALIGNMENT \
-	scripts/breakpoint_refinement/refine_breakpoints.R \
-	scripts/breakpoint_refinement/gather_align_data.R \
-	scripts/breakpoint_refinement/parse_age.R \
-	scripts/breakpoint_refinement/parse_svinfo.R \
-	scripts/breakpoint_refinement/revcomp.R \
-	scripts/breakpoint_refinement/call_age.R \
-	scripts/breakpoint_refinement/update_breakpoints.R \
+	scripts/breakpoint_refinement/breakpoint_refinement.R \
 	utilities/line_ids.txt \
 	scripts/breakpoint_refinement/age_realign.sh \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
@@ -315,7 +309,6 @@ nanopore_sv_calling/SV_NORMALIZATION : nanopore_sv_calling/SV_REFINEMENT \
 	nanopore_sv_calling/process_vcf_files.sh \
 	nanopore_sv_calling/add_metainfo_all.R \
 	nanopore_sv_calling/fix_vcfs.R \
-	scripts/add_metainfo.R \
 	scripts/fix_sniffles.R \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
 	cd nanopore_sv_calling ; ./process_vcf_files.sh $(BCFTOOLS) $(R_RUN_COMMAND) ; touch SV_NORMALIZATION

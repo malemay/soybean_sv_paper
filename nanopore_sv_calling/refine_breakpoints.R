@@ -1,18 +1,6 @@
 # Loading the necessary functions
-# DEPENDENCY : scripts/breakpoint_refinement/gather_align_data.R
-source("../scripts/breakpoint_refinement/gather_align_data.R")
-# DEPENDENCY : scripts/breakpoint_refinement/parse_age.R
-source("../scripts/breakpoint_refinement/parse_age.R")
-# DEPENDENCY : scripts/breakpoint_refinement/parse_svinfo.R
-source("../scripts/breakpoint_refinement/parse_svinfo.R")
-# DEPENDENCY : scripts/breakpoint_refinement/revcomp.R
-source("../scripts/breakpoint_refinement/revcomp.R")
-# DEPENDENCY : scripts/breakpoint_refinement/call_age.R
-source("../scripts/breakpoint_refinement/call_age.R")
-# DEPENDENCY : scripts/breakpoint_refinement/update_breakpoints.R
-source("../scripts/breakpoint_refinement/update_breakpoints.R")
-# DEPENDENCY : scripts/breakpoint_refinement/refine_breakpoints.R
-source("../scripts/breakpoint_refinement/refine_breakpoints.R")
+# DEPENDENCY : scripts/breakpoint_refinement/breakpoint_refinement.R
+source("../scripts/breakpoint_refinement/breakpoint_refinement.R")
 
 # Reading the location of the executables from the command line
 executables <- commandArgs(trailingOnly = TRUE)

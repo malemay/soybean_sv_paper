@@ -1,7 +1,7 @@
-
-# Loading the add_metainfo function
-# DEPENDENCY : scripts/add_metainfo.R
-source("../scripts/add_metainfo.R")
+# This file is kept here only for compatibility with the original Makefile
+# Metainfo addition is now done within the breakpoint refinement pipeline
+# Therefore, this code only copies the files ending with "_realigned.vcf"
+# to files ending with "_realigned_metainfo.vcf"
 
 # Adding the metainfo for all samples in turn
 # DEPENDENCY : utilities/line_ids.txt
@@ -25,6 +25,6 @@ for(i in read.table("../utilities/line_ids.txt", header = TRUE, stringsAsFactors
 # DEPENDENCY : nanopore_sv_calling/ROLAND/ROLAND_realigned.vcf
 	input_file = paste0(i, "/", i, "_realigned.vcf")
 
-	add_metainfo(input_file, paste0(i, "_realigned_metainfo.vcf"))
+	file.copy(input_file, paste0(i, "_realigned_metainfo.vcf"))
 }
 
