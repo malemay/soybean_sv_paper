@@ -123,5 +123,5 @@ genres.bst
 # Ignore the file used to update the timestamps
 reset_timestamps.sh
 
-# Ignore the README file of the breakpoint_refinement repo
-scripts/breakpoint_refinement/README.md
+# Ignore the breakpoint_refinement repo
+scripts/breakpoint_refinement/
