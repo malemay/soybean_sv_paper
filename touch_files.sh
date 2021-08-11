@@ -20,6 +20,7 @@ touch refgenome/Gmax_508_v4.0_mit_chlp.fasta.fai
 touch refgenome/Gmax_508_Wm82.a4.v1.gene_exons.gff3
 touch refgenome/Gmax_508_Wm82.a4.v1.gene.gff3
 touch refgenome/Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3
+touch gene_analysis/soybase_genome_annotation_v4.0_04-20-2021.txt
 
 # Create the transposable element data
 mkdir -p te_analysis/te_database
@@ -35,6 +36,6 @@ mkdir -p sv_genotyping/illumina_svs/sveval_benchmarks/frequency_RData
 mkdir -p sv_genotyping/nanopore_svs/sveval_benchmarks/norepeat_RData
 mkdir -p sv_genotyping/combined_svs/sveval_benchmarks/nogeno_RData
 mkdir -p sv_genotyping/combined_svs/sveval_benchmarks/norepeat_RData
-mkdir -p breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
+mkdir -p breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/nogeno_RData
 mkdir -p breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/nogeno_RData
 
