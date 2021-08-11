@@ -23,7 +23,7 @@ The path to each of the executables should be modified in the Makefile for the c
 * [bwa](https://github.com/lh3/bwa) (v. 0.7.17)
 * [bcftools](https://github.com/samtools/bcftools) (commit 7cd83b71405c993d2f81fb91126abe3e44344398)
 * [blastn](http://blast.ncbi.nlm.nih.gov) (v. 2.11.0+)
-* [Circos](www.circos.ca) (v. 0.69-8)
+* [Circos](http://circos.ca) (v. 0.69-8)
 * [fastStructure](https://github.com/rajanil/fastStructure) (v. 1.0)
 * [FLASH](https://sourceforge.net/projects/flashpage/) (v. 1.2.11)
 * [GenericRepeatFinder](https://github.com/bioinfolabmu/GenericRepeatFinder) (commit 35b1c4d6b3f6182df02315b98851cd2a30bd6201)
