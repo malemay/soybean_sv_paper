@@ -82,6 +82,8 @@ The following datasets are available from the Web and should be added to the rep
 The data can be converted to a text file and saved under `te_analysis/tian2012_tes.txt`.
 * The reference genome sequence and annotation of soybean cultivar Williams82, assembly version 4 can be downloaded from [Phytozome](https://phytozome-next.jgi.doe.gov/).
 The files needed (`Gmax_508_v4.0.fa`, `Gmax_508_Wm82.a4.v1.gene_exons.gff3`, `Gmax_508_Wm82.a4.v1.gene.gff3`, `Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3`) should be placed under `refgenome/`.
+* Gene Ontology annotations for Williams82 assembly version 4 can be downloaded from [SoyBase](https://www.soybase.org/genomeannotation/).
+We saved this file under the name `gene_analysis/soybase_genome_annotation_v4.0_04-20-2021.txt` because we accessed it on April 4, 2021.
 * The soybean chloroplast and mitochondrion genome sequences can be downloaded from [SoyBase](https://www.soybase.org/GlycineBlastPages/blast_descriptions.php).
 These should be concatenated together and placed under `refgenome/bt_decoy_sequences.fasta`.
 They should also be concatenated to `Gmax_508_v4.0.fa` and placed under the name `refgenome/Gmax_508_v4.0_mit_chlp.fasta`
@@ -101,6 +103,10 @@ Here, we give a short introduction for people who are not yet familiar with Make
 GNU make should be installed by default on many Linux distributions.
 If not, please visit [their website](https://www.gnu.org/software/make/) for download and installation.
 
+Prior to querying the Makefile using GNU Make, you should have created files and directories pointing to all the required data and scripts as described above.
+One does not need to actually download the data, but can simply `touch` the files needed.
+This can be achieved automatically by running the convenience script `touch_files.sh`.
+
 Make describes dependencies using a set of targets which depend on a list of prerequisites, and includes for each target a so-called recipe of shell commands used to create the target from the prerequisites.
 To get a list of the available targets in the Makefile, simply type the following command while in the top-level directory of this repository:
 
@@ -116,7 +122,7 @@ However, the list of all commands that would be run if the command were to be la
 
 	make -n all
 
-To get all the commands lancuhed to create Figure 1 from scratch, the following command can be used:
+As an example, to get all the commands needed to create Figure 1 from scratch, the following command can be used:
 
 	make -n figures/figure_1.png
 
