@@ -70,6 +70,54 @@ The original MIT copyright notice is included in our modified file.
 
 ## Querying the Makefile
 
+We used [GNU Make](https://www.gnu.org/software/make/) to describe the dependencies among our scripts and data through a Makefile.
+In theory, the Makefile should allow running all the analyses that were done in the paper in the proper order, given that all the sequencing and reference data are made available.
+In practice, our Makefile is intended as a tool to query this repository to understand what scripts should be run and in what order to obtain a particular result.
+Here, we give a short introduction for people who are not yet familiar with Make so they can query our Makefile effectively.
+
+GNU make should be installed by default on many Linux distributions.
+If not, please visit [their website](https://www.gnu.org/software/make/) for download and installation.
+
+Make describes dependencies using a set of targets which depend on a list of prerequisites, and includes for each target a so-called recipe of shell commands used to create the target from the prerequisites.
+To get a list of the available targets in the Makefile, simply type the following command while in the top-level directory of this repository:
+
+	make list
+
+Each of these targets can be given as a argument to the `make` command to launch the commands required to create the target.
+For example, the following command would run all the analyses used to make the paper:
+
+	make all
+
+We do not recommend running this command as such given the high computing requirements.
+However, the list of all commands that would be run if the command were to be launched can be obtained with the `-n` option:
+
+	make -n all
+
+To get all the commands lancuhed to create Figure 1 from scratch, the following command can be used:
+
+	make -n figures/figure_1.png
+
+Make automatically determines which commands need to be run based on the last time when each target was updated.
+If you want to trick Make into thinking that all targets were properly created, you can use the `-t` option to `touch` each target and update its timestamp instead of running the commands:
+
+	make -t all
+
+If this command runs properly, then running `make all` should print `make: Nothing to be done for 'all'.`
+If you want to for the list of commands to be printed even though the target is up to date, then you can add the `-B` option:
+
+	make -Bn all
+
+You can simulate what commands would actually be run from a given point in the analysis by modifying the timestamp of a code or data file of interest and running `make -n` again.
+For example, the code below would list all the commands needed to update Figure 3 after the code to call SNVs using playtpus has been modified.
+
+	touch structure_analysis/call_snps.sh
+	make -n figures/figure_3.png
+
+With these tools in hand, you should be able to effectively query the Makefile and understand the analysis workflow that we used.
+
 ## Citation
 
+If you use part of this code for your analyses, please cite:
+
+(to be added later)
 

@@ -881,3 +881,7 @@ te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/STOWAWAY_MITE_ANAL
 		$(R_RUN_COMMAND) stowaway_mite_analysis.R $(BCFTOOLS) $(PLINK) $(BGZIP) $(TABIX) ; \
 		touch STOWAWAY_MITE_ANALYSIS
 
+# A target that simply lists the available targets
+list:
+	grep '^[^#[:space:]].*:[^=]' Makefile | awk '{gsub(/\$$\(SDIR\)/, "additional_files", $$0); gsub(/\$$\(CIRCD\)/, "figures/figure_3_circos", $$0); print}' | cut -d ":" -f1 | grep -v %
+
