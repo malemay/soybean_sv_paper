@@ -29,7 +29,7 @@ The path to each of the executables should be modified in the Makefile for the c
 * [GenericRepeatFinder](https://github.com/bioinfolabmu/GenericRepeatFinder) (commit 35b1c4d6b3f6182df02315b98851cd2a30bd6201)
 * [htslib](https://github.com/samtools/htslib) (v. 1.10.2)
 * [KMC](https://github.com/refresh-bio/KMC) (v. 3.0.0)
-* [LAST](http://last.cbrc.jp/) (v. 1047)
+* [LAST](https://gitlab.com/mcfrith/last) (v. 1047)
 * [MAFFT](https://mafft.cbrc.jp/alignment/software/) (v. 7.475)
 * [manta](https://github.com/Illumina/manta) (v. 1.6.0)
 * [minimap2](https://github.com/lh3/minimap2) (commit c9874e2dc50e32bbff4ded01cf5ec0e9be0a53dd)
