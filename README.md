@@ -2,21 +2,22 @@
 
 ## Overview
 
-This repository contains all the code needed to reproduce the analyses presented in the paper titled "Combined use of Oxford Nanopore and Illumina sequencing yields insights into soybean structural variation biology"
+This repository contains all the code needed to reproduce the analyses presented in the paper titled "Combined use of Oxford Nanopore and Illumina sequencing yields insights into soybean structural variation biology".
 
 As a disclaimer, readers should be aware that most of the code was reorganized and integrated into the Makefile only after analyses were performed.
 Therefore, those trying to run the analyses might run into issues related to paths or software version incompatibilities.
-We encourage users who encounter issues while trying to run this code to open an issue or contact the repo maintainer directly.
-We believe that the code in this repository and the Makefile should still be useful to help those interested in understanding the analyses that were performed.
+We encourage users who encounter problems while trying to run this code to open a GitHub issue or contact the repo maintainer directly.
+We believe that the code in this repository and the associated Makefile should still be useful to help those interested in understanding the analyses that were performed.
 
 ## Software dependencies
 
 The following software should be installed to reproduce the analyses.
+Some of these programs may themselves have additional dependencies.
 Versions used for this work are indicated in parentheses.
 The path to each of the executables should be modified in the Makefile for the code to run properly.
 
 * [AGE](https://github.com/abyzovlab/AGE) (commit 6fa60999f573998a95b6ef751b454e6719b1849d)
-* [AsmVar](https://github.com/bioinformatics-centre/AsmVar) (830b1e35157d2a4151dd8462354fb7e0ab81aa0f)
+* [AsmVar](https://github.com/bioinformatics-centre/AsmVar) (commit 830b1e35157d2a4151dd8462354fb7e0ab81aa0f)
 * [BayesTyper](https://github.com/bioinformatics-centre/BayesTyper) (v. 1.5)
 * [BBDuk](https://jgi.doe.gov/data-and-tools/bbtools/bb-tools-user-guide/bbduk-guide/) (v. 38.25)
 * [bamaddrg](https://github.com/ekg/bamaddrg) (commit 3fccbf057eef21f6304fade6c306c5bb64158865)
@@ -39,7 +40,7 @@ The path to each of the executables should be modified in the Makefile for the c
 * [Platypus](https://www.well.ox.ac.uk/research/research-groups/lunter-group/lunter-group/platypus-a-haplotype-based-variant-caller-for-next-generation-sequence-data) (v. 0.8.1.1)
 * [PLINK](https://www.cog-genomics.org/plink2) (v. 1.90b5.3)
 * [Porechop](https://github.com/rrwick/Porechop) (commit 109e437280436d1ec27e5a5b7a34ffb752176390)
-* [`R` programming language](https://cran.r-project.org/) (version 4.0.3 for analyses, 3.5.0 for figures)
+* [R programming language](https://cran.r-project.org/) (version 4.0.3 for analyses, 3.5.0 for figures)
 * [samtools](https://github.com/samtools/samtools) (commit 26d7c73c690d298c3d4f6979224933d2e2d102cf)
 * [smoove](https://github.com/brentp/smoove) (v. 0.2.4)
 * [SOAPdenovo2](https://github.com/aquaskyline/SOAPdenovo2) (v. 2.04)
@@ -52,22 +53,24 @@ The path to each of the executables should be modified in the Makefile for the c
 
 The [breakpoint refinement pipeline](https://github.com/malemay/breakpoint_refinement) should be installed under `scripts/breakpoint_refinement`.
 
+The scripts and Makefile also expect to find Circos configuration files (the .conf files distributed with the software packaed) under `external/circos_config_files`.
+
 Some programs needed for reproducing analyses were modified from existing software:
 
-* We forked `R` package [sveval](https://github.com/jmonlong/sveval) and slightly modified it to add support for benchmarking duplications and for extracting more exhaustive output.
-This version can be installed from [our fork](https://github.com/malemay/sveval.git) by installing the commit 65f2781cad9c1e0979c93efac41f8157a436703f on branch soybean-nanopore-svs.
+* We forked the `R` package [sveval](https://github.com/jmonlong/sveval) and slightly modified it to add support for benchmarking duplications and for extracting more exhaustive output.
+This version can be installed from [our fork](https://github.com/malemay/sveval.git) by using the commit 65f2781cad9c1e0979c93efac41f8157a436703f on branch soybean-nanopore-svs.
 
-* The script [scripts/addMissingPaddingGmax4.py](https://github.com/malemay/soybean_sv_paper/blob/master/scripts/addMissingPaddingGmax4.py) was adapted from [addMissingPaddingHg38.py](https://github.com/vgteam/sv-genotyping-paper/blob/master/human/misc-scripts/addMissingPaddingHg38.py) to use the soybean reference genome instead of human reference genome.
+* The script [scripts/addMissingPaddingGmax4.py](https://github.com/malemay/soybean_sv_paper/blob/master/scripts/addMissingPaddingGmax4.py) was adapted from [addMissingPaddingHg38.py](https://github.com/vgteam/sv-genotyping-paper/blob/master/human/misc-scripts/addMissingPaddingHg38.py) to use the soybean reference genome instead of the human reference genome.
 The original MIT copyright notice is included in our modified file.
 
 ## Data availability
 
 ### Sequencing data
 
-The Illumina data used in this project is available from the [SRA](https://www.ncbi.nlm.nih.gov/sra) using the study accession number [SRP094720](https://www.ncbi.nlm.nih.gov/sra/?term=SRP094720).
+* The Illumina data used in this project is available from the [SRA](https://www.ncbi.nlm.nih.gov/sra) using the study accession number [SRP094720](https://www.ncbi.nlm.nih.gov/sra/?term=SRP094720).
 These data should be placed under `illumina_data/raw_fastq/` to reproduce the analyses.
 
-the Oxford Nanopore data generated by this project is available from the [SRA](https://www.ncbi.nlm.nih.gov/sra) using the study accession number [SRP331097](https://www.ncbi.nlm.nih.gov/sra/?term=SRP331097).
+* The Oxford Nanopore data generated by this project is available from the [SRA](https://www.ncbi.nlm.nih.gov/sra) using the study accession number [SRP331097](https://www.ncbi.nlm.nih.gov/sra/?term=SRP331097).
 These data should be placed under `nanopore_data/` to reproduce the analyses.
 
 ### Reference data
@@ -75,7 +78,7 @@ These data should be placed under `nanopore_data/` to reproduce the analyses.
 The following datasets are available from the Web and should be added to the repository to reproduce the analyses:
 
 * The SoyTEdb fasta file (`SoyBase_TE_Fasta.txt`) can be downloaded from [SoyBase](https://www.soybase.org/soytedb/) and should be placed under `te_analysis/te_database/` to reproduce the analyses.
-* The non-reference tranposable elements found by Tian et al. (2012) can be downloaded from the supplementary material to [their paper](https://doi.org/10.1105/tpc.112.103630).
+* The non-reference tranposable elements found by Tian et al. (2012) can be downloaded from the supplementary data to [their paper](https://doi.org/10.1105/tpc.112.103630).
 The data can be converted to a text file and saved under `te_analysis/tian2012_tes.txt`.
 * The reference genome sequence and annotation of soybean cultivar Williams82, assembly version 4 can be downloaded from [Phytozome](https://phytozome-next.jgi.doe.gov/).
 The files needed (`Gmax_508_v4.0.fa`, `Gmax_508_Wm82.a4.v1.gene_exons.gff3`, `Gmax_508_Wm82.a4.v1.gene.gff3`, `Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3`) should be placed under `refgenome/`.
@@ -91,7 +94,7 @@ Several of the VCF files generated by the analysis as well as the result from th
 ## Querying the Makefile
 
 We used [GNU Make](https://www.gnu.org/software/make/) to describe the dependencies among our scripts and data through a Makefile.
-In theory, the Makefile should allow running all the analyses that were done in the paper in the proper order, given that all the sequencing and reference data are made available.
+In theory, the Makefile should allow running all the analyses that were done in the paper in the proper order, given that all the sequencing and reference data are available.
 In practice, our Makefile is intended as a tool to query this repository to understand what scripts should be run and in what order to obtain a particular result.
 Here, we give a short introduction for people who are not yet familiar with Make so they can query our Makefile effectively.
 
@@ -108,7 +111,7 @@ For example, the following command would run all the analyses used to make the p
 
 	make all
 
-We do not recommend running this command as such given the high computing requirements.
+We do not recommend running this command as is given the high computing requirements of these analyses.
 However, the list of all commands that would be run if the command were to be launched can be obtained with the `-n` option:
 
 	make -n all
