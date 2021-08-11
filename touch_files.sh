@@ -13,13 +13,13 @@ do
 done
 
 # Creating the reference data files
-touch bt_decoy_sequences.fasta
-touch Gmax_508_v4.0.fa
-touch Gmax_508_v4.0_mit_chlp.fasta
-touch Gmax_508_v4.0_mit_chlp.fasta.fai
-touch Gmax_508_Wm82.a4.v1.gene_exons.gff3
-touch Gmax_508_Wm82.a4.v1.gene.gff3
-touch Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3
+touch refgenome/bt_decoy_sequences.fasta
+touch refgenome/Gmax_508_v4.0.fa
+touch refgenome/Gmax_508_v4.0_mit_chlp.fasta
+touch refgenome/Gmax_508_v4.0_mit_chlp.fasta.fai
+touch refgenome/Gmax_508_Wm82.a4.v1.gene_exons.gff3
+touch refgenome/Gmax_508_Wm82.a4.v1.gene.gff3
+touch refgenome/Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3
 
 # Create the transposable element data
 mkdir -p te_analysis/te_database
