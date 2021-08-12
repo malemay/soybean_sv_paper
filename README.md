@@ -11,6 +11,9 @@ We believe that the code in this repository and the associated Makefile should s
 
 ## Software dependencies
 
+These analyses were initially run on a Linux high-performance computer running openSUSE Leap 15.3.
+However, the code should run seamlessly on any Linux machine running the bash shell.
+
 The following software should be installed to reproduce the analyses.
 Some of these programs may themselves have additional dependencies.
 Versions used for this work are indicated in parentheses.
