@@ -225,12 +225,12 @@ tables/table_%.csv : tables/table_%.R
 	cd tables ; $(R_RUN_COMMAND) $(<F)
 
 tables/table_s1.csv : tables/lab_methods_table.csv
-tables/table_s2.csv : tables/lab_methods_table.csv
 tables/table_s3.csv : tables/table_s3_data.txt
 tables/table_s4.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 tables/table_s5.csv : gene_analysis/allele_frequency_permutations.RData
 tables/table_s6.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 tables/table_s7.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
+tables/table_s8.csv : tables/lab_methods_table.csv
 tables/table_s9.csv : nanopore_sv_calling/all_metainfo.RData
 
 

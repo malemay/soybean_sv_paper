@@ -397,38 +397,6 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Table S2 \caption{Metadata on Oxford Nanopore sequencing runs}{{{
-\begin{table}
-	\centering
-
-	\caption{Metadata on Oxford Nanopore sequencing runs}
-	\label{table_s2}
-
-	\begin{threeparttable}\small
-		\csvreader[tabular = llccccc,
-		head to column names,
-		table head = \toprule Sample\tnote{a} & Date\tnote{b} & Active pores\tnote{c} &%
-		Mass (ng)\tnote{d} & Run time (h)\tnote{e} & Yield (Gb)\tnote{f} & Read N50 (kb)\tnote{g} \\\midrule,
-		table foot = \bottomrule]%
-% DEPENDENCY : table_s2.csv
-		{../tables/table_s2.csv}%
-		{}%
-		{\sample & \date & \pores & \mass & \runtime & \yield & \nfifty}
-
-		\begin{tablenotes}\footnotesize
-		\item[a] The number in parentheses identifies samples sequenced on two different flowcells
-		\item[b] Date when the sequencing run was started, format dd-mm-yyyy
-		\item[c] Number of active pores on the flowcell prior to sequencing
-		\item[d] Total estimated mass of the DNA library that was loaded on the flowcell
-		\item[e] Duration of the sequencing run
-		\item[f] Total number of bases in the fastq files following basecalling
-		\item[g] Read N50 of all reads following basecalling
-
-		\end{tablenotes}
-	\end{threeparttable}
-\end{table}
-
-\clearpage%}}}
 
 % Table S3 \caption[Number of SVs per Oxford Nanopore sample]{{{{
 
@@ -592,6 +560,38 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
+% Table S8 \caption{Metadata on Oxford Nanopore sequencing runs}{{{
+\begin{table}
+	\centering
+
+	\caption{Metadata on Oxford Nanopore sequencing runs}
+	\label{table_s8}
+
+	\begin{threeparttable}\small
+		\csvreader[tabular = llccccc,
+		head to column names,
+		table head = \toprule Sample\tnote{a} & Date\tnote{b} & Active pores\tnote{c} &%
+		Mass (ng)\tnote{d} & Run time (h)\tnote{e} & Yield (Gb)\tnote{f} & Read N50 (kb)\tnote{g} \\\midrule,
+		table foot = \bottomrule]%
+% DEPENDENCY : table_s8.csv
+		{../tables/table_s8.csv}%
+		{}%
+		{\sample & \date & \pores & \mass & \runtime & \yield & \nfifty}
+
+		\begin{tablenotes}\footnotesize
+		\item[a] The number in parentheses identifies samples sequenced on two different flowcells
+		\item[b] Date when the sequencing run was started, format dd-mm-yyyy
+		\item[c] Number of active pores on the flowcell prior to sequencing
+		\item[d] Total estimated mass of the DNA library that was loaded on the flowcell
+		\item[e] Duration of the sequencing run
+		\item[f] Total number of bases in the fastq files following basecalling
+		\item[g] Read N50 of all reads following basecalling
+
+		\end{tablenotes}
+	\end{threeparttable}
+\end{table}
+
+\clearpage%}}}
 
 % Table S9 \caption{Classification of deletions and insertions for four samples used to test the SV refinement pipeline}{{{
 
