@@ -26,6 +26,6 @@ line_names <- c("MAPLE_PRESTO" = "Maple Presto",
 bp_table$sample <- line_names[bp_table$sample]
 
 # Writing to file for inclusion in the .tex document
-# OUTPUT : tables/table_s4.csv
-write.table(bp_table, file = "table_s4.csv", sep = ",", col.names = TRUE, row.names = FALSE, quote = FALSE)
+# OUTPUT : tables/table_s9.csv
+write.table(bp_table, file = "table_s9.csv", sep = ",", col.names = TRUE, row.names = FALSE, quote = FALSE)
 

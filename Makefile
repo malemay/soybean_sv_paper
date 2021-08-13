@@ -64,8 +64,8 @@ SUPFILES := $(SDIR)/additional_file_1.pdf $(SDIR)/additional_te_file.csv \
 # Supplemental figures S1 to S19 plus figure S20 which depends on another file
 SUPFIGURES := $(shell seq 1 19 | xargs -I {} echo figures/figure_s{}.png) figures/Gm04_2257090_annotated.png 
 
-# Supplemental tables S1 to S8
-SUPTABLES := $(shell seq 1 8 | xargs -I {} echo tables/table_s{}.csv)
+# Supplemental tables S1 to S9
+SUPTABLES := $(shell seq 1 9 | xargs -I {} echo tables/table_s{}.csv)
 
 # --- This target prepares all the figures, tables, and supplemental data
 all: $(FIGURES) $(TABLES) $(SUPFILES)
@@ -227,11 +227,11 @@ tables/table_%.csv : tables/table_%.R
 tables/table_s1.csv : tables/lab_methods_table.csv
 tables/table_s2.csv : tables/lab_methods_table.csv
 tables/table_s3.csv : tables/table_s3_data.txt
-tables/table_s4.csv : nanopore_sv_calling/all_metainfo.RData
 tables/table_s5.csv : gene_analysis/allele_frequency_permutations.RData
 tables/table_s6.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 tables/table_s7.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 tables/table_s8.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
+tables/table_s9.csv : nanopore_sv_calling/all_metainfo.RData
 
 
 ##### CREATING SOME INTERMEDIATE DATA FOR THE FIGURES AND TABLES

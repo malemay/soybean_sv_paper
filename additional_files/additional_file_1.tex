@@ -466,35 +466,6 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Table S4 \caption{Classification of deletions and insertions for four samples used to test the SV refinement pipeline}{{{
-
-\begin{table}
-	\centering
-	\caption{Classification of deletions and insertions for four samples used to test the SV refinement pipeline}
-	\label{table_s4}
-
-	\begin{threeparttable}\small
-
-		\csvreader[head to column names,
-		tabular = l*4{c},
-		table head = {\toprule Sample & Refined\tnote{a} & Below thresholds\tnote{b} & Above max. SVLEN\tnote{c} & No alignment\tnote{d} \\\midrule},%
-			table foot = {\bottomrule}]%
-			% DEPENDENCY: tables/table_s4.csv
-		{../tables/table_s4.csv}%
-		{}%
-		{\sample & \refined & \belowthr & \svlen & \noalignment}
-
-		\begin{tablenotes}\footnotesize
-		\item[a] SVs that passed all filters and had their breakpoints and/or sequence content updated by the pipeline
-		\item[b] Did not pass one or several thresholds applied when comparing the proposed refined SV to the raw SV
-		\item[c] SV length above the maximum permissible length (50 kb used here)
-		\item[d] No assembly or no alignment produced by the pipeline
-		\end{tablenotes}
-	\end{threeparttable}
-
-\end{table}
-
-\clearpage%}}}
 
 % Table S5 \caption{Randomization test on the mean allele frequencies of SVs depending on the genic features overlapped}{{{
 
@@ -619,6 +590,36 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 	\end{threeparttable}
 \end{table}
 \end{landscape}
+
+\clearpage%}}}
+
+% Table S9 \caption{Classification of deletions and insertions for four samples used to test the SV refinement pipeline}{{{
+
+\begin{table}
+	\centering
+	\caption{Classification of deletions and insertions for four samples used to test the SV refinement pipeline}
+	\label{table_s9}
+
+	\begin{threeparttable}\small
+
+		\csvreader[head to column names,
+		tabular = l*4{c},
+		table head = {\toprule Sample & Refined\tnote{a} & Below thresholds\tnote{b} & Above max. SVLEN\tnote{c} & No alignment\tnote{d} \\\midrule},%
+			table foot = {\bottomrule}]%
+			% DEPENDENCY: tables/table_s9.csv
+		{../tables/table_s9.csv}%
+		{}%
+		{\sample & \refined & \belowthr & \svlen & \noalignment}
+
+		\begin{tablenotes}\footnotesize
+		\item[a] SVs that passed all filters and had their breakpoints and/or sequence content updated by the pipeline
+		\item[b] Did not pass one or several thresholds applied when comparing the proposed refined SV to the raw SV
+		\item[c] SV length above the maximum permissible length (50 kb used here)
+		\item[d] No assembly or no alignment produced by the pipeline
+		\end{tablenotes}
+	\end{threeparttable}
+
+\end{table}
 
 \clearpage%}}}
 
