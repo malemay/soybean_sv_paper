@@ -61,8 +61,8 @@ SUPFILES := $(SDIR)/additional_file_1.pdf $(SDIR)/additional_te_file.csv \
 	$(SDIR)/additional_pfam_over_file.csv  $(SDIR)/additional_pfam_under_file.csv \
 	$(SDIR)/additional_tir_similarity_file.csv
 
-# Supplemental figures S1 to S19 plus figure S20 which depends on another file
-SUPFIGURES := $(shell seq 1 19 | xargs -I {} echo figures/figure_s{}.png) figures/Gm04_2257090_annotated.png 
+# Supplemental figures S1 to S21 except figure S18 which depends on another file
+SUPFIGURES := $(shell seq 1 21 | xargs -I {} echo figures/figure_s{}.png | grep -v s18) figures/Gm04_2257090_annotated.png 
 
 # Supplemental tables S1 to S9
 SUPTABLES := $(shell seq 1 9 | xargs -I {} echo tables/table_s{}.csv)
@@ -212,7 +212,7 @@ figures/figure_s18.png : breakpoint_refinement_analysis/raw_svs/sveval_benchmark
 	breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
 	scripts/make_plot_data.R
 
-figures/figure_s19.png : breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
+figures/figure_s21.png : breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
 	breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
 	scripts/make_plot_data.R
 

@@ -111,7 +111,7 @@ panelB <-
 	theme()
 
 # Saving as a png file
-png("figure_s19.png", width = 12, height = 6, units = "in", res = 500)
+png("figure_s21.png", width = 12, height = 6, units = "in", res = 500)
 
 grid.newpage()
 # Locating the subplots in the figure, leaving some space for the "A" and "B" plot labels
