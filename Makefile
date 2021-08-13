@@ -48,8 +48,8 @@ WTPOA_CNS = ~/programs/wtdbg2/wtpoa-cns
 
 ##### CREATING SOME VARIABLES AND MAIN TARGETS
 
-# Figures 1 to 6
-FIGURES := $(shell seq 1 6 | xargs -I {} echo figures/figure_{}.png)
+# Figures 1 to 5
+FIGURES := $(shell seq 1 5 | xargs -I {} echo figures/figure_{}.png)
 
 # Tables 1 to 2
 TABLES := $(shell seq 1 2 | xargs -I {} echo tables/table_{}.png)
@@ -151,7 +151,6 @@ $(CIRCD)/sv_highlights.txt $(CIRCD)/ltr_highlights.txt $(CIRCD)/dna_highlights.t
 
 # --- End of the Circos figure section
 
-figures/figure_4.png : structure_analysis/snp_pca/SNP_PCA structure_analysis/sv_pca/SV_PCA structure_analysis/structure.5.meanQ
 figures/figure_5.png : gene_analysis/GENE_OVERLAP_ANALYSIS gene_analysis/permutation_all_100kb.RData
 
 figures/figure_6.png : te_analysis/polymorphic_tes.tsv \
@@ -203,6 +202,8 @@ figures/figure_s13.png : sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RDa
 figures/figure_s14.png : sv_genotyping/nanopore_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData scripts/make_plot_data.R
 figures/figure_s15.png : sv_genotyping/combined_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData scripts/make_plot_data.R
 figures/figure_s16.png : sv_genotyping/combined_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData scripts/make_plot_data.R
+
+figures/figure_s17.png : structure_analysis/snp_pca/SNP_PCA structure_analysis/sv_pca/SV_PCA structure_analysis/structure.5.meanQ
 
 figures/figure_s18.png : breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
 	breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
@@ -737,7 +738,7 @@ breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/nogeno_RData/sveval
 	cd breakpoint_refinement_analysis/refined_svs/sveval_benchmarks ; $(R_RUN_COMMAND) refined_nogeno_analysis.R
 
 
-##### POPULATION STRUCTURE ANALYSES FOR FIGURE 4
+##### POPULATION STRUCTURE ANALYSES FOR FIGURE S17
 
 # Calling the SNPs using Platypus
 structure_analysis/platypus_snps.vcf : illumina_data/ILLUMINA_ALIGNMENT \

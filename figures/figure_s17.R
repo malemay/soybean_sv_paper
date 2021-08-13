@@ -1,6 +1,6 @@
 #!/usr/bin/Rscript
 
-# Figure 4 of the manuscript
+# Figure s17 of the manuscript
 
 # This figure shows the 3 first principal components obtained for
 # both the PCA conducted using SNPs and using SVs
@@ -110,8 +110,8 @@ snp_pc1_pc4 <-
 	common_theme
 
 # Outputting the figure
-# OUTPUT : figures/figure_4.png
-png("figure_4.png", width = 6, height = 6, units = "in", res = 500)
+# OUTPUT : figures/figure_s17.png
+png("figure_s17.png", width = 6, height = 6, units = "in", res = 500)
 
 grid.newpage()
 
