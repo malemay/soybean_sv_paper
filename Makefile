@@ -229,8 +229,8 @@ tables/table_s2.csv : tables/lab_methods_table.csv
 tables/table_s3.csv : tables/table_s3_data.txt
 tables/table_s4.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 tables/table_s5.csv : gene_analysis/allele_frequency_permutations.RData
+tables/table_s6.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 tables/table_s7.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
-tables/table_s8.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 tables/table_s9.csv : nanopore_sv_calling/all_metainfo.RData
 
 
@@ -800,7 +800,7 @@ gene_analysis/GENE_OVERLAP_ANALYSIS : sv_genotyping/combined_svs/combined_paragr
 	refgenome/repeat_regions/non_repeated_regions.bed
 	cd gene_analysis/ ; $(R_RUN_COMMAND) gene_overlap_analysis.R
 
-# Generating the gene ontology enrichment data for tables S6, S7 and S8
+# Generating the gene ontology enrichment data for tables S4, S5 and S6
 # Outputs the following files :
 # bp_over_summary.RData
 # bp_under_summary.RData

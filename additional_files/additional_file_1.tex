@@ -528,6 +528,37 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
+% Table S6 \caption{List of PFAM domains that are overrepresented ($\alpha = 0.05$) among coding sequences impacted by SVs with frequency $>$ 0.5}{{{
+
+\begin{landscape}
+\begin{table}
+
+	\centering
+	\caption{List of PFAM domains that are overrepresented ($\alpha = 0.05$) among coding sequences impacted by SVs with frequency $>$ 0.5}
+	\label{table_s6}
+
+	\begin{threeparttable}\small
+
+		\csvreader[head to column names,
+		tabular = ll*4{c},
+		table head = {\toprule PFAM ID & Description & Number of genes\tnote{a} & Expected\tnote{b} & Observed\tnote{c} & p-value\tnote{d} \\\midrule},
+		table foot = {\bottomrule}]%
+		% DEPENDENCY: tables/table_s6.csv
+		{../tables/table_s6.csv}%
+		{}%
+		{\PFAMID & \Term & \Size & \ExpCount & \Count & \Pvalue}
+
+		\begin{tablenotes}\footnotesize
+		\item[a] Number of genes with corresponding PFAM annotation within the gene universe (whole genome except unanchored scaffolds)
+		\item[b] Expected number of genes with given PFAM annotation within the subset of interest considering a hypergeometric distribution
+		\item[c] Observed number of genes with given PFAM annotation within the subset of interest
+		\item[d] Bonferroni-corrected p-values computed using the hypergeometric test in the GOstats R package \citep{gostats}
+		\end{tablenotes}
+	\end{threeparttable}
+\end{table}
+\end{landscape}
+
+\clearpage%}}}
 
 % Table S7 \caption{List of Gene Ontology Biological Process terms that are underrepresented ($\alpha = 0.05$) among coding sequences impacted by SVs with frequency $>$ 0.5}{{{
 
@@ -561,37 +592,6 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Table S8 \caption{List of PFAM domains that are overrepresented ($\alpha = 0.05$) among coding sequences impacted by SVs with frequency $>$ 0.5}{{{
-
-\begin{landscape}
-\begin{table}
-
-	\centering
-	\caption{List of PFAM domains that are overrepresented ($\alpha = 0.05$) among coding sequences impacted by SVs with frequency $>$ 0.5}
-	\label{table_s8}
-
-	\begin{threeparttable}\small
-
-		\csvreader[head to column names,
-		tabular = ll*4{c},
-		table head = {\toprule PFAM ID & Description & Number of genes\tnote{a} & Expected\tnote{b} & Observed\tnote{c} & p-value\tnote{d} \\\midrule},
-		table foot = {\bottomrule}]%
-		% DEPENDENCY: tables/table_s8.csv
-		{../tables/table_s8.csv}%
-		{}%
-		{\PFAMID & \Term & \Size & \ExpCount & \Count & \Pvalue}
-
-		\begin{tablenotes}\footnotesize
-		\item[a] Number of genes with corresponding PFAM annotation within the gene universe (whole genome except unanchored scaffolds)
-		\item[b] Expected number of genes with given PFAM annotation within the subset of interest considering a hypergeometric distribution
-		\item[c] Observed number of genes with given PFAM annotation within the subset of interest
-		\item[d] Bonferroni-corrected p-values computed using the hypergeometric test in the GOstats R package \citep{gostats}
-		\end{tablenotes}
-	\end{threeparttable}
-\end{table}
-\end{landscape}
-
-\clearpage%}}}
 
 % Table S9 \caption{Classification of deletions and insertions for four samples used to test the SV refinement pipeline}{{{
 
