@@ -359,6 +359,42 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage
 
+% Table S1 \caption[Number of SVs per Oxford Nanopore sample]{{{{
+
+\begin{landscape}
+\begin{table}
+	\caption[Number of SVs per Oxford Nanopore sample]{
+		Number of filtered variants per SV type and size class discovered by Sniffles for 17 samples subjected to Oxford Nanopore sequencing. 
+		These SVs were used as a truth set for the benchmarks presented in this paper.}
+	\label{table_s1}
+
+	\begin{threeparttable}\small
+
+		\csvreader[head to column names,
+		before first line = {\begin{tabular}{lccccccccccccccccccc}%
+			\toprule & \multicolumn{4}{c}{[50bp -- 100bp[} & &  \multicolumn{4}{c}{[100bp -- 1kb[} & & \multicolumn{4}{c}{[1kb -- 10kb[} & & \multicolumn{4}{c}{$\geq$ 10kb}%
+			\\[0.5ex] \cmidrule{2-5} \cmidrule{7-10} \cmidrule{12-15} \cmidrule{17-20}%
+			& DEL & INS & DUP & INV & & DEL & INS & DUP & INV & & DEL & INS & DUP & INV & & DEL & INS & DUP & INV %
+			\\[0.5ex] \cmidrule{2-5} \cmidrule{7-10} \cmidrule{12-15} \cmidrule{17-20}},%
+			late after last line = { \\ \bottomrule \end{tabular}}]%
+		{../tables/table_s1.csv}%
+		{}%
+		{\sample & \smalldel  & \smallins  & \smalldup  & \smallinv  & & %
+		           \mediumdel & \mediumins & \mediumdup & \mediuminv & & %
+		           \largedel  & \largeins  & \largedup  & \largeinv  & & %
+			   \hugedel   & \hugeins   & \hugedup   & \hugeinv \\}
+
+			   \begin{tablenotes}
+			   \item[] DEL: deletions; INS: insertions; DUP: duplications; INV: inversions
+			   \end{tablenotes}
+
+	\end{threeparttable}
+
+\end{table}
+\end{landscape}
+
+\clearpage%}}}
+
 % Table S1 \caption{DNA extraction and preparation methods for Oxford Nanopore sequencing}{{{
 \begin{table}
 	\centering
@@ -431,41 +467,6 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Table S3 \caption[Number of SVs per Oxford Nanopore sample]{{{{
-
-\begin{landscape}
-\begin{table}
-	\caption[Number of SVs per Oxford Nanopore sample]{
-		Number of filtered variants per SV type and size class discovered by Sniffles for 17 samples subjected to Oxford Nanopore sequencing. 
-		These SVs were used as a truth set for the benchmarks presented in this paper.}
-	\label{table_s3}
-
-	\begin{threeparttable}\small
-
-		\csvreader[head to column names,
-		before first line = {\begin{tabular}{lccccccccccccccccccc}%
-			\toprule & \multicolumn{4}{c}{[50bp -- 100bp[} & &  \multicolumn{4}{c}{[100bp -- 1kb[} & & \multicolumn{4}{c}{[1kb -- 10kb[} & & \multicolumn{4}{c}{$\geq$ 10kb}%
-			\\[0.5ex] \cmidrule{2-5} \cmidrule{7-10} \cmidrule{12-15} \cmidrule{17-20}%
-			& DEL & INS & DUP & INV & & DEL & INS & DUP & INV & & DEL & INS & DUP & INV & & DEL & INS & DUP & INV %
-			\\[0.5ex] \cmidrule{2-5} \cmidrule{7-10} \cmidrule{12-15} \cmidrule{17-20}},%
-			late after last line = { \\ \bottomrule \end{tabular}}]%
-		{../tables/table_s3.csv}%
-		{}%
-		{\sample & \smalldel  & \smallins  & \smalldup  & \smallinv  & & %
-		           \mediumdel & \mediumins & \mediumdup & \mediuminv & & %
-		           \largedel  & \largeins  & \largedup  & \largeinv  & & %
-			   \hugedel   & \hugeins   & \hugedup   & \hugeinv \\}
-
-			   \begin{tablenotes}
-			   \item[] DEL: deletions; INS: insertions; DUP: duplications; INV: inversions
-			   \end{tablenotes}
-
-	\end{threeparttable}
-
-\end{table}
-\end{landscape}
-
-\clearpage%}}}
 
 % Table S4 \caption{List of Gene Ontology Biological Process terms that are overrepresented ($\alpha = 0.05$) among coding sequences impacted by SVs with frequency $>$ 0.5}{{{
 

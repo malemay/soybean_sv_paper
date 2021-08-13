@@ -1,35 +1,31 @@
 #!/prg/R/4.0/bin/Rscript
 
-# Reading in the csv file with the full table
-# DEPENDENCY : tables/lab_methods_table.csv
-lab_methods <- read.table("lab_methods_table.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+# Formatting the data for Table S1
+# DEPENDENCY : tables/table_s1_data.txt
+table_s1 <- read.table("table_s1_data.txt", header = TRUE, stringsAsFactors = FALSE)
 
-# The first table will contain the first 8 columns, except date
-table_s1 <- lab_methods[, 1:8]
-table_s1 <- table_s1[, -2]
+# Reformatting the names of the lines in the sample column
+ind_names <- c("AC2001" = "AC2001",
+	       "ALTA" = "Alta",
+	       "MAPLE_ISLE" = "Maple Isle",
+	       "MAPLE_PRESTO" = "Maple Presto",
+	       "OAC_09_35C" = "OAC 09-35C",
+	       "OAC_CARMAN" = "OAC Carman",
+	       "OAC_DRAYTON" = "OAC Drayton",
+	       "OAC_EMBRO" = "OAC Embro",
+	       "OAC_LAKEVIEW" = "OAC Lakeview",
+	       "OAC_MADOC" = "OAC Madoc",
+	       "OAC_OXFORD" = "OAC Oxford",
+	       "OAC_PETREL_2" = "OAC Petrel",
+	       "OAC_PRUDENCE" = "OAC Prudence",
+	       "OAC_STRATFORD" = "OAC Stratford",
+	       "OT09-03" = "OT09-03",
+	       "QS5091.50J" = "QS5091.50j",
+	       "ROLAND" = "Roland")
 
-# Creating some lookup tables to recode the columns
-protocol  <- c("CTAB" = "CTAB", 
-	      "Qiagen DNeasy Plant Mini Kit" = "DNeasy",
-	      "Qiagen Gentra Puregene Tissue Kit" = "Gentra")
+table_s1$sample <- ind_names[table_s1$sample]
 
-grinding <- c("Liquid nitrogen + Qiagen TissueLyser" = "LN + TL",
-	      "Lyophilisation + Qiagen TissueLyser" = "CD + TL",
-	      "Liquid nitrogen + mortar and pestle" = "LN + MP")
-
-size_selection <- c("None" = "None",
-		    "BluePippin High-Pass Plus > 15kb" = "BP 15kb",
-		    "BluePippin > 6kb" = "BP 6kb",
-		    "Circulomics SRE" = "SRE")
-
-names(table_s1) <- c("sample", "growing", "grinding", "extraction", "rnase", "size", "combined")
-
-# Changing the contents of the columns of Table S1
-table_s1$grinding <- grinding[table_s1$grinding]
-table_s1$extraction <- protocol[table_s1$extraction]
-table_s1$size <- size_selection[table_s1$size]
-
-# Writing the contents of the table to table_s1.csv
+# Write to file as a csv
 # OUTPUT : tables/table_s1.csv
 write.table(table_s1, file = "table_s1.csv", col.names = TRUE, row.names = FALSE, quote = FALSE, sep = ",")
 

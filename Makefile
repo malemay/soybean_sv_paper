@@ -223,9 +223,9 @@ figures/figure_s19.png : breakpoint_refinement_analysis/raw_svs/sveval_benchmark
 tables/table_%.csv : tables/table_%.R
 	cd tables ; $(R_RUN_COMMAND) $(<F)
 
+tables/table_s1.csv : tables/table_s1_data.txt
 tables/table_s1.csv : tables/lab_methods_table.csv
 tables/table_s2.csv : gene_analysis/GENE_OVERLAP_ANALYSIS
-tables/table_s3.csv : tables/table_s3_data.txt
 tables/table_s4.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 tables/table_s5.csv : gene_analysis/allele_frequency_permutations.RData
 tables/table_s6.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
@@ -260,12 +260,12 @@ nanoplot_stats/N50_stats.txt : nanoplot_stats/NANOPLOT_BAM_STATS \
 	utilities/line_ids.txt
 	cd nanoplot_stats ; ./gather_N50_stats.sh > N50_stats.txt
 
-# Generating the data on the number of SVs per sample for Table S3
-tables/table_s3_data.txt : nanopore_sv_calling/SV_NORMALIZATION \
-       	tables/gather_table_s3_data.sh \
+# Generating the data on the number of SVs per sample for Table S1
+tables/table_s1_data.txt : nanopore_sv_calling/SV_NORMALIZATION \
+       	tables/gather_table_s1_data.sh \
        	utilities/line_ids.txt \
 	scripts/count_svtypes_svsizes.awk
-	cd tables ; ./gather_table_s3_data.sh
+	cd tables ; ./gather_table_s1_data.sh
 
 # Generating the data on the testing of the breakpoint refinement pipeline for Table S9
 nanopore_sv_calling/all_metainfo.RData : nanopore_sv_calling/SV_NORMALIZATION \
