@@ -1,6 +1,6 @@
 #!/usr/bin/Rscript
 
-# Figure 5 shows the allele frequencies of various SVs depending
+# Figure 4 shows the allele frequencies of various SVs depending
 # on the gene features (intergenic, 5 kb upstream, gene, exon)
 # that they overlap
 
@@ -20,7 +20,7 @@ overlap_data$af_class <- cut(overlap_data$af, seq(0, 1, 0.1))
 
 
 # Creating panel B of the plot
-figure_5b <- ggplot(overlap_data[overlap_data$ af != 1, ], aes(x = af_class, fill = overlap)) +
+figure_4b <- ggplot(overlap_data[overlap_data$ af != 1, ], aes(x = af_class, fill = overlap)) +
 	geom_bar(width = 0.6, position = position_dodge()) +
 	facet_wrap(~svtype, ncol = 1,
 		   labeller = labeller(svtype = c("DEL" = "Deletions", "INS" = "Insertions"))) +
@@ -72,7 +72,7 @@ observed_proportions <- data.frame(proportion = c(gene_table$DELprop, gene_table
 observed_proportions$feature <- factor(observed_proportions$feature, levels = c("cds", "gene", "upstream5kb", "intergenic"))
 
 # Creating panel A of the plot
-figure_5a <- ggplot(random_proportions, aes(x = proportion)) +
+figure_4a <- ggplot(random_proportions, aes(x = proportion)) +
 	geom_histogram(fill = "white", color = "blue", bins = 60, size = 0.1) +
 	geom_vline(data = observed_proportions, mapping = aes(xintercept = proportion), linetype = 3, color = "black", size = 0.15) +
 	geom_blank(data = data.frame(proportion = c(0.09, 0.32), svtype = c("INS", "INS"), feature = c("gene", "upstream5kb"))) +
@@ -91,20 +91,20 @@ figure_5a <- ggplot(random_proportions, aes(x = proportion)) +
 	      panel.spacing = unit(0.01, "npc"))
 
 # Arranging the two panels horizontally and saving as a png file
-# OUTPUT : figures/figure_5.png
-png("figure_5.png", width = 6, height = 3, units = "in", res = 500)
+# OUTPUT : figures/figure_4.png
+png("figure_4.png", width = 6, height = 3, units = "in", res = 500)
 grid.newpage()
 
 # Creating the two-panel layout
 pushViewport(viewport(layout = grid.layout(nrow = 1, ncol = 2)))
 # Pushing the left viewport, leaving some space to the left for the panel label
 pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 1))
-print(figure_5a, vp = viewport(x = 0.02, width = 0.98, just = "left"))
+print(figure_4a, vp = viewport(x = 0.02, width = 0.98, just = "left"))
 grid.text("A", x = 0.05, y = 0.95)
 popViewport()
 # Doing the same thing with the right viewport
 pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 2))
-print(figure_5b, vp = viewport(x = 0.02, width = 0.98, just = "left"))
+print(figure_4b, vp = viewport(x = 0.02, width = 0.98, just = "left"))
 grid.text("B", x = 0.05, y = 0.95)
 popViewport()
 

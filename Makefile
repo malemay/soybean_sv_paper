@@ -151,7 +151,7 @@ $(CIRCD)/sv_highlights.txt $(CIRCD)/ltr_highlights.txt $(CIRCD)/dna_highlights.t
 
 # --- End of the Circos figure section
 
-figures/figure_5.png : gene_analysis/GENE_OVERLAP_ANALYSIS gene_analysis/permutation_all_100kb.RData
+figures/figure_4.png : gene_analysis/GENE_OVERLAP_ANALYSIS gene_analysis/permutation_all_100kb.RData
 
 figures/figure_6.png : te_analysis/polymorphic_tes.tsv \
 	te_analysis/tian2012_tes.txt \
@@ -811,7 +811,7 @@ gene_analysis/GO_ANALYSIS : gene_analysis/GENE_OVERLAP_ANALYSIS \
 	gene_analysis/soybase_genome_annotation_v4.0_04-20-2021.txt
 	cd gene_analysis/ ; $(R_RUN_COMMAND) go_analysis.R; touch GO_ANALYSIS
 
-# Generating the permutation test data for figure 5
+# Generating the permutation test data for figure 4
 gene_analysis/permutation_all_100kb.RData : gene_analysis/gprop_permutations.R \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
 	sv_genotyping/combined_svs/combined_paragraph_filtered.vcf \
