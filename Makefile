@@ -204,11 +204,11 @@ figures/figure_s14.png : sv_genotyping/nanopore_svs/sveval_benchmarks/norepeat_R
 figures/figure_s15.png : sv_genotyping/combined_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData scripts/make_plot_data.R
 figures/figure_s16.png : sv_genotyping/combined_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData scripts/make_plot_data.R
 
-figures/figure_s17.png : breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
+figures/figure_s18.png : breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
 	breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
 	scripts/make_plot_data.R
 
-figures/figure_s18.png : breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
+figures/figure_s19.png : breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
 	breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
 	scripts/make_plot_data.R
 

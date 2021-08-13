@@ -116,8 +116,8 @@ panelB <-
 	#               legend.key = element_rect(fill = "white"))
 
 # Saving as a png file
-# OUTPUT : figures/figure_s17.png
-png("figure_s17.png", width = 12, height = 6, units = "in", res = 500)
+# OUTPUT : figures/figure_s19.png
+png("figure_s19.png", width = 12, height = 6, units = "in", res = 500)
 
 grid.newpage()
 # Locating the subplots in the figure, leaving some space for the "A" and "B" plot labels
