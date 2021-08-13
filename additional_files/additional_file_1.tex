@@ -395,46 +395,6 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Table S1 \caption{DNA extraction and preparation methods for Oxford Nanopore sequencing}{{{
-\begin{table}
-	\centering
-	\caption{DNA extraction and preparation methods for Oxford Nanopore sequencing}
-	\label{table_s1}
-
-	\begin{threeparttable}\small
-
-		\csvreader[tabular = llllcll,
-		head to column names,
-		table head = \toprule Sample\tnote{a} & Growth\tnote{b} & Grinding\tnote{c} & %
-			     Extraction\tnote{d} & RNase T (\textdegree{}C)\tnote{e} & Size selection\tnote{f} & Combined\tnote{g} \\\midrule,
-		table foot = \bottomrule]%
-% DEPENDENCY : table_s1.csv
-		{../tables/table_s1.csv}%
-		{}%
-		{\sample & \growing & \grinding & \extraction & \rnase & \size & \combined}
-
-		\begin{tablenotes}\footnotesize
-		\item[a] The number in parentheses identifies samples sequenced on two different flowcells
-		\item[b] Field: leaf harvested at Agriculture and Agri-Food Canada in Ottawa, and cryodessicated on site
-		\item[c] Grinding method: LN + TL, Frozen in liquid nitrogen and ground using Qiagen TissueLyser;\\
-			CD + TL, Cryodessicated at harvest and ground using Qiagen TissueLyser;\\
-			LN + MP, Frozen in liquid nitrogen and ground using mortar and pestle
-		\item[d] Extraction protocol used: CTAB, CTAB-based protocol described in main text;\\
-			DNeasy, Qiagen DNeasy Plant Mini Kit;\\
-			Gentra, Qiagen Gentra Puregene Tissue Kit
-		\item[e] Incubation temperature of the RNase A treatment
-		\item[f] Size-selection protocol: None, no size-selection;\\
-			BP 6kb, BluePippin with 6-kb size-selection threshold;\\
-			BP 15kb, BluePippin High-Pass Plus cassette with 15-kb size-selection threshold;\\
-			SRE, Circulomics Short Read Eliminator Kit
-		\item[g] Indicates whether the DNA from two different extractions was combined for sequencing
-		\end{tablenotes}
-
-	\end{threeparttable}
-\end{table}
-
-\clearpage%}}}
-
 % Table S2 \caption{Number of deletions and insertions overlapping various genic features and proportion of these features within the reference annotation of Williams82}{{{
 
 \begin{table}
@@ -590,6 +550,46 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 	\end{threeparttable}
 \end{table}
 \end{landscape}
+
+\clearpage%}}}
+
+% Table S7 \caption{DNA extraction and preparation methods for Oxford Nanopore sequencing}{{{
+\begin{table}
+	\centering
+	\caption{DNA extraction and preparation methods for Oxford Nanopore sequencing}
+	\label{table_s7}
+
+	\begin{threeparttable}\small
+
+		\csvreader[tabular = llllcll,
+		head to column names,
+		table head = \toprule Sample\tnote{a} & Growth\tnote{b} & Grinding\tnote{c} & %
+			     Extraction\tnote{d} & RNase T (\textdegree{}C)\tnote{e} & Size selection\tnote{f} & Combined\tnote{g} \\\midrule,
+		table foot = \bottomrule]%
+% DEPENDENCY : table_s7.csv
+		{../tables/table_s7.csv}%
+		{}%
+		{\sample & \growing & \grinding & \extraction & \rnase & \size & \combined}
+
+		\begin{tablenotes}\footnotesize
+		\item[a] The number in parentheses identifies samples sequenced on two different flowcells
+		\item[b] Field: leaf harvested at Agriculture and Agri-Food Canada in Ottawa, and cryodessicated on site
+		\item[c] Grinding method: LN + TL, Frozen in liquid nitrogen and ground using Qiagen TissueLyser;\\
+			CD + TL, Cryodessicated at harvest and ground using Qiagen TissueLyser;\\
+			LN + MP, Frozen in liquid nitrogen and ground using mortar and pestle
+		\item[d] Extraction protocol used: CTAB, CTAB-based protocol described in main text;\\
+			DNeasy, Qiagen DNeasy Plant Mini Kit;\\
+			Gentra, Qiagen Gentra Puregene Tissue Kit
+		\item[e] Incubation temperature of the RNase A treatment
+		\item[f] Size-selection protocol: None, no size-selection;\\
+			BP 6kb, BluePippin with 6-kb size-selection threshold;\\
+			BP 15kb, BluePippin High-Pass Plus cassette with 15-kb size-selection threshold;\\
+			SRE, Circulomics Short Read Eliminator Kit
+		\item[g] Indicates whether the DNA from two different extractions was combined for sequencing
+		\end{tablenotes}
+
+	\end{threeparttable}
+\end{table}
 
 \clearpage%}}}
 

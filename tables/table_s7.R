@@ -5,8 +5,8 @@
 lab_methods <- read.table("lab_methods_table.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 
 # The first table will contain the first 8 columns, except date
-table_s1 <- lab_methods[, 1:8]
-table_s1 <- table_s1[, -2]
+table_s7 <- lab_methods[, 1:8]
+table_s7 <- table_s7[, -2]
 
 # Creating some lookup tables to recode the columns
 protocol  <- c("CTAB" = "CTAB", 
@@ -22,14 +22,14 @@ size_selection <- c("None" = "None",
 		    "BluePippin > 6kb" = "BP 6kb",
 		    "Circulomics SRE" = "SRE")
 
-names(table_s1) <- c("sample", "growing", "grinding", "extraction", "rnase", "size", "combined")
+names(table_s7) <- c("sample", "growing", "grinding", "extraction", "rnase", "size", "combined")
 
-# Changing the contents of the columns of Table S1
-table_s1$grinding <- grinding[table_s1$grinding]
-table_s1$extraction <- protocol[table_s1$extraction]
-table_s1$size <- size_selection[table_s1$size]
+# Changing the contents of the columns of Table S7
+table_s7$grinding <- grinding[table_s7$grinding]
+table_s7$extraction <- protocol[table_s7$extraction]
+table_s7$size <- size_selection[table_s7$size]
 
-# Writing the contents of the table to table_s1.csv
-# OUTPUT : tables/table_s1.csv
-write.table(table_s1, file = "table_s1.csv", col.names = TRUE, row.names = FALSE, quote = FALSE, sep = ",")
+# Writing the contents of the table to table_s7.csv
+# OUTPUT : tables/table_s7.csv
+write.table(table_s7, file = "table_s7.csv", col.names = TRUE, row.names = FALSE, quote = FALSE, sep = ",")
 
