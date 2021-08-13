@@ -46,6 +46,6 @@ stopifnot(identical(rownames(norepeat_table), gene_table$feature))
 gene_table <- cbind(gene_table, norepeat_table)
 
 # Saving to file
-# OUTPUT : tables/table_3.csv
-write.table(gene_table, file = "table_3.csv", row.names = FALSE, col.names = TRUE, sep = ",", quote = FALSE)
+# OUTPUT : tables/table_s2.csv
+write.table(gene_table, file = "table_s2.csv", row.names = FALSE, col.names = TRUE, sep = ",", quote = FALSE)
 

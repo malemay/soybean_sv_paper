@@ -51,8 +51,8 @@ WTPOA_CNS = ~/programs/wtdbg2/wtpoa-cns
 # Figures 1 to 6
 FIGURES := $(shell seq 1 6 | xargs -I {} echo figures/figure_{}.png)
 
-# Tables 1 to 3
-TABLES := $(shell seq 1 3 | xargs -I {} echo tables/table_{}.png)
+# Tables 1 to 2
+TABLES := $(shell seq 1 2 | xargs -I {} echo tables/table_{}.png)
 
 # Supplemental files
 SDIR := additional_files
@@ -175,7 +175,6 @@ tables/table_1.png : tables/gather_table_1_data.sh \
 	scripts/count_svtypes_svsizes.awk
 
 tables/table_2.png : te_analysis/polymorphic_tes.tsv refgenome/Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3
-tables/table_3.png : gene_analysis/GENE_OVERLAP_ANALYSIS
 
 
 ##### CREATING THE SUPPLEMENTAL FIGURES
@@ -225,6 +224,7 @@ tables/table_%.csv : tables/table_%.R
 	cd tables ; $(R_RUN_COMMAND) $(<F)
 
 tables/table_s1.csv : tables/lab_methods_table.csv
+tables/table_s2.csv : gene_analysis/GENE_OVERLAP_ANALYSIS
 tables/table_s3.csv : tables/table_s3_data.txt
 tables/table_s4.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 tables/table_s5.csv : gene_analysis/allele_frequency_permutations.RData

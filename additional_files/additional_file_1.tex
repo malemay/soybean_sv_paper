@@ -15,6 +15,8 @@
 \usepackage[numbers]{natbib} % bibliography commands
 \usepackage{tocloft} % formatting the lists of tables and figures
 \usepackage{xcolor} % enable text coloring
+\usepackage{calc} % makes \widthof available to set the width of the last column
+\usepackage{array} % using command \arraybackslash to restore the definition of \\ after \centering
 
 % Formatting the table of contents/subsection
 \renewcommand{\contentsname}{Supplemental methods}
@@ -397,6 +399,37 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
+% Table S2 \caption{Number of deletions and insertions overlapping various genic features and proportion of these features within the reference annotation of Williams82}{{{
+
+\begin{table}
+	\centering
+	\caption{Number of deletions and insertions overlapping various genic features and proportion of these features within the reference annotation of Williams82}
+	\label{table_s2}
+
+	\begin{threeparttable}\small
+
+		\csvreader[head to column names,
+		tabular = lm{\widthof{\% in reference}}r@{\hskip 2pt}lr@{\hskip 2pt}lcm{\widthof{\% in reference}}r@{\hskip 2pt}lr@{\hskip 2pt}l,
+		table head = \toprule & \multicolumn{5}{c}{Whole genome} & & \multicolumn{5}{c}{Non-repeated genome}\\ \cmidrule{2-6} \cmidrule{8-12}%
+		Feature & \% in reference & DEL & (\%) & INS & (\%) & & \% in reference & DEL & (\%) & INS & (\%)\\\midrule,
+		table foot = \bottomrule]%
+		% DEPENDENCY: tables/table_s2.csv
+		{../tables/table_s2.csv}%
+		{}%
+		{\feature & \centering \gprop & \DEL & (\DELprop) & \INS & (\INSprop) & &%
+		\centering \nrgprop & \nrDEL & (\nrDELprop) & \nrINS & (\nrINSprop)\arraybackslash}
+
+			   \begin{tablenotes}\footnotesize
+			   \item{ } DEL: deletions, INS: insertions
+			   \item{ } cds: coding sequence
+			   \item{ } upstream5kb: within 5 kb upstream of a gene
+			   \end{tablenotes}
+
+	\end{threeparttable}
+
+\end{table}
+
+\clearpage%}}}
 
 % Table S3 \caption[Number of SVs per Oxford Nanopore sample]{{{{
 
