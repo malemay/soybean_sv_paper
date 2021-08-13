@@ -205,11 +205,11 @@ figures/figure_s16.png : sv_genotyping/combined_svs/sveval_benchmarks/norepeat_R
 
 figures/figure_s17.png : structure_analysis/snp_pca/SNP_PCA structure_analysis/sv_pca/SV_PCA structure_analysis/structure.5.meanQ
 
-figures/figure_s18.png : breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
+figures/figure_s19.png : breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
 	breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
 	scripts/make_plot_data.R
 
-figures/figure_s19.png : breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
+figures/figure_s20.png : breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
 	breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
 	scripts/make_plot_data.R
 

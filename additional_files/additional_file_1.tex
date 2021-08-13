@@ -154,7 +154,7 @@ For these testing purposes, we applied the SV refinement pipeline described abov
 SVs discovered using Sniffles were filtered as described in the main text (notably, only SVs genotyped as homozygous were kept) and then used as input to the pipeline.
 Insertions and deletions were refined if they met the required thresholds, which were as described above except for the minimum reciprocal overlap which was set to 0.7 and the maximum distance ratio which was set to 0.45.
 
-Table \ref{table_s4} shows the number of variants that could be refined or not for each sample.
+Table \ref{table_s9} shows the number of variants that could be refined or not for each sample.
 For all four samples, a majority of SVs subjected to the pipeline met the conditions for refinement.
 
 There can be three main reasons why a variant is not refined:
@@ -216,7 +216,7 @@ Benchmarks were carried out using the sveval R package \citep[][\url{https://git
 
 \paragraph{Bayestyper}
 
-Figure \ref{fig_s17} shows the benchmarking results obtained for BayesTyper.
+Figure \ref{fig_s19} shows the benchmarking results obtained for BayesTyper.
 Overall, the refined deletions resulted in a higher sensitivity but similar precision. 
 The benefits of SV refinement were obvious for larger deletions, whereas results were sometimes worse for deletions in the range of 100-1000 nucleotides.
 The improvemement brought by refinement is more obvious for insertions than it is for deletions, most likely because the refinement pipeline also improved the sequence content of the insertions.
@@ -225,14 +225,14 @@ Nevertheless, the improvement in sensitivity obtained by using refined SVs sugge
 
 \paragraph{vg}
 
-Figure \ref{fig_s18} shows the benchmarking results obtained for vg.
+Figure \ref{fig_s20} shows the benchmarking results obtained for vg.
 Refining the deletions does seem to have improved the results, although only very slightly.
 For insertions, however, the improvement resulting from refinement is obvious, both in terms of sensitivity and precision.
 Again, this suggests that the breakpoint refinement pipeline improved the accuracy of the sequence content of insertions, such that they could be more accurately genotyped by vg.
 
 \paragraph{Paragraph}
 
-Figure \ref{fig_s19} shows the benchmarking results obtained for Paragraph.
+Figure \ref{fig_s21} shows the benchmarking results obtained for Paragraph.
 Using refined variants results in a slight increase in sensitivity for Paragraph, both for deletions and smaller insertions ($<$ 1,000 bp).
 The apparent drop in precision for insertions $\geq$ 1,000 bp is likely due to the fact that the Oxford Nanopore data represented a poor ground truth dataset for these samples in this size range, as explained in the main text.
 It is therefore expected that an increase in sensitivity from refining the variants will result in an apparent loss of precision in this size range.
@@ -946,23 +946,6 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Figure S18 \caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using vg]{{{{
-\begin{lsfigure}
-	% DEPENDENCY : figure_s18.png
-	\includegraphics[width = 9.5in]{figure_s18}
-
-	\caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using vg]{
-		Genotyping sensitivity and precision of raw and refined (A) deletions and (B) insertions discovered by Sniffles on the Oxford Nanopore data for four samples when using vg as a genotyper.
-		Each line represents data for a single sample whose SV breakpoints have either been refined (refined SVs) or not (raw SVs).
-		The points correspond to different filtering thresholds on the genotype quality (GQ) required to support a genotype call.
-	}
-
-	\label{fig_s18}
-
-\end{lsfigure}
-
-\clearpage%}}}
-
 % Figure S17 \caption[Population structure analyses of the whole 102 Canadian soybean panel]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s17.png
@@ -983,6 +966,25 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
+% Figure S18 \caption[IGV screenshot of Oxford Nanopore and Illumina read alignments of three samples at the location of a polymorphic Stowaway TE insertion]{{{
+\begin{lsfigure}
+	% DEPENDENCY : Gm04_2257090_annotated.png
+	\includegraphics[width = 9.5in]{Gm04_2257090_annotated}
+
+	\caption[IGV screenshot of Oxford Nanopore and Illumina read alignments of three samples at the location of a polymorphic Stowaway TE insertion]{
+		IGV screenshot of Oxford Nanopore and Illumina read alignments of three samples at the location of a polymorphic Stowaway TE insertion at Gm04:2,257,090.
+		(A) Oxford Nanopore and (B) Illumina alignments of sample CAD1077/AC2001, which matches the reference (absence of TE insertion).
+		(C) Oxford Nanopore and (D) Illumina alignments of sample CAD1022/OAC Petrel, which bears the 480-bp Stowaway TE insertion.
+		(E) Oxford Nanopore and (F) Illumina alignments of sample CAD1010/Maple Presto, which bears a 6-bp insertion putatively due to excision of the TE.
+		The black rectangle in the middle of the figure encloses the region where the insertion polymorphisms of interest occur.
+	}
+
+	\label{fig_s18}
+
+\end{lsfigure}
+
+\clearpage%}}}
+
 % Figure S19 \caption[Genotyping benchmark of raw and refined Oxford Nanopore SVs for four samples using BayesTyper]{{{
 \begin{lsfigure}
 	% DEPENDENCY : figure_s19.png
@@ -1000,17 +1002,15 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Figure S20 \caption[IGV screenshot of Oxford Nanopore and Illumina read alignments of three samples at the location of a polymorphic Stowaway TE insertion]{{{
+% Figure S20 \caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using vg]{{{{
 \begin{lsfigure}
-	% DEPENDENCY : Gm04_2257090_annotated.png
-	\includegraphics[width = 9.5in]{Gm04_2257090_annotated}
+	% DEPENDENCY : figure_s20.png
+	\includegraphics[width = 9.5in]{figure_s20}
 
-	\caption[IGV screenshot of Oxford Nanopore and Illumina read alignments of three samples at the location of a polymorphic Stowaway TE insertion]{
-		IGV screenshot of Oxford Nanopore and Illumina read alignments of three samples at the location of a polymorphic Stowaway TE insertion at Gm04:2,257,090.
-		(A) Oxford Nanopore and (B) Illumina alignments of sample CAD1077/AC2001, which matches the reference (absence of TE insertion).
-		(C) Oxford Nanopore and (D) Illumina alignments of sample CAD1022/OAC Petrel, which bears the 480-bp Stowaway TE insertion.
-		(E) Oxford Nanopore and (F) Illumina alignments of sample CAD1010/Maple Presto, which bears a 6-bp insertion putatively due to excision of the TE.
-		The black rectangle in the middle of the figure encloses the region where the insertion polymorphisms of interest occur.
+	\caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using vg]{
+		Genotyping sensitivity and precision of raw and refined (A) deletions and (B) insertions discovered by Sniffles on the Oxford Nanopore data for four samples when using vg as a genotyper.
+		Each line represents data for a single sample whose SV breakpoints have either been refined (refined SVs) or not (raw SVs).
+		The points correspond to different filtering thresholds on the genotype quality (GQ) required to support a genotype call.
 	}
 
 	\label{fig_s20}
