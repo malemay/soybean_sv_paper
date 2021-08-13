@@ -81,7 +81,7 @@ This data should be placed under `nanopore_data/` to reproduce the analyses.
 The following datasets are available from the Web and should be added to the repository to reproduce the analyses:
 
 * The SoyTEdb fasta file (`SoyBase_TE_Fasta.txt`) can be downloaded from [SoyBase](https://www.soybase.org/soytedb/) and should be placed under `te_analysis/te_database/` to reproduce the analyses.
-* The non-reference tranposable elements found by Tian et al. (2012) can be downloaded from the supplementary data to [their paper](https://doi.org/10.1105/tpc.112.103630).
+* The non-reference transposable elements found by Tian et al. (2012) can be downloaded from the supplementary data to [their paper](https://doi.org/10.1105/tpc.112.103630).
 The data can be converted to a text file and saved under `te_analysis/tian2012_tes.txt`.
 * The reference genome sequence and annotation of soybean cultivar Williams82, assembly version 4 can be downloaded from [Phytozome](https://phytozome-next.jgi.doe.gov/).
 The files needed (`Gmax_508_v4.0.fa`, `Gmax_508_Wm82.a4.v1.gene_exons.gff3`, `Gmax_508_Wm82.a4.v1.gene.gff3`, `Gmax_508_Wm82.a4.v1.repeatmasked_assembly_v4.0.gff3`) should be placed under `refgenome/`.
