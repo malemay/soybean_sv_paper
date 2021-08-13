@@ -97,7 +97,7 @@ tables/table_1.csv
 tables/table_1_data.txt
 tables/table_2.csv
 tables/table_3.csv
-tables/table_s3_data.txt
+tables/table_s1_data.txt
 te_analysis/blast_svs.txt
 te_analysis/multiple_alignments/filtered_alignments/tir_similarity_all.txt
 te_analysis/multiple_alignments/filtered_alignments/tir_similarity_noref.txt
