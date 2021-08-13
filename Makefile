@@ -153,7 +153,7 @@ $(CIRCD)/sv_highlights.txt $(CIRCD)/ltr_highlights.txt $(CIRCD)/dna_highlights.t
 
 figures/figure_4.png : gene_analysis/GENE_OVERLAP_ANALYSIS gene_analysis/permutation_all_100kb.RData
 
-figures/figure_6.png : te_analysis/polymorphic_tes.tsv \
+figures/figure_5.png : te_analysis/polymorphic_tes.tsv \
 	te_analysis/tian2012_tes.txt \
 	te_analysis/multiple_alignments/TIR_TSD_ANALYSIS \
 	te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/STOWAWAY_MITE_ANALYSIS

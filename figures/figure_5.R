@@ -1,6 +1,6 @@
 #! /prg/R/4.0/bin/Rscript
 
-# This file contains the code to generate figure 6 of the manuscript
+# This file contains the code to generate figure 5 of the manuscript
 # the figure is split over 4 panels:
 # - Panel A will show the number of polymorphic LTR elements per family as compared to the results of Tian et al. (2012)
 # - Panel B will show the number of polymorphic DNA transposable elements per superfamily as compared to the results of Tian et al. (2012)
@@ -46,7 +46,7 @@ family_numbers$tian_count <- as.numeric(tian_counts[family_numbers$family])
 family_numbers <- family_numbers[complete.cases(family_numbers) & family_numbers$count >= 10, ]
 
 # Now let us plot
-figure_6a <- ggplot(family_numbers, aes(x = count, y = tian_count)) +
+figure_5a <- ggplot(family_numbers, aes(x = count, y = tian_count)) +
 	geom_point(size = 1) +
 	scale_x_log10("SVs per LTR family in this study") +
 	scale_y_log10("Occurences of LTR family \nin Tian et al. (2012)") +
@@ -85,7 +85,7 @@ dna_counts <- data.frame(type = names(my_dna_counts),
 dna_counts[dna_counts$type == "PIF-Harbinge", "type"] <- "PIF-Harbinger"
 
 # Now plotting these results
-figure_6b <- ggplot(dna_counts, aes(x = count, y = tian_count)) +
+figure_5b <- ggplot(dna_counts, aes(x = count, y = tian_count)) +
 	geom_point(size = 1) +
 	geom_blank(data = data.frame(count = 950, tian_count = 3000)) +
 	geom_text(aes(label = type), vjust = 0, hjust = 0, nudge_x = -0.1, nudge_y = -0.09, size = 1.5) +
@@ -102,7 +102,7 @@ figure_6b <- ggplot(dna_counts, aes(x = count, y = tian_count)) +
 # DEPENDENCY : multiple_alignments/filtered_alignments/tir_similarity_all.txt
 # all_means <- read.table("multiple_alignments/filtered_alignments/tir_similarity_all.txt", header = TRUE, stringsAsFactors = FALSE)
 # 
-# fugre_6c <- ggplot(all_means, aes(x = family, y = similarity, color = superfamily)) +
+# fugre_5c <- ggplot(all_means, aes(x = family, y = similarity, color = superfamily)) +
 #         geom_jitter(size = 2, height = 0, width = 0.15) +
 #         scale_y_continuous(name = "Proportion of matching nucleotides in terminal repeats") +
 #         scale_x_discrete(name = "Name of matching TE entry in database") +
@@ -123,7 +123,7 @@ figure_6b <- ggplot(dna_counts, aes(x = count, y = tian_count)) +
 # DEPENDENCY : te_analysis/multiple_alignments/filtered_alignments/tir_similarity_noref.txt
 noref_means <- read.table("../te_analysis/multiple_alignments/filtered_alignments/tir_similarity_noref.txt", header = TRUE, stringsAsFactors = FALSE)
 
-figure_6c <- ggplot(noref_means, aes(x = family, y = similarity, color = superfamily)) +
+figure_5c <- ggplot(noref_means, aes(x = family, y = similarity, color = superfamily)) +
 	geom_jitter(size = 1, height = 0, width = 0.3) +
 	scale_y_continuous(name = "Proportion of matching nucleotides\nin terminal repeats") +
 	scale_x_discrete(name = "Name of matching TE entry in database") +
@@ -153,7 +153,7 @@ diverging_snps$snp_pos <- sapply(strsplit(diverging_snps$site, "_"),
 			      function (x) x[1])
 
 # Plotting the ALT allele frequencies within the interval
-figure_6d <- ggplot(plotting_df, aes(x = as.factor(site_num), y = as.factor(hap_num), fill = alt_freq)) +
+figure_5d <- ggplot(plotting_df, aes(x = as.factor(site_num), y = as.factor(hap_num), fill = alt_freq)) +
 	geom_tile(height = 0.65) + #, color = "black", size = 0.1) +
 	geom_vline(data = diverging_snps, mapping = aes(xintercept = site_num), linetype = 3, size = 0.2) +
 	scale_x_discrete(name = "",
@@ -175,29 +175,29 @@ theme(text = element_text(size = 8),
       panel.border = element_blank())
 
 # Now arranging the panels in the single figure and saving it to file
-# OUTPUT : figures/figure_6.png
-png("figure_6.png", width = 6, height = 9, units = "in", res = 500)
+# OUTPUT : figures/figure_5.png
+png("figure_5.png", width = 6, height = 9, units = "in", res = 500)
 grid.newpage()
 # Preparing the 3 x 2 layout for the plots
 pushViewport(viewport(layout = grid.layout(nrow = 3, ncol = 2)))
 # Pushing the viewport for panel A
 pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 1))
-print(figure_6a, vp = viewport(x = 0.02, width = 0.98, just = "left"))
+print(figure_5a, vp = viewport(x = 0.02, width = 0.98, just = "left"))
 grid.text("A", x = 0.04, y = 0.95)
 popViewport()
 # Pushing the viewport for panel B
 pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 2))
-print(figure_6b, vp = viewport(x = 0.02, width = 0.98, just = "left"))
+print(figure_5b, vp = viewport(x = 0.02, width = 0.98, just = "left"))
 grid.text("B", x = 0.04, y = 0.95)
 popViewport()
 # Pushing the viewport for panel C
 pushViewport(viewport(layout.pos.row = 2))
-print(figure_6c, vp = viewport(x = 0.02, width = 0.98, just = "left"))
+print(figure_5c, vp = viewport(x = 0.02, width = 0.98, just = "left"))
 grid.text("C", x = 0.04, y = 0.95)
 popViewport()
 # Pushing the viewport for panel C
 pushViewport(viewport(layout.pos.row = 3))
-print(figure_6d, vp = viewport(x = 0.02, width = 0.98, just = "left"))
+print(figure_5d, vp = viewport(x = 0.02, width = 0.98, just = "left"))
 grid.text("D", x = 0.04, y = 0.95)
 popViewport()
 dev.off()
