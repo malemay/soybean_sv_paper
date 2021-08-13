@@ -226,8 +226,8 @@ tables/table_%.csv : tables/table_%.R
 tables/table_s1.csv : tables/table_s1_data.txt
 tables/table_s1.csv : tables/lab_methods_table.csv
 tables/table_s2.csv : gene_analysis/GENE_OVERLAP_ANALYSIS
+tables/table_s3.csv : gene_analysis/allele_frequency_permutations.RData
 tables/table_s4.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
-tables/table_s5.csv : gene_analysis/allele_frequency_permutations.RData
 tables/table_s6.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 tables/table_s7.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 tables/table_s8.csv : tables/lab_methods_table.csv
@@ -780,7 +780,7 @@ refgenome/repeat_regions/non_repeated_regions.bed : refgenome/repeat_regions/mak
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta
 	cd refgenome/repeat_regions ; $(R_RUN_COMMAND) make_repeat_bed.R
 
-# Generating the data on the permutation tests for allele frequencies for Table S5
+# Generating the data on the permutation tests for allele frequencies for Table S3
 gene_analysis/allele_frequency_permutations.RData : gene_analysis/GENE_OVERLAP_ANALYSIS \
 	gene_analysis/allele_frequency_permutations.R
 	cd gene_analysis ; $(R_RUN_COMMAND) allele_frequency_permutations.R

@@ -60,6 +60,6 @@ output_table$delp <- ifelse(output_table$del_pvalue == 0, "$< 10^{-4}$", sprintf
 output_table$insp <- ifelse(output_table$ins_pvalue == 0, "$< 10^{-4}$", sprintf("%.3f", output_table$ins_pvalue))
 
 # Outputting the table to file
-# OUTPUT: tables/table_s5.csv
-write.table(output_table, file = "table_s5.csv", col.names = TRUE, row.names = FALSE, quote = FALSE, sep = ",")
+# OUTPUT: tables/table_s3.csv
+write.table(output_table, file = "table_s3.csv", col.names = TRUE, row.names = FALSE, quote = FALSE, sep = ",")
 

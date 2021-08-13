@@ -467,6 +467,35 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
+% Table S3 \caption{Randomization test on the mean allele frequencies of SVs depending on the genic features overlapped}{{{
+
+\begin{table}
+
+	\centering
+	\caption{Randomization test on the mean allele frequencies of SVs depending on the genic features overlapped}
+	\label{table_s3}
+
+	\begin{threeparttable}\small
+		\csvreader[head to column names,
+		before first line = {\begin{tabular}{l*5{c}}%
+			\toprule & \multicolumn{2}{c}{Deletions} & & \multicolumn{2}{c}{Insertions} \\[0.5ex] \cmidrule{2-3} \cmidrule{5-6}%
+			Genic features & Observed difference\tnote{a} & p-value\tnote{b} & & Observed difference & p-value \\\midrule},
+		late after last line = {\\ \bottomrule \end{tabular}}]%
+		% DEPENDENCY: tables/table_s3.csv
+		{../tables/table_s3.csv}%
+		{}%
+		{\regionfmt & \deldiff & \delp & & \insdiff & \insp \\}
+
+		\begin{tablenotes}\footnotesize
+		\item[a] Observed difference between the mean allele frequencies of the SVs overlapping the corresponding genic features
+		\item[b] p-value computed from a one-sided comparison to the distribution of mean differences obtained from the randomizations (10,000 iterations).
+			The significance threshold was set to $\alpha = 0.05 \div 6 = 0.008$ to correct for multiple testing.
+		\end{tablenotes}
+	\end{threeparttable}
+
+\end{table}
+
+\clearpage%}}}
 
 % Table S4 \caption{List of Gene Ontology Biological Process terms that are overrepresented ($\alpha = 0.05$) among coding sequences impacted by SVs with frequency $>$ 0.5}{{{
 
@@ -497,36 +526,6 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 	\end{threeparttable}
 \end{table}
 \end{landscape}
-
-\clearpage%}}}
-
-% Table S5 \caption{Randomization test on the mean allele frequencies of SVs depending on the genic features overlapped}{{{
-
-\begin{table}
-
-	\centering
-	\caption{Randomization test on the mean allele frequencies of SVs depending on the genic features overlapped}
-	\label{table_s5}
-
-	\begin{threeparttable}\small
-		\csvreader[head to column names,
-		before first line = {\begin{tabular}{l*5{c}}%
-			\toprule & \multicolumn{2}{c}{Deletions} & & \multicolumn{2}{c}{Insertions} \\[0.5ex] \cmidrule{2-3} \cmidrule{5-6}%
-			Genic features & Observed difference\tnote{a} & p-value\tnote{b} & & Observed difference & p-value \\\midrule},
-		late after last line = {\\ \bottomrule \end{tabular}}]%
-		% DEPENDENCY: tables/table_s5.csv
-		{../tables/table_s5.csv}%
-		{}%
-		{\regionfmt & \deldiff & \delp & & \insdiff & \insp \\}
-
-		\begin{tablenotes}\footnotesize
-		\item[a] Observed difference between the mean allele frequencies of the SVs overlapping the corresponding genic features
-		\item[b] p-value computed from a one-sided comparison to the distribution of mean differences obtained from the randomizations (10,000 iterations).
-			The significance threshold was set to $\alpha = 0.05 \div 6 = 0.008$ to correct for multiple testing.
-		\end{tablenotes}
-	\end{threeparttable}
-
-\end{table}
 
 \clearpage%}}}
 
