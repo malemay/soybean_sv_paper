@@ -17,9 +17,9 @@
 
 		\csvreader[head to column names,
 		before first line = {\begin{tabular}{lcccccccccccccccccc}%
-			\toprule & \multicolumn{4}{c}{[50bp -- 100bp[} & &  \multicolumn{4}{c}{[100bp -- 1kb[} & & \multicolumn{4}{c}{[1kb -- 10kb[} & & \multicolumn{3}{c}{$\geq$ 10kb\tnote{*}}%
+			\toprule & \multicolumn{4}{c}{[50bp -- 100bp[} & &  \multicolumn{4}{c}{[100bp -- 1kb[} & & \multicolumn{4}{c}{[1kb -- 10kb[} & & \multicolumn{3}{c}{$\geq$ 10kb\tnote{a}}%
 			\\[0.5ex] \cmidrule{2-5} \cmidrule{7-10} \cmidrule{12-15} \cmidrule{17-19}%
-			Calling program & DEL & INS & DUP & INV & & DEL & INS & DUP & INV & & DEL & INS & DUP & INV & & DEL & DUP & INV %
+			Calling program & DEL\tnote{b} & INS\tnote{c} & DUP\tnote{d} & INV\tnote{e} & & DEL & INS & DUP & INV & & DEL & INS & DUP & INV & & DEL & DUP & INV %
 			\\[0.5ex] \cmidrule{2-5} \cmidrule{7-10} \cmidrule{12-15} \cmidrule{17-19}},%
 			late after last line = { \\ \bottomrule \end{tabular}}]%
 		{table_1.csv}%
@@ -30,9 +30,12 @@
 			   \hugedel   & \hugedup   & \hugeinv \\}
 
 			   \begin{tablenotes} \footnotesize
-			   \item[*] Insertions $\geq$ 10kb are not shown because none were called
-			   \item[ ] DEL: deletions, INS: insertions, DUP: duplications, INV: inversions
-			   \item[ ] merged: the dataset merged using SVmerge
+			   \item[a] Insertions $\geq$ 10kb are not shown because none were called
+			   \item[b] DEL: deletions, 
+			   \item[c] INS: insertions
+			   \item[d] DUP: duplications
+			   \item[e] INV: inversions
+			   \item[f] merged: the dataset merged using SVmerge
 			   \end{tablenotes}
 
 	\end{threeparttable}

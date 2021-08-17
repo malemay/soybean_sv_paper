@@ -35,6 +35,6 @@ gawk 'BEGIN {OFS = ","}
 	/manta/ {$1 = "manta"} 
 	/smoove/ {$1 = "smoove"} 
 	/svaba/ {$1 = "svaba"} 
-	/svmerged/ {$1 = "merged"} 
+	/svmerged/ {$1 = "merged\\tnote{f}"} 
 	{print}' table_1_data.txt > table_1.csv
 

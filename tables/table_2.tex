@@ -20,12 +20,12 @@
 		head to column names,
 		table head = \toprule & 
 		                        \multicolumn{4}{c}{REF\tnote{a} (\%)} & & %
-		                        \multicolumn{4}{c}{DEL (\%)} & & %
-		                        \multicolumn{4}{c}{INS (\%)} \\ %
+					\multicolumn{4}{c}{DEL\tnote{b} (\%)} & & %
+					\multicolumn{4}{c}{INS\tnote{c} (\%)} \\ %
 					\cmidrule{2-5} \cmidrule{7-10} \cmidrule{12-15}%
 		TE type & %
-		\multicolumn{2}{c}{\cit N\tnote{b}} & \multicolumn{2}{c}{Mb\tnote{c}} &  & %
-		\multicolumn{2}{c}{\cit N} & \multicolumn{2}{c}{kb\tnote{d}} & & %
+		\multicolumn{2}{c}{\cit N\tnote{d}} & \multicolumn{2}{c}{Mb\tnote{e}} &  & %
+		\multicolumn{2}{c}{\cit N} & \multicolumn{2}{c}{kb\tnote{f}} & & %
 		\multicolumn{2}{c}{\cit N} & \multicolumn{2}{c}{kb} \arraybackslash\\\midrule,
 		table foot = \bottomrule]%
 			{table_2.csv}%
@@ -33,11 +33,12 @@
 			{\type & \ref & (\refprop) & \refmb & (\refmbprop) & & \DEL & (\DELprop) & \DELkb & (\DELkbprop) & & \INS & (\INSprop) & \INSkb & (\INSkbprop) \arraybackslash}
 
 			   \begin{tablenotes}\footnotesize
-			   \item[ ] REF: reference, DEL: deletions, INS: insertions
-			   \item[a] Transposable elements $\geq$ 100 bp in the reference genome
-			   \item[b] \textit N: Number of reference elements, deletions or insertions matching given TE type %(\% of matching SVs corresponding to a given TE type)
-			   \item[c] Mb: Total length of reference elements of a given type, in Mb
-			   \item[d] kb: Total length of polymorphic elements matching given TE type, in kb %(\% of polymorphic bases corresponding to a given TE type)
+			   \item[a] REF: transposable elements $\geq$ 100 bp in the reference genome
+			   \item[b] DEL: deletions relative to the reference that are annotated as TEs
+			   \item[c] INS: insertions relative to the reference that are annotated as TEs
+			   \item[d] \textit N: Number of reference elements, deletions or insertions matching given TE type %(\% of matching SVs corresponding to a given TE type)
+			   \item[e] Mb: Total length of reference elements of a given type, in Mb
+			   \item[f] kb: Total length of polymorphic elements matching given TE type, in kb %(\% of polymorphic bases corresponding to a given TE type)
 			   \end{tablenotes}
 
 	\end{threeparttable}
