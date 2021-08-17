@@ -39,8 +39,10 @@ ins_plot_data$size_class <- droplevels(ins_plot_data$size_class)
 
 # Defining a common theme for both plots
 common_theme <- theme_bw() + 
-	theme(panel.grid.minor = element_blank(),
-	      legend.text = element_text(size = 8),
+	theme(text = element_text(size = 10),
+	      strip.background = element_blank(),
+	      panel.grid.minor = element_blank(),
+	      legend.text = element_text(size = 6),
 	      legend.key.height = unit(0.02, "npc"),
 	      legend.position = "top",
 	      legend.direction = "horizontal")
@@ -55,8 +57,8 @@ y_axis <- scale_y_continuous(name = "Precision",
 deletions_plot <- 
 	ggplot(del_plot_data, aes(x = sensitivity, y = precision)) +
 	geom_line(mapping = aes(group = cultivar), size = 0.2) +
-	geom_point(mapping = aes(color = cultivar), size = 0.5) +
-	geom_point(data = del_plot_data[del_plot_data$threshold == 2, ], aes(color = cultivar), shape = 8, size = 2) +
+	geom_point(mapping = aes(color = cultivar), size = 0.3) +
+	geom_point(data = del_plot_data[del_plot_data$threshold == 2, ], aes(color = cultivar), shape = 8, size = 1.5) +
 	facet_wrap(~size_class,
 		   labeller = labeller(size_class = 
 				       c("[50-100[" = "[50-100 bp[ deletions",
@@ -90,7 +92,7 @@ insertions_plot <-
 
 # Saving to disk as "Figure_1.png"
 # OUTPUT : figures/figure_1.png
-png("figure_1.png", width = 6, height = 9, units = "in", res = 500)
+png("figure_1.png", width = 10, height = 16, units = "cm", res = 800)
 grid.newpage()
 # Locating the subplots in the figure
 pushViewport(viewport(x = 0.03, width = 0.97, just = "left"))
@@ -100,7 +102,7 @@ print(deletions_plot, vp = del_vp)
 ins_vp <- viewport(layout.pos.row = 2, layout.pos.col = 1)
 print(insertions_plot, vp = ins_vp)
 # Adding the A and B panel labels
-grid.text("A", x = 0, y = 0.97, gp = gpar(fontsize = 24), vp = del_vp)
-grid.text("B", x = 0, y = 0.97, gp = gpar(fontsize = 24), vp = ins_vp)
+grid.text("A", x = 0, y = 0.97, gp = gpar(fontsize = 16), vp = del_vp)
+grid.text("B", x = 0, y = 0.97, gp = gpar(fontsize = 16), vp = ins_vp)
 dev.off()
 

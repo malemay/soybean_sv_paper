@@ -51,7 +51,7 @@ figure_5a <- ggplot(family_numbers, aes(x = count, y = tian_count)) +
 	scale_x_log10("SVs per LTR family in this study") +
 	scale_y_log10("Occurences of LTR family \nin Tian et al. (2012)") +
 	theme_bw() +
-	theme(text = element_text(size = 8))
+	theme(text = element_text(size = 10))
 
 # Now let us see what we can learn about DNA transposable elements from the ones found by Tian et al. 2021
 tian_dna <- tian_tes[grepl("^DNA", tian_tes$category), ]
@@ -88,11 +88,12 @@ dna_counts[dna_counts$type == "PIF-Harbinge", "type"] <- "PIF-Harbinger"
 figure_5b <- ggplot(dna_counts, aes(x = count, y = tian_count)) +
 	geom_point(size = 1) +
 	geom_blank(data = data.frame(count = 950, tian_count = 3000)) +
-	geom_text(aes(label = type), vjust = 0, hjust = 0, nudge_x = -0.1, nudge_y = -0.09, size = 1.5) +
+	geom_text(aes(label = type), vjust = 0, hjust = 0, nudge_x = -0.1, nudge_y = -0.09, size = 2) +
 	scale_x_log10("SVs per DNA TE type in this study") +
-	scale_y_log10("Occurences of DNA TE type in\n Tian et al. (2012)") +
+	scale_y_log10("Occurences of DNA TE type\nin Tian et al. (2012)") +
 	theme_bw() +
-	theme(text = element_text(size = 8),
+	theme(text = element_text(size = 10),
+	      axis.title.x = element_text(hjust = 0.8),
 	      panel.grid.minor = element_blank())
 
 
@@ -124,19 +125,19 @@ figure_5b <- ggplot(dna_counts, aes(x = count, y = tian_count)) +
 noref_means <- read.table("../te_analysis/multiple_alignments/filtered_alignments/tir_similarity_noref.txt", header = TRUE, stringsAsFactors = FALSE)
 
 figure_5c <- ggplot(noref_means, aes(x = family, y = similarity, color = superfamily)) +
-	geom_jitter(size = 1, height = 0, width = 0.3) +
-	scale_y_continuous(name = "Proportion of matching nucleotides\nin terminal repeats") +
+	geom_jitter(size = 1.5, height = 0, width = 0.3) +
+	scale_y_continuous(name = "Proportion of matching\nnucleotides in terminal repeats") +
 	scale_x_discrete(name = "Name of matching TE entry in database") +
 	scale_color_discrete(name = "Superfamily",
 			     labels = c("DTH" = "PIF-Harbinger (DTH)",
 					"DTM" = "Mutator (DTM)",
 					"DTT" = "Tc1-Mariner (DTT)")) +
 theme_bw() +
-theme(text = element_text(size = 8),
+theme(text = element_text(size = 10),
       axis.text.x = element_text(angle = 40, 
 				 vjust = 1, 
 				 hjust = 1,
-				 size = 6),
+				 size = 8),
       legend.box.spacing = unit(0, "npc"),
       legend.position = "top",
       legend.direction = "horizontal",
@@ -155,7 +156,7 @@ diverging_snps$snp_pos <- sapply(strsplit(diverging_snps$site, "_"),
 # Plotting the ALT allele frequencies within the interval
 figure_5d <- ggplot(plotting_df, aes(x = as.factor(site_num), y = as.factor(hap_num), fill = alt_freq)) +
 	geom_tile(height = 0.65) + #, color = "black", size = 0.1) +
-	geom_vline(data = diverging_snps, mapping = aes(xintercept = site_num), linetype = 3, size = 0.2) +
+	geom_vline(data = diverging_snps, mapping = aes(xintercept = site_num), linetype = 3, size = 0.4) +
 	scale_x_discrete(name = "",
 			 breaks = diverging_snps$site_num,
 			 labels = diverging_snps$snp_pos) +
@@ -167,7 +168,7 @@ figure_5d <- ggplot(plotting_df, aes(x = as.factor(site_num), y = as.factor(hap_
 			     type = "div", 
 			     palette = "RdBu") +
 theme_bw() + 
-theme(text = element_text(size = 8),
+theme(text = element_text(size = 10),
       legend.box.spacing = unit(0, "npc"),
       legend.direction = "horizontal",
       legend.position = "top",
@@ -176,29 +177,29 @@ theme(text = element_text(size = 8),
 
 # Now arranging the panels in the single figure and saving it to file
 # OUTPUT : figures/figure_5.png
-png("figure_5.png", width = 6, height = 9, units = "in", res = 500)
+png("figure_5.png", width = 14, height = 21, units = "cm", res = 800)
 grid.newpage()
 # Preparing the 3 x 2 layout for the plots
 pushViewport(viewport(layout = grid.layout(nrow = 3, ncol = 2)))
 # Pushing the viewport for panel A
 pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 1))
 print(figure_5a, vp = viewport(x = 0.02, width = 0.98, just = "left"))
-grid.text("A", x = 0.04, y = 0.95)
+grid.text("A", x = 0.04, y = 0.95, gp = gpar(fontsize = 18))
 popViewport()
 # Pushing the viewport for panel B
 pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 2))
 print(figure_5b, vp = viewport(x = 0.02, width = 0.98, just = "left"))
-grid.text("B", x = 0.04, y = 0.95)
+grid.text("B", x = 0.04, y = 0.95, gp = gpar(fontsize = 18))
 popViewport()
 # Pushing the viewport for panel C
 pushViewport(viewport(layout.pos.row = 2))
 print(figure_5c, vp = viewport(x = 0.02, width = 0.98, just = "left"))
-grid.text("C", x = 0.04, y = 0.95)
+grid.text("C", x = 0.02, y = 0.95, gp = gpar(fontsize = 18))
 popViewport()
 # Pushing the viewport for panel C
 pushViewport(viewport(layout.pos.row = 3))
 print(figure_5d, vp = viewport(x = 0.02, width = 0.98, just = "left"))
-grid.text("D", x = 0.04, y = 0.95)
+grid.text("D", x = 0.02, y = 0.95, gp = gpar(fontsize = 18))
 popViewport()
 dev.off()
 

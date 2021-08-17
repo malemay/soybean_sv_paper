@@ -30,7 +30,8 @@ ins_plot_data$size_class <- droplevels(ins_plot_data$size_class)
 
 # Defining a common theme for both plots
 common_theme <- theme_bw() + 
-	theme(panel.grid.minor = element_blank())
+	theme(strip.background = element_blank(),
+	      panel.grid.minor = element_blank())
 
 # Defining common x- and y-axes
 x_axis <- scale_x_continuous(name = "Sensitivity",
@@ -78,19 +79,19 @@ insertions_plot <-
 
 # Saving to disk as "figure_2.png"
 # OUTPUT : figures/figure_2.png
-png("figure_2.png", width = 12, height = 6, units = "in", res = 500)
+png("figure_2.png", width = 10, height = 20, units = "cm", res = 800)
 grid.newpage()
 # Locating the subplots in the figure, leaving some space for the "A" and "B" plot labels
-pushViewport(viewport(layout = grid.layout(1, 2)))
+pushViewport(viewport(layout = grid.layout(2, 1)))
 
 pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 1))
 print(deletions_plot, vp = viewport(x = 0.03, width = 0.97, just = "left"))
-grid.text("A", x = 0.04, y = 0.97, gp = gpar(fontsize = 24))
+grid.text("A", x = 0.04, y = 0.95, gp = gpar(fontsize = 16))
 popViewport()
 
-pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 2))
+pushViewport(viewport(layout.pos.row = 2, layout.pos.col = 1))
 print(insertions_plot, vp = viewport(x = 0.03, width = 0.97, just = "left"))
-grid.text("B", x = 0.04, y = 0.97, gp = gpar(fontsize = 24))
+grid.text("B", x = 0.04, y = 0.95, gp = gpar(fontsize = 16))
 popViewport()
 
 dev.off()

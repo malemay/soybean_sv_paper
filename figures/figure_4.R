@@ -28,10 +28,10 @@ figure_4b <- ggplot(overlap_data[overlap_data$ af != 1, ], aes(x = af_class, fil
 	scale_y_log10(name = "Number of SVs") +
 	scale_fill_discrete(name = "Overlapped feature") +
 	theme_bw() +
-	theme(text = element_text(size = 6),
-	      axis.text = element_text(size = 4, color = "black"),
-	      axis.ticks = element_line(size = 0.2),
-	      strip.text = element_text(size = 6),
+	theme(text = element_text(size = 8),
+	      axis.text = element_text(size = 7, color = "black"),
+	      axis.ticks = element_line(size = 0.6),
+	      strip.text = element_text(size = 8),
 	      strip.background = element_blank(),
 	      panel.spacing = unit(0.01, "npc"),
 	      legend.position = "top",
@@ -74,7 +74,7 @@ observed_proportions$feature <- factor(observed_proportions$feature, levels = c(
 # Creating panel A of the plot
 figure_4a <- ggplot(random_proportions, aes(x = proportion)) +
 	geom_histogram(fill = "white", color = "blue", bins = 60, size = 0.1) +
-	geom_vline(data = observed_proportions, mapping = aes(xintercept = proportion), linetype = 3, color = "black", size = 0.15) +
+	geom_vline(data = observed_proportions, mapping = aes(xintercept = proportion), linetype = 3, color = "black", size = 0.4) +
 	geom_blank(data = data.frame(proportion = c(0.09, 0.32), svtype = c("INS", "INS"), feature = c("gene", "upstream5kb"))) +
 	facet_grid(svtype ~ feature, scales = "free_x",
 		   labeller = labeller(svtype = c("DEL" = "Deletions", "INS" = "Insertions"))) +
@@ -82,28 +82,28 @@ figure_4a <- ggplot(random_proportions, aes(x = proportion)) +
 	scale_y_continuous(name = "Count") +
 	theme_bw() +
 	theme(panel.grid = element_blank(),
-	      axis.ticks = element_line(size = 0.2),
-	      axis.text = element_text(size = 4, color = "black"),
-	      text = element_text(size = 6), 
-	      strip.text = element_text(size = 6,
+	      axis.ticks = element_line(size = 0.4),
+	      axis.text = element_text(size = 7, color = "black"),
+	      text = element_text(size = 8), 
+	      strip.text = element_text(size = 8,
 					margin = margin(0, 2, 2, 2, "pt")),
 	      strip.background = element_blank(),
 	      panel.spacing = unit(0.01, "npc"))
 
 # Arranging the two panels horizontally and saving as a png file
 # OUTPUT : figures/figure_4.png
-png("figure_4.png", width = 6, height = 3, units = "in", res = 500)
+png("figure_4.png", width = 12, height = 12, units = "cm", res = 800)
 grid.newpage()
 
 # Creating the two-panel layout
-pushViewport(viewport(layout = grid.layout(nrow = 1, ncol = 2)))
+pushViewport(viewport(layout = grid.layout(nrow = 2, ncol = 1, heights = unit(c(1, 1.2), c("null", "null")))))
 # Pushing the left viewport, leaving some space to the left for the panel label
 pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 1))
 print(figure_4a, vp = viewport(x = 0.02, width = 0.98, just = "left"))
 grid.text("A", x = 0.05, y = 0.95)
 popViewport()
 # Doing the same thing with the right viewport
-pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 2))
+pushViewport(viewport(layout.pos.row = 2, layout.pos.col = 1))
 print(figure_4b, vp = viewport(x = 0.02, width = 0.98, just = "left"))
 grid.text("B", x = 0.05, y = 0.95)
 popViewport()
