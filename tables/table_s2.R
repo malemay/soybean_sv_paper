@@ -45,6 +45,10 @@ norepeat_table$nrgprop <- sprintf("%.1f", norepeat_table$nrgprop)
 stopifnot(identical(rownames(norepeat_table), gene_table$feature))
 gene_table <- cbind(gene_table, norepeat_table)
 
+# Formatting the feature column for the table notes
+gene_table$feature <- c("cds\\tnote{c}", "gene", "intergenic", "upstream5kb\\tnote{d}")
+
+
 # Saving to file
 # OUTPUT : tables/table_s2.csv
 write.table(gene_table, file = "table_s2.csv", row.names = FALSE, col.names = TRUE, sep = ",", quote = FALSE)

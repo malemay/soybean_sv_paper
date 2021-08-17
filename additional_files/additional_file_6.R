@@ -15,6 +15,6 @@ names(polymorphic_tes) <- c("sv_id", "sv_chrom", "sv_start_pos", "sv_end_pos", "
 			    "blastn_percent_identity", "te_group", "te_class", "te_subclass", "te_order", "te_superfamily", 
 			    "te_family", "te_description")
 
-# OUTPUT : additional_files/additional_te_file.csv
-write.table(polymorphic_tes, file = "additional_te_file.csv", sep = ",", col.names = TRUE, row.names = FALSE, quote = FALSE)
+# OUTPUT : additional_files/additional_file_6.csv
+write.table(polymorphic_tes, file = "additional_file_6.csv", sep = ",", col.names = TRUE, row.names = FALSE, quote = FALSE)
 

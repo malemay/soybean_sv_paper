@@ -56,10 +56,7 @@ TABLES := $(shell seq 1 2 | xargs -I {} echo tables/table_{}.png)
 
 # Supplemental files
 SDIR := additional_files
-SUPFILES := $(SDIR)/additional_file_1.pdf $(SDIR)/additional_te_file.csv \
-	$(SDIR)/additional_bp_over_file.csv $(SDIR)/additional_bp_under_file.csv \
-	$(SDIR)/additional_pfam_over_file.csv  $(SDIR)/additional_pfam_under_file.csv \
-	$(SDIR)/additional_tir_similarity_file.csv
+SUPFILES := $(SDIR)/additional_file_1.pdf $(shell seq 2 7 | xargs -I {} echo additional_files/additional_file_{}.csv)
 
 # Supplemental figures S1 to S21 except figure S18 which depends on another file
 SUPFIGURES := $(shell seq 1 21 | xargs -I {} echo figures/figure_s{}.png | grep -v s18) figures/Gm04_2257090_annotated.png 
@@ -94,12 +91,12 @@ $(SDIR)/additional_file_1.pdf : $(SUPFIGURES) $(SUPTABLES) \
 $(SDIR)/additional_%.csv : $(SDIR)/additional_%.R
 	cd $(SDIR) ; $(R_RUN_COMMAND) $(<F)
 
-$(SDIR)/additional_te_file.csv : te_analysis/polymorphic_tes.tsv
-$(SDIR)/additional_bp_over_file.csv : scripts/format_go_csv.R gene_analysis/GO_ANALYSIS
-$(SDIR)/additional_bp_under_file.csv : scripts/format_go_csv.R gene_analysis/GO_ANALYSIS
-$(SDIR)/additional_pfam_over_file.csv : scripts/format_go_csv.R gene_analysis/GO_ANALYSIS
-$(SDIR)/additional_pfam_under_file.csv : scripts/format_go_csv.R gene_analysis/GO_ANALYSIS
-$(SDIR)/additional_tir_similarity_file.csv : te_analysis/multiple_alignments/TIR_TSD_ANALYSIS
+$(SDIR)/additional_file_2.csv : scripts/format_go_csv.R gene_analysis/GO_ANALYSIS
+$(SDIR)/additional_file_3.csv : scripts/format_go_csv.R gene_analysis/GO_ANALYSIS
+$(SDIR)/additional_file_4.csv : scripts/format_go_csv.R gene_analysis/GO_ANALYSIS
+$(SDIR)/additional_file_5.csv : scripts/format_go_csv.R gene_analysis/GO_ANALYSIS
+$(SDIR)/additional_file_6.csv : te_analysis/polymorphic_tes.tsv
+$(SDIR)/additional_file_7.csv : te_analysis/multiple_alignments/TIR_TSD_ANALYSIS
 
 ##### CREATING THE MAIN FIGURES
 

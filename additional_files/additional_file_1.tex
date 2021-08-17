@@ -54,7 +54,7 @@
 
 % Information for the title page
 \title{Supplemental data to ``Combined use of Oxford Nanopore and Illumina sequencing yields insights into soybean structural variation biology''}
-\author{Marc-André Lemay \and Jonas Andreas Sibbesen \and Davoud Torkamaneh \and Jérémie Hamel \and Roger C. Levesque \and François Belzile}
+\author{Marc-André Lemay \and Jonas A. Sibbesen \and Davoud Torkamaneh \and Jérémie Hamel \and Roger C. Levesque \and François Belzile}
 \date{}
 
 % END OF PREAMBLE
@@ -303,7 +303,7 @@ In total, we identified high-quality TSD/TIR sequences for 42 individual SVs.
 For each of the TIR sequences identified, we computed the percentage of matching nucleotides between the two inverted repeats and averaged them over all insertion sequences for a given SV.
 
 Some of the TIR sequences were identified directly from the reference sequence and may thus have been of higher quality than the error-prone assemblies generated from the Oxford Nanopore data.
-Therefore, we only show the results obtained from the de novo-assembled sequences in figure 6c of the main text.
+Therefore, we only show the results obtained from the de novo-assembled sequences in figure 5c of the main text.
 This results in 40 individual SVs collectively representing 17 sequences in the SoyTEdb database.
 
 \subsection{Detailed analysis of a 480-bp Stowaway MITE insertion}
@@ -354,7 +354,7 @@ Samples that were called as homozygous for the reference allele at the 6-bp inse
 Finally, eight (8) samples for which missing genotype calls did not allow unambiguous classification were discarded and not used for further analysis.
 
 Using this classification, we computed the alternate allele frequency within each of the three allele classes of the 156 SNVs in the 39-kb LD block.
-These results are visualized in figure 6d of the main text.
+These results are visualized in figure 5d of the main text.
 They show clear similarity between the "present" and "excised" haplotypes, which is indeed consistent with the 6-bp insertion being a remnant from the excision of the 480-bp TE.
 
 \clearpage
@@ -374,7 +374,7 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 		before first line = {\begin{tabular}{lccccccccccccccccccc}%
 			\toprule & \multicolumn{4}{c}{[50bp -- 100bp[} & &  \multicolumn{4}{c}{[100bp -- 1kb[} & & \multicolumn{4}{c}{[1kb -- 10kb[} & & \multicolumn{4}{c}{$\geq$ 10kb}%
 			\\[0.5ex] \cmidrule{2-5} \cmidrule{7-10} \cmidrule{12-15} \cmidrule{17-20}%
-			& DEL & INS & DUP & INV & & DEL & INS & DUP & INV & & DEL & INS & DUP & INV & & DEL & INS & DUP & INV %
+			& DEL\tnote{a} & INS\tnote{b} & DUP\tnote{c} & INV\tnote{d} & & DEL & INS & DUP & INV & & DEL & INS & DUP & INV & & DEL & INS & DUP & INV %
 			\\[0.5ex] \cmidrule{2-5} \cmidrule{7-10} \cmidrule{12-15} \cmidrule{17-20}},%
 			late after last line = { \\ \bottomrule \end{tabular}}]%
 		{../tables/table_s1.csv}%
@@ -385,7 +385,10 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 			   \hugedel   & \hugeins   & \hugedup   & \hugeinv \\}
 
 			   \begin{tablenotes}
-			   \item[] DEL: deletions; INS: insertions; DUP: duplications; INV: inversions
+			   \item[a] DEL: deletions
+			   \item[b] INS: insertions
+			   \item[c] DUP: duplications
+			   \item[d] INV: inversions
 			   \end{tablenotes}
 
 	\end{threeparttable}
@@ -405,9 +408,9 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 	\begin{threeparttable}\small
 
 		\csvreader[head to column names,
-		tabular = lm{\widthof{\% in reference}}r@{\hskip 2pt}lr@{\hskip 2pt}lcm{\widthof{\% in reference}}r@{\hskip 2pt}lr@{\hskip 2pt}l,
+		tabular = lm{\widthof{\% in reference}}r@{\hskip 5pt}lr@{\hskip 5pt}lcm{\widthof{\% in reference}}r@{\hskip 2pt}lr@{\hskip 2pt}l,
 		table head = \toprule & \multicolumn{5}{c}{Whole genome} & & \multicolumn{5}{c}{Non-repeated genome}\\ \cmidrule{2-6} \cmidrule{8-12}%
-		Feature & \% in reference & DEL & (\%) & INS & (\%) & & \% in reference & DEL & (\%) & INS & (\%)\\\midrule,
+		Feature & \% in reference & DEL\tnote{a} & (\%) & INS\tnote{b} & (\%) & & \% in reference & DEL & (\%) & INS & (\%)\\\midrule,
 		table foot = \bottomrule]%
 		% DEPENDENCY: tables/table_s2.csv
 		{../tables/table_s2.csv}%
@@ -416,9 +419,10 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 		\centering \nrgprop & \nrDEL & (\nrDELprop) & \nrINS & (\nrINSprop)\arraybackslash}
 
 			   \begin{tablenotes}\footnotesize
-			   \item{ } DEL: deletions, INS: insertions
-			   \item{ } cds: coding sequence
-			   \item{ } upstream5kb: within 5 kb upstream of a gene
+			   \item[a] DEL: deletions
+			   \item[b] INS: insertions
+			   \item[c] cds: coding sequence
+			   \item[d] upstream5kb: within 5 kb upstream of a gene
 			   \end{tablenotes}
 
 	\end{threeparttable}
@@ -450,6 +454,8 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 		\item[a] Observed difference between the mean allele frequencies of the SVs overlapping the corresponding genic features
 		\item[b] p-value computed from a one-sided comparison to the distribution of mean differences obtained from the randomizations (10,000 iterations).
 			The significance threshold was set to $\alpha = 0.05 \div 6 = 0.008$ to correct for multiple testing.
+		\item[c] cds: coding sequence
+		\item[d] upstream5kb: within 5 kb upstream of a gene
 		\end{tablenotes}
 	\end{threeparttable}
 
@@ -946,13 +952,13 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Figure S17 \caption[Population structure analyses of the whole 102 Canadian soybean panel]{{{{
+% Figure S17 \caption[Population structure analyses of the whole Canadian soybean panel]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s17.png
 	\includegraphics[width = 6.5in]{figure_s17}
 
-	\caption[Population structure analyses of the whole 102 Canadian soybean panel]{
-		Population structure analyses of the whole 102 Canadian soybean panel. 
+	\caption[Population structure analyses of the whole Canadian soybean panel]{
+		Population structure analyses of the whole Canadian soybean panel. 
 		PCA were computed based on (A) SVs discovered by Illumina and Oxford Nanopore and genotyped with Illumina data using Paragraph and (B) SNVs called by Platypus from Illumina data. 
 		The first three principal components are shown for each PCA. 
 		Samples are colored according to their population assignment by fastStructure based on the population with the highest q-value for each sample. 

@@ -61,5 +61,11 @@ output_table$insp <- ifelse(output_table$ins_pvalue == 0, "$< 10^{-4}$", sprintf
 
 # Outputting the table to file
 # OUTPUT: tables/table_s3.csv
+output_table$regionfmt[1] <- "cds\\tnote{c} - gene"
+output_table$regionfmt[3] <- "cds - upstream5kb\\tnote{d}"
+
+# Formatting the first column to include footnotes
+
+
 write.table(output_table, file = "table_s3.csv", col.names = TRUE, row.names = FALSE, quote = FALSE, sep = ",")
 

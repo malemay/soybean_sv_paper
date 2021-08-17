@@ -23,5 +23,5 @@ names(tir_data)[7] <- "tir_proportion_matching_nucleotides"
 tir_data <- tir_data[order(tir_data$tir_proportion_matching_nucleotides, decreasing = TRUE), ]
 
 # Outputting to file
-write.table(tir_data, file = "additional_tir_similarity_file.csv", sep = ",", col.names = TRUE, row.names = FALSE, quote = FALSE)
+write.table(tir_data, file = "additional_file_7.csv", sep = ",", col.names = TRUE, row.names = FALSE, quote = FALSE)
 
