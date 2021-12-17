@@ -17,6 +17,9 @@
 \usepackage{xcolor} % enable text coloring
 \usepackage{calc} % makes \widthof available to set the width of the last column
 \usepackage{array} % using command \arraybackslash to restore the definition of \\ after \centering
+\usepackage{longtable} % allow tables to span more than one page
+\usepackage{threeparttablex} % threeparttable for longtable
+\usepackage{capt-of} % put caption on next page
 
 % Formatting the table of contents/subsection
 \renewcommand{\contentsname}{Supplemental methods}
@@ -559,6 +562,55 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
+% Table X \caption{Metadata on the Illumina sequencing data of the 102 Canadian accessions}{{{
+\begin{landscape} \small
+	\begin{ThreePartTable}
+
+		\begin{TableNotes}
+		\item[a] The length of a single sequence read
+		\item[b] The number of sequenced spots. Each spot corresponds to one forward and one reverse read.
+		\item[c] The average sequencing depth computed from reads mapped to assembled chromosome pseudomolecules (Gm01 .. Gm20)
+		\item[d] An "X" indicates that the sample belongs to the core set from which most Oxford Nanopore samples were selected
+		\item[e] An "X" indicates that the sample was sequenced using Oxford Nanopore Technologies sequencing
+		\end{TableNotes}
+
+\begin{longtable}{llcccccl}
+
+	\caption{Metadata on the Illumina sequencing data of the 102 Canadian accessions}\\
+
+	\label{tablex}\\
+
+	\toprule
+	ID & Name & Read length\tnote{a} & Number of spots\tnote{b} & Average depth\tnote{c} & Core\tnote{d} & ONT\tnote{e} & SRA Run accession \\
+	\midrule \endfirsthead
+
+	\caption[]{Metadata on the Illumina sequencing data of the 102 Canadian accessions \emph{(continued)}}\\
+
+	\toprule
+	ID & Name & Read length\tnote{a} & Number of spots\tnote{b} & Average depth\tnote{c} & Core\tnote{d} & ONT\tnote{e} & SRA Run accession \\
+	\midrule
+	\endhead
+
+	\bottomrule
+	Continued on next page \\
+	\endfoot
+
+	\bottomrule \insertTableNotes
+	\endlastfoot
+	\csvreader[head to column names,
+		late after line=\\,
+		late after last line=,
+		before reading={\catcode`\#=12},
+		after reading={\catcode`\#=6},
+		/csv/separator=semicolon]%
+	{../tables/table_sx.csv}{}{\ID & \name & \length & \spots & \depth & \core & \nanopore & \run}
+
+\end{longtable}
+\end{ThreePartTable}
+\end{landscape}
+
+\clearpage%}}}
+
 % Table S7 \caption{DNA extraction and preparation methods for Oxford Nanopore sequencing}{{{
 \begin{table}
 	\centering
@@ -659,6 +711,30 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 	\end{threeparttable}
 
 \end{table}
+
+\clearpage%}}}
+
+% Figure Y \caption[Graphical summary of the analyses presented in the paper]{{{{
+\begin{lsfigure}
+	% DEPENDENCY : Figure_Y.png
+	\includegraphics[width = 8.5in]{Figure_y}
+
+	\flushleft{\emph{Caption on next page}}
+
+	\label{fig_y}
+\end{lsfigure}
+
+	\captionof{figure}[Graphical summary of the analyses presented in the paper]{
+		Graphical summary of the analyses presented in the paper.
+		The various steps of the analysis are color-coded depending on the data output by that step (see legend at the bottom of the figure).
+		The words in italics in parentheses indicate the name of program used to compute that part of the analysis, where applicable.
+		Arrows between steps indicate that one step is a prerequisite to the step it is pointing to.
+		An exception to this is the dotted arrow indicating that both SV genotypes and the ground truth Oxford Nanopore SV dataset are necessary to benchmarking.
+		Benchmarks were performed for three different SV datasets genotyped using Illumina data: SVs discoverered from Illumina data only, SVs discovered from Oxford Nanopore data only, and the combination of SVs discovered from the Illumina and Oxford Nanopore data.
+	as part of this paper.
+	Population-scale analyses were performed on the SV dataset based on combined Illumina and Oxford Nanopore SVs.
+	ONT: Oxford Nanopore Technologies, SV: Structural variant, SNV: single-nucleotide variant, GO: Gene Ontology, BP: Biological Process, TIR: terminal inverted repeat, TSD: target site duplication, MITE: miniature inverted-repeat transposable element, PCA: principal component analysis.
+}
 
 \clearpage%}}}
 

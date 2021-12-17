@@ -59,10 +59,10 @@ SDIR := additional_files
 SUPFILES := $(SDIR)/additional_file_1.pdf $(shell seq 2 7 | xargs -I {} echo additional_files/additional_file_{}.csv)
 
 # Supplemental figures S1 to S21 except figure S18 which depends on another file
-SUPFIGURES := $(shell seq 1 21 | xargs -I {} echo figures/figure_s{}.png | grep -v s18) figures/Gm04_2257090_annotated.png 
+SUPFIGURES := $(shell seq 1 21 | xargs -I {} echo figures/figure_s{}.png | grep -v s18) figures/Gm04_2257090_annotated.png figures/Figure_Y.png
 
 # Supplemental tables S1 to S9
-SUPTABLES := $(shell seq 1 9 | xargs -I {} echo tables/table_s{}.csv)
+SUPTABLES := $(shell seq 1 9 | xargs -I {} echo tables/table_s{}.csv) tables/table_sx.csv
 
 # --- This target prepares all the figures, tables, and supplemental data
 all: $(FIGURES) $(TABLES) $(SUPFILES)
@@ -230,6 +230,8 @@ tables/table_s6.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 tables/table_s7.csv : tables/lab_methods_table.csv
 tables/table_s8.csv : tables/lab_methods_table.csv
 tables/table_s9.csv : nanopore_sv_calling/all_metainfo.RData
+
+# I'll need an entry for the supplementary table on Illumina metadata here
 
 
 ##### CREATING SOME INTERMEDIATE DATA FOR THE FIGURES AND TABLES
