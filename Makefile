@@ -49,7 +49,7 @@ WTPOA_CNS = ~/programs/wtdbg2/wtpoa-cns
 ##### CREATING SOME VARIABLES AND MAIN TARGETS
 
 # Figures 1 to 5
-FIGURES := $(shell seq 1 5 | xargs -I {} echo figures/figure_{}.png)
+FIGURES := $(shell seq 1 5 | xargs -I {} echo figures/figure_{}.png) figures/figure_X.png
 
 # Tables 1 to 2
 TABLES := $(shell seq 1 2 | xargs -I {} echo tables/table_{}.png)
