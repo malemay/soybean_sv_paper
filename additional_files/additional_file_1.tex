@@ -362,6 +362,25 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage
 
+\section{Subsampling analysis of four samples sequenced using Oxford Nanopore sequencing}
+
+Given the relatively modest average sequencing depth (12X) of the Oxford Nanopore data obtained in this study, we performed subsampling analyses of the data for four cultivars.
+We generated these results both to better understand our results and to provide guidelines for other researchers wanting to use Oxford Nanopore sequencing data for calling SVs.
+
+We adopted a subsampling approach in order to simulate lower coverage from the four cultivars that were sequenced with > 16X sequencing depth (Alta, Maple Isle, AC2001, OAC Lakeview).
+For each of the cultivars, we sampled 20\%, 40\%, 60\% and 80\% of the aligned reads using \texttt{samtools view --subsample} \citep{bcftools}.
+Five (5) replicates of each cultivar/sampling fraction combination were generated using a different randomly chosen seed for each sample.
+Each of the 80 \texttt{.bam} files thus generated were processed as described in the main text to generate a catalog of SV calls from each of them:
+
+* SV calling with Sniffles using parameters \texttt{--min\_support 3 --min\_seq\_size 1000 --min\_homo\_af 0.7}
+* Filtering of variants as described in the main text
+* Benchmarking of each SV dataset thus called and filtered with the sveval R package, using the SVs called on the complete dataset for the corresponding cultivar as a ground truth
+
+Breakpoint refinement was not performed on the SV datasets generated from these subsamples for computational efficiency reasons.
+However, we believe that the impact of breakpoint refinement on these comparisons would have been minimal and should not impact the conclusions drawn from these analyses.
+
+Results of the subsampling analyses are presented in \ref{fig_s2} (deletions), \ref{fig_s3} (insertions), \ref{fig_s4} (duplications) and \ref{fig_s5} (inversions).
+
 % Table S1 \caption[Number of SVs per Oxford Nanopore sample]{{{{
 
 \begin{landscape}
@@ -738,6 +757,86 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
+% Figure sA \caption[Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data]{{{{
+\begin{cfigure}
+	% DEPENDENCY : figure_sA.png
+	\includegraphics[width = 6.2in]{figure_sA}
+
+	\label{fig_sA}
+
+	\caption[Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data]{
+		Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data.
+		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
+		SVs were called on each of these subsamples and (A) sensitivity and (B) computed by comparing the resulting SVs to the SVs called on the full dataset for the corresponding cultivar.
+		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value.
+		Asterisks indicate the value (1 by definition) obtained for the full dataset.
+		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
+}
+
+\end{cfigure}
+
+\clearpage%}}}
+
+% Figure sB \caption[Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data]{{{{
+\begin{cfigure}
+	% DEPENDENCY : figure_sB.png
+	\includegraphics[width = 6.2in]{figure_sB}
+
+	\label{fig_sB}
+
+	\caption[Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data]{
+		Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data.
+		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
+		SVs were called on each of these subsamples and (A) sensitivity and (B) computed by comparing the resulting SVs to the SVs called on the full dataset for the corresponding cultivar.
+		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value.
+		Asterisks indicate the value (1 by definition) obtained for the full dataset.
+		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
+}
+
+\end{cfigure}
+
+\clearpage%}}}
+
+% Figure sC \caption[Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data]{{{{
+\begin{cfigure}
+	% DEPENDENCY : figure_sC.png
+	\includegraphics[width = 6.2in]{figure_sC}
+
+	\label{fig_sC}
+
+	\caption[Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data]{
+		Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data.
+		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
+		SVs were called on each of these subsamples and (A) sensitivity and (B) computed by comparing the resulting SVs to the SVs called on the full dataset for the corresponding cultivar.
+		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value.
+		Asterisks indicate the value (1 by definition) obtained for the full dataset.
+		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
+}
+
+\end{cfigure}
+
+\clearpage%}}}
+
+% Figure sD \caption[Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data]{{{{
+\begin{cfigure}
+	% DEPENDENCY : figure_sD.png
+	\includegraphics[width = 6.2in]{figure_sD}
+
+	\label{fig_sD}
+
+	\caption[Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data]{
+		Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data.
+		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
+		SVs were called on each of these subsamples and (A) sensitivity and (B) computed by comparing the resulting SVs to the SVs called on the full dataset for the corresponding cultivar.
+		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value.
+		Asterisks indicate the value (1 by definition) obtained for the full dataset.
+		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
+}
+
+\end{cfigure}
+
+\clearpage%}}}
+
 % Figure S1 \caption[Sensitivity and precision of Illumina deletion and insertion genotyping in non-repeat regions]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s1.png
@@ -1028,23 +1127,38 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \clearpage%}}}
 
-% Figure S17 \caption[Population structure analyses of the whole Canadian soybean panel]{{{{
+% Figure S17 \caption[Principal component analyses (PCA) of the whole Canadian soybean panel]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s17.png
 	\includegraphics[width = 6.5in]{figure_s17}
 
-	\caption[Population structure analyses of the whole Canadian soybean panel]{
-		Population structure analyses of the whole Canadian soybean panel. 
-		PCA were computed based on (A) SVs discovered by Illumina and Oxford Nanopore and genotyped with Illumina data using Paragraph and (B) SNVs called by Platypus from Illumina data. 
+	\caption[Principal component analyses (PCA) of the whole Canadian soybean panel]{
+		Principal component analyses (PCA) of the whole Canadian soybean panel.
+		PCA were computed based on (A) SVs discovered by Illumina and Oxford Nanopore and genotyped with Illumina data using Paragraph and (B) SNVs called by Platypus from Illumina data.
 		The first three principal components are shown for each PCA. 
-		Samples are colored according to their population assignment by fastStructure based on the population with the highest q-value for each sample. 
-		A subset of the Illumina SNVs were used by fastStructure to infer the populations. 
-		Samples with a maximum q-value below 0.6 are considered admixed and are labeled with asterisks.
+		The color of each point indicates the population that the cultivar belongs to according to the fastStructure analysis with SNVs, following the same color scheme as in Figure 4 of the main text.
+		Samples with a maximum q-value below 0.6 (as inferred from fastStructure) are considered admixed and are labeled with asterisks.
 	}
 
 	\label{fig_s17}
 
 \end{cfigure}
+
+\clearpage%}}}
+
+% Figure sE \caption[Neighbour-joining phylogenetic trees of the population of 102 Canadian soybean cultivars]{{{{
+\begin{lsfigure}
+	% DEPENDENCY : figure_sE.png
+	\includegraphics[width = 9.5in]{figure_sE}
+
+	\caption[Neighbour-joining phylogenetic trees of the population of 102 Canadian soybean cultivars]{
+		Neighbour-joining phylogenetic trees of the population of 102 Canadian soybean cultivars derived from (A) SVs discovered by Illumina and Oxford Nanopore and genotyped with Illumina data using Paragraph and (B) SNVs called by Platypus from Illumina data.
+		Tip label color indicates the population that the cultivar belongs to according to the fastStructure analysis with SNVs, following the same color scheme as in Figure 4 of the main text.
+		Node labels indicate the number of trees (out of 100) of the bootstrap analysis that support a given node/grouping.
+	}
+
+	\label{fig_sE}
+\end{lsfigure}
 
 \clearpage%}}}
 

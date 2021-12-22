@@ -59,7 +59,7 @@ SDIR := additional_files
 SUPFILES := $(SDIR)/additional_file_1.pdf $(shell seq 2 7 | xargs -I {} echo additional_files/additional_file_{}.csv)
 
 # Supplemental figures S1 to S21 except figure S18 which depends on another file
-SUPFIGURES := $(shell seq 1 21 | xargs -I {} echo figures/figure_s{}.png | grep -v s18) figures/Gm04_2257090_annotated.png figures/Figure_Y.png
+SUPFIGURES := $(shell seq 1 21 | xargs -I {} echo figures/figure_s{}.png | grep -v s18) figures/Gm04_2257090_annotated.png figures/Figure_Y.png figures/figure_sA.png figures/figure_sB.png figures/figure_sC.png figures/figure_sD.png figures/figure_sE.png
 
 # Supplemental tables S1 to S9
 SUPTABLES := $(shell seq 1 9 | xargs -I {} echo tables/table_s{}.csv) tables/table_sx.csv
