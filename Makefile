@@ -48,8 +48,8 @@ WTPOA_CNS = ~/programs/wtdbg2/wtpoa-cns
 
 ##### CREATING SOME VARIABLES AND MAIN TARGETS
 
-# Figures 1 to 5
-FIGURES := $(shell seq 1 5 | xargs -I {} echo figures/figure_{}.png) figures/figure_X.png
+# Figures 1 to 6
+FIGURES := $(shell seq 1 6 | xargs -I {} echo figures/figure_{}.png)
 
 # Tables 1 to 2
 TABLES := $(shell seq 1 2 | xargs -I {} echo tables/table_{}.png)
@@ -148,9 +148,11 @@ $(CIRCD)/sv_highlights.txt $(CIRCD)/ltr_highlights.txt $(CIRCD)/dna_highlights.t
 
 # --- End of the Circos figure section
 
-figures/figure_4.png : gene_analysis/GENE_OVERLAP_ANALYSIS gene_analysis/permutation_all_100kb.RData
+# Placeholder for figure 4
 
-figures/figure_5.png : te_analysis/polymorphic_tes.tsv \
+figures/figure_5.png : gene_analysis/GENE_OVERLAP_ANALYSIS gene_analysis/permutation_all_100kb.RData
+
+figures/figure_6.png : te_analysis/polymorphic_tes.tsv \
 	te_analysis/tian2012_tes.txt \
 	te_analysis/multiple_alignments/TIR_TSD_ANALYSIS \
 	te_analysis/multiple_alignments/Gm04_2257090_INS_480_analysis/STOWAWAY_MITE_ANALYSIS
