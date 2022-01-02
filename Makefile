@@ -148,7 +148,7 @@ $(CIRCD)/sv_highlights.txt $(CIRCD)/ltr_highlights.txt $(CIRCD)/dna_highlights.t
 
 # --- End of the Circos figure section
 
-# Placeholder for figure 4
+figures/figure_4.png : structure_analysis/structure.5.meanQ structure_analysis/sv_structure.5.meanQ
 
 figures/figure_5.png : gene_analysis/GENE_OVERLAP_ANALYSIS gene_analysis/permutation_all_100kb.RData
 
@@ -769,6 +769,11 @@ structure_analysis/platypus_filtered_snps.vcf : structure_analysis/platypus_snps
 structure_analysis/structure.5.meanQ : structure_analysis/platypus_filtered_snps.vcf \
 	structure_analysis/compute_structure.sh
 	cd structure_analysis ; ./compute_structure.sh $(FASTSTRUCTURE) $(VCFTOOLS) $(PLINK)
+
+# Computing the fastStructure results from the filtered SVs genotyped by Paragraph on combined Illumina/ONT SVs
+structure_analysis/sv_structure.5.meanQ : structure_analysis/sv_pca/SV_PCA \
+	structure_analysis/compute_sv_structure.sh
+	cd structure_analysis ; ./compute_sv_structure.sh $(FASTSTRUCTURE)
 
 # Computing the PCA on the SNPs called with Platypus
 structure_analysis/snp_pca/SNP_PCA : structure_analysis/platypus_filtered_snps.vcf \

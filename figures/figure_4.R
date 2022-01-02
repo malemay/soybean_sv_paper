@@ -3,11 +3,59 @@
 # Figure 4 shows the results of the fastStructure analysis on SNVs and SVs
 
 # Loading the required packages
+library(combinat)
 library(ggplot2)
 library(grid)
 
-# Loading the structure data from file
-load("~/analyse_nanopore/manuscript_revision/population_analysis/structure/structure_data.RData")
+# Reading the results of the structure analysis from SNPs
+# DEPENDENCY : structure_analysis/structure.5.meanQ
+snp_structure <- read.table("../structure_analysis/structure.5.meanQ")
+snp_structure <- as.matrix(snp_structure)
+rowSums(snp_structure)
+
+# Reading the results of the structure analysis from SVs
+# DEPENDENCY : structure_analysis/sv_structure.5.meanQ
+sv_structure <- read.table("../structure_analysis/sv_structure.5.meanQ")
+sv_structure <- as.matrix(sv_structure)
+rowSums(sv_structure)
+
+# We need to find a permutation that makes the population numbers (1 to 5) equivalent for both analyses
+# Writing a function that finds the permutation of the second data.frame which minimizes the difference
+find_perm <- function(x, y) {
+	# Checking that the dimensions of the two objects are the same
+	stopifnot(identical(dim(x), dim(y)))
+
+	# Generating a matrix with all permutations as rows
+	permutations <- as.matrix(t(unname(as.data.frame(permn(1:ncol(y))))))
+
+	# Creating a vector that will hold the sum of distances
+	distances <- numeric(nrow(permutations))
+
+	# Iterating over the possible permutations
+	for(i in 1:nrow(permutations)) {
+		distances[i] <- sum(abs(x - y[, permutations[i, ]]))
+	}
+
+	# Returning the y matrix with the best permutation
+	y[, permutations[which.min(distances), ]]
+}
+
+sv_structure_perm <- find_perm(snp_structure, sv_structure)
+stopifnot(all(rowSums(sv_structure_perm) == rowSums(sv_structure)))
+
+sum(apply(snp_structure, 1, which.max) != apply(sv_structure_perm, 1, which.max))
+
+# Sorting the samples within the first matrix according to their population estimates
+sample_sort <- order(-apply(snp_structure, 1, which.max), snp_structure[, 1], snp_structure[, 2], snp_structure[, 3], snp_structure[, 4], snp_structure[, 5], decreasing = TRUE)
+snp_sorted <- snp_structure[sample_sort, ]
+sv_sorted  <- sv_structure_perm[sample_sort, ] 
+
+# A function to imitate the color selection in ggplot2
+# Taken from Stack Overflow: https://stackoverflow.com/questions/8197559/emulate-ggplot2-default-color-palette
+gg_color_hue <- function(n) {
+	hues = seq(15, 375, length = n + 1)
+	hcl(h = hues, l = 65, c = 100)[1:n]
+}
 
 # A plotting function that generates a structure plot from structure results using grid
 plot_structure <- function(x, scolors, vp = NULL, differences = NULL, diffcol = NULL) {
@@ -40,6 +88,10 @@ plot_structure <- function(x, scolors, vp = NULL, differences = NULL, diffcol = 
 
 	invisible(NULL)
 }
+
+# A vector indicating whether the population with the highest value is the same for both analyses
+differences <- apply(snp_sorted, 1, which.max) != apply(sv_sorted, 1, which.max)
+diff_colors <- ifelse(apply(snp_sorted, 1, max) < 0.6, "black", "red")
 
 # Saving the figure as Figure 4
 png("figure_4.png", width = 15, height = 12, units = "cm", res = 800)
