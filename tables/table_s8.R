@@ -4,12 +4,32 @@
 # DEPENDENCY : tables/lab_methods_table.csv
 lab_methods <- read.table("lab_methods_table.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 
-# Preparing the second table, which will contain metadata on the sequencing runs
-table_s8 <- lab_methods[, c(1:2, 9:13)]
-names(table_s8) <- c("sample", "date", "pores", "mass", "runtime", "yield", "nfifty")
-table_s8$nfifty <- sprintf("%.1f", table_s8$nfifty)
+# The first table will contain the first 8 columns, except date
+table_s8 <- lab_methods[, 1:8]
+table_s8 <- table_s8[, -2]
 
-# Writing to file
+# Creating some lookup tables to recode the columns
+protocol  <- c("CTAB" = "CTAB", 
+	      "Qiagen DNeasy Plant Mini Kit" = "DNeasy",
+	      "Qiagen Gentra Puregene Tissue Kit" = "Gentra")
+
+grinding <- c("Liquid nitrogen + Qiagen TissueLyser" = "LN + TL",
+	      "Lyophilisation + Qiagen TissueLyser" = "CD + TL",
+	      "Liquid nitrogen + mortar and pestle" = "LN + MP")
+
+size_selection <- c("None" = "None",
+		    "BluePippin High-Pass Plus > 15kb" = "BP 15kb",
+		    "BluePippin > 6kb" = "BP 6kb",
+		    "Circulomics SRE" = "SRE")
+
+names(table_s8) <- c("sample", "growing", "grinding", "extraction", "rnase", "size", "combined")
+
+# Changing the contents of the columns of Table S8
+table_s8$grinding <- grinding[table_s8$grinding]
+table_s8$extraction <- protocol[table_s8$extraction]
+table_s8$size <- size_selection[table_s8$size]
+
+# Writing the contents of the table to table_s8.csv
 # OUTPUT : tables/table_s8.csv
 write.table(table_s8, file = "table_s8.csv", col.names = TRUE, row.names = FALSE, quote = FALSE, sep = ",")
 

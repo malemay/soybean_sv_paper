@@ -157,7 +157,7 @@ For these testing purposes, we applied the SV refinement pipeline described abov
 SVs discovered using Sniffles were filtered as described in the main text (notably, only SVs genotyped as homozygous were kept) and then used as input to the pipeline.
 Insertions and deletions were refined if they met the required thresholds, which were as described above except for the minimum reciprocal overlap which was set to 0.7 and the maximum distance ratio which was set to 0.45.
 
-Table \ref{table_s9} shows the number of variants that could be refined or not for each sample.
+Table \ref{table_s10} shows the number of variants that could be refined or not for each sample.
 For all four samples, a majority of SVs subjected to the pipeline met the conditions for refinement.
 
 There can be three main reasons why a variant is not refined:
@@ -606,7 +606,7 @@ One exception to this result is smaller inversions (50 - 100 bp), as the small n
 
 \clearpage%}}}
 
-% Table X \caption{Metadata on the Illumina sequencing data of the 102 Canadian accessions}{{{
+% Table S7 \caption{Metadata on the Illumina sequencing data of the 102 Canadian accessions}{{{
 \begin{landscape} \small
 	\begin{ThreePartTable}
 
@@ -622,7 +622,7 @@ One exception to this result is smaller inversions (50 - 100 bp), as the small n
 
 	\caption{Metadata on the Illumina sequencing data of the 102 Canadian accessions}\\
 
-	\label{tablex}\\
+	\label{table_s7}\\
 
 	\toprule
 	ID & Name & Read length\tnote{a} & Number of spots\tnote{b} & Average depth\tnote{c} & Core\tnote{d} & ONT\tnote{e} & SRA Run accession \\
@@ -647,7 +647,7 @@ One exception to this result is smaller inversions (50 - 100 bp), as the small n
 		before reading={\catcode`\#=12},
 		after reading={\catcode`\#=6},
 		/csv/separator=semicolon]%
-	{../tables/table_sx.csv}{}{\ID & \name & \length & \spots & \depth & \core & \nanopore & \run}
+	{../tables/table_s7.csv}{}{\ID & \name & \length & \spots & \depth & \core & \nanopore & \run}
 
 \end{longtable}
 \end{ThreePartTable}
@@ -655,11 +655,11 @@ One exception to this result is smaller inversions (50 - 100 bp), as the small n
 
 \clearpage%}}}
 
-% Table S7 \caption{DNA extraction and preparation methods for Oxford Nanopore sequencing}{{{
+% Table S8 \caption{DNA extraction and preparation methods for Oxford Nanopore sequencing}{{{
 \begin{table}
 	\centering
 	\caption{DNA extraction and preparation methods for Oxford Nanopore sequencing}
-	\label{table_s7}
+	\label{table_s8}
 
 	\begin{threeparttable}\small
 
@@ -668,8 +668,8 @@ One exception to this result is smaller inversions (50 - 100 bp), as the small n
 		table head = \toprule Sample\tnote{a} & Growth\tnote{b} & Grinding\tnote{c} & %
 			     Extraction\tnote{d} & RNase T (\textdegree{}C)\tnote{e} & Size selection\tnote{f} & Combined\tnote{g} \\\midrule,
 		table foot = \bottomrule]%
-% DEPENDENCY : table_s7.csv
-		{../tables/table_s7.csv}%
+% DEPENDENCY : table_s8.csv
+		{../tables/table_s8.csv}%
 		{}%
 		{\sample & \growing & \grinding & \extraction & \rnase & \size & \combined}
 
@@ -695,12 +695,12 @@ One exception to this result is smaller inversions (50 - 100 bp), as the small n
 
 \clearpage%}}}
 
-% Table S8 \caption{Metadata on Oxford Nanopore sequencing runs}{{{
+% Table S9 \caption{Metadata on Oxford Nanopore sequencing runs}{{{
 \begin{table}
 	\centering
 
 	\caption{Metadata on Oxford Nanopore sequencing runs}
-	\label{table_s8}
+	\label{table_s9}
 
 	\begin{threeparttable}\small
 		\csvreader[tabular = llccccc,
@@ -708,8 +708,8 @@ One exception to this result is smaller inversions (50 - 100 bp), as the small n
 		table head = \toprule Sample\tnote{a} & Date\tnote{b} & Active pores\tnote{c} &%
 		Mass (ng)\tnote{d} & Run time (h)\tnote{e} & Yield (Gb)\tnote{f} & Read N50 (kb)\tnote{g} \\\midrule,
 		table foot = \bottomrule]%
-% DEPENDENCY : table_s8.csv
-		{../tables/table_s8.csv}%
+% DEPENDENCY : table_s9.csv
+		{../tables/table_s9.csv}%
 		{}%
 		{\sample & \date & \pores & \mass & \runtime & \yield & \nfifty}
 
@@ -728,12 +728,12 @@ One exception to this result is smaller inversions (50 - 100 bp), as the small n
 
 \clearpage%}}}
 
-% Table S9 \caption{Classification of deletions and insertions for four samples used to test the SV refinement pipeline}{{{
+% Table S10 \caption{Classification of deletions and insertions for four samples used to test the SV refinement pipeline}{{{
 
 \begin{table}
 	\centering
 	\caption{Classification of deletions and insertions for four samples used to test the SV refinement pipeline}
-	\label{table_s9}
+	\label{table_s10}
 
 	\begin{threeparttable}\small
 
@@ -741,8 +741,8 @@ One exception to this result is smaller inversions (50 - 100 bp), as the small n
 		tabular = l*4{c},
 		table head = {\toprule Sample & Refined\tnote{a} & Below thresholds\tnote{b} & Above max. SVLEN\tnote{c} & No alignment\tnote{d} \\\midrule},%
 			table foot = {\bottomrule}]%
-			% DEPENDENCY: tables/table_s9.csv
-		{../tables/table_s9.csv}%
+			% DEPENDENCY: tables/table_s10.csv
+		{../tables/table_s10.csv}%
 		{}%
 		{\sample & \refined & \belowthr & \svlen & \noalignment}
 

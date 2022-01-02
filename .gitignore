@@ -93,6 +93,7 @@ nanopore_sv_calling/QS5091.50J
 nanopore_sv_calling/ROLAND
 sv_genotyping/illumina_svs/CAD????_results
 tables/table_s?.csv
+tables/table_s10.csv
 tables/table_1.csv
 tables/table_1_data.txt
 tables/table_2.csv
