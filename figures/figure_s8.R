@@ -7,7 +7,8 @@ library(ggplot2)
 library(grid)
 
 # Loading the benchmark plotting data.frame that contains the processed data for plotting
-load("~/analyse_nanopore/manuscript_revision/sequencing_depth/benchmark_data.RData")
+# DEPENDENCY : nanopore_sv_calling/subsampling_analysis/benchmark_data.RData
+load("../nanopore_sv_calling/subsampling_analysis/benchmark_data.RData")
 
 # A function that takes the plotting dataframe, an SV type, and a measure (sensitivity or precision)
 # and plots the results

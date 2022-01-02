@@ -37,6 +37,7 @@
 sv_genotyping/illumina_svs/size_distribution.tsv
 *NanoStats.txt
 *ped
+*rds
 *tbi
 *vcf
 *vcf.gz

@@ -34,6 +34,7 @@ PORECHOP = ~/programs/Porechop/porechop-runner.py
 R_FIG_COMMAND = /usr/bin/Rscript
 R_RUN_COMMAND = /prg/R/4.0/bin/Rscript
 SAMTOOLS = ~/programs/samtools/samtools
+SAMTOOLS13 = /prg/samtools/1.13/bin/samtools
 SMOOVE = ~/programs/smoove/smoove
 SOAPDENOVO2 = /prg/SOAPdenovo/2.04/SOAPdenovo-63mer
 SNIFFLES = ~/programs/Sniffles-master/bin/sniffles-core-1.0.11/sniffles
@@ -186,10 +187,10 @@ figures/figure_s4.png : sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RD
 figures/figure_s5.png : depth_distributions/average_depth.RData utilities/line_ids.txt \
 	sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
 
-# Placeholder for figure s6
-# Placeholder for figure s7
-# Placeholder for figure s8
-# Placeholder for figure s9
+figures/figure_s6.png : nanopore_sv_calling/subsampling_analysis/benchmark_data.RData
+figures/figure_s7.png : nanopore_sv_calling/subsampling_analysis/benchmark_data.RData
+figures/figure_s8.png : nanopore_sv_calling/subsampling_analysis/benchmark_data.RData
+figures/figure_s9.png : nanopore_sv_calling/subsampling_analysis/benchmark_data.RData
 
 figures/figure_s10.png : sv_genotyping/illumina_svs/sveval_benchmarks/frequency_RData/sveval_frequency_rates.RData scripts/make_plot_data.R
 figures/figure_s11.png : sv_genotyping/illumina_svs/sveval_benchmarks/frequency_RData/sveval_frequency_rates.RData scripts/make_plot_data.R
@@ -245,6 +246,12 @@ tables/table_s10.csv : nanopore_sv_calling/all_metainfo.RData
 
 
 ##### CREATING SOME INTERMEDIATE DATA FOR THE FIGURES AND TABLES
+
+# Summarizing the benchmarks on the subsampling analysis for figures S6 to S9
+nanopore_sv_calling/subsampling_analysis/benchmark_data.RData : nanopore_sv_calling/subsampling_analysis/SUBSAMPLE_BENCHMARKS \
+	depth_distributions/average_depth.RData \
+	nanopore_sv_calling/subsampling_analysis/benchmark_summary.R
+	cd nanopore_sv_calling/subsampling_analysis/ ; $(R_RUN_COMMAND) benchmark_summary.R
 
 # Computing the average sequencing depths used for plotting figure S5
 depth_distributions/average_depth.RData : nanopore_data/NANOPORE_ALIGNMENT \
@@ -745,6 +752,27 @@ breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/nogeno_RData/sveval
 	breakpoint_refinement_analysis/refined_svs/paragraph/PARAGRAPH_REFINED_GENOTYPING \
 	breakpoint_refinement_analysis/refined_svs/vg/VG_REFINED_GENOTYPING
 	cd breakpoint_refinement_analysis/refined_svs/sveval_benchmarks ; $(R_RUN_COMMAND) refined_nogeno_analysis.R
+
+##### SUBSAMPLING ANALYSIS OF OXFORD NANOPORE SEQUENCING DATA (FOR SUPPLEMENTARY MATERIAL)
+
+# Computing the benchmarks
+nanopore_sv_calling/subsampling_analysis/SUBSAMPLE_BENCHMARKS : \
+	nanopore_sv_calling/subsampling_analysis/SUBSAMPLE_SNIFFLES_CALLING \
+	nanopore_sv_calling/SV_NORMALIZATION \
+	scripts/extract_rates.R \
+	scripts/read_filter_vcf.R \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	nanopore_sv_calling/subsampling_analysis/benchmark.R
+	cd nanopore_sv_calling/subsampling_analysis/ ; $(R_RUN_COMMAND) benchmark.R
+
+# Calling SVs on subsamples with Sniffles and filtering them for use in benchmarks
+nanopore_sv_calling/subsampling_analysis/SUBSAMPLE_SNIFFLES_CALLING : nanopore_data/NANOPORE_ALIGNMENT \
+	nanopore_sv_calling/subsampling_analysis/subsample_sniffles.sh \
+	nanopore_sv_calling/subsampling_analysis/filter_vcf_files.R \
+	scripts/filter_sniffles.R \
+	refgenome/Gmax_508_v4.0_mit_chlp.fasta \
+	nanopore_sv_calling/subsampling_analysis/subsample_parameters.txt
+	cd nanopore_sv_calling/subsampling_analysis/ ; ./subsample_sniffles.sh $(SAMTOOLS13) $(SNIFFLES) ; $(R_RUN_COMMAND) filter_vcf_files.R
 
 
 ##### POPULATION STRUCTURE ANALYSES FOR FIGURE S22
