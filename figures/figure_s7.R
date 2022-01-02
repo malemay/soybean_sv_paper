@@ -1,105 +1,107 @@
 #!/prg/R/4.0/bin/Rscript
 
-# Figure S7 shows the benchmarking of SVs discovered using Illumina sequencing
-# For deletions, 4 panels are needed (50-100, 100-1000, 1000-10000 and 10000+)
-# For insertions, only 2 panels are needed because almost no SVs > 1000 bp were found
+# Figure s7 shows the results of the subsampling analysis on insertion sensitivity and precision
 
-# This figure is similar to figures 1 and S4 except that here, the quality measure that
-# is used for the precision-recall curve is the number of independent programs that called
-# the variant, while the DP (number of supporting reads) threshold is maintained to 2 and
-# the AC_Hom (the number of ALT alleles within homozygous ALT calls) threshold is maintained
-# to 4.
 
-# Loading the ggplot2 and grid packages
+# Loading the required packages
 library(ggplot2)
 library(grid)
 
-# Loading the data used for plotting
-# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/sveval_ncallers_rates.RData
-# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/NCALLERS_ILLUMINA_BENCHMARK
-load("../sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/sveval_ncallers_rates.RData")
+# Loading the benchmark plotting data.frame that contains the processed data for plotting
+load("~/analyse_nanopore/manuscript_revision/sequencing_depth/benchmark_data.RData")
 
-# Also loading a script that will be used to prepare the data for plotting
-# DEPENDENCY : scripts/make_plot_data.R
-source("../scripts/make_plot_data.R")
+# A function that takes the plotting dataframe, an SV type, and a measure (sensitivity or precision)
+# and plots the results
+plot_downsampling <- function(x, svtype, measure) {
 
-# Preparing the data for plotting
-del_plot_data <- make_plot_data(sveval_ncallers_rates, "DEL")
-ins_plot_data <- make_plot_data(sveval_ncallers_rates, "INS")
+	stopifnot(svtype %in% c("DEL", "INS", "INV", "DUP"))
+	stopifnot(measure %in% c("sensitivity", "precision"))
 
-# For deletions, we remove the "[30-50[" and "all" columns
-del_plot_data <- del_plot_data[!del_plot_data$size_class %in% c("[30-50[", "all"), ]
-del_plot_data$size_class <- droplevels(del_plot_data$size_class)
+	# Removing underscores in the cultivar names
+	x$cultivar <- gsub("_", " ", x$cultivar)
 
-# For insertions, we only keep the "[50-100[" and [100-1000[" columns
-ins_plot_data <- ins_plot_data[ins_plot_data$size_class %in% c("[50-100[", "[100-1000["), ]
-ins_plot_data$size_class <- droplevels(ins_plot_data$size_class)
+	x <- x[x$size_class != "all" & x$svtype == svtype, ]
 
+	if(measure == "sensitivity") {
+		median_col = "s_median"
+		min_col = "s_min"
+		max_col = "s_max"
+	} else {
+		median_col = "p_median"
+		min_col = "p_min"
+		max_col = "p_max"
+	
+	}
 
-# Defining a common theme for both plots
-common_theme <- theme_bw() + 
-	theme(panel.grid.minor = element_blank(),
-	      text = element_text(size = 15))
+	svtype_mapping <- c("DEL" = "deletions",
+			    "INS" = "insertions",
+			    "INV" = "inversions",
+			    "DUP" = "duplications")
 
-# Defining common x- and y-axes
-x_axis <- scale_x_continuous(name = "Sensitivity")
-	#		     limits = c(0, 0.8), 
-	#		     breaks = seq(0, 0.8, 0.2))
+	size_class_levels <- c(paste0("[50-100 bp[ ", svtype_mapping[svtype]),
+			       paste0("[100-1,000 bp[ ", svtype_mapping[svtype]),
+			       paste0("[1,000-10,000 bp[ ", svtype_mapping[svtype]),
+			       paste0("[10,000+ bp[ ", svtype_mapping[svtype]))
 
-y_axis <- scale_y_continuous(name = "Precision")
-			     #limits = c(0.6, 1),
-			     #expand = c(-0.02, 0.02),
-			     #breaks = seq(0.6, 1, 0.1))
+	size_class_mapping <- c("[50-100[" = size_class_levels[1],
+				"[100-1000[" = size_class_levels[2],
+				"[1000-10000[" = size_class_levels[3],
+				"[10000+[" = size_class_levels[4])
 
-# Preparing the plot for deletions
-deletions_plot <- 
-	ggplot(del_plot_data, aes(x = sensitivity, y = precision)) +
-	geom_line(mapping = aes(group = cultivar), size = 0.2) +
-	geom_point(mapping = aes(color = cultivar), size = 0.5) +
-	geom_point(data = del_plot_data[del_plot_data$threshold == 1, ], aes(color = cultivar), shape = 8, size = 2) +
-	facet_wrap(~size_class,
-		   labeller = labeller(size_class = 
-				       c("[50-100[" = "[50-100 bp[ deletions",
-					 "[100-1000[" = "[100-1,000 bp[ deletions",
-					 "[1000-10000[" = "[1,000-10,000 bp[ deletions",
-					 "[10000+[" = "[10,000+ bp[ deletions"))) +
+	x$size_class <- factor(size_class_mapping[x$size_class], levels = size_class_levels)
 
-	x_axis +
-	y_axis +
-	guides(color = FALSE) +
-	common_theme +
-	theme( panel.spacing.y = unit(0.03, "npc"))
+	baseplot <- 
+		ggplot(x[x$frac != 1, ], aes_string(x = "depth", y = median_col, ymin = min_col, ymax = max_col, color = "cultivar")) +
+		geom_pointrange() +
+		geom_point(data = x[x$frac == 1, ], shape = 8) +
+		facet_wrap(~size_class, ncol = 1) +
+		scale_y_continuous(name = ifelse(measure == "sensitivity", "Sensitivity", "Precision"),
+				   limits = c(0, 1)) +
+		xlab("Sequencing depth (X)") +
+		theme_bw() +
+		theme(panel.grid.minor = element_blank())
 
-# Now preparing the plot for insertions
-insertions_plot <- 
-	ggplot(ins_plot_data, aes(x = sensitivity, y = precision)) +
-	geom_line(mapping = aes(group = cultivar), size = 0.2) +
-	geom_point(mapping = aes(color = cultivar), size = 0.5) +
-	geom_point(data = ins_plot_data[ins_plot_data$threshold == 1, ], aes(color = cultivar), shape = 8, size = 2) +
-	facet_wrap(~size_class,
-		   labeller = labeller(size_class = 
-				       c("[50-100[" = "[50-100 bp[ insertions",
-					 "[100-1000[" = "[100-1,000 bp[ insertions"))) +
-	scale_x_continuous(name = "Sensitivity",
-			   limits = c(0, 0.42),
-			   breaks = seq(0, 0.4, 0.1)) +
-	y_axis +
-	guides(color = FALSE) +
-	common_theme
+	main_plot <- baseplot + guides(color =  "none")
+	legend_plot <- baseplot + theme(legend.position = "top", legend.direction = "horizontal")
 
-# Saving as a png file
-# OUTPUT : figures/figure_s7.png
-png("figure_s7.png", width = 6, height = 9, units = "in", res = 500)
-grid.newpage()
-# Locating the subplots in the figure
-pushViewport(viewport(x = 0.05, just = "left", width = 0.95))
-pushViewport(viewport(layout = grid.layout(2, 1, heights = c(unit(65, "null"), unit(35, "null")))))
-del_vp <- viewport(layout.pos.row = 1, layout.pos.col = 1)
-print(deletions_plot, vp = del_vp)
-ins_vp <- viewport(layout.pos.row = 2, layout.pos.col = 1)
-print(insertions_plot, vp = ins_vp)
-# Adding the A and B panel labels
-grid.text("A", x = 0, y = 0.97, gp = gpar(fontsize = 24), vp = del_vp)
-grid.text("B", x = 0, y = 0.97, gp = gpar(fontsize = 24), vp = ins_vp)
+	return(list(main_plot, legend_plot))
+}
+
+# Another function that takes a sensitivity plot, a precision plot, and a plot with a legend,
+#  and wraps them up in a single plot
+combine_plots <- function(sensitivity, precision, legend_plot) {
+	grid.newpage()
+
+	# Printing the plot with the legend first and then hiding everything but the legend
+	print(legend_plot)
+	pushViewport(viewport(y = 0, height = 0.95, just = "bottom", layout = grid.layout(nrow = 1, ncol = 2)))
+	grid.rect(gp = gpar(col = "transparent", fill = "white"))
+
+	# Printing the sensitivity plot
+	pushViewport(viewport(layout.pos.col = 1))
+	grid.text("A", x = 0.08, y = 0.96, gp = gpar(fontsize = 24))
+	print(sensitivity, vp = viewport(x = 0.12, width = 0.88, just = "left"))
+	popViewport()
+
+	# Printing the precision plot
+	pushViewport(viewport(layout.pos.col = 2))
+	grid.text("B", x = 0.08, y = 0.96, gp = gpar(fontsize = 24))
+	print(precision, vp = viewport(x = 0.12, width = 0.88, just = "left"))
+	popViewport()
+}
+
+# A plot of deletions combining all the information
+sensitivity_plot <- plot_downsampling(benchmark_plotting, "INS", "sensitivity")
+precision_plot <- plot_downsampling(benchmark_plotting, "INS", "precision")
+
+# theme parameters common to both subplots
+common_theme <- theme(text = element_text(size = 14),
+		      panel.grid.minor = element_blank())
+
+# Saving the figure as Figure s7
+png("figure_s7.png", width = 7, height = 8, units = "in", res = 500)
+combine_plots(sensitivity_plot[[1]] + common_theme,
+	      precision_plot[[1]] + common_theme, 
+	      sensitivity_plot[[2]] + common_theme)
 dev.off()
 

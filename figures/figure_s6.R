@@ -1,81 +1,107 @@
-#!/usr/bin/Rscript
+#!/prg/R/4.0/bin/Rscript
 
-# Figure S6 shows the benchmarking of duplications and inversions discovered using Illumina sequencing
-# We only need a single panel to show inversions and another to show duplications because there are not many
+# Figure s6 shows the results of the subsampling analysis on deletion sensitivity and precision
 
-# The difference with Figure S2 is that the quality measure used for the precision-recall curve here is
-#  the number of ALT alleles called within homozygous ALT genotypes (INFO/AC_Hom), while the minimum number 
-#  of supporting   reads (INFO/DP) is fixed to 2. The optimal overall AC_Hom threshold as determined from
-# the F1 score was 10 for inversions and 6 for duplications, so we will highlight these in the plots.
 
-# Loading the ggplot2 and grid packages
+# Loading the required packages
 library(ggplot2)
 library(grid)
 
-# Loading the data used for plotting
-# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/frequency_RData/sveval_frequency_rates.RData
-load("../sv_genotyping/illumina_svs/sveval_benchmarks/frequency_RData/sveval_frequency_rates.RData")
+# Loading the benchmark plotting data.frame that contains the processed data for plotting
+load("~/analyse_nanopore/manuscript_revision/sequencing_depth/benchmark_data.RData")
 
-# Also loading a script that will be used to prepare the data for plotting
-# DEPENDENCY : scripts/make_plot_data.R
-source("../scripts/make_plot_data.R")
+# A function that takes the plotting dataframe, an SV type, and a measure (sensitivity or precision)
+# and plots the results
+plot_downsampling <- function(x, svtype, measure) {
 
-# Preparing the data for plotting
-dup_plot_data <- make_plot_data(sveval_frequency_rates, "DUP")
-inv_plot_data <- make_plot_data(sveval_frequency_rates, "INV")
+	stopifnot(svtype %in% c("DEL", "INS", "INV", "DUP"))
+	stopifnot(measure %in% c("sensitivity", "precision"))
 
-# We keep only the summaries over all size classes
-dup_plot_data <- dup_plot_data[dup_plot_data$size_class == "all", ]
-inv_plot_data <- inv_plot_data[inv_plot_data$size_class == "all", ]
+	# Removing underscores in the cultivar names
+	x$cultivar <- gsub("_", " ", x$cultivar)
 
-# Defining a common theme for both plots
-common_theme <- theme_bw() + 
-	theme(plot.title = element_text(size = 12),
-	      panel.grid.minor = element_blank())
+	x <- x[x$size_class != "all" & x$svtype == svtype, ]
 
-# Defining common x- and y-axes
-x_axis <- scale_x_continuous(name = "Sensitivity")
+	if(measure == "sensitivity") {
+		median_col = "s_median"
+		min_col = "s_min"
+		max_col = "s_max"
+	} else {
+		median_col = "p_median"
+		min_col = "p_min"
+		max_col = "p_max"
+	
+	}
 
-y_axis <- scale_y_continuous(name = "Precision")
+	svtype_mapping <- c("DEL" = "deletions",
+			    "INS" = "insertions",
+			    "INV" = "inversions",
+			    "DUP" = "duplications")
 
-# Preparing the plot for duplications
-duplications_plot <- 
-	ggplot(dup_plot_data, aes(x = sensitivity, y = precision)) +
-	geom_line(mapping = aes(group = cultivar), size = 0.2) +
-	geom_point(mapping = aes(color = cultivar), size = 0.5) +
-	geom_point(data = dup_plot_data[dup_plot_data$threshold == 6, ], aes(color = cultivar), shape = 8, size = 2) +
-	x_axis +
-	y_axis +
-	guides(color = FALSE) +
-	ggtitle("Duplications (all sizes)") +
-	common_theme 
+	size_class_levels <- c(paste0("[50-100 bp[ ", svtype_mapping[svtype]),
+			       paste0("[100-1,000 bp[ ", svtype_mapping[svtype]),
+			       paste0("[1,000-10,000 bp[ ", svtype_mapping[svtype]),
+			       paste0("[10,000+ bp[ ", svtype_mapping[svtype]))
 
-# Now preparing the plot for inversions
-inversions_plot <- 
-	ggplot(inv_plot_data, aes(x = sensitivity, y = precision)) +
-	geom_line(mapping = aes(group = cultivar), size = 0.2) +
-	geom_point(mapping = aes(color = cultivar), size = 0.5) +
-	geom_point(data = inv_plot_data[inv_plot_data$threshold == 10, ], aes(color = cultivar), shape = 8, size = 2) +
-	geom_blank(data = data.frame(sensitivity = 0.2, precision = 0.5)) +
-	x_axis +
-	y_axis +
-	guides(color = FALSE) +
-	ggtitle("Inversions (all sizes)") +
-	common_theme
+	size_class_mapping <- c("[50-100[" = size_class_levels[1],
+				"[100-1000[" = size_class_levels[2],
+				"[1000-10000[" = size_class_levels[3],
+				"[10000+[" = size_class_levels[4])
 
-# Saving as a png file
-# OUTPUT : figures/figure_s6.png
-png("figure_s6.png", width = 3, height = 6, units = "in", res = 500)
-grid.newpage()
-# Locating the subplots in the figure
-pushViewport(viewport(x = 0.05, just = "left", width = 0.95))
-pushViewport(viewport(layout = grid.layout(2, 1)))
-dup_vp <- viewport(layout.pos.row = 1, layout.pos.col = 1)
-print(duplications_plot, vp = dup_vp)
-inv_vp <- viewport(layout.pos.row = 2, layout.pos.col = 1)
-print(inversions_plot, vp = inv_vp)
-# Add the panel labels A and B
-grid.text("A", x = 0, y = 0.95, gp = gpar(fontsize = 20), vp = dup_vp)
-grid.text("B", x = 0, y = 0.95, gp = gpar(fontsize = 20), vp = inv_vp)
+	x$size_class <- factor(size_class_mapping[x$size_class], levels = size_class_levels)
+
+	baseplot <- 
+		ggplot(x[x$frac != 1, ], aes_string(x = "depth", y = median_col, ymin = min_col, ymax = max_col, color = "cultivar")) +
+		geom_pointrange() +
+		geom_point(data = x[x$frac == 1, ], shape = 8) +
+		facet_wrap(~size_class, ncol = 1) +
+		scale_y_continuous(name = ifelse(measure == "sensitivity", "Sensitivity", "Precision"),
+				   limits = c(0, 1)) +
+		xlab("Sequencing depth (X)") +
+		theme_bw() +
+		theme(panel.grid.minor = element_blank())
+
+	main_plot <- baseplot + guides(color =  "none")
+	legend_plot <- baseplot + theme(legend.position = "top", legend.direction = "horizontal")
+
+	return(list(main_plot, legend_plot))
+}
+
+# Another function that takes a sensitivity plot, a precision plot, and a plot with a legend,
+#  and wraps them up in a single plot
+combine_plots <- function(sensitivity, precision, legend_plot) {
+	grid.newpage()
+
+	# Printing the plot with the legend first and then hiding everything but the legend
+	print(legend_plot)
+	pushViewport(viewport(y = 0, height = 0.95, just = "bottom", layout = grid.layout(nrow = 1, ncol = 2)))
+	grid.rect(gp = gpar(col = "transparent", fill = "white"))
+
+	# Printing the sensitivity plot
+	pushViewport(viewport(layout.pos.col = 1))
+	grid.text("A", x = 0.08, y = 0.96, gp = gpar(fontsize = 24))
+	print(sensitivity, vp = viewport(x = 0.12, width = 0.88, just = "left"))
+	popViewport()
+
+	# Printing the precision plot
+	pushViewport(viewport(layout.pos.col = 2))
+	grid.text("B", x = 0.08, y = 0.96, gp = gpar(fontsize = 24))
+	print(precision, vp = viewport(x = 0.12, width = 0.88, just = "left"))
+	popViewport()
+}
+
+# A plot of deletions combining all the information
+sensitivity_plot <- plot_downsampling(benchmark_plotting, "DEL", "sensitivity")
+precision_plot <- plot_downsampling(benchmark_plotting, "DEL", "precision")
+
+# theme parameters common to both subplots
+common_theme <- theme(text = element_text(size = 14),
+		      panel.grid.minor = element_blank())
+
+# Saving the figure as Figure s6
+png("figure_s6.png", width = 7, height = 8, units = "in", res = 500)
+combine_plots(sensitivity_plot[[1]] + common_theme,
+	      precision_plot[[1]] + common_theme, 
+	      sensitivity_plot[[2]] + common_theme)
 dev.off()
 

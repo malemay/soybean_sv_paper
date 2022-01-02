@@ -1,65 +1,106 @@
-#!/usr/bin/Rscript
+#!/prg/R/4.0/bin/Rscript
 
-# Code for the Figure S8 of the manuscript
-# This figure is divided into two parts:
-# - Panel A shows the number of variants of various sizes in the range -250 to 250
-#   for various tools as histograms
-# - Panel B shows the distribution of deletion sizes on a logorithmic scale for
-#   various tools as histograms
+# Figure s8 shows the results of the subsampling analysis on duplication sensitivity and precision
 
-# Loading the required libraries
+# Loading the required packages
 library(ggplot2)
 library(grid)
 
-# Reading in the data that will be used for plotting
-# DEPENDENCY : sv_genotyping/illumina_svs/size_distribution.tsv
-sv_sizes <- read.table("../sv_genotyping/illumina_svs/size_distribution.tsv", header = TRUE, stringsAsFactors = FALSE)
-# nrow(sv_sizes)
-# [1] 140597
+# Loading the benchmark plotting data.frame that contains the processed data for plotting
+load("~/analyse_nanopore/manuscript_revision/sequencing_depth/benchmark_data.RData")
 
-# Removing the few SVs that might be shorter than 50 bp
-sv_sizes <- sv_sizes[abs(sv_sizes$size) >= 50, ]
-# nrow(sv_sizes)
-# [1] 138000
+# A function that takes the plotting dataframe, an SV type, and a measure (sensitivity or precision)
+# and plots the results
+plot_downsampling <- function(x, svtype, measure) {
 
-# Creating a common theme for the two panels
-common_theme <- 
-	theme_bw() +
-	theme(text = element_text(size = 14),
-	      axis.text = element_text(size = 10),
-	      panel.grid.minor = element_blank(),
-	      strip.text = element_text(margin = margin(0.1, 0, 0.1, 0, "cm")))
+	stopifnot(svtype %in% c("DEL", "INS", "INV", "DUP"))
+	stopifnot(measure %in% c("sensitivity", "precision"))
 
-# Creating panel A
-panelA <- ggplot(sv_sizes[abs(sv_sizes$size) <= 250 & sv_sizes$svtype %in% c("INS", "DEL"), ], aes(x = size)) +
-	geom_histogram(binwidth = 10, fill = "skyblue", color = "black", size = 0.15) +
-	facet_wrap(~program, ncol = 1) +
-	scale_x_continuous(name = "SV size (bp)") +
-	ylab("Number of SVs") +
-	common_theme
+	# Removing underscores in the cultivar names
+	x$cultivar <- gsub("_", " ", x$cultivar)
 
-# Creating panel B
-panelB <- ggplot(sv_sizes[sv_sizes$svtype == "DEL", ], aes(x = abs(size))) +
-	geom_histogram(fill = "indianred", color = "black", bins = 50, size = 0.15) +
-	facet_wrap(~program, ncol = 1) +
-	scale_x_log10(name = "Deletion size (bp)",
-		      breaks = c(100, 10000, 1000000)) +
-	ylab("Number of deletions") +
-	common_theme +
-	theme(panel.grid.minor = element_line(),
-	      panel.grid.minor.y = element_blank())
+	x <- x[x$size_class != "all" & x$svtype == svtype, ]
 
-# Assembling both panels in a single figure and saving to "figure_s8.png"
-# OUTPUT : figures/figure_s8.png
-png("figure_s8.png", width = 6, height = 6, units = "in", res = 500)
-grid.newpage()
-pushViewport(viewport(layout = grid.layout(1, 2)))
-pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 1))
-print(panelA, vp = viewport(x = 0.05, width = 0.95, just = "left"))
-grid.text("A", x = 0.07, y = 0.97, gp = gpar(fontsize = 24))
-popViewport()
-pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 2))
-print(panelB, vp = viewport(x = 0.05, width = 0.95, just = "left"))
-grid.text("B", x = 0.07, y = 0.97, gp = gpar(fontsize = 24))
+	if(measure == "sensitivity") {
+		median_col = "s_median"
+		min_col = "s_min"
+		max_col = "s_max"
+	} else {
+		median_col = "p_median"
+		min_col = "p_min"
+		max_col = "p_max"
+	
+	}
+
+	svtype_mapping <- c("DEL" = "deletions",
+			    "INS" = "insertions",
+			    "INV" = "inversions",
+			    "DUP" = "duplications")
+
+	size_class_levels <- c(paste0("[50-100 bp[ ", svtype_mapping[svtype]),
+			       paste0("[100-1,000 bp[ ", svtype_mapping[svtype]),
+			       paste0("[1,000-10,000 bp[ ", svtype_mapping[svtype]),
+			       paste0("[10,000+ bp[ ", svtype_mapping[svtype]))
+
+	size_class_mapping <- c("[50-100[" = size_class_levels[1],
+				"[100-1000[" = size_class_levels[2],
+				"[1000-10000[" = size_class_levels[3],
+				"[10000+[" = size_class_levels[4])
+
+	x$size_class <- factor(size_class_mapping[x$size_class], levels = size_class_levels)
+
+	baseplot <- 
+		ggplot(x[x$frac != 1, ], aes_string(x = "depth", y = median_col, ymin = min_col, ymax = max_col, color = "cultivar")) +
+		geom_pointrange() +
+		geom_point(data = x[x$frac == 1, ], shape = 8) +
+		facet_wrap(~size_class, ncol = 1) +
+		scale_y_continuous(name = ifelse(measure == "sensitivity", "Sensitivity", "Precision"),
+				   limits = c(0, 1)) +
+		xlab("Sequencing depth (X)") +
+		theme_bw() +
+		theme(panel.grid.minor = element_blank())
+
+	main_plot <- baseplot + guides(color =  "none")
+	legend_plot <- baseplot + theme(legend.position = "top", legend.direction = "horizontal")
+
+	return(list(main_plot, legend_plot))
+}
+
+# Another function that takes a sensitivity plot, a precision plot, and a plot with a legend,
+#  and wraps them up in a single plot
+combine_plots <- function(sensitivity, precision, legend_plot) {
+	grid.newpage()
+
+	# Printing the plot with the legend first and then hiding everything but the legend
+	print(legend_plot)
+	pushViewport(viewport(y = 0, height = 0.95, just = "bottom", layout = grid.layout(nrow = 1, ncol = 2)))
+	grid.rect(gp = gpar(col = "transparent", fill = "white"))
+
+	# Printing the sensitivity plot
+	pushViewport(viewport(layout.pos.col = 1))
+	grid.text("A", x = 0.08, y = 0.96, gp = gpar(fontsize = 24))
+	print(sensitivity, vp = viewport(x = 0.12, width = 0.88, just = "left"))
+	popViewport()
+
+	# Printing the precision plot
+	pushViewport(viewport(layout.pos.col = 2))
+	grid.text("B", x = 0.08, y = 0.96, gp = gpar(fontsize = 24))
+	print(precision, vp = viewport(x = 0.12, width = 0.88, just = "left"))
+	popViewport()
+}
+
+# A plot of deletions combining all the information
+sensitivity_plot <- plot_downsampling(benchmark_plotting, "DUP", "sensitivity")
+precision_plot <- plot_downsampling(benchmark_plotting, "DUP", "precision")
+
+# theme parameters common to both subplots
+common_theme <- theme(text = element_text(size = 14),
+		      panel.grid.minor = element_blank())
+
+# Saving the figure as Figure s8
+png("figure_s8.png", width = 7, height = 8, units = "in", res = 500)
+combine_plots(sensitivity_plot[[1]] + common_theme,
+	      precision_plot[[1]] + common_theme, 
+	      sensitivity_plot[[2]] + common_theme)
 dev.off()
 

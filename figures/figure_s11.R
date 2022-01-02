@@ -1,80 +1,81 @@
 #!/usr/bin/Rscript
 
-# Code to create Figure S11 of the manuscript
-# This figure is a scatter plot of the precision of insertion genotyping
-#  as a function of Oxford Nanopore sequencing N50
-# The objective is to show that samples that were sequenced with longer reads
-#  had more power for insertion discovery, thus explaining the poor precision
-#  of insertion genotyping for some samples
-# Panel A will show results for insertions in the range 1,000-10,000, while
-#  Panel B will show results for insertions > 10,000
+# Figure S11 shows the benchmarking of duplications and inversions discovered using Illumina sequencing
+# We only need a single panel to show inversions and another to show duplications because there are not many
+
+# The difference with Figure S2 is that the quality measure used for the precision-recall curve here is
+#  the number of ALT alleles called within homozygous ALT genotypes (INFO/AC_Hom), while the minimum number 
+#  of supporting   reads (INFO/DP) is fixed to 2. The optimal overall AC_Hom threshold as determined from
+# the F1 score was 10 for inversions and 6 for duplications, so we will highlight these in the plots.
 
 # Loading the ggplot2 and grid packages
 library(ggplot2)
 library(grid)
 
-# Loading the N50 data
-# DEPENDENCY : nanoplot_stats/N50_stats.txt
-N50_stats <- read.table("../nanoplot_stats/N50_stats.txt", header = TRUE, stringsAsFactors = FALSE)
+# Loading the data used for plotting
+# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/frequency_RData/sveval_frequency_rates.RData
+load("../sv_genotyping/illumina_svs/sveval_benchmarks/frequency_RData/sveval_frequency_rates.RData")
 
-# Loading the genotyping precision and sensitivity rates
-# DEPENDENCY : sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
-load("../sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData")
+# Also loading a script that will be used to prepare the data for plotting
+# DEPENDENCY : scripts/make_plot_data.R
+source("../scripts/make_plot_data.R")
 
-# We also load the correspondence between line names and their CAD IDs
-# DEPENDENCY : utilities/line_ids.txt
-line_ids <- read.table("../utilities/line_ids.txt", header = TRUE, stringsAsFactors = FALSE)
+# Preparing the data for plotting
+dup_plot_data <- make_plot_data(sveval_frequency_rates, "DUP")
+inv_plot_data <- make_plot_data(sveval_frequency_rates, "INV")
 
-# Now we can extract and link the data through the IDs
-line_ids$N50 <- N50_stats[match(line_ids$name, N50_stats$sample), "N50"]
+# We keep only the summaries over all size classes
+dup_plot_data <- dup_plot_data[dup_plot_data$size_class == "all", ]
+inv_plot_data <- inv_plot_data[inv_plot_data$size_class == "all", ]
 
-# Now extracting the precision rates for ranges 1,000-10,000 and 10,000+
-insertion_data <- sveval_nogeno_rates$INS
-insertion_1000_data <- insertion_data[insertion_data$size_class == "[1000-10000[" & insertion_data$threshold == 2, ]
-insertion_1000_precision <- insertion_1000_data$precision
-names(insertion_1000_precision) <- insertion_1000_data$cultivar
+# Defining a common theme for both plots
+common_theme <- theme_bw() + 
+	theme(plot.title = element_text(size = 12),
+	      panel.grid.minor = element_blank())
 
-insertion_10000_data <- insertion_data[insertion_data$size_class == "[10000+[" & insertion_data$threshold == 2, ]
-insertion_10000_precision <- insertion_10000_data$precision
-names(insertion_10000_precision) <- insertion_10000_data$cultivar
+# Defining common x- and y-axes
+x_axis <- scale_x_continuous(name = "Sensitivity")
 
-line_ids$insertions_1000 <- insertion_1000_precision[line_ids$id]
-line_ids$insertions_10000 <- insertion_10000_precision[line_ids$id]
+y_axis <- scale_y_continuous(name = "Precision")
 
-# Creating panel A (insertions in the range 1,000-10,000 bp)
-panelA <- ggplot(line_ids, aes(x = N50 / 1000, y = insertions_1000)) +
-	geom_point(size = 1) +
-	scale_x_continuous(name = "Oxford Nanopore sequencing N50 (kb)") +
-	scale_y_continuous(name = "Precision of insertion genotyping") +
-	theme_bw() +
-	theme(panel.grid.minor = element_blank(),
-	      text = element_text(size = 10))
+# Preparing the plot for duplications
+duplications_plot <- 
+	ggplot(dup_plot_data, aes(x = sensitivity, y = precision)) +
+	geom_line(mapping = aes(group = cultivar), size = 0.2) +
+	geom_point(mapping = aes(color = cultivar), size = 0.5) +
+	geom_point(data = dup_plot_data[dup_plot_data$threshold == 6, ], aes(color = cultivar), shape = 8, size = 2) +
+	x_axis +
+	y_axis +
+	guides(color = FALSE) +
+	ggtitle("Duplications (all sizes)") +
+	common_theme 
 
-# And now creating panel B (insertions larger than 10,000 bp)
-panelB <- ggplot(line_ids, aes(x = N50 / 1000, y = insertions_10000)) +
-	geom_point(size = 1) +
-	scale_x_continuous(name = "Oxford Nanopore sequencing N50 (kb)") +
-	scale_y_continuous(name = "Precision of insertion genotyping") +
-	theme_bw() +
-	theme(panel.grid.minor = element_blank(),
-	      text = element_text(size = 10))
+# Now preparing the plot for inversions
+inversions_plot <- 
+	ggplot(inv_plot_data, aes(x = sensitivity, y = precision)) +
+	geom_line(mapping = aes(group = cultivar), size = 0.2) +
+	geom_point(mapping = aes(color = cultivar), size = 0.5) +
+	geom_point(data = inv_plot_data[inv_plot_data$threshold == 10, ], aes(color = cultivar), shape = 8, size = 2) +
+	geom_blank(data = data.frame(sensitivity = 0.2, precision = 0.5)) +
+	x_axis +
+	y_axis +
+	guides(color = FALSE) +
+	ggtitle("Inversions (all sizes)") +
+	common_theme
 
-# Saving to the png format
+# Saving as a png file
 # OUTPUT : figures/figure_s11.png
-png("figure_s11.png", width = 6, height = 3, units = "in", res = 500)
-pushViewport(viewport(layout = grid.layout(1, 2)))
-
-# Printing panel A in the left column viewport
-pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 1))
-print(panelA, vp = viewport(x = 0.03, width = 0.97, just = "left"))
-grid.text("A", x = 0.04, y = 0.96, gp = gpar(fontsize = 18))
-popViewport()
-
-# Printing panel B in the right column viewport
-pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 2))
-print(panelB, vp = viewport(x = 0.03, width = 0.97, just = "left"))
-grid.text("B", x = 0.04, y = 0.96, gp = gpar(fontsize = 18))
-popViewport()
-
+png("figure_s11.png", width = 3, height = 6, units = "in", res = 500)
+grid.newpage()
+# Locating the subplots in the figure
+pushViewport(viewport(x = 0.05, just = "left", width = 0.95))
+pushViewport(viewport(layout = grid.layout(2, 1)))
+dup_vp <- viewport(layout.pos.row = 1, layout.pos.col = 1)
+print(duplications_plot, vp = dup_vp)
+inv_vp <- viewport(layout.pos.row = 2, layout.pos.col = 1)
+print(inversions_plot, vp = inv_vp)
+# Add the panel labels A and B
+grid.text("A", x = 0, y = 0.95, gp = gpar(fontsize = 20), vp = dup_vp)
+grid.text("B", x = 0, y = 0.95, gp = gpar(fontsize = 20), vp = inv_vp)
 dev.off()
 

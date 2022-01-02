@@ -1,100 +1,98 @@
-#!/usr/bin/Rscript
+#!/prg/R/4.0/bin/Rscript
 
-# Figure S5 shows the benchmarking of SVs discovered using Illumina sequencing
-# For deletions, 4 panels are needed (50-100, 100-1000, 1000-10000 and 10000+)
-# For insertions, only 2 panels are needed because almost no SVs > 1000 bp were found
-
-# This figure is similar to figure 1 except that here, the quality measure that is
-# used for the precision-recall curve is the number of ALT alleles in homozygous
-# ALT genotype calls (INFO/AC_Hom) and the minimum number of supporting reads was
-# fixed to 2
+# Code to create Figure S5 of the manuscript
+# This figure is a scatter plot of the precision of dupliction genotyping
+#  as a function of Oxford Nanopore sequencing depth
+# The ojective is to show that samples that were sequenced using Nanopore
+#  have higher precision of duplication genotyping
 
 # Loading the ggplot2 and grid packages
 library(ggplot2)
 library(grid)
 
-# Loading the data used for plotting
-# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/frequency_RData/sveval_frequency_rates.RData
-load("../sv_genotyping/illumina_svs/sveval_benchmarks/frequency_RData/sveval_frequency_rates.RData")
+# Loading the sequencing depth data
+# DEPENDENCY : depth_distributions/average_depth.RData
+load("../depth_distributions/average_depth.RData")
 
-# Also loading a script that will be used to prepare the data for plotting
-# DEPENDENCY : scripts/make_plot_data.R
-source("../scripts/make_plot_data.R")
+# Loading the genotyping precision and sensitivity rates
+# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
+load("../sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData")
 
-# Preparing the data for plotting
-del_plot_data <- make_plot_data(sveval_frequency_rates, "DEL")
-ins_plot_data <- make_plot_data(sveval_frequency_rates, "INS")
+# We also load the correspondence between line names and their CAD IDs
+# DEPENDENCY : utilities/line_ids.txt
+line_ids <- read.table("../utilities/line_ids.txt", header = TRUE, stringsAsFactors = FALSE)
 
-# For deletions, we remove the "[30-50[" and "all" columns
-del_plot_data <- del_plot_data[!del_plot_data$size_class %in% c("[30-50[", "all"), ]
-del_plot_data$size_class <- droplevels(del_plot_data$size_class)
+# Now we can extract and link the data through the IDs
+line_ids$sequencing_depth <- average_depth[match(line_ids$name, average_depth$sample), "depth"]
 
-# For insertions, we only keep the "[50-100[" and [100-1000[" columns
-ins_plot_data <- ins_plot_data[ins_plot_data$size_class %in% c("[50-100[", "[100-1000["), ]
-ins_plot_data$size_class <- droplevels(ins_plot_data$size_class)
+# Checking whether there is a link between Oxford Nanopore sequencing depth and precision all SV types
+# First writing a function that will extract the data from the rates object
+get_precision <- function(line_ids, precision_data, svtype) {
+	precision_data <- precision_data[[svtype]]
+	precision_data <- precision_data[precision_data$size_class == "all" & precision_data$threshold == 2, ]
+	precision <- precision_data$precision
+	names(precision) <- precision_data$cultivar
 
+	line_ids$precision <- precision[line_ids$id]
+	return(line_ids)
+}
 
-# Defining a common theme for both plots
+# Creating a common theme for all panels
 common_theme <- theme_bw() + 
 	theme(panel.grid.minor = element_blank(),
-	      text = element_text(size = 15))
+	      text = element_text(size = 6))
 
-# Defining common x- and y-axes
-x_axis <- scale_x_continuous(name = "Sensitivity")
-
-y_axis <- scale_y_continuous(name = "Precision")
-
-# Preparing the plot for deletions
-deletions_plot <- 
-	ggplot(del_plot_data, aes(x = sensitivity, y = precision)) +
-	geom_line(mapping = aes(group = cultivar), size = 0.2) +
-	geom_point(mapping = aes(color = cultivar), size = 0.5) +
-	geom_point(data = del_plot_data[del_plot_data$threshold == 4, ], aes(color = cultivar), shape = 8, size = 2) +
-	facet_wrap(~size_class,
-		   labeller = labeller(size_class = 
-				       c("[50-100[" = "[50-100 bp[ deletions",
-					 "[100-1000[" = "[100-1,000 bp[ deletions",
-					 "[1000-10000[" = "[1,000-10,000 bp[ deletions",
-					 "[10000+[" = "[10,000+ bp[ deletions"))) +
-
-	x_axis +
-	y_axis +
-	guides(color = FALSE) +
-	common_theme +
-	theme(panel.spacing.y = unit(0.03, "npc"))
-
-# Now preparing the plot for insertions
-insertions_plot <- 
-	ggplot(ins_plot_data, aes(x = sensitivity, y = precision)) +
-	geom_line(mapping = aes(group = cultivar), size = 0.2) +
-	geom_point(mapping = aes(color = cultivar), size = 0.5) +
-	geom_point(data = ins_plot_data[ins_plot_data$threshold == 4, ], aes(color = cultivar), shape = 8, size = 2) +
-	facet_wrap(~size_class,
-		   labeller = labeller(size_class = 
-				       c("[50-100[" = "[50-100 bp[ insertions",
-					 "[100-1000[" = "[100-1,000 bp[ insertions"))) +
-	scale_x_continuous(name = "Sensitivity",
-			   limits = c(0.1, 0.4),
-			   breaks = seq(0.1, 0.4, 0.1)) +
+# Creating the plot object for deletions
+del_plot <- ggplot(get_precision(line_ids, sveval_nogeno_rates, "DEL"), aes(x = sequencing_depth, y = precision)) +
+	geom_point(size = 1) +
+	scale_x_continuous(name = "Average sequencing depth (X)") +
 	scale_y_continuous(name = "Precision",
-			   limits = c(0.6, 0.9),
-			   breaks = seq(0.6, 0.9, 0.1)) +
-	guides(color = FALSE) +
+			   limits = c(0.70, 0.87)) +
+	ggtitle("Deletions") +
 	common_theme
 
-# Saving as a png file
-# OUTPUT : figure_s5.png
-png("figure_s5.png", width = 6, height = 9, units = "in", res = 500)
+# Creating the plot object for insertions
+ins_plot <- ggplot(get_precision(line_ids, sveval_nogeno_rates, "INS"), aes(x = sequencing_depth, y = precision)) +
+	geom_point(size = 1) +
+	scale_x_continuous(name = "Average sequencing depth (X)") +
+	scale_y_continuous(name = "Precision") +
+	ggtitle("Insertions") +
+	common_theme
+
+# Creating the plot object for duplications
+dup_plot <- ggplot(get_precision(line_ids, sveval_nogeno_rates, "DUP"), aes(x = sequencing_depth, y = precision)) +
+	geom_point(size = 1) +
+	scale_x_continuous(name = "Average sequencing depth (X)") +
+	scale_y_continuous(name = "Precision",
+			   breaks = seq(0.10, 0.22, 0.04)) +
+	ggtitle("Duplications") +
+	common_theme
+
+# Creating the plot object for inversions
+inv_plot <- ggplot(get_precision(line_ids, sveval_nogeno_rates, "INV"), aes(x = sequencing_depth, y = precision)) +
+	geom_point(size = 1) +
+	scale_x_continuous(name = "Average sequencing depth (X)") +
+	scale_y_continuous(name = "Precision") +
+	ggtitle("Inversions") +
+	common_theme
+
+# Saving to disk as a png file
+# OUTPUT : figures/figure_s5.png
+png("figure_s5.png", width = 3, height = 3, units = "in", res = 500)
 grid.newpage()
-# Locating the subplots in the figure
-pushViewport(viewport(x = 0.03, just = "left", width = 0.97))
-pushViewport(viewport(layout = grid.layout(2, 1, heights = c(unit(65, "null"), unit(35, "null")))))
-del_vp <- viewport(layout.pos.row = 1, layout.pos.col = 1)
-print(deletions_plot, vp = del_vp)
-ins_vp <- viewport(layout.pos.row = 2, layout.pos.col = 1)
-print(insertions_plot, vp = ins_vp)
-# Adding the A and B panel labels
-grid.text("A", x = 0, y = 0.97, gp = gpar(fontsize = 24), vp = del_vp)
-grid.text("B", x = 0, y = 0.97, gp = gpar(fontsize = 24), vp = ins_vp)
+pushViewport(viewport(layout = grid.layout(nrow = 2, ncol = 2)))
+del_vp <- viewport(layout.pos.col = 1, layout.pos.row = 1)
+ins_vp <- viewport(layout.pos.col = 2, layout.pos.row = 1)
+dup_vp <- viewport(layout.pos.col = 1, layout.pos.row = 2)
+inv_vp <- viewport(layout.pos.col = 2, layout.pos.row = 2)
+print(del_plot, vp = del_vp)
+print(ins_plot, vp = ins_vp)
+print(inv_plot, vp = inv_vp)
+print(dup_plot, vp = dup_vp)
+grid.text("A", x = 0.05, y = 0.95, vp = del_vp)
+grid.text("B", x = 0.05, y = 0.95, vp = ins_vp)
+grid.text("C", x = 0.05, y = 0.95, vp = dup_vp)
+grid.text("D", x = 0.05, y = 0.95, vp = inv_vp)
 dev.off()
+
 

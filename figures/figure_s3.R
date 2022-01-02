@@ -1,25 +1,23 @@
-#!/prg/R/4.0/bin/Rscript
+#!/usr/bin/Rscript
 
 # Figure S3 shows the benchmarking of duplications and inversions discovered using Illumina sequencing
 # We only need a single panel to show inversions and another to show duplications because there are not many
-
-# The only difference with Figure S2 is that this figure applies to non-repeat regions
 
 # Loading the ggplot2 and grid packages
 library(ggplot2)
 library(grid)
 
 # Loading the data used for plotting
-# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData
-load("../sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData")
+# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
+load("../sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData")
 
 # Also loading a script that will be used to prepare the data for plotting
 # DEPENDENCY : scripts/make_plot_data.R
 source("../scripts/make_plot_data.R")
 
 # Preparing the data for plotting
-dup_plot_data <- make_plot_data(sveval_norepeat_rates, "DUP")
-inv_plot_data <- make_plot_data(sveval_norepeat_rates, "INV")
+dup_plot_data <- make_plot_data(sveval_nogeno_rates, "DUP")
+inv_plot_data <- make_plot_data(sveval_nogeno_rates, "INV")
 
 # We keep only the summaries over all size classes
 dup_plot_data <- dup_plot_data[dup_plot_data$size_class == "all", ]
@@ -53,6 +51,7 @@ inversions_plot <-
 	geom_line(mapping = aes(group = cultivar), size = 0.2) +
 	geom_point(mapping = aes(color = cultivar), size = 0.5) +
 	geom_point(data = inv_plot_data[inv_plot_data$threshold == 2, ], aes(color = cultivar), shape = 8, size = 2) +
+	geom_blank(data = data.frame(sensitivity = 0.2, precision = 0.5)) +
 	x_axis +
 	y_axis +
 	guides(color = FALSE) +
@@ -60,7 +59,7 @@ inversions_plot <-
 	common_theme
 
 # Saving as a .png file
-# OUTPUT : figures/figure_s3.png
+# OUTPUT figures/figure_s3.png
 png("figure_s3.png", width = 3, height = 6, units = "in", res = 500)
 grid.newpage()
 # Locating the subplots in the figure
@@ -68,7 +67,7 @@ pushViewport(viewport(x = 0.05, just = "left", width = 0.95))
 pushViewport(viewport(layout = grid.layout(2, 1)))
 dup_vp <- viewport(layout.pos.row = 1, layout.pos.col = 1)
 print(duplications_plot, vp = dup_vp)
-inv_vp <- viewport(layout.pos.row = 2, layout.pos.col = 1)
+inv_vp <-  viewport(layout.pos.row = 2, layout.pos.col = 1)
 print(inversions_plot, vp = inv_vp)
 # Add the panel labels A and B
 grid.text("A", x = 0, y = 0.95, gp = gpar(fontsize = 20), vp = dup_vp)

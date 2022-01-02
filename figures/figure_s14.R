@@ -1,77 +1,91 @@
 #!/usr/bin/Rscript
 
-# Figure S14 shows the benchmarking of duplications and inversions discovered using Oxford Nanopore sequencing
-#  and genotyped using the Illumina sequencing data in non-repeat regions
-# We only need a single panel to show inversions and another to show duplications because there are not many
+# Figure S14 shows the proportion of true positive and false positive deletion calls for
+#  different SV calling program combinations and different SV sizes
 
-# Loading the ggplot2 and grid packages
+# A sample with median F1-score will be chosen so as to be representative.
+#  The benchmark data on calls filtered for the number of supporting calls
+#  (DP >= 2) and the number of ALT alleles within homozygous ALT calls (AC_Hom >= 4)
+#  will be used.
+
+# Loading the ggplot2 and GenomicRanges packages
 library(ggplot2)
-library(grid)
+library(GenomicRanges)
 
-# Loading the data used for plotting
-# DEPENDENCY : sv_genotyping/nanopore_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData
-load("../sv_genotyping/nanopore_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData")
+# Loading the rates for all samples so we can identify a sample to use
+# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/sveval_ncallers_rates.RData
+load("../sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/sveval_ncallers_rates.RData")
 
-# Also loading a script that will be used to prepare the data for plotting
-# DEPENDENCY : scripts/make_plot_data.R
-source("../scripts/make_plot_data.R")
+# Finding the median f-score among the overall results
+deletions <- sveval_ncallers_rates$DEL
+deletions <- deletions[deletions$size_class == "all", ]
+deletions <- deletions[deletions$threshold == 1, ]
+deletions$f1_score <- 2 * (deletions$precision * deletions$sensitivity) / (deletions$precision + deletions$sensitivity)
+# We get the median row by ordering as a function of F-score and taking the 9th row
+# deletions[order(deletions$f1_score), ][9, ]
+#                     size_class sensitivity precision precision_shrunk  pipeline cultivar threshold  f1_score
+# CAD1049_paragraph.2        all   0.5848983 0.8080104        0.7911448 paragraph  CAD1049         1 0.6785856
 
-# Preparing the data for plotting
-dup_plot_data <- make_plot_data(sveval_norepeat_rates, "DUP")
-inv_plot_data <- make_plot_data(sveval_norepeat_rates, "INV")
+# So we will be using sample CAD1049. Let us load the data for that sample
+# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/CAD1049_paragraph.RData
+load("../sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/CAD1049_paragraph.RData")
 
-# We keep only the summaries over all size classes
-dup_plot_data <- dup_plot_data[dup_plot_data$size_class == "all", ]
-inv_plot_data <- inv_plot_data[inv_plot_data$size_class == "all", ]
+# We get the list element for which the ncallers threshold was 1
+#str(sveval_output, max.level = 3)
+# List of 2
+#  $ qual_ths: num [1:5] 0 1 2 3 4
+#  $ eval    :List of 5
+#   ..$ :List of 2
+#   .. ..$ eval   :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	5 obs. of  9 variables:
+#   .. ..$ regions:List of 4
+#   ..$ :List of 2
+#   .. ..$ eval   :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	5 obs. of  9 variables:
+#   .. ..$ regions:List of 4
+#   ..$ :List of 2
+#   .. ..$ eval   :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	5 obs. of  9 variables:
+#   .. ..$ regions:List of 4
+#   ..$ :List of 2
+#   .. ..$ eval   :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	5 obs. of  9 variables:
+#   .. ..$ regions:List of 4
+#   ..$ :List of 2
+#   .. ..$ eval   :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	5 obs. of  9 variables:
+#   .. ..$ regions:List of 4
+# NULL
+sveval_output <- sveval_output$eval[[2]]$regions
+#str(sveval_output, max.level = 1)
+# List of 4
+#  $ INS:List of 4
+#  $ DEL:List of 4
+#  $ INV:List of 4
+#  $ DUP:List of 4
+# NULL
 
-# Defining a common theme for both plots
-common_theme <- theme_bw() + 
-	theme(plot.title = element_text(size = 12),
-	      panel.grid.minor = element_blank())
+# From here we use a function defined in another file to extract the relevant data
+# for plotting
+# DEPENDENCY : scripts/format_sveval_plotting_data.R
+source("../scripts/format_sveval_plotting_data.R")
+plotting_data <- format_sveval_plotting_data(sveval_output, "DEL")
 
-# Defining common x- and y-axes
-x_axis <- scale_x_continuous(name = "Sensitivity")
+# Creating the plot
+figure_s14 <- ggplot(plotting_data, aes(x = size / 1000, fill = truepos)) +
+    facet_wrap(~ClusterIDs, ncol = 5) + geom_histogram(bins = 30) +
+    scale_x_log10(name = "Deletion size (kb)",
+		  breaks = c(0.1, 1, 10, 100),
+		  labels = c("0.1", "1", "10", "100")) + 
+    scale_y_continuous("Number of deletions") +
+    scale_fill_discrete(name = "",
+			labels = c("TRUE" = "True positive calls",
+				   "FALSE" = "False positive calls")) +
+    theme_bw() +
+    theme(text = element_text(size = 14),
+	  strip.text = element_text(size = 9.5),
+          legend.key.height = unit(0.02, "npc"),
+          legend.position = "top",
+          legend.direction = "horizontal")
 
-y_axis <- scale_y_continuous(name = "Precision")
-
-# Preparing the plot for duplications
-duplications_plot <- 
-	ggplot(dup_plot_data, aes(x = sensitivity, y = precision)) +
-	geom_line(mapping = aes(group = cultivar), size = 0.2) +
-	geom_point(mapping = aes(color = cultivar), size = 0.5) +
-	geom_point(data = dup_plot_data[dup_plot_data$threshold == 2, ], aes(color = cultivar), shape = 8, size = 2) +
-	x_axis +
-	y_axis +
-	guides(color = FALSE) +
-	ggtitle("Duplications (all sizes)") +
-	common_theme
-
-# Now preparing the plot for inversions
-inversions_plot <- 
-	ggplot(inv_plot_data, aes(x = sensitivity, y = precision)) +
-	geom_line(mapping = aes(group = cultivar), size = 0.2) +
-	geom_point(mapping = aes(color = cultivar), size = 0.5) +
-	geom_point(data = inv_plot_data[inv_plot_data$threshold == 2, ], aes(color = cultivar), shape = 8, size = 2) +
-	x_axis +
-	y_axis +
-	guides(color = FALSE) +
-	ggtitle("Inversions (all sizes)") +
-	common_theme
-
-
-# Saving to disk as "figure_s14.png"
+# Saving as a png file
 # OUTPUT : figures/figure_s14.png
-png("figure_s14.png", width = 3, height = 6, units = "in", res = 500)
-grid.newpage()
-# Locating the subplots in the figure
-pushViewport(viewport(x = 0.05, just = "left", width = 0.95))
-pushViewport(viewport(layout = grid.layout(2, 1)))
-dup_vp <- viewport(layout.pos.row = 1, layout.pos.col = 1)
-print(duplications_plot, vp = dup_vp)
-inv_vp <- viewport(layout.pos.row = 2, layout.pos.col = 1)
-print(inversions_plot, vp = inv_vp)
-# Add the panel labels A and B
-grid.text("A", x = 0, y = 0.95, gp = gpar(fontsize = 20), vp = dup_vp)
-grid.text("B", x = 0, y = 0.95, gp = gpar(fontsize = 20), vp = inv_vp)
+png("figure_s14.png", width = 10, height = 6, units = "in", res = 500)
+print(figure_s14)
 dev.off()
 

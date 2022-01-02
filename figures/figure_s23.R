@@ -1,6 +1,6 @@
 #!/prg/R/4.0/bin/Rscript
 
-# Figure sE shows the phylogenetic trees obtained from SNPs and SVs
+# Figure s23 shows the phylogenetic trees obtained from SNPs and SVs
 
 # Loading the ape package
 library(ape)
@@ -9,7 +9,7 @@ library(ape)
 load("~/analyse_nanopore/manuscript_revision/population_analysis/tree/tree_data.RData")
 
 # Saving the figure as Figure sA
-png("figure_sE.png", width = 9.5, height = 6, units = "in", res = 500)
+png("figure_s23.png", width = 9.5, height = 6, units = "in", res = 500)
 
 opar <- par(mar = c(0, 0, 0, 0), mfrow = c(1, 2))
 

@@ -1,25 +1,24 @@
-#!/prg/R/4.0/bin/Rscript
+#!/usr/bin/Rscript
 
-# Figure S4 shows the benchmarking of duplications and inversions discovered using Illumina sequencing
+# Figure S18 shows the benchmarking of duplications and inversions discovered using Oxford Nanopore sequencing
+#  and genotyped using the Illumina sequencing data
 # We only need a single panel to show inversions and another to show duplications because there are not many
-
-# The only difference with Figure S2 is that this figure applies to non-repeat regions
 
 # Loading the ggplot2 and grid packages
 library(ggplot2)
 library(grid)
 
 # Loading the data used for plotting
-# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData
-load("../sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData")
+# DEPENDENCY : sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
+load("../sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData")
 
 # Also loading a script that will be used to prepare the data for plotting
 # DEPENDENCY : scripts/make_plot_data.R
 source("../scripts/make_plot_data.R")
 
 # Preparing the data for plotting
-dup_plot_data <- make_plot_data(sveval_norepeat_rates, "DUP")
-inv_plot_data <- make_plot_data(sveval_norepeat_rates, "INV")
+dup_plot_data <- make_plot_data(sveval_nogeno_rates, "DUP")
+inv_plot_data <- make_plot_data(sveval_nogeno_rates, "INV")
 
 # We keep only the summaries over all size classes
 dup_plot_data <- dup_plot_data[dup_plot_data$size_class == "all", ]
@@ -59,9 +58,10 @@ inversions_plot <-
 	ggtitle("Inversions (all sizes)") +
 	common_theme
 
-# Saving as a .png file
-# OUTPUT : figures/figure_s4.png
-png("figure_s4.png", width = 3, height = 6, units = "in", res = 500)
+
+# Saving to disk as "figure_s18.png"
+# OUTPUT : figures/figure_s18.png
+png("figure_s18.png", width = 3, height = 6, units = "in", res = 500)
 grid.newpage()
 # Locating the subplots in the figure
 pushViewport(viewport(x = 0.05, just = "left", width = 0.95))
