@@ -306,7 +306,7 @@ In total, we identified high-quality TSD/TIR sequences for 42 individual SVs.
 For each of the TIR sequences identified, we computed the percentage of matching nucleotides between the two inverted repeats and averaged them over all insertion sequences for a given SV.
 
 Some of the TIR sequences were identified directly from the reference sequence and may thus have been of higher quality than the error-prone assemblies generated from the Oxford Nanopore data.
-Therefore, we only show the results obtained from the de novo-assembled sequences in figure 5c of the main text.
+Therefore, we only show the results obtained from the de novo-assembled sequences in figure 6c of the main text.
 This results in 40 individual SVs collectively representing 17 sequences in the SoyTEdb database.
 
 \subsection{Detailed analysis of a 480-bp Stowaway MITE insertion}
@@ -357,29 +357,54 @@ Samples that were called as homozygous for the reference allele at the 6-bp inse
 Finally, eight (8) samples for which missing genotype calls did not allow unambiguous classification were discarded and not used for further analysis.
 
 Using this classification, we computed the alternate allele frequency within each of the three allele classes of the 156 SNVs in the 39-kb LD block.
-These results are visualized in figure 5d of the main text.
+These results are visualized in figure 6d of the main text.
 They show clear similarity between the "present" and "excised" haplotypes, which is indeed consistent with the 6-bp insertion being a remnant from the excision of the 480-bp TE.
 
 \clearpage
 
 \section{Subsampling analysis of four samples sequenced using Oxford Nanopore sequencing}
 
-Given the relatively modest average sequencing depth (12X) of the Oxford Nanopore data obtained in this study, we performed subsampling analyses of the data for four cultivars.
+Given the relatively modest average sequencing depth (12X) of the Oxford Nanopore data used in this study, we performed subsampling analyses of the data for four cultivars.
 We generated these results both to better understand our results and to provide guidelines for other researchers wanting to use Oxford Nanopore sequencing data for calling SVs.
 
-We adopted a subsampling approach in order to simulate lower coverage from the four cultivars that were sequenced with > 16X sequencing depth (Alta, Maple Isle, AC2001, OAC Lakeview).
+We adopted a subsampling approach in order to simulate lower coverage from the four cultivars that were sequenced with $>$ 16X sequencing depth (Alta, Maple Isle, AC2001, OAC Lakeview).
 For each of the cultivars, we sampled 20\%, 40\%, 60\% and 80\% of the aligned reads using \texttt{samtools view --subsample} \citep{bcftools}.
 Five (5) replicates of each cultivar/sampling fraction combination were generated using a different randomly chosen seed for each sample.
 Each of the 80 \texttt{.bam} files thus generated were processed as described in the main text to generate a catalog of SV calls from each of them:
 
-* SV calling with Sniffles using parameters \texttt{--min\_support 3 --min\_seq\_size 1000 --min\_homo\_af 0.7}
-* Filtering of variants as described in the main text
-* Benchmarking of each SV dataset thus called and filtered with the sveval R package, using the SVs called on the complete dataset for the corresponding cultivar as a ground truth
+\begin{itemize}
+	\item SV calling with Sniffles using parameters \texttt{--min\_support 3 --min\_seq\_size 1000 --min\_homo\_af 0.7}
+	\item Filtering of variants as described in the main text
+	\item Benchmarking of each such filtered SV dataset with the sveval R package, using the SVs called on the complete dataset for the corresponding cultivar as a ground truth
+\end{itemize}
 
 Breakpoint refinement was not performed on the SV datasets generated from these subsamples for computational efficiency reasons.
 However, we believe that the impact of breakpoint refinement on these comparisons would have been minimal and should not impact the conclusions drawn from these analyses.
 
-Results of the subsampling analyses are presented in \ref{fig_s2} (deletions), \ref{fig_s3} (insertions), \ref{fig_s4} (duplications) and \ref{fig_s5} (inversions).
+Results of the subsampling analyses are presented in figure \ref{fig_sA} (deletions), figure \ref{fig_sB} (insertions), figure \ref{fig_sC} (duplications) and figure \ref{fig_sD} (inversions).
+In the context of this analysis, ``sensitivity'' represents the proportion of SVs found in a given subsample relative to the complete dataset.
+Similarly, ``precision'' represents the proportion of SVs found in a given subsample that actually exist in the complete dataset.
+
+The results obtained for deletions (figure \ref{fig_sA}) show that sensitivity reaches 80\% at a sequencing depth of 10X across all size classes.
+The precision of deletion discovery is close to perfection across all size classes but the smallest one (50 - 100 bp) and does not vary with sequencing depth.
+These results indicate that, for deletions, a sequencing depth of 10X is sufficient to detect the majority of variants and that the occurrence of false positive calls does not increase in samples that are sequenced at low depth.
+
+The results obtained for insertions (figure \ref{fig_sB}) show that sensitivity reaches 75\% at a sequencing depth of 10X for insertions in the range 50 - 1,000 bp but decreases for larger insertions.
+Therefore, it appears that the effect of sequencing depth becomes more important as insertions increase in size.
+The precision of insertion discovery varies between 85 and 95\% depending on insertion size, suggesting that insertion discovery is less accurate than deletion discovery.
+However, we observe the same pattern of independence between sequencing depth and precision as was observed for deletions.
+This again indicates that the accuracy of insertion calls from Oxford Nanopore data does not decrease in samples that are sequenced at lower depth.
+
+The results obtained for duplications (figure \ref{fig_sC}) show that duplication discovery is more sensitive to sequencing depth than other SV types, with sensitivity below 50\% at a sequencing depth of 10X.
+This result is not surprising given that duplication calling relies on observing higher coverage on some genomic interval compared to average, and such differences can be assessed more confidently in deeply sequenced samples.
+This result is also consistent with our observation that the precision of duplication genotyping depends strongly on Oxford Nanopore sequencing depth (see figure \ref{fig_s4}).
+The precision of duplication discovery seen in figure \ref{fig_sC} is also poor, consistenly with difficulties in discovering and genotyping duplications documented elsewhere in this paper.
+
+Finally, the results obtained for inversions (figure \ref{fig_sD}) show sensitivity values intermediate between those observed for insertions and duplications, with sensitivity reaching between 50 and 75\% at a sequencing depth of 10X.
+Inversion discovery appears to be highly sensitive to sequencing depth, as the relationship between sensitivity and sequencing depth does not seem to plateau.
+Precision rates are generally excellent ($>$ 90\%) and do not depend on sequencing depth, which indicates that inversion discovery will generally be accurate in samples sequenced at lower depth.
+One exception to this result is smaller inversions (50 - 100 bp), as the small number of inversions observed in this size class (see table \ref{table_s1}) caused important stochastic variation in precision rates depending on the cultivar and subsample.
+
 
 % Table S1 \caption[Number of SVs per Oxford Nanopore sample]{{{{
 
@@ -733,7 +758,7 @@ Results of the subsampling analyses are presented in \ref{fig_s2} (deletions), \
 
 \clearpage%}}}
 
-% Figure Y \caption[Graphical summary of the analyses presented in the paper]{{{{
+% Figure Y \caption[Graphical summary of the methods used in this paper]{{{{
 \begin{lsfigure}
 	% DEPENDENCY : Figure_Y.png
 	\includegraphics[width = 8.5in]{Figure_y}
@@ -743,97 +768,16 @@ Results of the subsampling analyses are presented in \ref{fig_s2} (deletions), \
 	\label{fig_y}
 \end{lsfigure}
 
-	\captionof{figure}[Graphical summary of the analyses presented in the paper]{
-		Graphical summary of the analyses presented in the paper.
+	\captionof{figure}[Graphical summary of the methods used in this paper]{
+		Graphical summary of the methods used in this paper.
 		The various steps of the analysis are color-coded depending on the data output by that step (see legend at the bottom of the figure).
 		The words in italics in parentheses indicate the name of program used to compute that part of the analysis, where applicable.
 		Arrows between steps indicate that one step is a prerequisite to the step it is pointing to.
 		An exception to this is the dotted arrow indicating that both SV genotypes and the ground truth Oxford Nanopore SV dataset are necessary to benchmarking.
 		Benchmarks were performed for three different SV datasets genotyped using Illumina data: SVs discoverered from Illumina data only, SVs discovered from Oxford Nanopore data only, and the combination of SVs discovered from the Illumina and Oxford Nanopore data.
-	as part of this paper.
 	Population-scale analyses were performed on the SV dataset based on combined Illumina and Oxford Nanopore SVs.
-	ONT: Oxford Nanopore Technologies, SV: Structural variant, SNV: single-nucleotide variant, GO: Gene Ontology, BP: Biological Process, TIR: terminal inverted repeat, TSD: target site duplication, MITE: miniature inverted-repeat transposable element, PCA: principal component analysis.
+	ONT: Oxford Nanopore Technologies, SV: structural variant, SNV: single-nucleotide variant, GO: Gene Ontology, BP: Biological Process, TIR: terminal inverted repeat, TSD: target site duplication, MITE: miniature inverted-repeat transposable element, PCA: principal component analysis.
 }
-
-\clearpage%}}}
-
-% Figure sA \caption[Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data]{{{{
-\begin{cfigure}
-	% DEPENDENCY : figure_sA.png
-	\includegraphics[width = 6.2in]{figure_sA}
-
-	\label{fig_sA}
-
-	\caption[Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data]{
-		Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data.
-		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
-		SVs were called on each of these subsamples and (A) sensitivity and (B) computed by comparing the resulting SVs to the SVs called on the full dataset for the corresponding cultivar.
-		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value.
-		Asterisks indicate the value (1 by definition) obtained for the full dataset.
-		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
-}
-
-\end{cfigure}
-
-\clearpage%}}}
-
-% Figure sB \caption[Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data]{{{{
-\begin{cfigure}
-	% DEPENDENCY : figure_sB.png
-	\includegraphics[width = 6.2in]{figure_sB}
-
-	\label{fig_sB}
-
-	\caption[Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data]{
-		Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data.
-		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
-		SVs were called on each of these subsamples and (A) sensitivity and (B) computed by comparing the resulting SVs to the SVs called on the full dataset for the corresponding cultivar.
-		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value.
-		Asterisks indicate the value (1 by definition) obtained for the full dataset.
-		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
-}
-
-\end{cfigure}
-
-\clearpage%}}}
-
-% Figure sC \caption[Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data]{{{{
-\begin{cfigure}
-	% DEPENDENCY : figure_sC.png
-	\includegraphics[width = 6.2in]{figure_sC}
-
-	\label{fig_sC}
-
-	\caption[Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data]{
-		Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data.
-		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
-		SVs were called on each of these subsamples and (A) sensitivity and (B) computed by comparing the resulting SVs to the SVs called on the full dataset for the corresponding cultivar.
-		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value.
-		Asterisks indicate the value (1 by definition) obtained for the full dataset.
-		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
-}
-
-\end{cfigure}
-
-\clearpage%}}}
-
-% Figure sD \caption[Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data]{{{{
-\begin{cfigure}
-	% DEPENDENCY : figure_sD.png
-	\includegraphics[width = 6.2in]{figure_sD}
-
-	\label{fig_sD}
-
-	\caption[Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data]{
-		Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data.
-		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
-		SVs were called on each of these subsamples and (A) sensitivity and (B) computed by comparing the resulting SVs to the SVs called on the full dataset for the corresponding cultivar.
-		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value.
-		Asterisks indicate the value (1 by definition) obtained for the full dataset.
-		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
-}
-
-\end{cfigure}
 
 \clearpage%}}}
 
@@ -904,6 +848,86 @@ Results of the subsampling analyses are presented in \ref{fig_s2} (deletions), \
 	}
 
 	\label{fig_s4}
+
+\end{cfigure}
+
+\clearpage%}}}
+
+% Figure sA \caption[Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data]{{{{
+\begin{cfigure}
+	% DEPENDENCY : figure_sA.png
+	\includegraphics[width = 6.2in]{figure_sA}
+
+	\caption[Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data]{
+		Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data.
+		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
+		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full dataset for the corresponding cultivar.
+		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value of five replicates.
+		Asterisks indicate the value (1 by definition) obtained for the full dataset.
+		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
+}
+
+\label{fig_sA}
+
+\end{cfigure}
+
+\clearpage%}}}
+
+% Figure sB \caption[Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data]{{{{
+\begin{cfigure}
+	% DEPENDENCY : figure_sB.png
+	\includegraphics[width = 6.2in]{figure_sB}
+
+	\caption[Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data]{
+		Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data.
+		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
+		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full dataset for the corresponding cultivar.
+		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value of five replicates.
+		Asterisks indicate the value (1 by definition) obtained for the full dataset.
+		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
+}
+
+\label{fig_sB}
+
+\end{cfigure}
+
+\clearpage%}}}
+
+% Figure sC \caption[Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data]{{{{
+\begin{cfigure}
+	% DEPENDENCY : figure_sC.png
+	\includegraphics[width = 6.2in]{figure_sC}
+
+	\caption[Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data]{
+		Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data.
+		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
+		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full dataset for the corresponding cultivar.
+		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value of five replicates.
+		Asterisks indicate the value (1 by definition) obtained for the full dataset.
+		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
+}
+
+\label{fig_sC}
+
+\end{cfigure}
+
+\clearpage%}}}
+
+% Figure sD \caption[Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data]{{{{
+\begin{cfigure}
+	% DEPENDENCY : figure_sD.png
+	\includegraphics[width = 6.2in]{figure_sD}
+
+	\caption[Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data]{
+		Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data.
+		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
+		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full dataset for the corresponding cultivar.
+		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value of five replicates.
+		Asterisks indicate the value (1 by definition) obtained for the full dataset.
+		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
+}
+
+\label{fig_sD}
 
 \end{cfigure}
 

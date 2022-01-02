@@ -36,7 +36,7 @@ plot_downsampling <- function(x, svtype, measure) {
 	svtype_mapping <- c("DEL" = "deletions",
 			    "INS" = "insertions",
 			    "INV" = "inversions",
-			    "DUP" = "duplicatons")
+			    "DUP" = "duplications")
 
 	size_class_levels <- c(paste0("[50-100 bp[ ", svtype_mapping[svtype]),
 			       paste0("[100-1,000 bp[ ", svtype_mapping[svtype]),

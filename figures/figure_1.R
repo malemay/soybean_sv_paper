@@ -59,6 +59,10 @@ deletions_plot <-
 	geom_line(mapping = aes(group = cultivar), size = 0.2) +
 	geom_point(mapping = aes(color = cultivar), size = 0.3) +
 	geom_point(data = del_plot_data[del_plot_data$threshold == 2, ], aes(color = cultivar), shape = 8, size = 1.5) +
+	# Adding labels with the number of supporting reads for a single sample in one panel
+	geom_text(data = del_plot_data[del_plot_data$size_class == "[50-100[" & del_plot_data$cultivar == "CAD1052" &
+		  del_plot_data$threshold %in% c(2, 6, 10, 14, 16, 18, 20, 22, 24, 26, 29), ],
+		  aes(label = threshold, color = cultivar, y = precision + 0.04), size = 2) +
 	facet_wrap(~size_class,
 		   labeller = labeller(size_class = 
 				       c("[50-100[" = "[50-100 bp[ deletions",

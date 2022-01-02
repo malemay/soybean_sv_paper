@@ -39,7 +39,7 @@ x_axis <- scale_x_continuous(name = "Sensitivity",
 			     breaks = seq(0, 1, 0.2))
 
 y_axis <- scale_y_continuous(name = "Precision",
-			     limits = c(0, 1),
+			     limits = c(0, 1.03),
 			     breaks = seq(0, 1, 0.2))
 
 # Preparing the plot for deletions
@@ -48,6 +48,10 @@ deletions_plot <-
 	geom_line(mapping = aes(group = cultivar), size = 0.2) +
 	geom_point(mapping = aes(color = cultivar), size = 0.5) +
 	geom_point(data = del_plot_data[del_plot_data$threshold == 2, ], aes(color = cultivar), shape = 8, size = 2) +
+	# Adding labels with the number of supporting reads for a single sample in one panel
+	geom_text(data = del_plot_data[del_plot_data$size_class == "[50-100[" & del_plot_data$cultivar == "CAD1052" &
+		  del_plot_data$threshold %in% c(2, 6, 8, 12, 16, 19, 23, 30), ],
+		  aes(label = threshold, color = cultivar, y = precision + 0.06), size = 2) +
 	facet_wrap(~size_class, ncol = 2,
 		   labeller = labeller(size_class = 
 				       c("[50-100[" = "[50-100 bp[ deletions",
