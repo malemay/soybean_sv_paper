@@ -28,6 +28,8 @@ The path to each of the executables should be modified in the Makefile for the c
 * [bcftools](https://github.com/samtools/bcftools) (commit 7cd83b71405c993d2f81fb91126abe3e44344398)
 * [blastn](http://blast.ncbi.nlm.nih.gov) (v. 2.11.0+)
 * [Circos](http://circos.ca) (v. 0.69-8)
+* efetch from the [Edirect utilities](https://www.ncbi.nlm.nih.gov/books/NBK179288/) (v. 8.30)
+* esearch from the [Edirect utilities](https://www.ncbi.nlm.nih.gov/books/NBK179288/) (v. 8.30)
 * [fastStructure](https://github.com/rajanil/fastStructure) (v. 1.0)
 * [FLASH](https://sourceforge.net/projects/flashpage/) (v. 1.2.11)
 * [GenericRepeatFinder](https://github.com/bioinfolabmu/GenericRepeatFinder) (commit 35b1c4d6b3f6182df02315b98851cd2a30bd6201)
@@ -40,11 +42,12 @@ The path to each of the executables should be modified in the Makefile for the c
 * [NanoPlot](https://github.com/wdecoster/NanoPlot) (v. 1.18.2)
 * [ngmlr](https://github.com/philres/ngmlr) (v. 0.2.7)
 * [paragraph](https://github.com/Illumina/paragraph) (v. 2.4a)
+* [PHYLIP](https://evolution.genetics.washington.edu/phylip.html) (v. 3.697)
 * [Platypus](https://www.well.ox.ac.uk/research/research-groups/lunter-group/lunter-group/platypus-a-haplotype-based-variant-caller-for-next-generation-sequence-data) (v. 0.8.1.1)
 * [PLINK](https://www.cog-genomics.org/plink2) (v. 1.90b5.3)
 * [Porechop](https://github.com/rrwick/Porechop) (commit 109e437280436d1ec27e5a5b7a34ffb752176390)
 * [R programming language](https://cran.r-project.org/) (version 4.0.3 for analyses, 3.5.0 for figures)
-* [samtools](https://github.com/samtools/samtools) (commit 26d7c73c690d298c3d4f6979224933d2e2d102cf)
+* [samtools](https://github.com/samtools/samtools) (commit 26d7c73c690d298c3d4f6979224933d2e2d102cf) - Version 1.13 also needed for some analyses
 * [smoove](https://github.com/brentp/smoove) (v. 0.2.4)
 * [SOAPdenovo2](https://github.com/aquaskyline/SOAPdenovo2) (v. 2.04)
 * [Sniffles](https://github.com/fritzsedlazeck/Sniffles) (v. 1.0.11)
@@ -151,5 +154,7 @@ With these tools in hand, you should be able to effectively query the Makefile a
 
 If you use part of this code for your analyses, please cite:
 
-(to be added later)
+Combined use of Oxford Nanopore and Illumina sequencing yields insights into soybean structural variation biology.
+Marc-André Lemay, Jonas A. Sibbesen, Davoud Torkamaneh, Jérémie Hamel, Roger C. Levesque, François Belzile
+bioRxiv 2021.08.26.457816; doi: [10.1101/2021.08.26.457816][https://doi.org/10.1101/2021.08.26.457816]
 
