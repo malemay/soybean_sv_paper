@@ -27,6 +27,7 @@ MINIMAP2 = ~/programs/minimap2/minimap2
 MULTIGRMPY = ~/programs/paragraph/bin/multigrmpy.py
 NANOPLOT = ~/.local/bin/NanoPlot
 NGMLR = ~/programs/ngmlr/ngmlr-0.2.7/ngmlr
+PHYLIP = ~/programs/phylip-3.697/exe/neighbor
 PLATYPUS = /prg/platypus/0.8.1.1/bin/Platypus.py
 PLINK = /prg/plink/1.90b5.3/bin/plink
 PORECHOP = ~/programs/Porechop/porechop-runner.py
@@ -210,7 +211,9 @@ figures/figure_s21.png : sv_genotyping/combined_svs/sveval_benchmarks/norepeat_R
 
 figures/figure_s22.png : structure_analysis/snp_pca/SNP_PCA structure_analysis/sv_pca/SV_PCA structure_analysis/structure.5.meanQ
 
-# Placeholder for figure s23
+figures/figure_s23.png : structure_analysis/trees/snp_outtree structure_analysis/trees/sv_outtree \
+	structure_analysis/trees/SNP_BOOTSTRAP structure_analysis/trees/SV_BOOTSTRAP \
+	structure_analysis/structure.5.meanQ
 
 figures/figure_s25.png : breakpoint_refinement_analysis/raw_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
 	breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData \
@@ -814,6 +817,30 @@ structure_analysis/sv_pca/SV_PCA : sv_genotyping/combined_svs/combined_paragraph
 	scripts/recode_alleles.awk
 	cd structure_analysis/sv_pca ; ./sv_pca.sh $(VCFTOOLS) $(PLINK) ; touch SV_PCA
 
+# Phylogenetic tree analyses
+# Computing the main SNP tree
+structure_analysis/trees/snp_outtree : structure_analysis/snp_pca/SNP_PCA \
+	structure_analysis/trees/snp_tree.sh \
+	structure_analysis/trees/convert_to_phylip.R
+	cd structure_analysis/trees/ ; ./snp_tree.sh $(R_RUN_COMMAND) $(PLINK) $(PHYLIP)
+
+# Computing the main SV tree
+structure_analysis/trees/sv_outtree : structure_analysis/sv_pca/SV_PCA \
+	structure_analysis/trees/sv_tree.sh \
+	structure_analysis/trees/convert_to_phylip.R
+	cd structure_analysis/trees/ ; ./sv_tree.sh $(R_RUN_COMMAND) $(PLINK) $(PHYLIP)
+
+# Computing the bootstraps on the SNP tree
+structure_analysis/trees/SNP_BOOTSTRAP : structure_analysis/platypus_filtered_snps.vcf \
+	structure_analysis/trees/snp_tree_bootstrap.sh \
+	structure_analysis/trees/convert_to_phylip.R
+	cd structure_analysis/trees/ ; ./snp_tree_bootstrap.sh $(R_RUN_COMMAND) $(PLINK) $(PHYLIP) $(VCFTOOLS) $(BCFTOOLS)
+
+# Computing the bootstraps on the SV tree
+structure_analysis/trees/SV_BOOTSTRAP : sv_genotyping/combined_svs/combined_paragraph_filtered.vcf \
+	structure_analysis/trees/sv_tree_bootstrap.sh \
+	structure_analysis/trees/convert_to_phylip.R
+	cd structure_analysis/trees/ ; ./sv_tree_bootstrap.sh $(R_RUN_COMMAND) $(PLINK) $(PHYLIP) $(VCFTOOLS) $(BCFTOOLS)
 
 ##### GENE FEATURE OVERLAP ANALYSES
 
