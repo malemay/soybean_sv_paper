@@ -156,5 +156,5 @@ If you use part of this code for your analyses, please cite:
 
 Combined use of Oxford Nanopore and Illumina sequencing yields insights into soybean structural variation biology.
 Marc-André Lemay, Jonas A. Sibbesen, Davoud Torkamaneh, Jérémie Hamel, Roger C. Levesque, François Belzile
-bioRxiv 2021.08.26.457816; doi: [10.1101/2021.08.26.457816][https://doi.org/10.1101/2021.08.26.457816]
+bioRxiv 2021.08.26.457816; doi: [10.1101/2021.08.26.457816](https://doi.org/10.1101/2021.08.26.457816)
 
