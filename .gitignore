@@ -120,6 +120,8 @@ te_analysis/te_metadata.txt
 *png
 # But do not ignore the IGV screenshot to include in additional file 1
 !figures/Gm04_2257090_annotated.png
+# Nor the figure S1
+!figures/figure_s1_diagram.png
 
 # Ignore obsolete code that is no longer needed
 figures/figure_duptools_obsolete.R
