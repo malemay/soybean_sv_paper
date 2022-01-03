@@ -31,6 +31,8 @@
 *fa
 *fam
 *fastq.gz
+illumina_data/metadata/sra_metadata.csv
+illumina_data/metadata/coverage/CAD*coverage.txt
 *ld
 *manifest.txt
 *maf

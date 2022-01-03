@@ -13,6 +13,8 @@ BCFTOOLS = ~/programs/bcftools/bcftools
 BCFTOOLS_PLUGIN_PATH = ~/programs/bcftools/plugins
 BLASTN = ~/programs/ncbi-blast-2.11.0+/bin/blastn
 CIRCOS = ~/programs/circos-0.69-9/bin/circos
+ESEARCH = /prg/edirect/8.30/esearch
+EFETCH = /prg/edirect/8.30/efetch
 FASTSTRUCTURE = /prg/fastStructure/1.0/structure.py
 FLASH = ~/programs/FLASH-1.2.11-Linux-x86_64/flash
 GINSI = ~/.local/bin/ginsi
@@ -240,7 +242,10 @@ tables/table_s3.csv : gene_analysis/allele_frequency_permutations.RData
 tables/table_s4.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 tables/table_s5.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
 tables/table_s6.csv : gene_analysis/GO_ANALYSIS scripts/format_go_table.R
-# A placeholder for Table S7
+tables/table_s7.csv : illumina_data/metadata/sra_metadata.csv illumina_data/metadata/illumina_sample_ids.txt \
+	utilities/read_lengths.txt illumina_data/metadata/core_set.txt utilities/line_ids.txt \
+	illumina_data/metadata/ILLUMINA_COVERAGE
+
 tables/table_s8.csv : tables/lab_methods_table.csv
 tables/table_s9.csv : tables/lab_methods_table.csv
 tables/table_s10.csv : nanopore_sv_calling/all_metainfo.RData
@@ -286,6 +291,15 @@ tables/table_s1_data.txt : nanopore_sv_calling/SV_NORMALIZATION \
        	utilities/line_ids.txt \
 	scripts/count_svtypes_svsizes.awk
 	cd tables ; ./gather_table_s1_data.sh
+
+# Generating Illumina metadata for Table S7
+illumina_data/metadata/sra_metadata.csv : illumina_data/metadata/fetch_sra_metadata.sh
+	cd illumina_data/metadata/ ; ./fetch_sra_metadata.sh $(ESEARCH) $(EFETCH)
+
+illumina_data/metadata/ILLUMINA_COVERAGE : illumina_data/ILLUMINA_ALIGNMENT \
+	utilities/all_lines.txt \
+	illumina_data/metadata/illumina_coverage.sh
+	cd illumina_data/metadata/ ; ./illumina_coverage.sh $(SAMTOOLS) ; touch ILLUMINA_COVERAGE
 
 # Generating the data on the testing of the breakpoint refinement pipeline for Table S10
 nanopore_sv_calling/all_metainfo.RData : nanopore_sv_calling/SV_NORMALIZATION \
