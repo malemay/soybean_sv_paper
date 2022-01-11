@@ -775,7 +775,7 @@ breakpoint_refinement_analysis/refined_svs/sveval_benchmarks/nogeno_RData/sveval
 # Computing the benchmarks
 nanopore_sv_calling/subsampling_analysis/SUBSAMPLE_BENCHMARKS : \
 	nanopore_sv_calling/subsampling_analysis/SUBSAMPLE_SNIFFLES_CALLING \
-	nanopore_sv_calling/SV_NORMALIZATION \
+	nanopore_sv_calling/SV_CALLING \
 	scripts/extract_rates.R \
 	scripts/read_filter_vcf.R \
 	refgenome/Gmax_508_v4.0_mit_chlp.fasta \

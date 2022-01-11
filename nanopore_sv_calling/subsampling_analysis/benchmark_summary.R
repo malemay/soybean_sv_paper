@@ -50,13 +50,14 @@ benchmark_rates$rep <-
 	unlist(tapply(benchmark_rates$rep, list(benchmark_rates$cultivar, benchmark_rates$frac), function(x) as.integer(as.factor(x))))
 
 # Loading the sequencing depth per sample so we can translate the fraction into actual sequencing depths
+# DEPENDENCY : depth_distributions/average_depth.RData
 load("../../depth_distributions/average_depth.RData")
 depth <- average_depth$depth
 names(depth) <- average_depth$sample
 benchmark_rates$depth <- benchmark_rates$frac * depth[benchmark_rates$cultivar]
 
 # Displaying the cases with NA values
-# benchmark_rates[!complete.cases(benchmark_rates),] 
+benchmark_rates[!complete.cases(benchmark_rates),] 
 
 # Formatting the benchmark data for publication-ready plotting
 # Each sample/sequencing depth combination will be plotted using

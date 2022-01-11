@@ -3,6 +3,8 @@
 # Benchmarking the variants found by each of the Sniffles discovery steps based on
 # subsampled .bam files using the sveval package.
 
+# Here, the truth set consists in the calls made for each sample PRIOR to breakpoint refinement
+
 # Four samples with average sequencing depth > 16 were chosen for this analysis:
 # AC2001, ALTA, MAPLE_ISLE, and OAC_LAKEVIEW
 
@@ -28,8 +30,8 @@ input_files <- dir(".", pattern = ".*seed[0-9]+_filtered.vcf", recursive = TRUE)
 stopifnot(length(input_files) == 80)
 input_samples <- sub("/.*", "", input_files)
 
-# DEPENDENCY : nanopore_sv_calling/SV_NORMALIZATION (filtered and normalized SV calls used for benchmarks)
-truth_files <- paste0("../", samples, "_normalized_ids.vcf")
+# DEPENDENCY : nanopore_sv_calling/SV_CALLING (filtered SV calls, not breakpoint-refined)
+truth_files <- paste0("../", samples, "_hom70_filtered.vcf")
 stopifnot(all(file.exists(truth_files)))
 names(truth_files) <- samples
 
