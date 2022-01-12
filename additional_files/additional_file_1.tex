@@ -790,8 +790,8 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		The various steps of the analysis are color-coded depending on the data output by that step (see legend at the bottom of the figure).
 		The words in italics in parentheses indicate the name of program used to compute that part of the analysis, where applicable.
 		Arrows between steps indicate that one step is a prerequisite to the step it is pointing to.
-		An exception to this is the dotted arrow indicating that both SV genotypes and the ground truth Oxford Nanopore SV dataset are necessary to benchmarking.
-		Benchmarks were performed for three different SV datasets genotyped using Illumina data: SVs discoverered from Illumina data only, SVs discovered from Oxford Nanopore data only, and the combination of SVs discovered from the Illumina and Oxford Nanopore data.
+		An exception to this is the dotted arrow indicating that both predicted SV genotypes and the ground truth Oxford Nanopore SV dataset are necessary to benchmarking.
+		Benchmarks were performed for three different candidate SV datasets genotyped using Illumina data: SVs discoverered from Illumina data only, SVs discovered from Oxford Nanopore data only, and the combination of SVs discovered from the Illumina and Oxford Nanopore data.
 	Population-scale analyses were performed on the SV dataset based on combined Illumina and Oxford Nanopore SVs.
 	ONT: Oxford Nanopore Technologies, SV: structural variant, SNV: single-nucleotide variant, GO: Gene Ontology, BP: Biological Process, TIR: terminal inverted repeat, TSD: target site duplication, MITE: miniature inverted-repeat transposable element, PCA: principal component analysis.
 }
@@ -878,7 +878,7 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 	\caption[Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data]{
 		Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data.
 		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
-		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full dataset for the corresponding cultivar.
+		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full (not sampled) dataset for the corresponding cultivar.
 		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value of five replicates.
 		Asterisks indicate the value (1 by definition) obtained for the full dataset.
 		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
@@ -898,7 +898,7 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 	\caption[Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data]{
 		Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data.
 		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
-		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full dataset for the corresponding cultivar.
+		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full (not sampled) dataset for the corresponding cultivar.
 		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value of five replicates.
 		Asterisks indicate the value (1 by definition) obtained for the full dataset.
 		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
@@ -918,7 +918,7 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 	\caption[Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data]{
 		Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data.
 		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
-		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full dataset for the corresponding cultivar.
+		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full (not sampled) dataset for the corresponding cultivar.
 		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value of five replicates.
 		Asterisks indicate the value (1 by definition) obtained for the full dataset.
 		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
@@ -938,7 +938,7 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 	\caption[Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data]{
 		Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data.
 		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
-		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full dataset for the corresponding cultivar.
+		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full (not sampled) dataset for the corresponding cultivar.
 		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value of five replicates.
 		Asterisks indicate the value (1 by definition) obtained for the full dataset.
 		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
@@ -1175,7 +1175,7 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 
 	\caption[Principal component analyses (PCA) of the whole Canadian soybean panel]{
 		Principal component analyses (PCA) of the whole Canadian soybean panel.
-		PCA were computed based on (A) SVs discovered by Illumina and Oxford Nanopore and genotyped with Illumina data using Paragraph and (B) SNVs called by Platypus from Illumina data.
+		PCA were computed based on (A) SVs discovered from Illumina and Oxford Nanopore data, and subsequently genotyped with Illumina data using Paragraph and (B) SNVs called by Platypus from Illumina data.
 		The first three principal components are shown for each PCA. 
 		The color of each point indicates the population that the cultivar belongs to according to the fastStructure analysis with SNVs, following the same color scheme as in Figure 4 of the main text.
 		Samples with a maximum q-value below 0.6 (as inferred from fastStructure) are considered admixed and are labeled with asterisks.
@@ -1193,8 +1193,8 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 	\includegraphics[width = 9.5in]{figure_s23}
 
 	\caption[Neighbour-joining phylogenetic trees of the population of 102 Canadian soybean cultivars]{
-		Neighbour-joining phylogenetic trees of the population of 102 Canadian soybean cultivars derived from (A) SVs discovered by Illumina and Oxford Nanopore and genotyped with Illumina data using Paragraph and (B) SNVs called by Platypus from Illumina data.
-		Tip label color indicates the population that the cultivar belongs to according to the fastStructure analysis with SNVs, following the same color scheme as in Figure 4 of the main text.
+		Neighbour-joining phylogenetic trees of the population of 102 Canadian soybean cultivars derived from (A) SVs discovered from Illumina and Oxford Nanopore data, and subsequently genotyped with Illumina data using Paragraph and (B) SNVs called by Platypus from Illumina data.
+		Tip label colors indicate the population that the cultivar belongs to according to the fastStructure analysis with SNVs, following the same color scheme as in Figure 4 of the main text.
 		Node labels indicate the number of trees (out of 100) of the bootstrap analysis that support a given node/grouping.
 	}
 
