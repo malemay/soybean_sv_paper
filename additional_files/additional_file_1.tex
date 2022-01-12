@@ -364,47 +364,64 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 
 \section{Subsampling analysis of four samples sequenced using Oxford Nanopore sequencing}
 
-Given the relatively modest average sequencing depth (12X) of the Oxford Nanopore data used in this study, we performed subsampling analyses of the data for four cultivars.
-We generated these results both to better understand our results and to provide guidelines for other researchers wanting to use Oxford Nanopore sequencing data for calling SVs.
+To investigate the effect of the relatively modest average sequencing depth (12X) of the Oxford Nanopore data used in this study, we performed a subsampling analysis of the data for four cultivars.
 
 We adopted a subsampling approach in order to simulate lower coverage from the four cultivars that were sequenced with $>$ 16X sequencing depth (Alta, Maple Isle, AC2001, OAC Lakeview).
 For each of the cultivars, we sampled 20\%, 40\%, 60\% and 80\% of the aligned reads using \texttt{samtools view --subsample} \citep{bcftools}.
 Five (5) replicates of each cultivar/sampling fraction combination were generated using a different randomly chosen seed for each sample.
-Each of the 80 \texttt{.bam} files thus generated were processed as described in the main text to generate a catalog of SV calls from each of them:
+Each of the 80 subsampled \texttt{.bam} files were processed to generate a catalog of SV calls from each of them and benchmark their results using the same methods as described in the main text:
 
 \begin{itemize}
 	\item SV calling with Sniffles using parameters \texttt{--min\_support 3 --min\_seq\_size 1000 --min\_homo\_af 0.7}
-	\item Filtering of variants as described in the main text
-	\item Benchmarking of each such filtered SV dataset with the sveval R package, using the SVs called on the complete dataset for the corresponding cultivar as a ground truth
+	\item Filtering of variants by removing those meeting the following conditions:
+		\begin{itemize}
+			\item Variants other than insertions, deletions, duplications and inversions
+			\item Variants called as heterozygous
+			\item Variants overlapping any \texttt{N} in the reference sequence or containing any \texttt{N} in their sequence
+			\item Variants located on unanchored scaffolds or organellar genomes
+			\item Insertions located less than 20 bp away form any \texttt{N} in the reference sequence
+			\item Variants smaller than 50 bp or larger than 500 kb
+		\end{itemize}
+	\item Benchmarking of each such filtered SV dataset with the sveval R package, using the SVs called on the complete (not sampled) dataset for the corresponding cultivar as a ground truth
 \end{itemize}
 
 Breakpoint refinement was not performed on the SV datasets generated from these subsamples for computational efficiency reasons.
+For consistency, the complete (not sampled) truth SV sets against which subsampled datasets were compared were also not breakpoint-refined.
 However, we believe that the impact of breakpoint refinement on these comparisons would have been minimal and should not impact the conclusions drawn from these analyses.
 
 Results of the subsampling analyses are presented in figure \ref{fig_s6} (deletions), figure \ref{fig_s7} (insertions), figure \ref{fig_s8} (duplications) and figure \ref{fig_s9} (inversions).
-In the context of this analysis, ``sensitivity'' represents the proportion of SVs found in a given subsample relative to the complete dataset.
+In the context of this analysis, ``sensitivity'' represents the proportion of SVs in the complete dataset found in a given subsample.
 Similarly, ``precision'' represents the proportion of SVs found in a given subsample that actually exist in the complete dataset.
 
-The results obtained for deletions (figure \ref{fig_s6}) show that sensitivity reaches 80\% at a sequencing depth of 10X across all size classes.
-The precision of deletion discovery is close to perfection across all size classes but the smallest one (50 - 100 bp) and does not vary with sequencing depth.
+The results obtained for deletions (figure \ref{fig_s6}) show that sensitivity exceeds 75\% at a sequencing depth of 10X across all size classes and samples.
+The precision of deletion discovery is close to perfection across all size classes, and does not vary with sequencing depth.
 These results indicate that, for deletions, a sequencing depth of 10X is sufficient to detect the majority of variants and that the occurrence of false positive calls does not increase in samples that are sequenced at low depth.
 
-The results obtained for insertions (figure \ref{fig_s7}) show that sensitivity reaches 75\% at a sequencing depth of 10X for insertions in the range 50 - 1,000 bp but decreases for larger insertions.
+The results obtained for insertions (figure \ref{fig_s7}) show that sensitivity exceeds 75\% at a sequencing depth of 10X for insertions in the range 50 - 1,000 bp but decreases for larger insertions.
 Therefore, it appears that the effect of sequencing depth becomes more important as insertions increase in size.
-The precision of insertion discovery varies between 85 and 95\% depending on insertion size, suggesting that insertion discovery is less accurate than deletion discovery.
-However, we observe the same pattern of independence between sequencing depth and precision as was observed for deletions.
+The precision of insertion discovery varies between 75\% and close to 100\% depending on insertion size, with the exception of insertions larger than 10 kb for a single sample (AC2001).
+These results suggest that insertion discovery is less accurate than deletion discovery.
+However, we observe the same pattern of independence between sequencing depth and precision as was observed for deletions, with the same exception as noted above.
 This again indicates that the accuracy of insertion calls from Oxford Nanopore data does not decrease in samples that are sequenced at lower depth.
 
-The results obtained for duplications (figure \ref{fig_s8}) show that duplication discovery is more sensitive to sequencing depth than other SV types, with sensitivity below 50\% at a sequencing depth of 10X.
+The results obtained for duplications (figure \ref{fig_s8}) show that duplication discovery is more sensitive to sequencing depth than other SV types, with sensitivity below 75\% at a sequencing depth of 10X.
 This result is not surprising given that duplication calling relies on observing higher coverage on some genomic interval compared to average, and such differences can be assessed more confidently in deeply sequenced samples.
-This result is also consistent with our observation that the precision of duplication genotyping depends strongly on Oxford Nanopore sequencing depth (see figure \ref{fig_s5}).
-The precision of duplication discovery seen in figure \ref{fig_s8} is also poor, consistenly with difficulties in discovering and genotyping duplications documented elsewhere in this paper.
+This result is also consistent with our observation that the apparent precision of duplication genotyping from Illumina data depends strongly on Oxford Nanopore sequencing depth (see figure \ref{fig_s5}).
+The precision of duplication discovery seen in figure \ref{fig_s8} is also poorer than for other SV types and decreases slightly with decreasing sequencing depth, consistenly with difficulties in discovering and genotyping duplications as documented elsewhere in this paper.
 
-Finally, the results obtained for inversions (figure \ref{fig_s9}) show sensitivity values intermediate between those observed for insertions and duplications, with sensitivity reaching between 50 and 75\% at a sequencing depth of 10X.
+Finally, the results obtained for inversions (figure \ref{fig_s9}) show sensitivity values similar to those observed for duplications, with sensitivity reaching between 50\% and 75\% at a sequencing depth of 10X.
 Inversion discovery appears to be highly sensitive to sequencing depth, as the relationship between sensitivity and sequencing depth does not seem to plateau.
 Precision rates are generally excellent ($>$ 90\%) and do not depend on sequencing depth, which indicates that inversion discovery will generally be accurate in samples sequenced at lower depth.
-One exception to this result is smaller inversions (50 - 100 bp), as the small number of inversions observed in this size class (see table \ref{table_s1}) caused important stochastic variation in precision rates depending on the cultivar and subsample.
+One exception to this result is smaller inversions (50 - 100 bp), as the small number of inversions observed in this size class (see table \ref{table_s1}) caused stochastic variation in precision rates depending on the cultivar and subsample.
 
+The observation that the precision rates of deletion, insertion and inversion discovery do not vary with sequencing depth is not surprising.
+Indeed, one would not expect a subsample of the reads to discover variants that were not already discovered from the full set of reads.
+However, Sniffles determines the coordinates of SVs by combining the information from all reads supporting a given SV.
+Therefore, for some variants located in regions where reads are difficult to align properly, subsets of reads may describe variants differently from the complete set of reads.
+Similarly, variants that are supported by only a few misaligned reads might be called as homozygous from a sample of reads, but as heterozygous from the complete set and therefore filtered out.
+Both these situations would lead to false positive calls in the subsampled dataset relative to the full dataset, as assessed by the sveval package.
+Despite the possibility of those situations occurring, our results show that such false positive calls are rare for deletions, insertions, and inversions.
+Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencing data without worrying about the impact of false positive calls.
 
 % Table S1 \caption[Number of SVs per Oxford Nanopore sample]{{{{
 
