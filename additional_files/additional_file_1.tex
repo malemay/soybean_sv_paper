@@ -219,7 +219,7 @@ Benchmarks were carried out using the sveval R package \citep[][\url{https://git
 
 \paragraph{Bayestyper}
 
-Figure \ref{fig_s25} shows the benchmarking results obtained for BayesTyper.
+Figure \ref{fig_s26} shows the benchmarking results obtained for BayesTyper.
 Overall, the refined deletions resulted in a higher sensitivity but similar precision. 
 The benefits of SV refinement were obvious for larger deletions, whereas results were sometimes worse for deletions in the range of 100-1000 nucleotides.
 The improvemement brought by refinement is more obvious for insertions than it is for deletions, most likely because the refinement pipeline also improved the sequence content of the insertions.
@@ -228,14 +228,14 @@ Nevertheless, the improvement in sensitivity obtained by using refined SVs sugge
 
 \paragraph{vg}
 
-Figure \ref{fig_s26} shows the benchmarking results obtained for vg.
+Figure \ref{fig_s27} shows the benchmarking results obtained for vg.
 Refining the deletions does seem to have improved the results, although only very slightly.
 For insertions, however, the improvement resulting from refinement is obvious, both in terms of sensitivity and precision.
 Again, this suggests that the breakpoint refinement pipeline improved the accuracy of the sequence content of insertions, such that they could be more accurately genotyped by vg.
 
 \paragraph{Paragraph}
 
-Figure \ref{fig_s27} shows the benchmarking results obtained for Paragraph.
+Figure \ref{fig_s28} shows the benchmarking results obtained for Paragraph.
 Using refined variants results in a slight increase in sensitivity for Paragraph, both for deletions and smaller insertions ($<$ 1,000 bp).
 The apparent drop in precision for insertions $\geq$ 1,000 bp is likely due to the fact that the Oxford Nanopore data represented a poor ground truth dataset for these samples in this size range, as explained in the main text.
 It is therefore expected that an increase in sensitivity from refining the variants will result in an apparent loss of precision in this size range.
@@ -389,27 +389,27 @@ Breakpoint refinement was not performed on the SV datasets generated from these 
 For consistency, the complete (not sampled) truth SV sets against which subsampled datasets were compared were also not breakpoint-refined.
 However, we believe that the impact of breakpoint refinement on these comparisons would have been minimal and should not impact the conclusions drawn from these analyses.
 
-Results of the subsampling analyses are presented in figure \ref{fig_s6} (deletions), figure \ref{fig_s7} (insertions), figure \ref{fig_s8} (duplications) and figure \ref{fig_s9} (inversions).
+Results of the subsampling analyses are presented in figure \ref{fig_s7} (deletions), figure \ref{fig_s8} (insertions), figure \ref{fig_s9} (duplications) and figure \ref{fig_s10} (inversions).
 In the context of this analysis, ``sensitivity'' represents the proportion of SVs in the complete dataset found in a given subsample.
 Similarly, ``precision'' represents the proportion of SVs found in a given subsample that actually exist in the complete dataset.
 
-The results obtained for deletions (figure \ref{fig_s6}) show that sensitivity exceeds 75\% at a sequencing depth of 10X across all size classes and samples.
+The results obtained for deletions (figure \ref{fig_s7}) show that sensitivity exceeds 75\% at a sequencing depth of 10X across all size classes and samples.
 The precision of deletion discovery is close to perfection across all size classes, and does not vary with sequencing depth.
 These results indicate that, for deletions, a sequencing depth of 10X is sufficient to detect the majority of variants and that the occurrence of false positive calls does not increase in samples that are sequenced at low depth.
 
-The results obtained for insertions (figure \ref{fig_s7}) show that sensitivity exceeds 75\% at a sequencing depth of 10X for insertions in the range 50 - 1,000 bp but decreases for larger insertions.
+The results obtained for insertions (figure \ref{fig_s8}) show that sensitivity exceeds 75\% at a sequencing depth of 10X for insertions in the range 50 - 1,000 bp but decreases for larger insertions.
 Therefore, it appears that the effect of sequencing depth becomes more important as insertions increase in size.
 The precision of insertion discovery varies between 75\% and close to 100\% depending on insertion size, with the exception of insertions larger than 10 kb for a single sample (AC2001).
 These results suggest that insertion discovery is less accurate than deletion discovery.
 However, we observe the same pattern of independence between sequencing depth and precision as was observed for deletions, with the same exception as noted above.
 This again indicates that the accuracy of insertion calls from Oxford Nanopore data does not decrease in samples that are sequenced at lower depth.
 
-The results obtained for duplications (figure \ref{fig_s8}) show that duplication discovery is more sensitive to sequencing depth than other SV types, with sensitivity below 75\% at a sequencing depth of 10X.
+The results obtained for duplications (figure \ref{fig_s9}) show that duplication discovery is more sensitive to sequencing depth than other SV types, with sensitivity below 75\% at a sequencing depth of 10X.
 This result is not surprising given that duplication calling relies on observing higher coverage on some genomic interval compared to average, and such differences can be assessed more confidently in deeply sequenced samples.
-This result is also consistent with our observation that the apparent precision of duplication genotyping from Illumina data depends strongly on Oxford Nanopore sequencing depth (see figure \ref{fig_s5}).
-The precision of duplication discovery seen in figure \ref{fig_s8} is also poorer than for other SV types and decreases slightly with decreasing sequencing depth, consistenly with difficulties in discovering and genotyping duplications as documented elsewhere in this paper.
+This result is also consistent with our observation that the apparent precision of duplication genotyping from Illumina data depends strongly on Oxford Nanopore sequencing depth (see figure \ref{fig_s6}).
+The precision of duplication discovery seen in figure \ref{fig_s9} is also poorer than for other SV types and decreases slightly with decreasing sequencing depth, consistenly with difficulties in discovering and genotyping duplications as documented elsewhere in this paper.
 
-Finally, the results obtained for inversions (figure \ref{fig_s9}) show sensitivity values similar to those observed for duplications, with sensitivity reaching between 50\% and 75\% at a sequencing depth of 10X.
+Finally, the results obtained for inversions (figure \ref{fig_s10}) show sensitivity values similar to those observed for duplications, with sensitivity reaching between 50\% and 75\% at a sequencing depth of 10X.
 Inversion discovery appears to be highly sensitive to sequencing depth, as the relationship between sensitivity and sequencing depth does not seem to plateau.
 Precision rates are generally excellent ($>$ 90\%) and do not depend on sequencing depth, which indicates that inversion discovery will generally be accurate in samples sequenced at lower depth.
 One exception to this result is smaller inversions (50 - 100 bp), as the small number of inversions observed in this size class (see table \ref{table_s1}) caused stochastic variation in precision rates depending on the cultivar and subsample.
@@ -798,10 +798,10 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 
 \clearpage%}}}
 
-% Figure S2 \caption[Sensitivity and precision of Illumina deletion and insertion genotyping in non-repeat regions]{{{{
+% Figure S3 \caption[Sensitivity and precision of Illumina deletion and insertion genotyping in non-repeat regions]{{{{
 \begin{cfigure}
-	% DEPENDENCY : figure_s2.png
-	\includegraphics[width = 5in]{figure_s2}
+	% DEPENDENCY : figure_s3.png
+	\includegraphics[width = 5in]{figure_s3}
 
 	\caption[Sensitivity and precision of Illumina deletion and insertion genotyping in non-repeat regions]{
 		Genotyping sensitivity and precision of (A) deletions and (B) insertions discovered from the Illumina data in non-repeat regions. 
@@ -812,38 +812,19 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		Note that no results were available for deletions larger than 10 kb because these all overlapped repeat regions.
 	}
 
-	\label{fig_s2}
-
-\end{cfigure}
-
-\clearpage%}}}
-
-% Figure S3 \caption[Sensitivity and precision of Illumina duplication and inversion genotyping]{{{{
-\begin{cfigure}
-	% DEPENDENCY : figure_s3.png
-	\includegraphics[width = 3.5in]{figure_s3}
-	
-	\caption[Sensitivity and precision of Illumina duplication and inversion genotyping]{
-		Genotyping sensitivity and precision of (A) duplications and (B) inversions discovered from the Illumina data.
-		Each line and color represents one of 17 samples. 
-		The points correspond to different filtering thresholds on the minimum number of Illumina reads required to support a genotype call.
-		The asterisks indicate a minimum number of supporting reads of 2; points to the left of these for a given line represent increasingly stringent filtering threshold values.
-	}
-
 	\label{fig_s3}
 
 \end{cfigure}
 
 \clearpage%}}}
 
-% Figure S4 \caption[Sensitivity and precision of Illumina duplication and inversion genotyping in non-repeat regions]{{{{
+% Figure S4 \caption[Sensitivity and precision of Illumina duplication and inversion genotyping]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s4.png
 	\includegraphics[width = 3.5in]{figure_s4}
-
-	\caption[Sensitivity and precision of Illumina duplication and inversion genotyping in non-repeat regions]{
-		Genotyping sensitivity and precision of (A) duplications and (B) inversions discovered from the Illumina data in non-repeat regions.
-		Only SVs with less than 20\% overlap to regions annotated as repeats were used for these benchmarks. 
+	
+	\caption[Sensitivity and precision of Illumina duplication and inversion genotyping]{
+		Genotyping sensitivity and precision of (A) duplications and (B) inversions discovered from the Illumina data.
 		Each line and color represents one of 17 samples. 
 		The points correspond to different filtering thresholds on the minimum number of Illumina reads required to support a genotype call.
 		The asterisks indicate a minimum number of supporting reads of 2; points to the left of these for a given line represent increasingly stringent filtering threshold values.
@@ -855,13 +836,17 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 
 \clearpage%}}}
 
-% Figure S5 \caption[Relationship between Oxford Nanopore sequencing depth and genotyping precision of Illumina SVs]{{{{
+% Figure S5 \caption[Sensitivity and precision of Illumina duplication and inversion genotyping in non-repeat regions]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s5.png
-	\includegraphics[width = 6in]{figure_s5}
+	\includegraphics[width = 3.5in]{figure_s5}
 
-	\caption[Relationship between Oxford Nanopore sequencing depth and genotyping precision of Illumina SVs]{
-		Genotyping precision of (A) deletions, (B) insertions, (C) duplications and (D) inversions~discovered from Illumina data (at a minimum threshold of 2 supporting reads) for 17 samples as a function of the average Oxford Nanopore sequencing depth of that sample.
+	\caption[Sensitivity and precision of Illumina duplication and inversion genotyping in non-repeat regions]{
+		Genotyping sensitivity and precision of (A) duplications and (B) inversions discovered from the Illumina data in non-repeat regions.
+		Only SVs with less than 20\% overlap to regions annotated as repeats were used for these benchmarks. 
+		Each line and color represents one of 17 samples. 
+		The points correspond to different filtering thresholds on the minimum number of Illumina reads required to support a genotype call.
+		The asterisks indicate a minimum number of supporting reads of 2; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 	}
 
 	\label{fig_s5}
@@ -870,33 +855,28 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 
 \clearpage%}}}
 
-% Figure s6 \caption[Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data]{{{{
+% Figure S6 \caption[Relationship between Oxford Nanopore sequencing depth and genotyping precision of Illumina SVs]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s6.png
-	\includegraphics[width = 6.2in]{figure_s6}
+	\includegraphics[width = 6in]{figure_s6}
 
-	\caption[Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data]{
-		Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data.
-		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
-		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full (not sampled) dataset for the corresponding cultivar.
-		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value of five replicates.
-		Asterisks indicate the value (1 by definition) obtained for the full dataset.
-		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
-}
+	\caption[Relationship between Oxford Nanopore sequencing depth and genotyping precision of Illumina SVs]{
+		Genotyping precision of (A) deletions, (B) insertions, (C) duplications and (D) inversions~discovered from Illumina data (at a minimum threshold of 2 supporting reads) for 17 samples as a function of the average Oxford Nanopore sequencing depth of that sample.
+	}
 
-\label{fig_s6}
+	\label{fig_s6}
 
 \end{cfigure}
 
 \clearpage%}}}
 
-% Figure s7 \caption[Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data]{{{{
+% Figure s7 \caption[Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s7.png
 	\includegraphics[width = 6.2in]{figure_s7}
 
-	\caption[Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data]{
-		Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data.
+	\caption[Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data]{
+		Effects of sequencing depth on the sensitivity and precision of deletion discovery from Oxford Nanopore sequencing data.
 		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
 		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full (not sampled) dataset for the corresponding cultivar.
 		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value of five replicates.
@@ -910,13 +890,13 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 
 \clearpage%}}}
 
-% Figure s8 \caption[Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data]{{{{
+% Figure s8 \caption[Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s8.png
 	\includegraphics[width = 6.2in]{figure_s8}
 
-	\caption[Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data]{
-		Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data.
+	\caption[Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data]{
+		Effects of sequencing depth on the sensitivity and precision of insertion discovery from Oxford Nanopore sequencing data.
 		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
 		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full (not sampled) dataset for the corresponding cultivar.
 		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value of five replicates.
@@ -930,13 +910,13 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 
 \clearpage%}}}
 
-% Figure s9 \caption[Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data]{{{{
+% Figure s9 \caption[Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s9.png
 	\includegraphics[width = 6.2in]{figure_s9}
 
-	\caption[Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data]{
-		Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data.
+	\caption[Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data]{
+		Effects of sequencing depth on the sensitivity and precision of duplication discovery from Oxford Nanopore sequencing data.
 		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
 		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full (not sampled) dataset for the corresponding cultivar.
 		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value of five replicates.
@@ -950,10 +930,30 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 
 \clearpage%}}}
 
-% Figure S10 \caption[Effect of homozygous ALT count on genotyping performance of Illumina insertions and deletions]{{{{
+% Figure s10 \caption[Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s10.png
-	\includegraphics[width = 5in]{figure_s10}
+	\includegraphics[width = 6.2in]{figure_s10}
+
+	\caption[Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data]{
+		Effects of sequencing depth on the sensitivity and precision of inversion discovery from Oxford Nanopore sequencing data.
+		Oxford Nanopore reads of four cultivars were subsampled using subsampling fractions of 20\%, 40\%, 60\% and 80\%, with five replicates of each cultivar/subsampling fraction combination.
+		SVs were called on each of these subsamples and (A) sensitivity and (B) precision computed by comparing the resulting SVs to the SVs called on the full (not sampled) dataset for the corresponding cultivar.
+		Points indicate the median value for a given cultivar/subsampling fraction combination, while vertical error bars indicate the span from the minimum to the maximum value of five replicates.
+		Asterisks indicate the value (1 by definition) obtained for the full dataset.
+		Error bars are not visible in cases where the minimum and maximum values are too close to each other.
+}
+
+\label{fig_s10}
+
+\end{cfigure}
+
+\clearpage%}}}
+
+% Figure S11 \caption[Effect of homozygous ALT count on genotyping performance of Illumina insertions and deletions]{{{{
+\begin{cfigure}
+	% DEPENDENCY : figure_s11.png
+	\includegraphics[width = 5in]{figure_s11}
 
 	\caption[Effect of homozygous ALT count on genotyping performance of Illumina deletions and insertions]{
 		Effect of filtering variants for minimum number of ALT alleles in homozygous genotype calls (homozygous ALT count) on the genotyping performance of (A) deletions and (B) insertions discovered from Illumina data.
@@ -962,16 +962,16 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		The asterisks mark a homozygous ALT count threshold of 4; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 	}
 
-	\label{fig_s10}
+	\label{fig_s11}
 
 \end{cfigure}
 
 \clearpage%}}}
 
-% Figure S11 \caption[Effect of homozygous ALT count on genotyping performance of Illumina duplications and inversions]{{{{
+% Figure S12 \caption[Effect of homozygous ALT count on genotyping performance of Illumina duplications and inversions]{{{{
 \begin{cfigure}
-	% DEPENDENCY : figure_s11.png
-	\includegraphics[width = 3.5in]{figure_s11}
+	% DEPENDENCY : figure_s12.png
+	\includegraphics[width = 3.5in]{figure_s12}
 
 	\caption[Effect of homozygous ALT count on genotyping performance of Illumina duplications and inversions]{
 		Effect of filtering variants for minimum number of ALT alleles in homozygous genotype calls (homozygous ALT count) on the genotyping performance of (A) duplications and (B) inversions discovered from Illumina data.
@@ -980,16 +980,16 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		The asterisks mark a homozygous ALT count threshold of 6 (for duplications) or 10 (for inversions); points to the left of these for a given line represent increasingly stringent filtering threshold values.
 	}
 
-	\label{fig_s11}
+	\label{fig_s12}
 
 \end{cfigure}
 
 \clearpage%}}}
 
-% Figure S12 \caption[Effect of the number of supporting calling tools on genotyping performance of Illumina deletions and insertions]{{{{
+% Figure S13 \caption[Effect of the number of supporting calling tools on genotyping performance of Illumina deletions and insertions]{{{{
 \begin{cfigure}
-	% DEPENDENCY : figure_s12.png
-	\includegraphics[width = 5in]{figure_s12}
+	% DEPENDENCY : figure_s13.png
+	\includegraphics[width = 5in]{figure_s13}
 
 	\caption[Effect of the number of supporting calling tools on genotyping performance of Illumina deletions and insertions]{
 		Effect of filtering variants for minimum number of supporting calling tools on the genotyping performance of (A) deletions and (B) insertions discovered from Illumina data.
@@ -998,16 +998,16 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		The asterisks mark a minimum threshold of one supporting calling tool for a variant to be considered; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 		}
 
-	\label{fig_s12}
+	\label{fig_s13}
 
 \end{cfigure}
 
 \clearpage%}}}
 
-% Figure S13 \caption[Size distribution of the SVs reported by various calling tools using Illumina data]{{{{
+% Figure S14 \caption[Size distribution of the SVs reported by various calling tools using Illumina data]{{{{
 \begin{cfigure}
-	% DEPENDENCY : figure_s13.png
-	\includegraphics[width = 6.5in]{figure_s13}
+	% DEPENDENCY : figure_s14.png
+	\includegraphics[width = 6.5in]{figure_s14}
 
 	\caption[Size distribution of the SVs reported by various calling tools using Illumina data]{
 		Size distribution of the SVs reported by various calling tools using Illumina data.
@@ -1017,16 +1017,16 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		(B) Distribution of the absolute size of deletions on a logarithmic scale.
 	}
 
-	\label{fig_s13}
+	\label{fig_s14}
 
 \end{cfigure}
 
 \clearpage%}}}
 
-% Figure S14 \caption[Number of true positive and false positive deletion calls reported by various calling tool combinations]{{{{
+% Figure S15 \caption[Number of true positive and false positive deletion calls reported by various calling tool combinations]{{{{
 \begin{lsfigure}
-	% DEPENDENCY : figure_s14.png
-	\includegraphics[width = 9in]{figure_s14}
+	% DEPENDENCY : figure_s15.png
+	\includegraphics[width = 9in]{figure_s15}
 
 	\caption[Number of true positive and false positive deletion calls reported by various calling tool combinations]{
 		Number of true positive and false positive deletion genotype calls broken down by size and by the combination of tools that reported the variant for sample OAC Oxford.
@@ -1035,16 +1035,16 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		Note the logarithmic scale on the x-axis.
 	}
 
-	\label{fig_s14}
+	\label{fig_s15}
 
 \end{lsfigure}
 
 \clearpage%}}}
 
-% Figure S15 \caption[Number of true positive and false positive insertion calls reported by various calling tool combinations]{{{{
+% Figure S16 \caption[Number of true positive and false positive insertion calls reported by various calling tool combinations]{{{{
 \begin{cfigure}
-	% DEPENDENCY : figure_s15.png
-	\includegraphics[width = 6.5in]{figure_s15}
+	% DEPENDENCY : figure_s16.png
+	\includegraphics[width = 6.5in]{figure_s16}
 
 	\caption[Number of true positive and false positive insertion calls reported by various calling tool combinations]{
 		Number of true positive and false positive insertion genotype calls broken down by size and by the combination of tools that reported the variant for sample OAC Lakeview.
@@ -1053,16 +1053,16 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		Note the logarithmic scale on the x-axis.
 	}
 
-	\label{fig_s15}
+	\label{fig_s16}
 
 \end{cfigure}
 
 \clearpage%}}}
 
-% Figure S16 \caption[Relationship between Oxford Nanopore read N50 and genotyping precision of Oxford Nanopore insertions]{{{{
+% Figure S17 \caption[Relationship between Oxford Nanopore read N50 and genotyping precision of Oxford Nanopore insertions]{{{{
 \begin{lsfigure}
-	% DEPENDENCY : figure_s16.png
-	\includegraphics[width = 8in]{figure_s16}
+	% DEPENDENCY : figure_s17.png
+	\includegraphics[width = 8in]{figure_s17}
 
 	\caption[Relationship between Oxford Nanopore read N50 and genotyping precision of Oxford Nanopore insertions]{
 		Genotyping precision of insertions discovered from Oxford Nanopore data (at a minimum threshold of 2 supporting reads) of 17 samples as a function of the read N50 of the Oxford Nanopore run(s) of that sample.
@@ -1071,15 +1071,15 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 
 	}
 
-	\label{fig_s16}
+	\label{fig_s17}
 \end{lsfigure}
 
 \clearpage%}}}
 
-% Figure S17 \caption[Sensitivity and precision of Oxford Nanopore deletion and insertion genotyping in non-repeat regions]{{{{
+% Figure S18 \caption[Sensitivity and precision of Oxford Nanopore deletion and insertion genotyping in non-repeat regions]{{{{
 \begin{lsfigure}
-		% DEPENDENCY : figure_s17.png
-		\includegraphics[width = 9.5in]{figure_s17}
+		% DEPENDENCY : figure_s18.png
+		\includegraphics[width = 9.5in]{figure_s18}
 
 		\caption[Sensitivity and precision of Oxford Nanopore deletion and insertion genotyping in non-repeat regions]{
 			Genotyping sensitivity and precision of (A) deletions and (B) insertions discovered from the Oxford Nanopore data in non-repeat regions. 
@@ -1090,37 +1090,18 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 			Note that no results were available for deletions larger than 10 kb because these all overlapped repeat regions.
 	}
 
-		\label{fig_s17}
+		\label{fig_s18}
 \end{lsfigure}
 
 \clearpage%}}}
 
-% Figure S18 \caption[Sensitivity and precision of Oxford Nanopore duplication and inversion genotyping]{{{{
-\begin{cfigure}
-	% DEPENDENCY : figure_s18.png
-	\includegraphics[width = 3.5in]{figure_s18}
-
-	\caption[Sensitivity and precision of Oxford Nanopore duplication and inversion genotyping]{
-		Genotyping sensitivity and precision of (A) duplications and (B) inversions discovered from the Oxford Nanopore data. 
-		Each line and color represents one of 17 samples. 
-		The points correspond to different filtering thresholds on the minimum number of Illumina reads required to support a genotype call.
-		The asterisks indicate a minimum number of supporting reads of 2; points to the left of these for a given line represent increasingly stringent filtering threshold values.
-	}
-
-	\label{fig_s18}
-
-\end{cfigure}
-
-\clearpage%}}}
-
-% Figure S19 \caption[Sensitivity and precision of Oxford Nanopore duplication and inversion genotyping in non-repeat regions]{{{{
+% Figure S19 \caption[Sensitivity and precision of Oxford Nanopore duplication and inversion genotyping]{{{{
 \begin{cfigure}
 	% DEPENDENCY : figure_s19.png
 	\includegraphics[width = 3.5in]{figure_s19}
 
-	\caption[Sensitivity and precision of Oxford Nanopore duplication and inversion genotyping in non-repeat regions]{
-		Genotyping sensitivity and precision of (A) duplications and (B) inversions discovered from the Oxford Nanopore data in non-repeat regions.
-		Only SVs with less than 20\% overlap to regions annotated as repeats were used for these benchmarks. 
+	\caption[Sensitivity and precision of Oxford Nanopore duplication and inversion genotyping]{
+		Genotyping sensitivity and precision of (A) duplications and (B) inversions discovered from the Oxford Nanopore data. 
 		Each line and color represents one of 17 samples. 
 		The points correspond to different filtering thresholds on the minimum number of Illumina reads required to support a genotype call.
 		The asterisks indicate a minimum number of supporting reads of 2; points to the left of these for a given line represent increasingly stringent filtering threshold values.
@@ -1132,10 +1113,29 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 
 \clearpage%}}}
 
-% Figure S20  \caption[Sensitivity and precision of joint Illumina/Oxford Nanopore deletion and insertion genotyping]{{{{
-\begin{lsfigure}
+% Figure S20 \caption[Sensitivity and precision of Oxford Nanopore duplication and inversion genotyping in non-repeat regions]{{{{
+\begin{cfigure}
 	% DEPENDENCY : figure_s20.png
-	\includegraphics[width = 9.5in]{figure_s20}
+	\includegraphics[width = 3.5in]{figure_s20}
+
+	\caption[Sensitivity and precision of Oxford Nanopore duplication and inversion genotyping in non-repeat regions]{
+		Genotyping sensitivity and precision of (A) duplications and (B) inversions discovered from the Oxford Nanopore data in non-repeat regions.
+		Only SVs with less than 20\% overlap to regions annotated as repeats were used for these benchmarks. 
+		Each line and color represents one of 17 samples. 
+		The points correspond to different filtering thresholds on the minimum number of Illumina reads required to support a genotype call.
+		The asterisks indicate a minimum number of supporting reads of 2; points to the left of these for a given line represent increasingly stringent filtering threshold values.
+	}
+
+	\label{fig_s20}
+
+\end{cfigure}
+
+\clearpage%}}}
+
+% Figure S21  \caption[Sensitivity and precision of joint Illumina/Oxford Nanopore deletion and insertion genotyping]{{{{
+\begin{lsfigure}
+	% DEPENDENCY : figure_s21.png
+	\includegraphics[width = 9.5in]{figure_s21}
 
 	\caption[Sensitivity and precision of joint Illumina/Oxford Nanopore deletion and insertion genotyping]{
 		Genotyping sensitivity and precision of (A) deletions and (B) insertions in the merged dataset of SVs discovered from the Illumina and Oxford Nanopore data.
@@ -1144,15 +1144,15 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 			The asterisks indicate a minimum number of supporting reads of 2; points to the left of these for a given line represent increasingly stringent filtering threshold values.
 	}
 
-	\label{fig_s20}
+	\label{fig_s21}
 \end{lsfigure}
 
 \clearpage%}}}
 
-% Figure S21 \caption[Sensitivity and precision of joint Illumina/Oxford Nanopore deletion and insertion genotyping in non-repeat regions]{{{{
+% Figure S22 \caption[Sensitivity and precision of joint Illumina/Oxford Nanopore deletion and insertion genotyping in non-repeat regions]{{{{
 \begin{lsfigure}
-	% DEPENDENCY : figure_s21.png
-	\includegraphics[width = 9.5in]{figure_s21}
+	% DEPENDENCY : figure_s22.png
+	\includegraphics[width = 9.5in]{figure_s22}
 
 	\caption[Sensitivity and precision of joint Illumina/Oxford Nanopore deletion and insertion genotyping in non-repeat regions]{
 		Genotyping sensitivity and precision of (A) deletions and (B) insertions in non-repeat regions in the merged dataset of SVs discovered from the Illumina and Oxford Nanopore data. 
@@ -1163,15 +1163,15 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		Note that no results were available for deletions larger than 10 kb because these all overlapped repeat regions.
 	}
 
-	\label{fig_s21}
+	\label{fig_s22}
 \end{lsfigure}
 
 \clearpage%}}}
 
-% Figure S22 \caption[Principal component analyses (PCA) of the whole Canadian soybean panel]{{{{
+% Figure S23 \caption[Principal component analyses (PCA) of the whole Canadian soybean panel]{{{{
 \begin{cfigure}
-	% DEPENDENCY : figure_s22.png
-	\includegraphics[width = 6.5in]{figure_s22}
+	% DEPENDENCY : figure_s23.png
+	\includegraphics[width = 6.5in]{figure_s23}
 
 	\caption[Principal component analyses (PCA) of the whole Canadian soybean panel]{
 		Principal component analyses (PCA) of the whole Canadian soybean panel.
@@ -1181,16 +1181,16 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		Samples with a maximum q-value below 0.6 (as inferred from fastStructure) are considered admixed and are labeled with asterisks.
 	}
 
-	\label{fig_s22}
+	\label{fig_s23}
 
 \end{cfigure}
 
 \clearpage%}}}
 
-% Figure s23 \caption[Neighbour-joining phylogenetic trees of the population of 102 Canadian soybean cultivars]{{{{
+% Figure s24 \caption[Neighbour-joining phylogenetic trees of the population of 102 Canadian soybean cultivars]{{{{
 \begin{lsfigure}
-	% DEPENDENCY : figure_s23.png
-	\includegraphics[width = 9.5in]{figure_s23}
+	% DEPENDENCY : figure_s24.png
+	\includegraphics[width = 9.5in]{figure_s24}
 
 	\caption[Neighbour-joining phylogenetic trees of the population of 102 Canadian soybean cultivars]{
 		Neighbour-joining phylogenetic trees of the population of 102 Canadian soybean cultivars derived from (A) SVs discovered from Illumina and Oxford Nanopore data, and subsequently genotyped with Illumina data using Paragraph and (B) SNVs called by Platypus from Illumina data.
@@ -1198,12 +1198,12 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		Node labels indicate the number of trees (out of 100) of the bootstrap analysis that support a given node/grouping.
 	}
 
-	\label{fig_s23}
+	\label{fig_s24}
 \end{lsfigure}
 
 \clearpage%}}}
 
-% Figure S24 \caption[IGV screenshot of Oxford Nanopore and Illumina read alignments of three samples at the location of a polymorphic Stowaway TE insertion]{{{
+% Figure S25 \caption[IGV screenshot of Oxford Nanopore and Illumina read alignments of three samples at the location of a polymorphic Stowaway TE insertion]{{{
 \begin{lsfigure}
 	% DEPENDENCY : Gm04_2257090_annotated.png
 	\includegraphics[width = 9.5in]{Gm04_2257090_annotated}
@@ -1216,36 +1216,19 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		The black rectangle in the middle of the figure encloses the region where the insertion polymorphisms of interest occur.
 	}
 
-	\label{fig_s24}
-
-\end{lsfigure}
-
-\clearpage%}}}
-
-% Figure S25 \caption[Genotyping benchmark of raw and refined Oxford Nanopore SVs for four samples using BayesTyper]{{{
-\begin{lsfigure}
-	% DEPENDENCY : figure_s25.png
-	\includegraphics[width = 9.5in]{figure_s25}
-
-	\caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using BayesTyper]{
-		Genotyping sensitivity and precision of raw and refined (A) deletions and (B) insertions discovered by Sniffles on the Oxford Nanopore data for four samples when using BayesTyper as a genotyper.
-		Each line represents data for a single sample whose SV breakpoints have either been refined (refined SVs) or not (raw SVs).
-		The points correspond to different filtering thresholds on the genotype quality (GQ) required to support a genotype call.
-	}
-
 	\label{fig_s25}
 
 \end{lsfigure}
 
 \clearpage%}}}
 
-% Figure S26 \caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using vg]{{{{
+% Figure S26 \caption[Genotyping benchmark of raw and refined Oxford Nanopore SVs for four samples using BayesTyper]{{{
 \begin{lsfigure}
 	% DEPENDENCY : figure_s26.png
 	\includegraphics[width = 9.5in]{figure_s26}
 
-	\caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using vg]{
-		Genotyping sensitivity and precision of raw and refined (A) deletions and (B) insertions discovered by Sniffles on the Oxford Nanopore data for four samples when using vg as a genotyper.
+	\caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using BayesTyper]{
+		Genotyping sensitivity and precision of raw and refined (A) deletions and (B) insertions discovered by Sniffles on the Oxford Nanopore data for four samples when using BayesTyper as a genotyper.
 		Each line represents data for a single sample whose SV breakpoints have either been refined (refined SVs) or not (raw SVs).
 		The points correspond to different filtering thresholds on the genotype quality (GQ) required to support a genotype call.
 	}
@@ -1256,10 +1239,27 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 
 \clearpage%}}}
 
-% Figure S27 \caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using Paragraph]{{{
+% Figure S27 \caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using vg]{{{{
 \begin{lsfigure}
 	% DEPENDENCY : figure_s27.png
 	\includegraphics[width = 9.5in]{figure_s27}
+
+	\caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using vg]{
+		Genotyping sensitivity and precision of raw and refined (A) deletions and (B) insertions discovered by Sniffles on the Oxford Nanopore data for four samples when using vg as a genotyper.
+		Each line represents data for a single sample whose SV breakpoints have either been refined (refined SVs) or not (raw SVs).
+		The points correspond to different filtering thresholds on the genotype quality (GQ) required to support a genotype call.
+	}
+
+	\label{fig_s27}
+
+\end{lsfigure}
+
+\clearpage%}}}
+
+% Figure S28 \caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using Paragraph]{{{
+\begin{lsfigure}
+	% DEPENDENCY : figure_s28.png
+	\includegraphics[width = 9.5in]{figure_s28}
 
 	\caption[Genotyping sensitivity of raw and refined Oxford Nanopore SVs for four samples using Paragraph]{
 		Genotyping sensitivity and precision of raw and refined (A) deletions and (B) insertions discovered by Sniffles on the Oxford Nanopore data for four samples when using Paragraph as a genotyper.
@@ -1267,7 +1267,7 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		The points correspond to different filtering thresholds on the minimum number of Illumina reads required to support a genotype call.
 	}
 
-	\label{fig_s27}
+	\label{fig_s28}
 
 \end{lsfigure}
 
