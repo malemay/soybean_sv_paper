@@ -74,7 +74,7 @@ y_axis <- scale_y_continuous(name = "Precision",
 
 # Panel A shows the deletions
 panelA <- 
-	ggplot(deletions[deletions$pipeline == "bayestyper", ], aes(x = sensitivity, y = precision)) +
+	ggplot(deletions[deletions$pipeline == "paragraph", ], aes(x = sensitivity, y = precision)) +
 	geom_line(mapping = aes(group = linegroup2), size = 0.3) +
 	geom_point(mapping = aes(color = type, shape = cultivar), size = 1.5) +
 	facet_wrap(~size_class, ncol = 2,
@@ -93,7 +93,7 @@ panelA <-
 
 # Panel B shows the insertions
 panelB <- 
-	ggplot(insertions[insertions$pipeline == "bayestyper", ], aes(x = sensitivity, y = precision)) +
+	ggplot(insertions[insertions$pipeline == "paragraph", ], aes(x = sensitivity, y = precision)) +
 	geom_line(mapping = aes(group = linegroup2), size = 0.3) +
 	geom_point(mapping = aes(color = type, shape = cultivar), size = 1.5) +
 	facet_wrap(~size_class, ncol = 2,
@@ -107,17 +107,11 @@ panelB <-
 	scale_shape_discrete(name = "") +
 	guides(color = FALSE,
 	       shape = guide_legend(override.aes = list(size = 3))) +
-	#         scale_color_discrete(guide = guide_legend(override.aes = list(color = "white"))) +
-	#         scale_shape_discrete(guide = guide_legend(override.aes = list(color = "white"))) +
 	common_theme +
 	theme()
-	#         theme(legend.text = element_text(color = "white"),
-	#               legend.title = element_text(color = "white"),
-	#               legend.key = element_rect(fill = "white"))
 
 # Saving as a png file
-# OUTPUT : figures/figure_s25.png
-png("figure_s25.png", width = 12, height = 6, units = "in", res = 500)
+png("figure_s28.png", width = 12, height = 6, units = "in", res = 500)
 
 grid.newpage()
 # Locating the subplots in the figure, leaving some space for the "A" and "B" plot labels

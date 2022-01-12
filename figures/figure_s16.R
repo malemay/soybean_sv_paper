@@ -1,80 +1,79 @@
 #!/usr/bin/Rscript
 
-# Code to create Figure S16 of the manuscript
-# This figure is a scatter plot of the precision of insertion genotyping
-#  as a function of Oxford Nanopore sequencing N50
-# The objective is to show that samples that were sequenced with longer reads
-#  had more power for insertion discovery, thus explaining the poor precision
-#  of insertion genotyping for some samples
-# Panel A will show results for insertions in the range 1,000-10,000, while
-#  Panel B will show results for insertions > 10,000
+# Figure S16 shows the proportion of true positive and false positive insertion calls for
+#  different SV calling program combinations and different SV sizes
 
-# Loading the ggplot2 and grid packages
+# Loading the ggplot2 and GenomicRanges packages
 library(ggplot2)
-library(grid)
+library(GenomicRanges)
 
-# Loading the N50 data
-# DEPENDENCY : nanoplot_stats/N50_stats.txt
-N50_stats <- read.table("../nanoplot_stats/N50_stats.txt", header = TRUE, stringsAsFactors = FALSE)
+# Loading the rates for all samples so we can identify a sample to use
+# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/sveval_ncallers_rates.RData
+load("../sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/sveval_ncallers_rates.RData")
 
-# Loading the genotyping precision and sensitivity rates
-# DEPENDENCY : sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
-load("../sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData")
+# Finding the median f-score among the overall results
+insertions <- sveval_ncallers_rates$INS
+insertions <- insertions[insertions$size_class == "all", ]
+insertions <- insertions[insertions$threshold == 1, ]
+insertions$f1_score <- 2 * (insertions$precision * insertions$sensitivity) / (insertions$precision + insertions$sensitivity)
+# We get the median row by ordering as a function of F-score and taking the 9th row
+# insertions[order(insertions$f1_score), ]
+#                     size_class sensitivity precision precision_shrunk  pipeline cultivar threshold  f1_score
+# CAD1070_paragraph.2        all   0.1657478 0.7171344        0.7087452 paragraph  CAD1070         1 0.2692623
+# CAD1089_paragraph.2        all   0.1801718 0.7561102        0.7439956 paragraph  CAD1089         1 0.2910016
+# CAD1096_paragraph.2        all   0.2522856 0.7235529        0.7107553 paragraph  CAD1096         1 0.3741234
+# CAD1049_paragraph.2        all   0.2467434 0.7744807        0.7624072 paragraph  CAD1049         1 0.3742528
+# CAD1002_paragraph.2        all   0.2493558 0.7561380        0.7433659 paragraph  CAD1002         1 0.3750345
+# CAD1092_paragraph.2        all   0.2460361 0.7911141        0.7788698 paragraph  CAD1092         1 0.3753413
+# CAD1077_paragraph.2        all   0.2544832 0.7330076        0.7220167 paragraph  CAD1077         1 0.3778022
+# CAD1022_paragraph.2        all   0.2658194 0.6948877        0.6795486 paragraph  CAD1022         1 0.3845389
+# CAD1015_paragraph.2        all   0.2605210 0.7483801        0.7361268 paragraph  CAD1015         1 0.3864973
+# CAD1056_paragraph.2        all   0.2680957 0.7116722        0.6985463 paragraph  CAD1056         1 0.3894724
+# CAD1087_paragraph.2        all   0.2707196 0.7104459        0.6971246 paragraph  CAD1087         1 0.3920473
+# CAD1018_paragraph.2        all   0.2611572 0.8089443        0.7983949 paragraph  CAD1018         1 0.3948441
+# CAD1074_paragraph.2        all   0.2769189 0.7358364        0.7233146 paragraph  CAD1074         1 0.4024013
+# CAD1065_paragraph.2        all   0.2831057 0.7143872        0.7034305 paragraph  CAD1065         1 0.4055108
+# CAD1064_paragraph.2        all   0.3011564 0.7048236        0.6957328 paragraph  CAD1064         1 0.4220008
+# CAD1052_paragraph.2        all   0.3000698 0.7725278        0.7613314 paragraph  CAD1052         1 0.4322446
+# CAD1010_paragraph.2        all   0.3222873 0.7300100        0.7215321 paragraph  CAD1010         1 0.4471606
 
-# We also load the correspondence between line names and their CAD IDs
-# DEPENDENCY : utilities/line_ids.txt
-line_ids <- read.table("../utilities/line_ids.txt", header = TRUE, stringsAsFactors = FALSE)
+# Would probably be best to choose the median again. This can be easily justified in the paper,
+#  especially since this is for supplementary material anyway
+# We get the median row by ordering as a function of F-score and taking the 9th row
+# insertions[order(insertions$f1_score), ][9, ]
+#                     size_class sensitivity precision precision_shrunk  pipeline cultivar threshold  f1_score
+# CAD1015_paragraph.2        all    0.260521 0.7483801        0.7361268 paragraph  CAD1015         1 0.3864973
 
-# Now we can extract and link the data through the IDs
-line_ids$N50 <- N50_stats[match(line_ids$name, N50_stats$sample), "N50"]
+# So we will be using sample CAD1015. Let us load the data for that sample
+# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/CAD1015_paragraph.RData
+load("../sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/CAD1015_paragraph.RData")
 
-# Now extracting the precision rates for ranges 1,000-10,000 and 10,000+
-insertion_data <- sveval_nogeno_rates$INS
-insertion_1000_data <- insertion_data[insertion_data$size_class == "[1000-10000[" & insertion_data$threshold == 2, ]
-insertion_1000_precision <- insertion_1000_data$precision
-names(insertion_1000_precision) <- insertion_1000_data$cultivar
+# We get the list element for which the ncallers threshold was 1
+sveval_output <- sveval_output$eval[[2]]$regions
 
-insertion_10000_data <- insertion_data[insertion_data$size_class == "[10000+[" & insertion_data$threshold == 2, ]
-insertion_10000_precision <- insertion_10000_data$precision
-names(insertion_10000_precision) <- insertion_10000_data$cultivar
+# From here we use a function defined in another file to extract the relevant data
+# for plotting
+# DEPENDENCY : scripts/format_sveval_plotting_data.R
+source("../scripts/format_sveval_plotting_data.R")
+plotting_data <- format_sveval_plotting_data(sveval_output, "INS")
 
-line_ids$insertions_1000 <- insertion_1000_precision[line_ids$id]
-line_ids$insertions_10000 <- insertion_10000_precision[line_ids$id]
+# Creating the plot
+figure_s16 <- ggplot(plotting_data, aes(x = size, fill = truepos)) +
+    facet_wrap(~ClusterIDs) + geom_histogram(bins = 30) +
+    scale_x_log10(name = "Insertion size (bp)") + 
+    scale_y_continuous("Number of insertions") +
+    scale_fill_discrete(name = "",
+			labels = c("TRUE" = "True positive calls",
+				   "FALSE" = "False positive calls")) +
+    theme_bw() +
+    theme(text = element_text(size = 14),
+          legend.key.height = unit(0.02, "npc"),
+          legend.position = "top",
+          legend.direction = "horizontal")
 
-# Creating panel A (insertions in the range 1,000-10,000 bp)
-panelA <- ggplot(line_ids, aes(x = N50 / 1000, y = insertions_1000)) +
-	geom_point(size = 1) +
-	scale_x_continuous(name = "Oxford Nanopore sequencing N50 (kb)") +
-	scale_y_continuous(name = "Precision of insertion genotyping") +
-	theme_bw() +
-	theme(panel.grid.minor = element_blank(),
-	      text = element_text(size = 10))
-
-# And now creating panel B (insertions larger than 10,000 bp)
-panelB <- ggplot(line_ids, aes(x = N50 / 1000, y = insertions_10000)) +
-	geom_point(size = 1) +
-	scale_x_continuous(name = "Oxford Nanopore sequencing N50 (kb)") +
-	scale_y_continuous(name = "Precision of insertion genotyping") +
-	theme_bw() +
-	theme(panel.grid.minor = element_blank(),
-	      text = element_text(size = 10))
-
-# Saving to the png format
+# Also saving as a png file
 # OUTPUT : figures/figure_s16.png
-png("figure_s16.png", width = 6, height = 3, units = "in", res = 500)
-pushViewport(viewport(layout = grid.layout(1, 2)))
-
-# Printing panel A in the left column viewport
-pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 1))
-print(panelA, vp = viewport(x = 0.03, width = 0.97, just = "left"))
-grid.text("A", x = 0.04, y = 0.96, gp = gpar(fontsize = 18))
-popViewport()
-
-# Printing panel B in the right column viewport
-pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 2))
-print(panelB, vp = viewport(x = 0.03, width = 0.97, just = "left"))
-grid.text("B", x = 0.04, y = 0.96, gp = gpar(fontsize = 18))
-popViewport()
-
+png("figure_s16.png", width = 6, height = 6, units = "in", res = 500)
+print(figure_s16)
 dev.off()
 

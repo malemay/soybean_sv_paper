@@ -1,107 +1,98 @@
 #!/prg/R/4.0/bin/Rscript
 
-# Figure s6 shows the results of the subsampling analysis on deletion sensitivity and precision
+# Code to create Figure S6 of the manuscript
+# This figure is a scatter plot of the precision of dupliction genotyping
+#  as a function of Oxford Nanopore sequencing depth
+# The ojective is to show that samples that were sequenced using Nanopore
+#  have higher precision of duplication genotyping
 
-# Loading the required packages
+# Loading the ggplot2 and grid packages
 library(ggplot2)
 library(grid)
 
-# Loading the benchmark plotting data.frame that contains the processed data for plotting
-# DEPENDENCY : nanopore_sv_calling/subsampling_analysis/benchmark_data.RData
-load("../nanopore_sv_calling/subsampling_analysis/benchmark_data.RData")
+# Loading the sequencing depth data
+# DEPENDENCY : depth_distributions/average_depth.RData
+load("../depth_distributions/average_depth.RData")
 
-# A function that takes the plotting dataframe, an SV type, and a measure (sensitivity or precision)
-# and plots the results
-plot_downsampling <- function(x, svtype, measure) {
+# Loading the genotyping precision and sensitivity rates
+# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
+load("../sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData")
 
-	stopifnot(svtype %in% c("DEL", "INS", "INV", "DUP"))
-	stopifnot(measure %in% c("sensitivity", "precision"))
+# We also load the correspondence between line names and their CAD IDs
+# DEPENDENCY : utilities/line_ids.txt
+line_ids <- read.table("../utilities/line_ids.txt", header = TRUE, stringsAsFactors = FALSE)
 
-	# Removing underscores in the cultivar names
-	x$cultivar <- gsub("_", " ", x$cultivar)
+# Now we can extract and link the data through the IDs
+line_ids$sequencing_depth <- average_depth[match(line_ids$name, average_depth$sample), "depth"]
 
-	x <- x[x$size_class != "all" & x$svtype == svtype, ]
+# Checking whether there is a link between Oxford Nanopore sequencing depth and precision all SV types
+# First writing a function that will extract the data from the rates object
+get_precision <- function(line_ids, precision_data, svtype) {
+	precision_data <- precision_data[[svtype]]
+	precision_data <- precision_data[precision_data$size_class == "all" & precision_data$threshold == 2, ]
+	precision <- precision_data$precision
+	names(precision) <- precision_data$cultivar
 
-	if(measure == "sensitivity") {
-		median_col = "s_median"
-		min_col = "s_min"
-		max_col = "s_max"
-	} else {
-		median_col = "p_median"
-		min_col = "p_min"
-		max_col = "p_max"
-	
-	}
-
-	svtype_mapping <- c("DEL" = "deletions",
-			    "INS" = "insertions",
-			    "INV" = "inversions",
-			    "DUP" = "duplications")
-
-	size_class_levels <- c(paste0("[50-100 bp[ ", svtype_mapping[svtype]),
-			       paste0("[100-1,000 bp[ ", svtype_mapping[svtype]),
-			       paste0("[1,000-10,000 bp[ ", svtype_mapping[svtype]),
-			       paste0("[10,000+ bp[ ", svtype_mapping[svtype]))
-
-	size_class_mapping <- c("[50-100[" = size_class_levels[1],
-				"[100-1000[" = size_class_levels[2],
-				"[1000-10000[" = size_class_levels[3],
-				"[10000+[" = size_class_levels[4])
-
-	x$size_class <- factor(size_class_mapping[x$size_class], levels = size_class_levels)
-
-	baseplot <- 
-		ggplot(x[x$frac != 1, ], aes_string(x = "depth", y = median_col, ymin = min_col, ymax = max_col, color = "cultivar")) +
-		geom_pointrange() +
-		geom_point(data = x[x$frac == 1, ], shape = 8) +
-		facet_wrap(~size_class, ncol = 1) +
-		scale_y_continuous(name = ifelse(measure == "sensitivity", "Sensitivity", "Precision"),
-				   limits = c(0, 1)) +
-		xlab("Sequencing depth (X)") +
-		theme_bw() +
-		theme(panel.grid.minor = element_blank())
-
-	main_plot <- baseplot + guides(color =  "none")
-	legend_plot <- baseplot + theme(legend.position = "top", legend.direction = "horizontal")
-
-	return(list(main_plot, legend_plot))
+	line_ids$precision <- precision[line_ids$id]
+	return(line_ids)
 }
 
-# Another function that takes a sensitivity plot, a precision plot, and a plot with a legend,
-#  and wraps them up in a single plot
-combine_plots <- function(sensitivity, precision, legend_plot) {
-	grid.newpage()
+# Creating a common theme for all panels
+common_theme <- theme_bw() + 
+	theme(panel.grid.minor = element_blank(),
+	      text = element_text(size = 6))
 
-	# Printing the plot with the legend first and then hiding everything but the legend
-	print(legend_plot)
-	pushViewport(viewport(y = 0, height = 0.95, just = "bottom", layout = grid.layout(nrow = 1, ncol = 2)))
-	grid.rect(gp = gpar(col = "transparent", fill = "white"))
+# Creating the plot object for deletions
+del_plot <- ggplot(get_precision(line_ids, sveval_nogeno_rates, "DEL"), aes(x = sequencing_depth, y = precision)) +
+	geom_point(size = 1) +
+	scale_x_continuous(name = "Average sequencing depth (X)") +
+	scale_y_continuous(name = "Precision",
+			   limits = c(0.70, 0.87)) +
+	ggtitle("Deletions") +
+	common_theme
 
-	# Printing the sensitivity plot
-	pushViewport(viewport(layout.pos.col = 1))
-	grid.text("A", x = 0.08, y = 0.96, gp = gpar(fontsize = 24))
-	print(sensitivity, vp = viewport(x = 0.12, width = 0.88, just = "left"))
-	popViewport()
+# Creating the plot object for insertions
+ins_plot <- ggplot(get_precision(line_ids, sveval_nogeno_rates, "INS"), aes(x = sequencing_depth, y = precision)) +
+	geom_point(size = 1) +
+	scale_x_continuous(name = "Average sequencing depth (X)") +
+	scale_y_continuous(name = "Precision") +
+	ggtitle("Insertions") +
+	common_theme
 
-	# Printing the precision plot
-	pushViewport(viewport(layout.pos.col = 2))
-	grid.text("B", x = 0.08, y = 0.96, gp = gpar(fontsize = 24))
-	print(precision, vp = viewport(x = 0.12, width = 0.88, just = "left"))
-	popViewport()
-}
+# Creating the plot object for duplications
+dup_plot <- ggplot(get_precision(line_ids, sveval_nogeno_rates, "DUP"), aes(x = sequencing_depth, y = precision)) +
+	geom_point(size = 1) +
+	scale_x_continuous(name = "Average sequencing depth (X)") +
+	scale_y_continuous(name = "Precision",
+			   breaks = seq(0.10, 0.22, 0.04)) +
+	ggtitle("Duplications") +
+	common_theme
 
-# A plot of deletions combining all the information
-sensitivity_plot <- plot_downsampling(benchmark_plotting, "DEL", "sensitivity")
-precision_plot <- plot_downsampling(benchmark_plotting, "DEL", "precision")
+# Creating the plot object for inversions
+inv_plot <- ggplot(get_precision(line_ids, sveval_nogeno_rates, "INV"), aes(x = sequencing_depth, y = precision)) +
+	geom_point(size = 1) +
+	scale_x_continuous(name = "Average sequencing depth (X)") +
+	scale_y_continuous(name = "Precision") +
+	ggtitle("Inversions") +
+	common_theme
 
-# theme parameters common to both subplots
-common_theme <- theme(text = element_text(size = 14),
-		      panel.grid.minor = element_blank())
-
-# Saving the figure as Figure s6
-png("figure_s6.png", width = 7, height = 8, units = "in", res = 500)
-combine_plots(sensitivity_plot[[1]] + common_theme,
-	      precision_plot[[1]] + common_theme, 
-	      sensitivity_plot[[2]] + common_theme)
+# Saving to disk as a png file
+# OUTPUT : figures/figure_s6.png
+png("figure_s6.png", width = 3, height = 3, units = "in", res = 500)
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(nrow = 2, ncol = 2)))
+del_vp <- viewport(layout.pos.col = 1, layout.pos.row = 1)
+ins_vp <- viewport(layout.pos.col = 2, layout.pos.row = 1)
+dup_vp <- viewport(layout.pos.col = 1, layout.pos.row = 2)
+inv_vp <- viewport(layout.pos.col = 2, layout.pos.row = 2)
+print(del_plot, vp = del_vp)
+print(ins_plot, vp = ins_vp)
+print(inv_plot, vp = inv_vp)
+print(dup_plot, vp = dup_vp)
+grid.text("A", x = 0.05, y = 0.95, vp = del_vp)
+grid.text("B", x = 0.05, y = 0.95, vp = ins_vp)
+grid.text("C", x = 0.05, y = 0.95, vp = dup_vp)
+grid.text("D", x = 0.05, y = 0.95, vp = inv_vp)
 dev.off()
+
 

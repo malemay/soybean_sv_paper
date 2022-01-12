@@ -1,6 +1,6 @@
 #!/prg/R/4.0/bin/Rscript
 
-# Figure s8 shows the results of the subsampling analysis on duplication sensitivity and precision
+# Figure s8 shows the results of the subsampling analysis on insertion sensitivity and precision
 
 # Loading the required packages
 library(ggplot2)
@@ -91,8 +91,8 @@ combine_plots <- function(sensitivity, precision, legend_plot) {
 }
 
 # A plot of deletions combining all the information
-sensitivity_plot <- plot_downsampling(benchmark_plotting, "DUP", "sensitivity")
-precision_plot <- plot_downsampling(benchmark_plotting, "DUP", "precision")
+sensitivity_plot <- plot_downsampling(benchmark_plotting, "INS", "sensitivity")
+precision_plot <- plot_downsampling(benchmark_plotting, "INS", "precision")
 
 # theme parameters common to both subplots
 common_theme <- theme(text = element_text(size = 14),

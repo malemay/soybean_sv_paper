@@ -1,7 +1,7 @@
 #!/usr/bin/Rscript
 
 # Figure S19 shows the benchmarking of duplications and inversions discovered using Oxford Nanopore sequencing
-#  and genotyped using the Illumina sequencing data in non-repeat regions
+#  and genotyped using the Illumina sequencing data
 # We only need a single panel to show inversions and another to show duplications because there are not many
 
 # Loading the ggplot2 and grid packages
@@ -9,16 +9,16 @@ library(ggplot2)
 library(grid)
 
 # Loading the data used for plotting
-# DEPENDENCY : sv_genotyping/nanopore_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData
-load("../sv_genotyping/nanopore_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData")
+# DEPENDENCY : sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
+load("../sv_genotyping/nanopore_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData")
 
 # Also loading a script that will be used to prepare the data for plotting
 # DEPENDENCY : scripts/make_plot_data.R
 source("../scripts/make_plot_data.R")
 
 # Preparing the data for plotting
-dup_plot_data <- make_plot_data(sveval_norepeat_rates, "DUP")
-inv_plot_data <- make_plot_data(sveval_norepeat_rates, "INV")
+dup_plot_data <- make_plot_data(sveval_nogeno_rates, "DUP")
+inv_plot_data <- make_plot_data(sveval_nogeno_rates, "INV")
 
 # We keep only the summaries over all size classes
 dup_plot_data <- dup_plot_data[dup_plot_data$size_class == "all", ]

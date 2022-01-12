@@ -1,91 +1,65 @@
 #!/usr/bin/Rscript
 
-# Figure S14 shows the proportion of true positive and false positive deletion calls for
-#  different SV calling program combinations and different SV sizes
+# Code for the Figure S14 of the manuscript
+# This figure is divided into two parts:
+# - Panel A shows the number of variants of various sizes in the range -250 to 250
+#   for various tools as histograms
+# - Panel B shows the distribution of deletion sizes on a logorithmic scale for
+#   various tools as histograms
 
-# A sample with median F1-score will be chosen so as to be representative.
-#  The benchmark data on calls filtered for the number of supporting calls
-#  (DP >= 2) and the number of ALT alleles within homozygous ALT calls (AC_Hom >= 4)
-#  will be used.
-
-# Loading the ggplot2 and GenomicRanges packages
+# Loading the required libraries
 library(ggplot2)
-library(GenomicRanges)
+library(grid)
 
-# Loading the rates for all samples so we can identify a sample to use
-# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/sveval_ncallers_rates.RData
-load("../sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/sveval_ncallers_rates.RData")
+# Reading in the data that will be used for plotting
+# DEPENDENCY : sv_genotyping/illumina_svs/size_distribution.tsv
+sv_sizes <- read.table("../sv_genotyping/illumina_svs/size_distribution.tsv", header = TRUE, stringsAsFactors = FALSE)
+# nrow(sv_sizes)
+# [1] 140597
 
-# Finding the median f-score among the overall results
-deletions <- sveval_ncallers_rates$DEL
-deletions <- deletions[deletions$size_class == "all", ]
-deletions <- deletions[deletions$threshold == 1, ]
-deletions$f1_score <- 2 * (deletions$precision * deletions$sensitivity) / (deletions$precision + deletions$sensitivity)
-# We get the median row by ordering as a function of F-score and taking the 9th row
-# deletions[order(deletions$f1_score), ][9, ]
-#                     size_class sensitivity precision precision_shrunk  pipeline cultivar threshold  f1_score
-# CAD1049_paragraph.2        all   0.5848983 0.8080104        0.7911448 paragraph  CAD1049         1 0.6785856
+# Removing the few SVs that might be shorter than 50 bp
+sv_sizes <- sv_sizes[abs(sv_sizes$size) >= 50, ]
+# nrow(sv_sizes)
+# [1] 138000
 
-# So we will be using sample CAD1049. Let us load the data for that sample
-# DEPENDENCY : sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/CAD1049_paragraph.RData
-load("../sv_genotyping/illumina_svs/sveval_benchmarks/ncallers_RData/CAD1049_paragraph.RData")
+# Creating a common theme for the two panels
+common_theme <- 
+	theme_bw() +
+	theme(text = element_text(size = 14),
+	      axis.text = element_text(size = 10),
+	      panel.grid.minor = element_blank(),
+	      strip.text = element_text(margin = margin(0.1, 0, 0.1, 0, "cm")))
 
-# We get the list element for which the ncallers threshold was 1
-#str(sveval_output, max.level = 3)
-# List of 2
-#  $ qual_ths: num [1:5] 0 1 2 3 4
-#  $ eval    :List of 5
-#   ..$ :List of 2
-#   .. ..$ eval   :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	5 obs. of  9 variables:
-#   .. ..$ regions:List of 4
-#   ..$ :List of 2
-#   .. ..$ eval   :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	5 obs. of  9 variables:
-#   .. ..$ regions:List of 4
-#   ..$ :List of 2
-#   .. ..$ eval   :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	5 obs. of  9 variables:
-#   .. ..$ regions:List of 4
-#   ..$ :List of 2
-#   .. ..$ eval   :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	5 obs. of  9 variables:
-#   .. ..$ regions:List of 4
-#   ..$ :List of 2
-#   .. ..$ eval   :Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	5 obs. of  9 variables:
-#   .. ..$ regions:List of 4
-# NULL
-sveval_output <- sveval_output$eval[[2]]$regions
-#str(sveval_output, max.level = 1)
-# List of 4
-#  $ INS:List of 4
-#  $ DEL:List of 4
-#  $ INV:List of 4
-#  $ DUP:List of 4
-# NULL
+# Creating panel A
+panelA <- ggplot(sv_sizes[abs(sv_sizes$size) <= 250 & sv_sizes$svtype %in% c("INS", "DEL"), ], aes(x = size)) +
+	geom_histogram(binwidth = 10, fill = "skyblue", color = "black", size = 0.15) +
+	facet_wrap(~program, ncol = 1) +
+	scale_x_continuous(name = "SV size (bp)") +
+	ylab("Number of SVs") +
+	common_theme
 
-# From here we use a function defined in another file to extract the relevant data
-# for plotting
-# DEPENDENCY : scripts/format_sveval_plotting_data.R
-source("../scripts/format_sveval_plotting_data.R")
-plotting_data <- format_sveval_plotting_data(sveval_output, "DEL")
+# Creating panel B
+panelB <- ggplot(sv_sizes[sv_sizes$svtype == "DEL", ], aes(x = abs(size))) +
+	geom_histogram(fill = "indianred", color = "black", bins = 50, size = 0.15) +
+	facet_wrap(~program, ncol = 1) +
+	scale_x_log10(name = "Deletion size (bp)",
+		      breaks = c(100, 10000, 1000000)) +
+	ylab("Number of deletions") +
+	common_theme +
+	theme(panel.grid.minor = element_line(),
+	      panel.grid.minor.y = element_blank())
 
-# Creating the plot
-figure_s14 <- ggplot(plotting_data, aes(x = size / 1000, fill = truepos)) +
-    facet_wrap(~ClusterIDs, ncol = 5) + geom_histogram(bins = 30) +
-    scale_x_log10(name = "Deletion size (kb)",
-		  breaks = c(0.1, 1, 10, 100),
-		  labels = c("0.1", "1", "10", "100")) + 
-    scale_y_continuous("Number of deletions") +
-    scale_fill_discrete(name = "",
-			labels = c("TRUE" = "True positive calls",
-				   "FALSE" = "False positive calls")) +
-    theme_bw() +
-    theme(text = element_text(size = 14),
-	  strip.text = element_text(size = 9.5),
-          legend.key.height = unit(0.02, "npc"),
-          legend.position = "top",
-          legend.direction = "horizontal")
-
-# Saving as a png file
+# Assembling both panels in a single figure and saving to "figure_s14.png"
 # OUTPUT : figures/figure_s14.png
-png("figure_s14.png", width = 10, height = 6, units = "in", res = 500)
-print(figure_s14)
+png("figure_s14.png", width = 6, height = 6, units = "in", res = 500)
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(1, 2)))
+pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 1))
+print(panelA, vp = viewport(x = 0.05, width = 0.95, just = "left"))
+grid.text("A", x = 0.07, y = 0.97, gp = gpar(fontsize = 24))
+popViewport()
+pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 2))
+print(panelB, vp = viewport(x = 0.05, width = 0.95, just = "left"))
+grid.text("B", x = 0.07, y = 0.97, gp = gpar(fontsize = 24))
 dev.off()
 

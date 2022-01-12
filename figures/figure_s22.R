@@ -1,153 +1,99 @@
-#!/usr/bin/Rscript
+#!/prg/R/4.0/bin/Rscript
 
-# Figure s22 of the manuscript
+# Figure S22 shows the benchmarking of SVs discovered using both Oxford Nanopore sequencing
+#  and Illumina data, then merged with SVmerge and genotyped with Illumina data
 
-# This figure shows the 3 first principal components obtained for
-# both the PCA conducted using SNPs and using SVs
-#
-# Points will be colored according to their population assignment
-# with fastStructure; points with less than 0.5 as their maximum
-# q-value will be shown with a different symbol to indicate admixture
+# Four (4) panels are needed for both deletions and insertions because we want to show
+#  the results for all size classes for both SV types
 
-# Loading the required packages
+# The only difference with Figure S13 is that here we show the benchmarks obtained in non-repeat regions
+
+# Loading the ggplot2 and grid packages
 library(ggplot2)
 library(grid)
 
-# Creating variables for the directories containing the analyses based on SVs and SNPs
-# DEPENDENCY : structure_analysis/snp_pca/SNP_PCA
-# DEPENDENCY : structure_analysis/sv_pca/SV_PCA 
-sv_dir <- "../structure_analysis/sv_pca"
-snp_dir <- "../structure_analysis/snp_pca"
+# Loading the data used for plotting
+# DEPENDENCY : sv_genotyping/combined_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData
+load("../sv_genotyping/combined_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData")
 
-# First checking that the samples were in the same order for both analyses
-snp_samples <- system(paste0("cut -f1 ", snp_dir, "/platypus_filtered_snps.ped"), intern = TRUE)
-sv_samples <- system(paste0("cut -f1 ", sv_dir, "/sv_pca_input.ped"), intern = TRUE)
-stopifnot(identical(substr(snp_samples, 1, 7), sv_samples))
+# Also loading a script that will be used to prepare the data for plotting
+# DEPENDENCY : scripts/make_plot_data.R
+source("../scripts/make_plot_data.R")
 
-# Reading the eigenvalues for the SV analysis and computing the percentage explained variance
-sv_eigenval <- read.table(paste0(sv_dir, "/sv_pca.eigenval"), header = FALSE)
-sv_explained <- sv_eigenval[[1]]/sum(sv_eigenval[[1]])
+# Preparing the data for plotting
+del_plot_data <- make_plot_data(sveval_norepeat_rates, "DEL")
+ins_plot_data <- make_plot_data(sveval_norepeat_rates, "INS")
 
-# Doing the same thing for the SNP analysis
-snp_eigenval <- read.table(paste0(snp_dir, "/snp_pca.eigenval"), header = FALSE)
-snp_explained <- snp_eigenval[[1]]/sum(snp_eigenval[[1]])
+# We remove the "[30-50[" and "all" size classes
+del_plot_data <- del_plot_data[!del_plot_data$size_class %in% c("[30-50[", "all"), ]
+del_plot_data$size_class <- droplevels(del_plot_data$size_class)
 
-# Reading the principal components for the SV analysis
-sv_pca <- read.table(paste0(sv_dir, "/sv_pca.eigenvec"), header = FALSE, stringsAsFactors = FALSE)
-names(sv_pca) <- c("ind", "ind2", paste0("PC", as.character(1:20)))
+ins_plot_data <- ins_plot_data[!ins_plot_data$size_class %in% c("[30-50[", "all"), ]
+ins_plot_data$size_class <- droplevels(ins_plot_data$size_class)
 
-# Doing the same thing for the SNP analysis
-snp_pca <- read.table(paste0(snp_dir, "/snp_pca.eigenvec"), header = FALSE, stringsAsFactors = FALSE)
-names(snp_pca) <- c("ind", "ind2", paste0("PC", as.character(1:20)))
+# Defining a common theme for both plots
+common_theme <- theme_bw() + 
+	theme(panel.grid.minor = element_blank(),
+	      text = element_text(size = 16))
 
-# Just another sanity check
-stopifnot(identical(sv_pca[[1]], substr(snp_pca[[1]], 1, 7)))
+# Defining common x- and y-axes
+x_axis <- scale_x_continuous(name = "Sensitivity",
+			     limits = c(0, 1), 
+			     breaks = seq(0, 1, 0.2))
 
-# Reading the fastStructure Q matrix obtained from the SNP analysis
-# DEPENDENCY : structure_analysis/structure.5.meanQ
-qmat <- read.table("../structure_analysis/structure.5.meanQ", header = FALSE)
+y_axis <- scale_y_continuous(name = "Precision",
+			     limits = c(0, 1),
+			     breaks = seq(0, 1, 0.2))
 
-# Adding a column for the population assignment in the pca data.frames
-sv_pca$pop <- as.factor(apply(qmat, 1, which.max))
-snp_pca$pop <- as.factor(apply(qmat, 1, which.max))
-
-# Adding a column indicating whether the maximum Q-value for a given sample is over 0.6
-sv_pca$admixed <- apply(qmat, 1, max) < 0.6
-snp_pca$admixed <- apply(qmat, 1, max) < 0.6
-
-# Creating a common theme for the plots
-common_theme <- theme_bw() + theme(panel.grid.minor = element_blank())
-
-# A function that generates a plot for a given PCA data.frame and principal components
-pca_plot <- function(data, pc1, pc2) {
-	ggplot(data[!data$admixed, ], mapping = aes_string(x = pc1, y = pc2, color = "pop")) +
-		geom_point() +
-		geom_point(data[data$admixed, ], mapping = aes_string(x = pc1, y = pc2, color = "pop"), shape = 8)
-}
-
-# Creating plots for the first 4 principal components for the SV dataset
-sv_pc1_pc2 <- 
-	pca_plot(sv_pca, "PC1", "PC2") + 
-	scale_x_continuous(name = "") +
-	scale_y_continuous(name = paste0("PC2 (", sprintf("%.1f", round(sv_explained[2], 3) * 100), " %)")) +
+# Preparing the plot for deletions
+deletions_plot <- 
+	ggplot(del_plot_data, aes(x = sensitivity, y = precision)) +
+	geom_line(mapping = aes(group = cultivar), size = 0.3) +
+	geom_point(mapping = aes(color = cultivar), size = 1.5) +
+	geom_point(data = del_plot_data[del_plot_data$threshold == 2, ], aes(color = cultivar), shape = 8, size = 2) +
+	facet_wrap(~size_class, ncol = 2,
+		   labeller = labeller(size_class = 
+				       c("[50-100[" = "[50-100 bp[ deletions",
+					 "[100-1000[" = "[100-1,000 bp[ deletions",
+					 "[1000-10000[" = "[1,000-10,000 bp[ deletions",
+					 "[10000+[" = "[10,000+ bp[ deletions"))) +
+	x_axis +
+	y_axis +
 	guides(color = FALSE) +
 	common_theme
 
-sv_pc1_pc3 <- 
-	pca_plot(sv_pca, "PC1", "PC3") + 
-	scale_x_continuous(name = "") +
-	scale_y_continuous(name = paste0("PC3 (", sprintf("%.1f", round(sv_explained[3], 3) * 100), " %)")) +
+# Now preparing the plot for insertions
+insertions_plot <- 
+	ggplot(ins_plot_data, aes(x = sensitivity, y = precision)) +
+	geom_line(mapping = aes(group = cultivar), size = 0.3) +
+	geom_point(mapping = aes(color = cultivar), size = 1.5) +
+	geom_point(data = ins_plot_data[ins_plot_data$threshold == 2, ], aes(color = cultivar), shape = 8, size = 2) +
+	facet_wrap(~size_class,
+		   labeller = labeller(size_class = 
+				       c("[50-100[" = "[50-100 bp[ insertions",
+					 "[100-1000[" = "[100-1,000 bp[ insertions",
+					 "[1000-10000[" = "[1,000-10,000 bp[ insertions",
+					 "[10000+[" = "[10,000+ bp[ insertions"))) +
+	x_axis +
+	y_axis +
 	guides(color = FALSE) +
 	common_theme
 
-sv_pc1_pc4 <- 
-	pca_plot(sv_pca, "PC1", "PC4") + 
-	scale_x_continuous(name = "") +
-	scale_y_continuous(name = paste0("PC4 (", sprintf("%.1f", round(sv_explained[4], 3) * 100), " %)")) +
-	guides(color = FALSE) +
-	common_theme
-
-# Creating the plots for the first 4 principal components for the SNP dataset
-snp_pc1_pc2 <- 
-	pca_plot(snp_pca, "PC1", "PC2") + 
-	scale_x_continuous(name = "") +
-	scale_y_continuous(name = paste0("PC2 (", sprintf("%.1f", round(snp_explained[2], 3) * 100), " %)")) +
-	guides(color = FALSE) +
-	common_theme
-
-snp_pc1_pc3 <- 
-	pca_plot(snp_pca, "PC1", "PC3") + 
-	scale_x_continuous(name = "") +
-	scale_y_continuous(name = paste0("PC3 (", sprintf("%.1f", round(snp_explained[3], 3) * 100), " %)")) +
-	guides(color = FALSE) +
-	common_theme
-
-snp_pc1_pc4 <- 
-	pca_plot(snp_pca, "PC1", "PC4") + 
-	scale_x_continuous(name = "") +
-	scale_y_continuous(name = paste0("PC4 (", sprintf("%.1f", round(snp_explained[4], 3) * 100), " %)")) +
-	guides(color = FALSE) +
-	common_theme
-
-# Outputting the figure
+# Saving to disk as "figure_s22.png"
 # OUTPUT : figures/figure_s22.png
-png("figure_s22.png", width = 6, height = 6, units = "in", res = 500)
-
+png("figure_s22.png", width = 12, height = 6, units = "in", res = 500)
 grid.newpage()
-
-# Pushing a first viewport with a layout such that SVs will be to the left, and SNPs to the right
+# Locating the subplots in the figure, leaving some space for the "A" and "B" plot labels
 pushViewport(viewport(layout = grid.layout(1, 2)))
-pushViewport(viewport(layout.pos.col = 1))
-# And now a second viewport that will be used to print the SV plots, but leaves some space for margin annotations
-pushViewport(viewport(x = 0.04, y = 0.02, width = 0.92, height = 0.98, just = c("left", "bottom")))
-# The next one splits the space for each of the three PC plots
-pushViewport(viewport(layout = grid.layout(2, 1)))
-print(sv_pc1_pc2, vp = viewport(layout.pos.row = 1))
-print(sv_pc1_pc3, vp = viewport(layout.pos.row = 2))
-# Going up a viewport and printing the x-axis name and the panel label
-popViewport()
-grid.text(paste0("PC1 (", sprintf("%.1f", round(sv_explained[1], 3) * 100), " %)"), 
-	  x = 0.6, y = 0)
-# Going up yet another viewport
-popViewport()
-grid.text("A", x = 0.06, y = 0.97, gp = gpar(fontsize = 20))
+
+pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 1))
+print(deletions_plot, vp = viewport(x = 0.03, width = 0.97, just = "left"))
+grid.text("A", x = 0.04, y = 0.97, gp = gpar(fontsize = 24))
 popViewport()
 
-# Now doing the sme thing for the SNP PCA
-pushViewport(viewport(layout.pos.col = 2))
-# And now a second viewport that will be used to print the SNP plots, but leaves some space for margin annotations
-pushViewport(viewport(x = 0.08, y = 0.02, width = 0.92, height = 0.98, just = c("left", "bottom")))
-# The next one splits the space for each of the three PC plots
-pushViewport(viewport(layout = grid.layout(2, 1)))
-print(snp_pc1_pc2, vp = viewport(layout.pos.row = 1))
-print(snp_pc1_pc3, vp = viewport(layout.pos.row = 2))
-# Going up a viewport and printing the x-axis name and the panel label
-popViewport()
-grid.text(paste0("PC1 (", sprintf("%.1f", round(snp_explained[1], 3) * 100), " %)"), 
-	  x = 0.6, y = 0)
-# Going up yet another viewport
-popViewport()
-grid.text("B", x = 0.10, y = 0.97, gp = gpar(fontsize = 20))
+pushViewport(viewport(layout.pos.row = 1, layout.pos.col = 2))
+print(insertions_plot, vp = viewport(x = 0.03, width = 0.97, just = "left"))
+grid.text("B", x = 0.04, y = 0.97, gp = gpar(fontsize = 24))
 popViewport()
 
 dev.off()

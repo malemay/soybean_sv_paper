@@ -74,7 +74,7 @@ y_axis <- scale_y_continuous(name = "Precision",
 
 # Panel A shows the deletions
 panelA <- 
-	ggplot(deletions[deletions$pipeline == "paragraph", ], aes(x = sensitivity, y = precision)) +
+	ggplot(deletions[deletions$pipeline == "vg", ], aes(x = sensitivity, y = precision)) +
 	geom_line(mapping = aes(group = linegroup2), size = 0.3) +
 	geom_point(mapping = aes(color = type, shape = cultivar), size = 1.5) +
 	facet_wrap(~size_class, ncol = 2,
@@ -93,7 +93,7 @@ panelA <-
 
 # Panel B shows the insertions
 panelB <- 
-	ggplot(insertions[insertions$pipeline == "paragraph", ], aes(x = sensitivity, y = precision)) +
+	ggplot(insertions[insertions$pipeline == "vg", ], aes(x = sensitivity, y = precision)) +
 	geom_line(mapping = aes(group = linegroup2), size = 0.3) +
 	geom_point(mapping = aes(color = type, shape = cultivar), size = 1.5) +
 	facet_wrap(~size_class, ncol = 2,

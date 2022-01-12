@@ -1,28 +1,25 @@
-#!/prg/R/4.0/bin/Rscript
+#!/usr/bin/Rscript
 
 # Figure S21 shows the benchmarking of SVs discovered using both Oxford Nanopore sequencing
-#  and Illumina data, then merged with SVmerge and genotyped with Illumina data
-
+#  and Illumina sequencing, and then merged using SVMerge
 # Four (4) panels are needed for both deletions and insertions because we want to show
 #  the results for all size classes for both SV types
-
-# The only difference with Figure S13 is that here we show the benchmarks obtained in non-repeat regions
 
 # Loading the ggplot2 and grid packages
 library(ggplot2)
 library(grid)
 
 # Loading the data used for plotting
-# DEPENDENCY : sv_genotyping/combined_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData
-load("../sv_genotyping/combined_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData")
+# DEPENDENCY : sv_genotyping/combined_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData
+load("../sv_genotyping/combined_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData")
 
 # Also loading a script that will be used to prepare the data for plotting
 # DEPENDENCY : scripts/make_plot_data.R
 source("../scripts/make_plot_data.R")
 
 # Preparing the data for plotting
-del_plot_data <- make_plot_data(sveval_norepeat_rates, "DEL")
-ins_plot_data <- make_plot_data(sveval_norepeat_rates, "INS")
+del_plot_data <- make_plot_data(sveval_nogeno_rates, "DEL")
+ins_plot_data <- make_plot_data(sveval_nogeno_rates, "INS")
 
 # We remove the "[30-50[" and "all" size classes
 del_plot_data <- del_plot_data[!del_plot_data$size_class %in% c("[30-50[", "all"), ]
@@ -79,7 +76,8 @@ insertions_plot <-
 	guides(color = FALSE) +
 	common_theme
 
-# Saving to disk as "figure_s21.png"
+
+# Saving to disk as a png file
 # OUTPUT : figures/figure_s21.png
 png("figure_s21.png", width = 12, height = 6, units = "in", res = 500)
 grid.newpage()
