@@ -43,6 +43,7 @@ illumina_data/metadata/coverage/CAD*coverage.txt
 *meanQ
 *nosex
 *outtree
+structure_analysis/snp_heterozygosity_rates.txt
 sv_genotyping/illumina_svs/size_distribution.tsv
 *NanoStats.txt
 *ped

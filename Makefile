@@ -182,7 +182,7 @@ tables/table_2.png : te_analysis/polymorphic_tes.tsv refgenome/Gmax_508_Wm82.a4.
 ##### CREATING THE SUPPLEMENTAL FIGURES
 
 # These use the same pattern rule as the main figures so we do not need to specify it again
-
+figures/figure_s2.png : structure_analysis/snp_heterozygosity_rates.txt tables/table_s7.csv
 figures/figure_s3.png : sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData scripts/make_plot_data.R
 figures/figure_s4.png : sv_genotyping/illumina_svs/sveval_benchmarks/nogeno_RData/sveval_nogeno_rates.RData scripts/make_plot_data.R
 figures/figure_s5.png : sv_genotyping/illumina_svs/sveval_benchmarks/norepeat_RData/sveval_norepeat_rates.RData scripts/make_plot_data.R
@@ -254,6 +254,11 @@ tables/table_s10.csv : nanopore_sv_calling/all_metainfo.RData
 
 
 ##### CREATING SOME INTERMEDIATE DATA FOR THE FIGURES AND TABLES
+
+# Computing the heterozygosity rates from filtered SNP data for figure S2
+structure_analysis/snp_heterozygosity_rates.txt : structure_analysis/platypus_filtered_snps.vcf \
+	structure_analysis/compute_heterozygosity.sh
+	cd structure_analysis/ ; ./compute_heterozygosity.sh $(VCFTOOLS)
 
 # Summarizing the benchmarks on the subsampling analysis for figures S7 to S10
 nanopore_sv_calling/subsampling_analysis/benchmark_data.RData : nanopore_sv_calling/subsampling_analysis/SUBSAMPLE_BENCHMARKS \
