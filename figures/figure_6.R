@@ -88,7 +88,10 @@ dna_counts[dna_counts$type == "PIF-Harbinge", "type"] <- "PIF-Harbinger"
 figure_6b <- ggplot(dna_counts, aes(x = count, y = tian_count)) +
 	geom_point(size = 1) +
 	geom_blank(data = data.frame(count = 950, tian_count = 3000)) +
-	geom_text(aes(label = type), vjust = 0, hjust = 0, nudge_x = -0.1, nudge_y = -0.09, size = 2) +
+	geom_text(data = dna_counts[!dna_counts$type %in% "PIF-Harbinger", ], 
+		  aes(label = type), vjust = 0, hjust = 0, nudge_x = -0.35, nudge_y = -0.14, size = 3) +
+	geom_text(data = dna_counts[dna_counts$type == "PIF-Harbinger", ], 
+		  aes(label = type), vjust = 0, hjust = 0, nudge_x = -0.35, nudge_y = 0.10, size = 3) +
 	scale_x_log10("SVs per DNA TE type in this study") +
 	scale_y_log10("Occurences of DNA TE type\nin Tian et al. (2012)") +
 	theme_bw() +
@@ -125,7 +128,7 @@ figure_6b <- ggplot(dna_counts, aes(x = count, y = tian_count)) +
 noref_means <- read.table("../te_analysis/multiple_alignments/filtered_alignments/tir_similarity_noref.txt", header = TRUE, stringsAsFactors = FALSE)
 
 figure_6c <- ggplot(noref_means, aes(x = family, y = similarity, color = superfamily)) +
-	geom_jitter(size = 1.5, height = 0, width = 0.3) +
+	geom_jitter(size = 1.3, height = 0, width = 0.3) +
 	scale_y_continuous(name = "Proportion of matching\nnucleotides in terminal repeats") +
 	scale_x_discrete(name = "Name of matching TE entry in database") +
 	scale_color_discrete(name = "Superfamily",

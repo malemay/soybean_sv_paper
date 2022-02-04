@@ -43,11 +43,11 @@ range(poly_dna[[4]])
 
 # Let us write a function that takes the two values for each file and saves them to disk
 write_axis_file <- function(ref_value, poly_value, output_file, dummy_length = 60000000) {
-	ref_line <- c("dummy", "0", "0", ref_value, "color=blue")
+	ref_line <- c("dummy", "4000000", "4000000", ref_value, "color=blue")
 	ref_line <- paste0(ref_line, collapse = "\t")
 	cat(ref_line, "\n", sep = "", file = output_file, append = FALSE)
 
-	poly_line <- c("dummy", dummy_length, dummy_length, poly_value, "color=red")
+	poly_line <- c("dummy", dummy_length - 4000000, dummy_length - 4000000, poly_value, "color=red")
 	poly_line <- paste0(poly_line, collapse = "\t")
 	cat(poly_line, "\n", sep = "", file = output_file, append = TRUE)
 
