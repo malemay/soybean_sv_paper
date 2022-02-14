@@ -12,7 +12,6 @@
 \usepackage{booktabs} % prettier tables
 \usepackage{threeparttable} % easy addition of footnotes below tables
 \usepackage{textcomp} % makes the \textdegree command available
-\usepackage[numbers]{natbib} % bibliography commands
 \usepackage{tocloft} % formatting the lists of tables and figures
 \usepackage{xcolor} % enable text coloring
 \usepackage{calc} % makes \widthof available to set the width of the last column
@@ -91,7 +90,7 @@ This would enable the use of Illumina data to carry out population-scale genotyp
 Oxford Nanopore data, however, has a high error rate.
 This makes it challenging to accurately describe breakpoints and sequence content (for insertions) and may negatively impact our ability to genotype the variants discovered with this technology using short reads.
 
-In order to address this issue, we assembled a pipeline that can be used to refine the SVs discovered by Sniffles \citep{ngmlr}.
+In order to address this issue, we assembled a pipeline that can be used to refine the SVs discovered by Sniffles [24].
 By refinement, we mean that the position of the breakpoints (start and end position for deletions, and single location for insertions) and the sequence content (for insertions) can be updated to improve the quality of the variants. 
 The current version of the pipeline ignores SVs other than deletions or insertions due to difficulties in assembling and aligning them properly.
 
@@ -99,18 +98,18 @@ The pipeline is based purely on Oxford Nanopore data (i.e. it does not need Illu
 
 \subsection{Details of the steps in the pipeline}
 
-The pipeline performs a local assembly of the Oxford Nanopore reads aligned to the region of interest and then uses AGE \citep{age} to align this assembly to the appropriate region of the reference genome.
+The pipeline performs a local assembly of the Oxford Nanopore reads aligned to the region of interest and then uses AGE [40] to align this assembly to the appropriate region of the reference genome.
 This alignment is then used to update the breakpoints and inserted sequence of the variant if certain quality thresholds are met.
 
-This alignment pipeline is largely inspired by the guidelines suggested by the authors of AGE in their newer LongAGE paper \citep{longage} and the authors of wtdbg2 \citep{wtdbg2} and consists of the following steps:
+This alignment pipeline is largely inspired by the guidelines suggested by the authors of AGE in their newer LongAGE paper [41] and the authors of wtdbg2 [42] and consists of the following steps:
 
 \begin{enumerate}
-	\item For every insertion or deletion, Oxford Nanopore reads overlapping the region of interest are extracted from the NGMLR \citep{ngmlr} BAM file. 
+	\item For every insertion or deletion, Oxford Nanopore reads overlapping the region of interest are extracted from the NGMLR [24] BAM file. 
 		The region of interest is a window spanning ± 200 nucleotides from the SV breakpoints (start and end of the breakpoint for deletions, and single location for insertions).
 \item  The reads extracted in this way are assembled using wtdbg2. 
 	We use preset values for Oxford Nanopore sequencing (\texttt{-x ont}) except for the following parameters: \texttt{-S 1} (no subsampling of reads), \texttt{-e} 2 (minimum read coverage of 2 for an edge in the graph), \texttt{-L 1000} (minimum read size of 1 kb), \texttt{-g 500000} (expected genome size of 500 kb).
 \item A consensus sequence for the assembly is produced using the \texttt{wtpoa-cns} command from wtdbg2 with default parameters.
-\item This assembly is polished using Oxford Nanopore data. For this, the same reads that were used for assembly are aligned to the consensus sequence using minimap2 \citep{minimap2} with options \texttt{-ax map-ont -r2k}. These aligned reads are used to update the consensus sequence with \texttt{wtpoa-cns}.
+\item This assembly is polished using Oxford Nanopore data. For this, the same reads that were used for assembly are aligned to the consensus sequence using minimap2 [43] with options \texttt{-ax map-ont -r2k}. These aligned reads are used to update the consensus sequence with \texttt{wtpoa-cns}.
 \item Following assembly and polishing, the reference sequence is extracted ± 500 nucleotides from the SV breakpoints for the assembled contig to be aligned against it.
 \item The largest of the assembled contigs (there is usually only one) is then aligned to the reference sequence using AGE with parameters \texttt{-allpos}, \texttt{-go=-1} (gap opening penalty of -1 to account for the high indel error rate of Oxford Nanopore data), \texttt{-indel} (the expected excised region is an indel) and \texttt{-both} (try alignment of both the sequence and its reverse complement, and report the best alignment).
 \end{enumerate}
@@ -121,7 +120,7 @@ From this information, the location of the excised fragment is transformed to re
 The following metrics are then computed in order to compare the (refined) deletion/insertion suggested by the AGE alignment to the original (raw) one defined by Sniffles:
 
 \begin{itemize}
-	\item For deletions, the reciprocal overlap between the raw deletion and its refined counterpart. The reciprocal overlap is the minimum of the two following values: proportion of deletion 1 covered by deletion 2, and proportion of deletion 2 covered by deletion 1. This overlap is computed using functions from the GenomicRanges R package \citep{granges}.
+	\item For deletions, the reciprocal overlap between the raw deletion and its refined counterpart. The reciprocal overlap is the minimum of the two following values: proportion of deletion 1 covered by deletion 2, and proportion of deletion 2 covered by deletion 1. This overlap is computed using functions from the GenomicRanges R package [44].
 	\item For insertions, the offset of the two insertions, i.e. the (absolute) physical distance in base pairs between the positions of the raw and refined insertion.
 	\item For insertions, the Levenshtein (edit) distance between the two inserted sequences, as computed by the R function \texttt{adist}. From this distance, a {\em distance ratio} is computed, which corresponds to the Levensthein distance between the two insertions divided by the length of the longest insertion. This provides a relative measure of the difference in sequence content between the two insertions.
 	\item In addition to the metrics related to the excised fragments themselves, the percentage of nucleotides that share identity and the percentage of nucleotides affected by gaps in the aligned flanking regions are also extracted from the output of AGE.
@@ -129,7 +128,7 @@ The following metrics are then computed in order to compare the (refined) deleti
 
 
 Note that SVs longer than 50 kb are excluded from the pipeline because of the high memory and computing time requirements of aligning to those variants using AGE.
-Although a newer version of AGE called LongAGE \citep{longage} requiring less memory has been recently released, we found it unsuitable for our needs due to cryptic error messages and slower speed.
+Although a newer version of AGE called LongAGE [41] requiring less memory has been recently released, we found it unsuitable for our needs due to cryptic error messages and slower speed.
 
 \subsection{Parameters determining whether SVs are updated or not}
 
@@ -149,7 +148,7 @@ Based on analyses carried out during the development of the pipeline, we have se
 \subsection{Testing the effect of refined SVs on genotyping performance}
 
 The main objective of the SV refinement pipeline described above is to improve the genotyping of SVs with Illumina data.
-In order to verify whether the pipeline indeed improved genotyping, we compared the genotyping precision and sensitivity of raw and refined SVs using three different genotypers: BayesTyper v. 1.5 \citep{bayestyper}, vg v. 1.23.0 \citep{vg} and Paragraph v. 2.4a \citep{paragraph}.
+In order to verify whether the pipeline indeed improved genotyping, we compared the genotyping precision and sensitivity of raw and refined SVs using three different genotypers: BayesTyper v. 1.5 [31], vg v. 1.23.0 [30], and Paragraph v. 2.4a [29].
 
 \subsubsection{Application of the pipeline}
 
@@ -174,10 +173,10 @@ In either of these cases, we simply keep the original representation of the SV a
 
 In order to assess the effect of refining SVs on genotpying performance, we generated an input dataset of raw variants and another input dataset of refined variants.
 
-In order to generate input datasets for genotyping, the SV sets obtained from the four samples were merged using SVmerge \citep{svmerge} with parameters \texttt{-maxdist 15 -reldist 0.1 -relsizediff 0.1 -relshift 0.1 -seqspecific}.
+In order to generate input datasets for genotyping, the SV sets obtained from the four samples were merged using SVmerge [45] with parameters \texttt{-maxdist 15 -reldist 0.1 -relsizediff 0.1 -relshift 0.1 -seqspecific}.
 For refined variants, the default random selection behavior of SVmerge when combining several variants together was modified to systematically favor variants that had been updated by the pipeline.
 
-Following this, the VCF files were coordinate-sorted, normalized (using \texttt{bcftools norm}, \cite{bcftools}) and duplicate records were removed.
+Following this, the VCF files were coordinate-sorted, normalized (using \texttt{bcftools norm}, [46]) and duplicate records were removed.
 
 \subsubsection{Genotyping methods}
 
@@ -187,7 +186,7 @@ The raw and refined SV datasets were both used as input to three genotyping prog
 
 We followed the methods suggested by the authors of BayesTyper for genotyping (\url{https://github.com/bioinformatics-centre/BayesTyper}).
 
-Briefly, k-mers were counted from the adapter-trimmed fastq files using KMC \citep{kmc} and a Bloom filter was applied using the \texttt{bayesTyperTools makeBloom} utility.
+Briefly, k-mers were counted from the adapter-trimmed fastq files using KMC [47] and a Bloom filter was applied using the \texttt{bayesTyperTools makeBloom} utility.
 
 In parallel, \texttt{BayesTyperTools combine} had to be run to make the VCF input files suitable for input to BayesTyper.
 
@@ -215,7 +214,7 @@ Precision-recall curves for Paragraph were generated by varying the minimum numb
 
 \subsubsection{Benchmarks: raw versus refined variants}
 
-Benchmarks were carried out using the sveval R package \citep[][\url{https://github.com/jmonlong/sveval}]{vg} following the methods described in the main text.
+Benchmarks were carried out using the sveval R package [30] following the methods described in the main text.
 
 \paragraph{Bayestyper}
 
@@ -223,7 +222,7 @@ Figure \ref{fig_s26} shows the benchmarking results obtained for BayesTyper.
 Overall, the refined deletions resulted in a higher sensitivity but similar precision. 
 The benefits of SV refinement were obvious for larger deletions, whereas results were sometimes worse for deletions in the range of 100-1000 nucleotides.
 The improvemement brought by refinement is more obvious for insertions than it is for deletions, most likely because the refinement pipeline also improved the sequence content of the insertions.
-The poor overall sensitivity of the results obtained with BayesTyper when genotyping Oxford Nanopore SVs is probably due to the small tolerance of this program to errors in SV breakpoint location or sequence content, as has been previously documented \citep{vg}.
+The poor overall sensitivity of the results obtained with BayesTyper when genotyping Oxford Nanopore SVs is probably due to the small tolerance of this program to errors in SV breakpoint location or sequence content, as has been previously documented [30].
 Nevertheless, the improvement in sensitivity obtained by using refined SVs suggests that the SV refinement pipeline indeed improves the quality of the variants.
 
 \paragraph{vg}
@@ -244,7 +243,7 @@ It is therefore expected that an increase in sensitivity from refining the varia
 
 Overall, the results show that the breakpoint refinement pipeline results in higher genotyping sensitivity than using the raw variants as called by Sniffles.
 While the results are not immediately obvious when using Paragraph, the improvements obtained using BayesTyper and vg suggest that the quality of the SVs is indeed higher following breakpoint refinement.
-This is probably due to the high tolerance of Paragraph to errors in SV sequence (as documented in \cite{paragraph}) compared to the two other tools.
+This is probably due to the high tolerance of Paragraph to errors in SV sequence (as documented in [29]) compared to the two other tools.
 However, even if the improvement in genotyping performance using Paragraph is not obvious, downstream analyses should still benefit from more accurate SV breakpoints and sequence.
 
 \subsection{Software availability}
@@ -257,18 +256,18 @@ The SV refinement pipeline described here is available from \url{https://github.
 
 \subsection{Description of the analysis pipeline}
 
-To study potential DNA transposable element (TE) activity in more detail, we extracted the SVs corresponding to all DNA TEs in the SoyTEdb database \citep{soytedb} that were matched by at least 3 SVs. 
+To study potential DNA transposable element (TE) activity in more detail, we extracted the SVs corresponding to all DNA TEs in the SoyTEdb database [48] that were matched by at least 3 SVs. 
 This represented 51 TEs in the database and 237 individual SVs.
 
 For each of these SVs, we extracted the Oxford Nanopore reads at the location of the SV and assembled them individually for each sample following methods similar to those used for the breakpoint refinement pipeline.
 Briefly, reads overlapping positions ± 200 bp from the SV were used for assembly with wtdbg2 and polishing with wtpoa\_cns after re-aligning the reads to the assembly with minimap2.
 
 The assemblies were then used for multiple alignment across samples in order to identify TE boundaries as well as target site duplication (TSD) and terminal inverted repeat (TIR) sequences.
-We used the \texttt{PairwiseAlignment} function from the Bioconductor Biostrings package \citep{biostrings} to individually align all assemblies to a section of the reference genome ±~500 bp from the putative TE insertion site.
+We used the \texttt{PairwiseAlignment} function from the Bioconductor Biostrings package [49] to individually align all assemblies to a section of the reference genome ±~500 bp from the putative TE insertion site.
 This pairwise alignment was only done in order to extract the part of the assemblies that was of interest.
 
 We then used the aligned sequences obtained from the pairwise alignment as input for multiple alignment.
-Multiple alignment was done with the MAFFT \citep{mafft} suite of tools using the command \texttt{ginsi --reorder} which performs multiple global alignment.
+Multiple alignment was done with the MAFFT [50] suite of tools using the command \texttt{ginsi --reorder} which performs multiple global alignment.
 
 We processed multiple alignments so as to only keep high-quality alignments that showed obvious TE insertion polymorphism.
 First, we manually checked all alignments and only kept those that showed an insertion/deletion polymorphism of the expected length.
@@ -283,7 +282,7 @@ Sequences that contained the TE sequence could be analyzed further to identify T
 In total, 301 sequences bearing the insertion could be queried for TSD and TIR sequences.
 31 of these 301 were extracted from insertions that are present in the reference, whereas the 270 remaining insertion sequences were extracted from the local assemblies of the Oxford Nanopore reads.
 
-We analyzed the insertion sequences using the GenericRepeatFinder software \citep{grf} with the following command:
+We analyzed the insertion sequences using the GenericRepeatFinder software [51] with the following command:
 
 \texttt{grf-main -i input\_fasta -o . -c 1 -p 30 -s 10 --seed\_mismatch 8 --min\_tr 12}
 
@@ -329,8 +328,8 @@ Interestingly, this insertion is by far the one for which the similarity between
 To investigate this question further, we analysed the SNV patterns surrounding the insertion site.
 If the TACGAG indeed resulted from the excision of the TE, then the haplotypes corresponding to the TE insertion and the 6-bp insertion should be more similar to each other than to the reference sequence, as the excision would have occurred within the TE insertion genetic background.
 
-The SNVs with FILTER = PASS among those discovered by Platypus \citep{platypus} were extracted from the VCF file of the 102 samples sequenced by Illumina to perform this analysis.
-The analysis of linkage disequilibrium (LD) using PLINK \citep{plink} in a 200-kb window surrounding the insertion location at Gm04:2,257,090 revealed a high-LD block spanning positions 2,220,398 to 2,259,326 that included the location of the insertion.
+The SNVs with FILTER = PASS among those discovered by Platypus [52] were extracted from the VCF file of the 102 samples sequenced by Illumina to perform this analysis.
+The analysis of linkage disequilibrium (LD) using PLINK [53] in a 200-kb window surrounding the insertion location at Gm04:2,257,090 revealed a high-LD block spanning positions 2,220,398 to 2,259,326 that included the location of the insertion.
 The SNVs in that 39-kb window were therefore extracted from the Platypus VCF file and used for downstream analyses.
 
 By combining the information obtained from Platypus and SV genotyping with Paragraph, we were able to classify samples into three groups depending on their status at the TE insertion locus:
@@ -367,7 +366,7 @@ They show clear similarity between the "present" and "excised" haplotypes, which
 To investigate the effect of the relatively modest average sequencing depth (12X) of the Oxford Nanopore data used in this study, we performed a subsampling analysis of the data for four cultivars.
 
 We adopted a subsampling approach in order to simulate lower coverage from the four cultivars that were sequenced with $>$ 16X sequencing depth (Alta, Maple Isle, AC2001, OAC Lakeview).
-For each of the cultivars, we sampled 20\%, 40\%, 60\% and 80\% of the aligned reads using \texttt{samtools view --subsample} \citep{bcftools}.
+For each of the cultivars, we sampled 20\%, 40\%, 60\% and 80\% of the aligned reads using \texttt{samtools view --subsample} [46].
 Five (5) replicates of each cultivar/sampling fraction combination were generated using a different randomly chosen seed for each sample.
 Each of the 80 subsampled \texttt{.bam} files were processed to generate a catalog of SV calls from each of them and benchmark their results using the same methods as described in the main text:
 
@@ -551,7 +550,7 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		\item[a] Number of genes with corresponding GO annotation within the gene universe (whole genome except unanchored scaffolds)
 		\item[b] Expected number of genes with given GO annotation within the subset of interest considering a hypergeometric distribution
 		\item[c] Observed number of genes with given GO annotation within the subset of interest
-		\item[d] Bonferroni-corrected p-values computed using the conditional hypergeometric test in the GOstats R package \citep{gostats}
+		\item[d] Bonferroni-corrected p-values computed using the conditional hypergeometric test in the GOstats R package [54]
 		\end{tablenotes}
 	\end{threeparttable}
 \end{table}
@@ -583,7 +582,7 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		\item[a] Number of genes with corresponding GO annotation within the gene universe (whole genome except unanchored scaffolds)
 		\item[b] Expected number of genes with given GO annotation within the subset of interest considering a hypergeometric distribution
 		\item[c] Observed number of genes with given GO annotation within the subset of interest
-		\item[d] Bonferroni-corrected p-values computed using the conditional hypergeometric test in the GOstats R package \citep{gostats}
+		\item[d] Bonferroni-corrected p-values computed using the conditional hypergeometric test in the GOstats R package [54]
 		\end{tablenotes}
 	\end{threeparttable}
 \end{table}
@@ -615,7 +614,7 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		\item[a] Number of genes with corresponding PFAM annotation within the gene universe (whole genome except unanchored scaffolds)
 		\item[b] Expected number of genes with given PFAM annotation within the subset of interest considering a hypergeometric distribution
 		\item[c] Observed number of genes with given PFAM annotation within the subset of interest
-		\item[d] Bonferroni-corrected p-values computed using the hypergeometric test in the GOstats R package \citep{gostats}
+		\item[d] Bonferroni-corrected p-values computed using the hypergeometric test in the GOstats R package [54]
 		\end{tablenotes}
 	\end{threeparttable}
 \end{table}
@@ -809,7 +808,7 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 		(B) Relationship between the heterozygosity rate of a cultivar and its Illumina sequencing depth.
 		The sequencing depth values shown are the same as in table \ref{table_s7} and represent the effective sequencing depth computed from mapped reads.
 		With the exception of one outlier, heterozygosity rates higher than 0.1 are attributable to shallow sequencing, which can lead to genotyping errors resulting in seemingly higher heterozygosity.
-		Heterozygous calls in the context of inbred lines may occur due to various causes including genotype-calling errors in low-depth samples (as shown here), copy number variants generating spurious heterozygous genotype calls \citep{torkamaneh2018}, or genuine residual heterozygosity.
+		Heterozygous calls in the context of inbred lines may occur due to various causes including genotype-calling errors in low-depth samples (as shown here), copy number variants generating spurious heterozygous genotype calls [6], or genuine residual heterozygosity.
 	}
 
 	\label{fig_s2}
@@ -1292,12 +1291,6 @@ Therefore, it is safe to call these SVs from low-depth Oxford Nanopore sequencin
 \end{lsfigure}
 
 \clearpage%}}}
-
-% DEPENDENCY : genome_research.bst
-\bibliographystyle{vancouver}
-% DEPENDENCY : references.bib
-\addcontentsline{toc}{section}{References}
-\bibliography{references}
 
 \end{document}
 
