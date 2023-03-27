@@ -154,7 +154,8 @@ With these tools in hand, you should be able to effectively query the Makefile a
 
 If you use part of this code for your analyses, please cite:
 
-Combined use of Oxford Nanopore and Illumina sequencing yields insights into soybean structural variation biology.
-Marc-André Lemay, Jonas A. Sibbesen, Davoud Torkamaneh, Jérémie Hamel, Roger C. Levesque, François Belzile
-bioRxiv 2021.08.26.457816; doi: [10.1101/2021.08.26.457816](https://doi.org/10.1101/2021.08.26.457816)
+Lemay, MA., Sibbesen, J.A., Torkamaneh, D. et al. Combined use of Oxford
+Nanopore and Illumina sequencing yields insights into soybean structural
+variation biology. BMC Biol 20, 53 (2022).
+<https://doi.org/10.1186/s12915-022-01255-w>
 
